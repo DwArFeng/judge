@@ -2,53 +2,62 @@ package com.dwarfeng.judge.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.Default;
 import java.util.Objects;
 
-public class FastJsonDriverInfo implements Bean {
+public class WebInputDriverInfo implements Bean {
 
-    private static final long serialVersionUID = 5401696580031449570L;
+    private static final long serialVersionUID = -3975993124807740934L;
 
-    public static FastJsonDriverInfo of(DriverInfo driverInfo) {
-        if (Objects.isNull(driverInfo)) {
+    public static DriverInfo toStackBean(WebInputDriverInfo webInputDriverInfo) {
+        if (Objects.isNull(webInputDriverInfo)) {
             return null;
         }
 
-        return new FastJsonDriverInfo(
-                FastJsonLongIdKey.of(driverInfo.getKey()),
-                FastJsonLongIdKey.of(driverInfo.getSectionKey()),
-                driverInfo.isEnabled(),
-                driverInfo.getType(),
-                driverInfo.getContent(),
-                driverInfo.getRemark()
+        return new DriverInfo(
+                WebInputLongIdKey.toStackBean(webInputDriverInfo.getKey()),
+                WebInputLongIdKey.toStackBean(webInputDriverInfo.getSectionKey()),
+                webInputDriverInfo.isEnabled(),
+                webInputDriverInfo.getType(),
+                webInputDriverInfo.getContent(),
+                webInputDriverInfo.getRemark()
         );
     }
 
-    @JSONField(name = "key", ordinal = 1)
-    private FastJsonLongIdKey key;
+    @JSONField(name = "key")
+    @Valid
+    @NotNull(groups = Default.class)
+    private WebInputLongIdKey key;
 
-    @JSONField(name = "section_key", ordinal = 2)
-    private FastJsonLongIdKey sectionKey;
+    @JSONField(name = "section_key")
+    @Valid
+    private WebInputLongIdKey sectionKey;
 
-    @JSONField(name = "enabled", ordinal = 3)
+    @JSONField(name = "enabled")
     private boolean enabled;
 
-    @JSONField(name = "type", ordinal = 4)
+    @JSONField(name = "type")
+    @NotNull
+    @NotEmpty
     private String type;
 
-    @JSONField(name = "content", ordinal = 5)
+    @JSONField(name = "content")
     private String content;
 
-    @JSONField(name = "remark", ordinal = 6)
+    @JSONField(name = "remark")
     private String remark;
 
-    public FastJsonDriverInfo() {
+    public WebInputDriverInfo() {
     }
 
-    public FastJsonDriverInfo(
-            FastJsonLongIdKey key, FastJsonLongIdKey sectionKey, boolean enabled, String type, String content,
+    public WebInputDriverInfo(
+            WebInputLongIdKey key, WebInputLongIdKey sectionKey, boolean enabled, String type, String content,
             String remark) {
         this.key = key;
         this.sectionKey = sectionKey;
@@ -58,19 +67,19 @@ public class FastJsonDriverInfo implements Bean {
         this.remark = remark;
     }
 
-    public FastJsonLongIdKey getKey() {
+    public WebInputLongIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonLongIdKey key) {
+    public void setKey(WebInputLongIdKey key) {
         this.key = key;
     }
 
-    public FastJsonLongIdKey getSectionKey() {
+    public WebInputLongIdKey getSectionKey() {
         return sectionKey;
     }
 
-    public void setSectionKey(FastJsonLongIdKey sectionKey) {
+    public void setSectionKey(WebInputLongIdKey sectionKey) {
         this.sectionKey = sectionKey;
     }
 
@@ -108,7 +117,7 @@ public class FastJsonDriverInfo implements Bean {
 
     @Override
     public String toString() {
-        return "FastJsonDriverInfo{" +
+        return "WebInputDrive{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
                 ", enabled=" + enabled +
