@@ -139,11 +139,11 @@
         <!-- 程序自身模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>fdr-stack</artifactId>
+            <artifactId>judge-stack</artifactId>
         </dependency>
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>fdr-sdk</artifactId>
+            <artifactId>judge-sdk</artifactId>
         </dependency>
     </dependencies>
 

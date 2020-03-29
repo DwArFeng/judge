@@ -52,15 +52,17 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-/fdr-impl/logs/
-/fdr-node/fdr-node-maintain/logs/
-/fdr-node/fdr-node-record/logs/
-/fdr-node/fdr-node-all/logs/
+/judge-impl/logs/
+/judge-node/judge-node-maintain/logs/
+/judge-node/judge-node-registry/logs/
+/judge-node/judge-node-work/logs/
+/judge-node/judge-node-all/logs/
 
 #################
 ## Configuration Files
 #################
-/fdr-impl/conf/
-/fdr-node/fdr-node-maintain/conf/
-/fdr-node/fdr-node-record/conf/
-/fdr-node/fdr-node-all/conf/
+/judge-impl/conf/
+/judge-node/judge-node-maintain/conf/
+/judge-node/judge-node-registry/conf/
+/judge-node/judge-node-work/conf/
+/judge-node/judge-node-all/conf/

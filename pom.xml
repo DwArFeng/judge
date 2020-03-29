@@ -389,33 +389,38 @@
             <!-- 程序自身组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>fdr-stack</artifactId>
-                <version>1.4.2.a</version>
+                <artifactId>judge-stack</artifactId>
+                <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>fdr-sdk</artifactId>
-                <version>1.4.2.a</version>
+                <artifactId>judge-sdk</artifactId>
+                <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>fdr-impl</artifactId>
-                <version>1.4.2.a</version>
+                <artifactId>judge-impl</artifactId>
+                <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>fdr-node-maintain</artifactId>
-                <version>1.4.2.a</version>
+                <artifactId>judge-node-maintain</artifactId>
+                <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>fdr-node-record</artifactId>
-                <version>1.4.2.a</version>
+                <artifactId>judge-node-registry</artifactId>
+                <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>fdr-node-all</artifactId>
-                <version>1.4.2.a</version>
+                <artifactId>judge-node-work</artifactId>
+                <version>beta-1.0.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>judge-node-all</artifactId>
+                <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

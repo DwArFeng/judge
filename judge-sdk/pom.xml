@@ -118,7 +118,7 @@
         <!-- 程序自身模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>fdr-stack</artifactId>
+            <artifactId>judge-stack</artifactId>
         </dependency>
     </dependencies>
 </project>
