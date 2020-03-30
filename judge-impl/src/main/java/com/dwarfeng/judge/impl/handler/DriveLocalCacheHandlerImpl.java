@@ -99,6 +99,7 @@ public class DriveLocalCacheHandlerImpl implements DriveLocalCacheHandler {
         try {
             contextMap.clear();
             notExistSections.clear();
+            allSectionKeys.clear();
         } finally {
             lock.writeLock().unlock();
         }

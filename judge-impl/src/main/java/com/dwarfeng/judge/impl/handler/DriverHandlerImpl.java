@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.handler.DriveHandler;
 import com.dwarfeng.judge.stack.handler.DriveLocalCacheHandler;
+import com.dwarfeng.judge.stack.handler.DriverHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class DriveHandlerImpl implements DriveHandler {
+public class DriverHandlerImpl implements DriverHandler {
 
     @Autowired
     private List<Driver> drivers;

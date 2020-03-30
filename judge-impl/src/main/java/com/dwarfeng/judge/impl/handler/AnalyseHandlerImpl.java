@@ -3,10 +3,10 @@ package com.dwarfeng.judge.impl.handler;
 import com.dwarfeng.dutil.basic.str.UUIDUtil;
 import com.dwarfeng.judge.stack.exception.JudgeWorkDisabledException;
 import com.dwarfeng.judge.stack.exception.SectionNotExistsException;
-import com.dwarfeng.judge.stack.handler.JudgeAssignHandler;
+import com.dwarfeng.judge.stack.handler.AnalyseHandler;
+import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.JudgeLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.JudgeLocalCacheHandler.JudgeContext;
-import com.dwarfeng.judge.stack.handler.JudgeWorkHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -22,14 +22,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class JudgeAssignHandlerImpl implements JudgeAssignHandler {
+public class AnalyseHandlerImpl implements AnalyseHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JudgeAssignHandlerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyseHandlerImpl.class);
 
     @Autowired
     private JudgeLocalCacheHandler localCacheHandler;
     @Autowired
-    private JudgeWorkHandler judgeWorkHandler;
+    private ConsumeHandler consumeHandler;
 
     private final Lock lock = new ReentrantLock();
     private boolean enabledFlag = false;
@@ -72,7 +72,7 @@ public class JudgeAssignHandlerImpl implements JudgeAssignHandler {
 
     @Override
     @BehaviorAnalyse
-    public void judge(LongIdKey sectionKey) throws HandlerException {
+    public void analyse(LongIdKey sectionKey) throws HandlerException {
         String uuid = UUIDUtil.toDenseString(UUID.randomUUID());
         try {
             // 判断是否允许判断，如果不允许，直接报错。
@@ -91,7 +91,7 @@ public class JudgeAssignHandlerImpl implements JudgeAssignHandler {
 
             // 2. 在 JudgeContext 中取出所有Judger，并按照判断的逻辑执行任务。
             for (Judger judger : judgeContext.getJudgers()) {
-                judgeWorkHandler.accept(judger);
+                consumeHandler.accept(judger);
             }
         } catch (HandlerException e) {
             throw e;

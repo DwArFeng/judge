@@ -2,7 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.dutil.develop.backgr.AbstractTask;
-import com.dwarfeng.judge.stack.handler.JudgeWorkHandler;
+import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.judge.stack.handler.SinkHandler;
@@ -21,9 +21,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class JudgeWorkHandlerImpl implements JudgeWorkHandler {
+public class ConsumeHandlerImpl implements ConsumeHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JudgeWorkHandlerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConsumeHandlerImpl.class);
 
     @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
@@ -40,7 +40,7 @@ public class JudgeWorkHandlerImpl implements JudgeWorkHandler {
     private final WorkBuffer workBuffer = new WorkBuffer();
     private boolean startFlag = false;
 
-    public JudgeWorkHandlerImpl(int thread) {
+    public ConsumeHandlerImpl(int thread) {
         this.thread = Math.max(thread, 1);
     }
 

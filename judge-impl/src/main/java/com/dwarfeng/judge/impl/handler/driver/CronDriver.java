@@ -2,7 +2,7 @@ package com.dwarfeng.judge.impl.handler.driver;
 
 import com.dwarfeng.judge.impl.handler.Driver;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
-import com.dwarfeng.judge.stack.handler.JudgeAssignHandler;
+import com.dwarfeng.judge.stack.handler.AnalyseHandler;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class CronDriver implements Driver {
     @Autowired
     private ThreadPoolTaskScheduler scheduler;
     @Autowired
-    private JudgeAssignHandler judgeAssignHandler;
+    private AnalyseHandler analyseHandler;
 
     private final Lock lock = new ReentrantLock();
     private final Set<ScheduledFuture<?>> scheduledFutures = new HashSet<>();
@@ -52,7 +52,7 @@ public class CronDriver implements Driver {
             LongIdKey sectionKey = driverInfo.getSectionKey();
             String cron = driverInfo.getContent();
             CronProcessor cronProcessor = new CronProcessor(
-                    judgeAssignHandler,
+                    analyseHandler,
                     sectionKey
             );
             CronTrigger cronTrigger = new CronTrigger(cron);
@@ -104,14 +104,14 @@ public class CronDriver implements Driver {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(CronProcessor.class);
 
-        private final JudgeAssignHandler judgeAssignHandler;
+        private final AnalyseHandler analyseHandler;
         private final LongIdKey sectionKey;
 
         private final Lock lock = new ReentrantLock();
         private boolean runningFlag = true;
 
-        private CronProcessor(JudgeAssignHandler judgeAssignHandler, LongIdKey sectionKey) {
-            this.judgeAssignHandler = judgeAssignHandler;
+        private CronProcessor(AnalyseHandler analyseHandler, LongIdKey sectionKey) {
+            this.analyseHandler = analyseHandler;
             this.sectionKey = sectionKey;
         }
 
@@ -123,7 +123,7 @@ public class CronDriver implements Driver {
                     return;
                 }
 
-                judgeAssignHandler.judge(sectionKey);
+                analyseHandler.analyse(sectionKey);
             } catch (Exception e) {
                 LOGGER.warn("记录 " + sectionKey + " 时出现异常, 放弃本次记录", e);
             } finally {

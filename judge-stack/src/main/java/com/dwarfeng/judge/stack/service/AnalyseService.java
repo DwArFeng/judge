@@ -5,18 +5,18 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.service.Service;
 
 /**
- * 判断处理服务。
+ * 分析处理服务。
  *
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface JudgeProcessService extends Service {
+public interface AnalyseService extends Service {
 
     /**
-     * 对指定的部件进行判断。
+     * 对指定的部件进行分析。
      *
      * @param sectionKey 部件的主键。
      * @throws ServiceException 服务异常。
      */
-    void judge(LongIdKey sectionKey) throws ServiceException;
+    void analyse(LongIdKey sectionKey) throws ServiceException;
 }

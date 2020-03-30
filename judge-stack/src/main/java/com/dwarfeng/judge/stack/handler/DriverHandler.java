@@ -9,7 +9,7 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface DriveHandler extends Handler {
+public interface DriverHandler extends Handler {
 
     /**
      * 是否注册。
