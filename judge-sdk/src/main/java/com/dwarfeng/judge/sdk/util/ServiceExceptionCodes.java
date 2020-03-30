@@ -22,6 +22,14 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 10, "repository failed");
     public static final ServiceException.Code SINK_FAILED =
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 20, "sink failed");
+    public static final ServiceException.Code DRIVE_FAILED =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 30, "drive failed");
+    public static final ServiceException.Code JUDGE_WORK_FAILED =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 40, "judge work failed");
+    public static final ServiceException.Code JUDGE_WORK_DISABLED =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 41, "judge work disabled");
+    public static final ServiceException.Code SECTION_NOT_EXISTS =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 50, "section not exists");
 
     /**
      * 获取异常代号的偏移量。

@@ -21,6 +21,10 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(UnsupportedJudgerTypeException.class, ServiceExceptionCodes.JUDGER_TYPE_UNSUPPORTED);
         destination.put(RepositoryException.class, ServiceExceptionCodes.REPOSITORY_FAILED);
         destination.put(SinkException.class, ServiceExceptionCodes.SINK_FAILED);
+        destination.put(DriveException.class, ServiceExceptionCodes.DRIVE_FAILED);
+        destination.put(JudgeWorkException.class, ServiceExceptionCodes.JUDGE_WORK_FAILED);
+        destination.put(JudgeWorkDisabledException.class, ServiceExceptionCodes.JUDGE_WORK_DISABLED);
+        destination.put(SectionNotExistsException.class, ServiceExceptionCodes.SECTION_NOT_EXISTS);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
     }
 }

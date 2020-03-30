@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler.judger;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.JudgerMaker;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;
@@ -10,13 +11,13 @@ import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -42,7 +43,6 @@ public class TruncationJudgerMaker implements JudgerMaker {
     public Judger makeJudger(JudgerInfo judgerInfo) throws JudgerException {
         try {
             TruncationJudger judger = ctx.getBean(TruncationJudger.class);
-            judger.setSectionKey(judgerInfo.getSectionKey());
             judger.setJudgerInfoKey(judgerInfo.getKey());
             return judger;
         } catch (Exception e) {
@@ -73,13 +73,11 @@ public class TruncationJudgerMaker implements JudgerMaker {
     }
 
     @Component
-    @Scope("prototype")
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public static class TruncationJudger implements Judger, Bean {
 
         private static final long serialVersionUID = -3161256701795506170L;
-        private static final Logger LOGGER = LoggerFactory.getLogger(TruncationJudger.class);
 
-        private LongIdKey sectionKey;
         private LongIdKey judgerInfoKey;
         private Config config;
 
@@ -87,26 +85,23 @@ public class TruncationJudgerMaker implements JudgerMaker {
         }
 
         @Override
-        public double judge(RepositoryHandler repositoryHandler) throws JudgerException {
+        public DataInfo judge(RepositoryHandler repositoryHandler) throws JudgerException {
             try {
                 String value = repositoryHandler.realtimeValue(new LongIdKey(config.getPointKey()));
                 double doubleValue = Double.parseDouble(value);
                 if (doubleValue < 0.0) {
-                    return 0.0;
+                    doubleValue = 0.0;
                 } else {
-                    return Math.min(doubleValue, 1.0);
+                    doubleValue = Math.min(doubleValue, 1.0);
                 }
+                return new DataInfo(
+                        judgerInfoKey.getLongId(),
+                        Double.toString(doubleValue),
+                        new Date()
+                );
             } catch (Exception e) {
                 throw new JudgerException(e);
             }
-        }
-
-        public LongIdKey getSectionKey() {
-            return sectionKey;
-        }
-
-        public void setSectionKey(LongIdKey sectionKey) {
-            this.sectionKey = sectionKey;
         }
 
         public LongIdKey getJudgerInfoKey() {
@@ -128,8 +123,7 @@ public class TruncationJudgerMaker implements JudgerMaker {
         @Override
         public String toString() {
             return "TruncationJudger{" +
-                    "sectionKey=" + sectionKey +
-                    ", judgerInfoKey=" + judgerInfoKey +
+                    "judgerInfoKey=" + judgerInfoKey +
                     ", config=" + config +
                     '}';
         }
