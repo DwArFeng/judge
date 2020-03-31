@@ -1,38 +1,29 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
-import com.dwarfeng.judge.stack.exception.DriverException;
+import com.dwarfeng.judge.stack.handler.Driver;
 
 /**
- * 驱动器。
+ * 驱动器构造器。
  *
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface Driver {
+public interface DriverProvider {
 
     /**
-     * 返回驱动器是否支持指定的类型。
+     * 返回制造器是否支持指定的类型。
      *
      * @param type 指定的类型。
-     * @return 驱动器是否支持指定的类型。
+     * @return 制造器是否支持指定的类型。
      */
     boolean supportType(String type);
 
     /**
-     * 注册指定的驱动器信息。
+     * 提供驱动器。
      *
-     * @param driverInfo 指定的驱动器信息。
-     * @throws DriverException 驱动异常。
+     * @return 被提供的驱动器。
      */
-    void register(DriverInfo driverInfo) throws DriverException;
-
-    /**
-     * 解除注册所有的驱动器信息。
-     *
-     * @throws DriverException 驱动异常。
-     */
-    void unregisterAll() throws DriverException;
+    Driver provide();
 
     /**
      * 提供类型。

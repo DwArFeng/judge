@@ -3,10 +3,10 @@ package com.dwarfeng.judge.impl.handler;
 import com.dwarfeng.dutil.basic.str.UUIDUtil;
 import com.dwarfeng.judge.stack.exception.JudgeWorkDisabledException;
 import com.dwarfeng.judge.stack.exception.SectionNotExistsException;
-import com.dwarfeng.judge.stack.handler.AnalyseHandler;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
-import com.dwarfeng.judge.stack.handler.JudgeLocalCacheHandler;
-import com.dwarfeng.judge.stack.handler.JudgeLocalCacheHandler.JudgeContext;
+import com.dwarfeng.judge.stack.handler.EvaluateHandler;
+import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
+import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler.JudgeContext;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -22,12 +22,12 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class AnalyseHandlerImpl implements AnalyseHandler {
+public class EvaluateHandlerImpl implements EvaluateHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyseHandlerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateHandlerImpl.class);
 
     @Autowired
-    private JudgeLocalCacheHandler localCacheHandler;
+    private EvaluateLocalCacheHandler localCacheHandler;
     @Autowired
     private ConsumeHandler consumeHandler;
 
@@ -72,7 +72,7 @@ public class AnalyseHandlerImpl implements AnalyseHandler {
 
     @Override
     @BehaviorAnalyse
-    public void analyse(LongIdKey sectionKey) throws HandlerException {
+    public void evaluate(LongIdKey sectionKey) throws HandlerException {
         String uuid = UUIDUtil.toDenseString(UUID.randomUUID());
         try {
             // 判断是否允许判断，如果不允许，直接报错。

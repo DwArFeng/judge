@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.handler.*;
-import com.dwarfeng.judge.stack.service.CombinedQosService;
+import com.dwarfeng.judge.stack.service.JudgeQosService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
@@ -16,20 +16,20 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Service
-public class CombinedQosServiceImpl implements CombinedQosService {
+public class JudgeQosServiceImpl implements JudgeQosService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CombinedQosServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JudgeQosServiceImpl.class);
 
     @Autowired
     private ConsumeHandler consumeHandler;
     @Autowired
-    private AnalyseHandler analyseHandler;
+    private EvaluateHandler evaluateHandler;
     @Autowired
-    private DriverHandler driverHandler;
+    private AssignHandler assignHandler;
     @Autowired
-    private DriveLocalCacheHandler driveLocalCacheHandler;
+    private AssignLocalCacheHandler assignLocalCacheHandler;
     @Autowired
-    private JudgeLocalCacheHandler judgeLocalCacheHandler;
+    private EvaluateLocalCacheHandler evaluateLocalCacheHandler;
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -47,8 +47,8 @@ public class CombinedQosServiceImpl implements CombinedQosService {
         try {
             LOGGER.info("开启判断服务...");
             consumeHandler.start();
-            analyseHandler.enable();
-            driverHandler.register();
+            evaluateHandler.enable();
+            assignHandler.online();
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("开启判断服务时发生异常",
                     LogLevel.WARN, sem, e
@@ -63,12 +63,12 @@ public class CombinedQosServiceImpl implements CombinedQosService {
         lock.lock();
         try {
             LOGGER.info("关闭判断服务...");
-            driverHandler.unregister();
+            assignHandler.offline();
             try {
                 Thread.sleep(500);
             } catch (Exception ignored) {
             }
-            analyseHandler.disable();
+            evaluateHandler.disable();
             try {
                 Thread.sleep(1000);
             } catch (Exception ignored) {
@@ -87,8 +87,8 @@ public class CombinedQosServiceImpl implements CombinedQosService {
     public void clearLocalCache() throws ServiceException {
         lock.lock();
         try {
-            driveLocalCacheHandler.clear();
-            judgeLocalCacheHandler.clear();
+            assignLocalCacheHandler.clear();
+            evaluateLocalCacheHandler.clear();
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常",
                     LogLevel.WARN, sem, e

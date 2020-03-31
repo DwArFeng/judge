@@ -2,7 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
-import com.dwarfeng.judge.stack.handler.JudgeLocalCacheHandler;
+import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.JudgerHandler;
 import com.dwarfeng.judge.stack.service.EnabledJudgerInfoLookupService;
@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Component
-public class JudgeLocalCacheHandlerImpl implements JudgeLocalCacheHandler {
+public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler {
 
     @Autowired
     private JudgeContextFetcher judgeContextFetcher;

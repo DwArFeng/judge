@@ -2,7 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
-import com.dwarfeng.judge.stack.handler.DriveLocalCacheHandler;
+import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
 import com.dwarfeng.judge.stack.service.EnabledDriverInfoLookupService;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
@@ -18,7 +18,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
 @Component
-public class DriveLocalCacheHandlerImpl implements DriveLocalCacheHandler {
+public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
 
     @Autowired
     private DriveContextFetcher driveContextFetcher;

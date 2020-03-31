@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.node.all.launcher;
 
 import com.dwarfeng.judge.node.all.handler.LauncherSettingHandler;
-import com.dwarfeng.judge.stack.service.CombinedQosService;
+import com.dwarfeng.judge.stack.service.JudgeQosService;
 import com.dwarfeng.springterminator.stack.handler.Terminator;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.slf4j.Logger;
@@ -44,11 +44,11 @@ public class Launcher {
 //        }
         // 判断是否开启判断服务。
         long startJudgeDelay = launcherSettingHandler.getStartJudgeDelay();
-        CombinedQosService combinedQosService = ctx.getBean(CombinedQosService.class);
+        JudgeQosService judgeQosService = ctx.getBean(JudgeQosService.class);
         if (startJudgeDelay == 0) {
             LOGGER.info("立即启动判断服务...");
             try {
-                combinedQosService.startJudge();
+                judgeQosService.startJudge();
             } catch (ServiceException e) {
                 LOGGER.error("无法启动判断服务，异常原因如下", e);
             }
@@ -60,7 +60,7 @@ public class Launcher {
             }
             LOGGER.info("启动判断服务...");
             try {
-                combinedQosService.startJudge();
+                judgeQosService.startJudge();
             } catch (ServiceException e) {
                 LOGGER.error("无法启动判断服务，异常原因如下", e);
             }

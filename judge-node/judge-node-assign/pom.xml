@@ -10,8 +10,8 @@
         <version>beta-1.0.0.a-SNAPSHOT</version>
     </parent>
 
-    <artifactId>judge-node-registry</artifactId>
-    <name>judge-node-registry</name>
+    <artifactId>judge-node-assign</artifactId>
+    <name>judge-node-assign</name>
     <url>http://maven.apache.org</url>
 
     <properties>

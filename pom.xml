@@ -409,12 +409,12 @@
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>judge-node-registry</artifactId>
+                <artifactId>judge-node-assign</artifactId>
                 <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>judge-node-work</artifactId>
+                <artifactId>judge-node-evaluate</artifactId>
                 <version>beta-1.0.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>

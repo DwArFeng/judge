@@ -4,12 +4,12 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.service.Service;
 
 /**
- * 联合QoS服务。
+ * 判断QoS服务。
  *
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface CombinedQosService extends Service {
+public interface JudgeQosService extends Service {
 
     /**
      * 启动判断服务。

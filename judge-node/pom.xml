@@ -26,8 +26,8 @@
 
     <modules>
         <module>judge-node-maintain</module>
-        <module>judge-node-registry</module>
-        <module>judge-node-work</module>
+        <module>judge-node-assign</module>
+        <module>judge-node-evaluate</module>
         <module>judge-node-all</module>
     </modules>
 </project>

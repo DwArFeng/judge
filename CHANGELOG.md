@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Beta_1.0.0_20200329_build_A
+### Beta_1.0.0_20200331_build_A
 
 #### 功能构建
 
@@ -9,6 +9,7 @@
 - Repository机制建立。
 - Drive机制建立。
 - Judge机制建立。
+- node-all模块搭建完毕，并且正常运行。
 
 #### Bug修复
 

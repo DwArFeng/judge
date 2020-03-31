@@ -54,8 +54,8 @@ buildNumber.properties
 #################
 /judge-impl/logs/
 /judge-node/judge-node-maintain/logs/
-/judge-node/judge-node-registry/logs/
-/judge-node/judge-node-work/logs/
+/judge-node/judge-node-assign/logs/
+/judge-node/judge-node-evaluate/logs/
 /judge-node/judge-node-all/logs/
 
 #################
@@ -63,6 +63,6 @@ buildNumber.properties
 #################
 /judge-impl/conf/
 /judge-node/judge-node-maintain/conf/
-/judge-node/judge-node-registry/conf/
-/judge-node/judge-node-work/conf/
+/judge-node/judge-node-assign/conf/
+/judge-node/judge-node-evaluate/conf/
 /judge-node/judge-node-all/conf/

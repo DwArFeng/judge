@@ -12,23 +12,11 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
 public interface DriverHandler extends Handler {
 
     /**
-     * 是否注册。
+     * 寻找指定的驱动。
      *
-     * @return 是否注册。
+     * @param type 驱动的类型。
+     * @return 符合驱动类型的指定的驱动。
+     * @throws HandlerException 驱动异常。
      */
-    boolean isRegistered();
-
-    /**
-     * 注册。
-     *
-     * @throws HandlerException 处理器异常。
-     */
-    void register() throws HandlerException;
-
-    /**
-     * 取消注册。
-     *
-     * @throws HandlerException 处理器异常。
-     */
-    void unregister() throws HandlerException;
+    Driver find(String type) throws HandlerException;
 }

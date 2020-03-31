@@ -10,8 +10,8 @@
         <version>beta-1.0.0.a-SNAPSHOT</version>
     </parent>
 
-    <artifactId>judge-node-work</artifactId>
-    <name>judge-node-work</name>
+    <artifactId>judge-node-evaluate</artifactId>
+    <name>judge-node-evaluate</name>
     <url>http://maven.apache.org</url>
 
     <properties>
