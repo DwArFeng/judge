@@ -3,7 +3,6 @@ package com.dwarfeng.judge.stack.bean.dto;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * 持久数据值。
@@ -11,18 +10,19 @@ import java.util.Objects;
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public class PersistenceValue implements Dto {
+public class TimedValue implements Dto {
 
     private static final long serialVersionUID = 4910869511230862532L;
 
     private String value;
     private Date happenedDate;
 
-    public PersistenceValue() {
+    public TimedValue() {
     }
 
-    public PersistenceValue(String value) {
+    public TimedValue(String value, Date happenedDate) {
         this.value = value;
+        this.happenedDate = happenedDate;
     }
 
     public String getValue() {
@@ -33,22 +33,12 @@ public class PersistenceValue implements Dto {
         this.value = value;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PersistenceValue that = (PersistenceValue) o;
-
-        if (!Objects.equals(value, that.value)) return false;
-        return Objects.equals(happenedDate, that.happenedDate);
+    public Date getHappenedDate() {
+        return happenedDate;
     }
 
-    @Override
-    public int hashCode() {
-        int result = value != null ? value.hashCode() : 0;
-        result = 31 * result + (happenedDate != null ? happenedDate.hashCode() : 0);
-        return result;
+    public void setHappenedDate(Date happenedDate) {
+        this.happenedDate = happenedDate;
     }
 
     @Override

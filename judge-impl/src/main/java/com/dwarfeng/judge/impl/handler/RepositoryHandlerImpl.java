@@ -1,10 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.PersistenceValue;
-import com.dwarfeng.judge.stack.exception.RepositoryException;
+import com.dwarfeng.judge.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
-import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
-import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +30,27 @@ public class RepositoryHandlerImpl implements RepositoryHandler {
     }
 
     @Override
-    public String realtimeValue(LongIdKey pointKey) throws RepositoryException {
+    public TimedValue realtimeValue(LongIdKey pointKey) throws HandlerException {
         return repository.realtimeValue(pointKey);
     }
 
     @Override
-    public PagedData<PersistenceValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate) throws RepositoryException {
+    public TimedValue realtimeValue(
+            LongIdKey pointKey,
+            String processPreset, Object[] args) throws HandlerException {
+        return repository.realtimeValue(pointKey, processPreset, args);
+    }
+
+    @Override
+    public List<TimedValue> persistenceValue(
+            LongIdKey pointKey, Date startDate, Date endDate) throws HandlerException {
         return repository.persistenceValue(pointKey, startDate, endDate);
     }
 
     @Override
-    public PagedData<PersistenceValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate, PagingInfo pagingInfo) throws RepositoryException {
-        return repository.persistenceValue(pointKey, startDate, endDate, pagingInfo);
+    public List<TimedValue> persistenceValue(
+            LongIdKey pointKey, Date startDate, Date endDate,
+            String processPreset, Object[] args) throws HandlerException {
+        return repository.persistenceValue(pointKey, startDate, endDate, processPreset, args);
     }
 }

@@ -3,6 +3,8 @@ package com.dwarfeng.judge.impl.handler.sink;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.Sink;
+import com.dwarfeng.judge.sdk.bean.dto.JudgedValueUtil;
+import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -46,13 +48,11 @@ public class KafkaSink implements Sink {
     }
 
     @Override
-    public void sinkData(DataInfo dataInfo) {
-        sinkData(DataInfoUtil.toMessage(dataInfo));
-    }
-
-    @Override
-    public void sinkData(String message) {
-        kafkaTemplate.send(topic, message);
+    public void sinkData(JudgedValue judgedValue) {
+        DataInfo dataInfo = JudgedValueUtil.toDataInfo(judgedValue);
+        if (Objects.nonNull(dataInfo)) {
+            kafkaTemplate.send(topic, DataInfoUtil.toMessage(dataInfo));
+        }
     }
 
     @Configuration

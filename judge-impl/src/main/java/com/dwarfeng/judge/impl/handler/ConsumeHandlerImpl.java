@@ -1,8 +1,8 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.dutil.develop.backgr.AbstractTask;
+import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
@@ -126,8 +126,13 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     }
 
     private void consume(Judger judger) throws Exception {
-        DataInfo dataInfo = judger.judge(repositoryHandler);
-        sinkHandler.sinkData(dataInfo);
+        TimeMeasurer tm = new TimeMeasurer();
+        tm.start();
+        JudgedValue judgedValue = judger.judge(repositoryHandler);
+        sinkHandler.sinkData(judgedValue);
+        tm.stop();
+        LOGGER.info("消费者完成消费, 判断器主键为 " + judgedValue.getJudgerKey() + ", 判断值为 " +
+                judgedValue.getJudgementInfo().getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
     }
 
     @Override
@@ -240,10 +245,11 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         private void consume(Judger judger) throws Exception {
             TimeMeasurer tm = new TimeMeasurer();
             tm.start();
-            DataInfo dataInfo = judger.judge(repositoryHandler);
-            sinkHandler.sinkData(dataInfo);
+            JudgedValue judgedValue = judger.judge(repositoryHandler);
+            sinkHandler.sinkData(judgedValue);
             tm.stop();
-            LOGGER.info("消费者完成消费, 生成数据对象为 " + dataInfo + ", 用时 " + tm.getTimeMs() + " 毫秒");
+            LOGGER.info("消费者完成消费, 判断器主键为 " + judgedValue.getJudgerKey() + ", 判断值为 " +
+                    judgedValue.getJudgementInfo().getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
         }
     }
 

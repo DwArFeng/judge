@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler.sink;
 
-import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.Sink;
+import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -23,10 +23,6 @@ public class DrainSink implements Sink {
     }
 
     @Override
-    public void sinkData(DataInfo dataInfo) {
-    }
-
-    @Override
-    public void sinkData(String message) {
+    public void sinkData(JudgedValue judgedValue) {
     }
 }

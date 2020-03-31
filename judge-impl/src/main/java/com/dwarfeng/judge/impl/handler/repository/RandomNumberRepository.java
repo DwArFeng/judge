@@ -1,10 +1,7 @@
 package com.dwarfeng.judge.impl.handler.repository;
 
 import com.dwarfeng.judge.impl.handler.Repository;
-import com.dwarfeng.judge.stack.bean.dto.PersistenceValue;
-import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
-import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
-import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
+import com.dwarfeng.judge.stack.bean.dto.TimedValue;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,10 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 随机数仓库。
@@ -33,7 +27,8 @@ public class RandomNumberRepository implements Repository {
 
     private final Random random;
 
-    public RandomNumberRepository(@Autowired @Qualifier("randomNumberRepository.random") Random random) {
+    public RandomNumberRepository(
+            @Autowired @Qualifier("randomNumberRepository.random") Random random) {
         this.random = random;
     }
 
@@ -43,20 +38,34 @@ public class RandomNumberRepository implements Repository {
     }
 
     @Override
-    public String realtimeValue(LongIdKey pointKey) {
-        return Double.toString(random.nextDouble());
+    public TimedValue realtimeValue(LongIdKey pointKey) {
+        return new TimedValue(
+                Double.toString(random.nextDouble()),
+                new Date()
+        );
     }
 
     @Override
-    public PagedData<PersistenceValue> persistenceValue(
+    public TimedValue realtimeValue(
+            LongIdKey pointKey,
+            String processPreset, Object[] args) {
+        return new TimedValue(
+                Double.toString(random.nextDouble()),
+                new Date()
+        );
+    }
+
+    @Override
+    public List<TimedValue> persistenceValue(
             LongIdKey pointKey, Date startDate, Date endDate) {
-        return PagingUtil.pagedData(Collections.emptyList());
+        return Collections.emptyList();
     }
 
     @Override
-    public PagedData<PersistenceValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate, PagingInfo pagingInfo) {
-        return PagingUtil.pagedData(Collections.emptyList());
+    public List<TimedValue> persistenceValue(
+            LongIdKey pointKey, Date startDate, Date endDate,
+            String processPreset, Object[] args) {
+        return Collections.emptyList();
     }
 
     @Configuration

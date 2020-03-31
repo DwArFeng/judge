@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import com.dwarfeng.judge.stack.handler.SinkHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +28,9 @@ public class SinkHandlerImpl implements SinkHandler {
     }
 
     @Override
-    public void sinkData(DataInfo dataInfo) throws HandlerException {
+    public void sinkData(JudgedValue judgedValue) throws HandlerException {
         try {
-            sink.sinkData(dataInfo);
-        } catch (HandlerException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    @Override
-    public void sinkData(String message) throws HandlerException {
-        try {
-            sink.sinkData(message);
+            sink.sinkData(judgedValue);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {

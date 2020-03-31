@@ -2,8 +2,10 @@ package com.dwarfeng.judge.impl.handler.judger;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.JudgerMaker;
+import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.stack.bean.dto.JudgementInfo;
+import com.dwarfeng.judge.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;
 import com.dwarfeng.judge.stack.exception.JudgerMakeException;
@@ -17,6 +19,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 
@@ -86,18 +89,27 @@ public class TruncationJudgerMaker implements JudgerMaker {
         }
 
         @Override
-        public DataInfo judge(RepositoryHandler repositoryHandler) throws JudgerException {
+        public JudgedValue judge(RepositoryHandler repositoryHandler) throws JudgerException {
             try {
-                String value = repositoryHandler.realtimeValue(new LongIdKey(config.getPointKey()));
+                LongIdKey realtimeKey = new LongIdKey(config.getPointKey());
+                TimedValue timedValue = repositoryHandler.realtimeValue(realtimeKey);
+                String value = timedValue.getValue();
                 double doubleValue = Double.parseDouble(value);
                 if (doubleValue < 0.0) {
                     doubleValue = 0.0;
                 } else {
                     doubleValue = Math.min(doubleValue, 1.0);
                 }
-                return new DataInfo(
-                        judgerInfoKey.getLongId(),
-                        Double.toString(doubleValue),
+
+                JudgementInfo judgementInfo = new JudgementInfo(
+                        doubleValue,
+                        Collections.singletonList(new JudgementInfo.RealtimeInfo(realtimeKey, value)),
+                        Collections.emptyList()
+                );
+
+                return new JudgedValue(
+                        judgerInfoKey,
+                        judgementInfo,
                         new Date()
                 );
             } catch (Exception e) {
