@@ -1,16 +1,15 @@
 package com.dwarfeng.judge.impl.configuration;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonDriverInfo;
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonJudgerInfo;
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
-import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
-import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
-import com.dwarfeng.judge.stack.bean.entity.Section;
+import com.dwarfeng.judge.sdk.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
+import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
+import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +35,10 @@ public class CacheConfiguration {
     private String enabledDriverInfoPrefix;
     @Value("${cache.prefix.list.enabled_judger_info}")
     private String enabledJudgerInfoPrefix;
+    @Value("${cache.prefix.entity.driver_support}")
+    private String driverSupportPrefix;
+    @Value("${cache.prefix.entity.judger_support}")
+    private String judgerSupportPrefix;
 
     @Bean
     @SuppressWarnings("unchecked")
@@ -84,6 +87,26 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonJudgerInfo>) template,
                 new LongIdStringKeyFormatter(enabledJudgerInfoPrefix),
                 new DozerBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBaseCache<StringIdKey, DriverSupport, FastJsonDriverSupport> driverSupportRedisBaseCache() {
+        return new RedisBaseCache<>(
+                (RedisTemplate<String, FastJsonDriverSupport>) template,
+                new StringIdStringKeyFormatter(driverSupportPrefix),
+                new DozerBeanTransformer<>(DriverSupport.class, FastJsonDriverSupport.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> judgerSupportRedisBaseCache() {
+        return new RedisBaseCache<>(
+                (RedisTemplate<String, FastJsonJudgerSupport>) template,
+                new StringIdStringKeyFormatter(judgerSupportPrefix),
+                new DozerBeanTransformer<>(JudgerSupport.class, FastJsonJudgerSupport.class, mapper)
         );
     }
 }

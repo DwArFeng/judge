@@ -1,36 +1,33 @@
 package com.dwarfeng.judge.node.all.configuration;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateDriverInfo;
-import com.dwarfeng.judge.impl.bean.entity.HibernateJudgerInfo;
-import com.dwarfeng.judge.impl.bean.entity.HibernateSection;
-import com.dwarfeng.judge.impl.dao.preset.DriverInfoPresetCriteriaMaker;
-import com.dwarfeng.judge.impl.dao.preset.JudgerInfoPresetCriteriaMaker;
-import com.dwarfeng.judge.impl.dao.preset.SectionPresetCriteriaMaker;
-import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
-import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
-import com.dwarfeng.judge.stack.bean.entity.Section;
+import com.dwarfeng.judge.impl.bean.entity.*;
+import com.dwarfeng.judge.impl.dao.preset.*;
+import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
+import com.dwarfeng.subgrade.impl.dao.HibernateBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 @Configuration
 public class DaoConfiguration {
 
     @Autowired
-    private HibernateTemplate hibernateTemplate;
+    private ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
+
     @Autowired
-    private RedisTemplate<String, ?> redisTemplate;
+    private HibernateTemplate hibernateTemplate;
     @Autowired
     private Mapper mapper;
 
@@ -40,6 +37,10 @@ public class DaoConfiguration {
     private SectionPresetCriteriaMaker sectionPresetCriteriaMaker;
     @Autowired
     private JudgerInfoPresetCriteriaMaker judgerInfoPresetCriteriaMaker;
+    @Autowired
+    private DriverSupportPresetCriteriaMaker driverSupportPresetCriteriaMaker;
+    @Autowired
+    private JudgerSupportPresetCriteriaMaker judgerSupportPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -134,6 +135,64 @@ public class DaoConfiguration {
                 hibernateTemplate,
                 new DozerBeanTransformer<>(JudgerInfo.class, HibernateJudgerInfo.class, mapper),
                 HibernateJudgerInfo.class
+        );
+    }
+
+    @Bean
+    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport> driverSupportHibernateBaseDao() {
+        return new HibernateBaseDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
+                new DozerBeanTransformer<>(DriverSupport.class, HibernateDriverSupport.class, mapper),
+                HibernateDriverSupport.class
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<DriverSupport, HibernateDriverSupport> driverSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(DriverSupport.class, HibernateDriverSupport.class, mapper),
+                HibernateDriverSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<DriverSupport, HibernateDriverSupport> driverSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(DriverSupport.class, HibernateDriverSupport.class, mapper),
+                HibernateDriverSupport.class,
+                driverSupportPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport> judgerSupportHibernateBaseDao() {
+        return new HibernateBaseDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
+                new DozerBeanTransformer<>(JudgerSupport.class, HibernateJudgerSupport.class, mapper),
+                HibernateJudgerSupport.class
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<JudgerSupport, HibernateJudgerSupport> judgerSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(JudgerSupport.class, HibernateJudgerSupport.class, mapper),
+                HibernateJudgerSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<JudgerSupport, HibernateJudgerSupport> judgerSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(JudgerSupport.class, HibernateJudgerSupport.class, mapper),
+                HibernateJudgerSupport.class,
+                judgerSupportPresetCriteriaMaker
         );
     }
 }

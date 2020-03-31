@@ -7,19 +7,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class LauncherSettingHandler implements Handler {
 
-    //    @Value("${launcher.reset_filter_support}")
-    private boolean resetFilterSupport;
-    //    @Value("${launcher.reset_trigger_support}")
-    private boolean resetTriggerSupport;
+    @Value("${launcher.reset_driver_support}")
+    private boolean resetDriverSupport;
+    @Value("${launcher.reset_judger_support}")
+    private boolean resetJudgerSupport;
     @Value("${launcher.start_judge_delay}")
     private long startJudgeDelay;
 
-    public boolean isResetFilterSupport() {
-        return resetFilterSupport;
+    public boolean isResetDriverSupport() {
+        return resetDriverSupport;
     }
 
-    public boolean isResetTriggerSupport() {
-        return resetTriggerSupport;
+    public boolean isResetJudgerSupport() {
+        return resetJudgerSupport;
     }
 
     public long getStartJudgeDelay() {
