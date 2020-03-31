@@ -12,11 +12,11 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
 public interface DriverHandler extends Handler {
 
     /**
-     * 寻找指定的驱动。
+     * 寻找指定的驱动器。
      *
-     * @param type 驱动的类型。
-     * @return 符合驱动类型的指定的驱动。
-     * @throws HandlerException 驱动异常。
+     * @param type 驱动器的类型。
+     * @return 符合驱动类型的指定的驱动器。
+     * @throws HandlerException 处理器。
      */
     Driver find(String type) throws HandlerException;
 }

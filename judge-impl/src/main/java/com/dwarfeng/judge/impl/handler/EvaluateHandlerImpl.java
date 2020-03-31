@@ -6,7 +6,7 @@ import com.dwarfeng.judge.stack.exception.SectionNotExistsException;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.EvaluateHandler;
 import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
-import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler.JudgeContext;
+import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler.EvaluateContext;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -84,13 +84,13 @@ public class EvaluateHandlerImpl implements EvaluateHandler {
             LOGGER.debug("驱动器使能, 驱动判断指定部件: " + sectionKey);
 
             // 1. 获取 JudgeContext。
-            JudgeContext judgeContext = localCacheHandler.getJudgeContext(sectionKey);
-            if (Objects.isNull(judgeContext)) {
+            EvaluateContext evaluateContext = localCacheHandler.getEvaluateContext(sectionKey);
+            if (Objects.isNull(evaluateContext)) {
                 throw new SectionNotExistsException(sectionKey);
             }
 
             // 2. 在 JudgeContext 中取出所有Judger，并按照判断的逻辑执行任务。
-            for (Judger judger : judgeContext.getJudgers()) {
+            for (Judger judger : evaluateContext.getJudgers()) {
                 consumeHandler.accept(judger);
             }
         } catch (HandlerException e) {

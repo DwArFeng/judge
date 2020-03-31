@@ -25,7 +25,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
     private JudgeContextFetcher judgeContextFetcher;
 
     private ReadWriteLock lock = new ReentrantReadWriteLock();
-    private Map<LongIdKey, JudgeContext> contextMap = new HashMap<>();
+    private Map<LongIdKey, EvaluateContext> contextMap = new HashMap<>();
     private Set<LongIdKey> notExistSections = new HashSet<>();
 
     @Override
@@ -50,12 +50,12 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
                 if (notExistSections.contains(sectionKey)) {
                     return false;
                 }
-                JudgeContext judgeContext = judgeContextFetcher.fetchContext(sectionKey);
-                if (Objects.isNull(judgeContext)) {
+                EvaluateContext evaluateContext = judgeContextFetcher.fetchContext(sectionKey);
+                if (Objects.isNull(evaluateContext)) {
                     notExistSections.add(sectionKey);
                     return false;
                 }
-                contextMap.put(sectionKey, judgeContext);
+                contextMap.put(sectionKey, evaluateContext);
                 return true;
             } finally {
                 lock.writeLock().unlock();
@@ -66,7 +66,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
     }
 
     @Override
-    public JudgeContext getJudgeContext(LongIdKey sectionKey) throws HandlerException {
+    public EvaluateContext getEvaluateContext(LongIdKey sectionKey) throws HandlerException {
         try {
             lock.readLock().lock();
             try {
@@ -87,10 +87,10 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
                 if (notExistSections.contains(sectionKey)) {
                     return null;
                 }
-                JudgeContext judgeContext = judgeContextFetcher.fetchContext(sectionKey);
-                if (Objects.nonNull(judgeContext)) {
-                    contextMap.put(sectionKey, judgeContext);
-                    return judgeContext;
+                EvaluateContext evaluateContext = judgeContextFetcher.fetchContext(sectionKey);
+                if (Objects.nonNull(evaluateContext)) {
+                    contextMap.put(sectionKey, evaluateContext);
+                    return evaluateContext;
                 }
                 notExistSections.add(sectionKey);
                 return null;
@@ -126,7 +126,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
 
         @BehaviorAnalyse
         @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-        public JudgeContext fetchContext(LongIdKey sectionKey) throws Exception {
+        public EvaluateContext fetchContext(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;
             }
@@ -140,7 +140,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
                 judgers.add(judgerHandler.make(judgerInfo));
             }
 
-            return new JudgeContext(
+            return new EvaluateContext(
                     section,
                     judgers
             );

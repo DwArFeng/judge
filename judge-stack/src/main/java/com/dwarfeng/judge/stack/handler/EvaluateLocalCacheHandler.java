@@ -29,13 +29,13 @@ public interface EvaluateLocalCacheHandler extends Handler {
     boolean existsSection(LongIdKey sectionKey) throws HandlerException;
 
     /**
-     * 获取指定部件的记录上下文。
+     * 获取指定部件的评估上下文。
      *
-     * @param sectionKey 指定部件的记录上下文，或者是null。
-     * @return 指定部件的记录上下文。
+     * @param sectionKey 指定部件的评估上下文，或者是null。
+     * @return 指定部件的评估上下文。
      * @throws HandlerException 处理器异常。
      */
-    JudgeContext getJudgeContext(LongIdKey sectionKey) throws HandlerException;
+    EvaluateContext getEvaluateContext(LongIdKey sectionKey) throws HandlerException;
 
     /**
      * 清除本地缓存。
@@ -45,22 +45,22 @@ public interface EvaluateLocalCacheHandler extends Handler {
     void clear() throws HandlerException;
 
     /**
-     * 数据记录上下文。
+     * 数据评估上下文。
      *
      * @author DwArFeng
      * @since beta-1.0.0
      */
-    class JudgeContext implements Bean {
+    class EvaluateContext implements Bean {
 
         private static final long serialVersionUID = 8224658804994085875L;
 
         private Section section;
         private List<Judger> judgers;
 
-        public JudgeContext() {
+        public EvaluateContext() {
         }
 
-        public JudgeContext(Section section, List<Judger> judgers) {
+        public EvaluateContext(Section section, List<Judger> judgers) {
             this.section = section;
             this.judgers = judgers;
         }
@@ -83,7 +83,7 @@ public interface EvaluateLocalCacheHandler extends Handler {
 
         @Override
         public String toString() {
-            return "RecordContext{" +
+            return "EvaluateContext{" +
                     "section=" + section +
                     ", judgers=" + judgers +
                     '}';

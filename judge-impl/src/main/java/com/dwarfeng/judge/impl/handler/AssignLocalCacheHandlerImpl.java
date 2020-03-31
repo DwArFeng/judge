@@ -24,7 +24,7 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
     private DriveContextFetcher driveContextFetcher;
 
     private ReadWriteLock lock = new ReentrantReadWriteLock();
-    private Map<LongIdKey, DriveContext> contextMap = new HashMap<>();
+    private Map<LongIdKey, AssignContext> contextMap = new HashMap<>();
     private Set<LongIdKey> notExistSections = new HashSet<>();
     private List<LongIdKey> allSectionKeys = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
     }
 
     @Override
-    public DriveContext getDriveContext(LongIdKey sectionKey) throws HandlerException {
+    public AssignContext getAssignContext(LongIdKey sectionKey) throws HandlerException {
         try {
             lock.readLock().lock();
             try {
@@ -78,10 +78,10 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
                 if (notExistSections.contains(sectionKey)) {
                     return null;
                 }
-                DriveContext driveContext = driveContextFetcher.fetchContext(sectionKey);
-                if (Objects.nonNull(driveContext)) {
-                    contextMap.put(sectionKey, driveContext);
-                    return driveContext;
+                AssignContext assignContext = driveContextFetcher.fetchContext(sectionKey);
+                if (Objects.nonNull(assignContext)) {
+                    contextMap.put(sectionKey, assignContext);
+                    return assignContext;
                 }
                 notExistSections.add(sectionKey);
                 return null;
@@ -122,7 +122,7 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
 
         @BehaviorAnalyse
         @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-        public DriveContext fetchContext(LongIdKey sectionKey) throws Exception {
+        public AssignContext fetchContext(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;
             }
@@ -130,7 +130,7 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
             Section section = sectionMaintainService.get(sectionKey);
             List<DriverInfo> driverInfos = enabledDriverInfoLookupService.getEnabledDriverInfos(sectionKey);
 
-            return new DriveContext(
+            return new AssignContext(
                     section,
                     driverInfos
             );

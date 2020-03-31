@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
 import java.util.List;
 
 /**
- * 驱动器本地缓存处理器。
+ * 指派用本地缓存处理器。
  * <p>处理器在本地保存数据，缓存中的数据可以保证与数据源保持同步。</p>
  * <p>数据存放在本地，必要时才与数据访问层通信，这有助于程序效率的提升。</p>
  * <p>该处理器线程安全。</p>
@@ -29,13 +29,13 @@ public interface AssignLocalCacheHandler extends Handler {
     List<LongIdKey> getSectionKeys() throws HandlerException;
 
     /**
-     * 获取指定部件的记录上下文。
+     * 获取指定部件的指派上下文。
      *
-     * @param sectionKey 指定部件的记录上下文，或者是null。
-     * @return 指定部件的记录上下文。
+     * @param sectionKey 指定部件的指派上下文，或者是null。
+     * @return 指定部件的指派上下文。
      * @throws HandlerException 处理器异常。
      */
-    DriveContext getDriveContext(LongIdKey sectionKey) throws HandlerException;
+    AssignContext getAssignContext(LongIdKey sectionKey) throws HandlerException;
 
     /**
      * 清除本地缓存。
@@ -45,22 +45,22 @@ public interface AssignLocalCacheHandler extends Handler {
     void clear() throws HandlerException;
 
     /**
-     * 数据记录上下文。
+     * 指派上下文。
      *
      * @author DwArFeng
      * @since beta-1.0.0
      */
-    class DriveContext implements Bean {
+    class AssignContext implements Bean {
 
         private static final long serialVersionUID = -1269757566394917803L;
 
         private Section section;
         private List<DriverInfo> driverInfos;
 
-        public DriveContext() {
+        public AssignContext() {
         }
 
-        public DriveContext(Section section, List<DriverInfo> driverInfos) {
+        public AssignContext(Section section, List<DriverInfo> driverInfos) {
             this.section = section;
             this.driverInfos = driverInfos;
         }
@@ -83,7 +83,7 @@ public interface AssignLocalCacheHandler extends Handler {
 
         @Override
         public String toString() {
-            return "DriveContext{" +
+            return "AssignContext{" +
                     "section=" + section +
                     ", driverInfos=" + driverInfos +
                     '}';

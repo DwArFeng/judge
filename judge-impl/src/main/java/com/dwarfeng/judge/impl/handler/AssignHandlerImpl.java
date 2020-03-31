@@ -4,7 +4,7 @@ import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.exception.DriverException;
 import com.dwarfeng.judge.stack.handler.AssignHandler;
 import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
-import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler.DriveContext;
+import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler.AssignContext;
 import com.dwarfeng.judge.stack.handler.Driver;
 import com.dwarfeng.judge.stack.handler.DriverHandler;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -52,11 +52,11 @@ public class AssignHandlerImpl implements AssignHandler {
                 List<DriverInfo> driverInfos = new ArrayList<>();
                 // 获取所有驱动信息。
                 for (LongIdKey sectionKey : sectionKeys) {
-                    DriveContext driveContext = localCacheHandler.getDriveContext(sectionKey);
-                    if (Objects.isNull(driveContext)) {
+                    AssignContext assignContext = localCacheHandler.getAssignContext(sectionKey);
+                    if (Objects.isNull(assignContext)) {
                         throw new DriverException("无法在本地缓存中找到有效的驱动上下文: " + sectionKey);
                     }
-                    driverInfos.addAll(driveContext.getDriverInfos());
+                    driverInfos.addAll(assignContext.getDriverInfos());
                 }
                 Map<DriverInfo, Driver> driverMap = new HashMap<>();
                 // 确认所有的驱动信息全部存在。

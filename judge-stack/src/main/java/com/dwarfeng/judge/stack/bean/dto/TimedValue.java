@@ -5,7 +5,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import java.util.Date;
 
 /**
- * 持久数据值。
+ * 拥有发生时间的数据值。
  *
  * @author DwArFeng
  * @since beta-1.0.0
