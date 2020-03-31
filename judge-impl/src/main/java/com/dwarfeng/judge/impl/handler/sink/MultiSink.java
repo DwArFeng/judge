@@ -31,13 +31,13 @@ public class MultiSink implements Sink {
     private List<Sink> sinks;
 
     @Value("${sink.multi.delegate_types}")
-    private String delegetTypes;
+    private String delegateTypes;
 
     private final List<Sink> delegates = new ArrayList<>();
 
     @PostConstruct
     public void init() throws HandlerException {
-        StringTokenizer st = new StringTokenizer(delegetTypes, ",");
+        StringTokenizer st = new StringTokenizer(delegateTypes, ",");
         while (st.hasMoreTokens()) {
             String delegateType = st.nextToken();
             delegates.add(sinks.stream().filter(p -> p.supportType(delegateType)).findAny()
