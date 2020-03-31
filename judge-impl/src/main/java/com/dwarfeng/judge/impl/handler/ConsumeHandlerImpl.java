@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.dutil.develop.backgr.AbstractTask;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
@@ -9,9 +10,11 @@ import com.dwarfeng.judge.stack.handler.SinkHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,16 +35,24 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     @Autowired
     private SinkHandler sinkHandler;
 
-    private final List<WorkTask> processingWorkTasks = new ArrayList<>();
-    private final List<WorkTask> endingWorkTasks = new ArrayList<>();
-    private int thread;
+    private final List<ConsumeTask> processingConsumeTasks = new ArrayList<>();
+    private final List<ConsumeTask> endingConsumeTasks = new ArrayList<>();
+
+    @Value("${consume.consumer_thread}")
+    private int consumerThread;
+    @Value("${consume.buffer_size}")
+    private int bufferSize;
 
     private final Lock lock = new ReentrantLock();
-    private final WorkBuffer workBuffer = new WorkBuffer();
-    private boolean startFlag = false;
+    private final ConsumeBuffer consumeBuffer = new ConsumeBuffer();
 
-    public ConsumeHandlerImpl(int thread) {
-        this.thread = Math.max(thread, 1);
+    private boolean startFlag = false;
+    private int thread;
+
+    @PostConstruct
+    public void init() {
+        thread = Math.max(1, consumerThread);
+        setBufferSize(bufferSize);
     }
 
     @Override
@@ -59,12 +70,12 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         lock.lock();
         try {
             if (!startFlag) {
-                LOGGER.info("Judge worker handler 开启消费线程...");
-                workBuffer.block();
+                LOGGER.info("Judge consumeer handler 开启消费线程...");
+                consumeBuffer.block();
                 for (int i = 0; i < thread; i++) {
-                    WorkTask workTask = new WorkTask(workBuffer, repositoryHandler, sinkHandler);
-                    threadPoolTaskExecutor.execute(workTask);
-                    processingWorkTasks.add(workTask);
+                    ConsumeTask consumeTask = new ConsumeTask(consumeBuffer, repositoryHandler, sinkHandler);
+                    threadPoolTaskExecutor.execute(consumeTask);
+                    processingConsumeTasks.add(consumeTask);
                 }
                 startFlag = true;
             }
@@ -78,24 +89,24 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         lock.lock();
         try {
             if (startFlag) {
-                LOGGER.info("Judge work handler 结束消费线程...");
-                processingWorkTasks.forEach(WorkTask::shutdown);
-                endingWorkTasks.addAll(processingWorkTasks);
-                processingWorkTasks.clear();
-                workBuffer.unblock();
+                LOGGER.info("Judge consume handler 结束消费线程...");
+                processingConsumeTasks.forEach(ConsumeTask::shutdown);
+                endingConsumeTasks.addAll(processingConsumeTasks);
+                processingConsumeTasks.clear();
+                consumeBuffer.unblock();
                 Judger judger;
-                while (Objects.nonNull(judger = workBuffer.poll())) {
+                while (Objects.nonNull(judger = consumeBuffer.poll())) {
                     try {
-                        LOGGER.info("判断 judge work handler 中剩余的元素 1 个...");
-                        work(judger);
+                        LOGGER.info("判断 judge consume handler 中剩余的元素 1 个...");
+                        consume(judger);
                     } catch (Exception e) {
                         LOGGER.warn("进行判断工作时发生异常, 抛弃 1 次判断", e);
                     }
                 }
-                endingWorkTasks.removeIf(AbstractTask::isFinished);
-                if (!endingWorkTasks.isEmpty()) {
-                    LOGGER.info("Work handler 中的线程还未完全结束, 等待线程结束...");
-                    endingWorkTasks.forEach(
+                endingConsumeTasks.removeIf(AbstractTask::isFinished);
+                if (!endingConsumeTasks.isEmpty()) {
+                    LOGGER.info("Consume handler 中的线程还未完全结束, 等待线程结束...");
+                    endingConsumeTasks.forEach(
                             task -> {
                                 try {
                                     task.awaitFinish();
@@ -104,9 +115,9 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                             }
                     );
                 }
-                processingWorkTasks.clear();
-                endingWorkTasks.clear();
-                LOGGER.info("Work handler 已经妥善处理数据, 消费线程结束");
+                processingConsumeTasks.clear();
+                endingConsumeTasks.clear();
+                LOGGER.info("Consume handler 已经妥善处理数据, 消费线程结束");
                 startFlag = false;
             }
         } finally {
@@ -114,19 +125,24 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         }
     }
 
-    private void work(Judger judger) throws Exception {
+    private void consume(Judger judger) throws Exception {
         DataInfo dataInfo = judger.judge(repositoryHandler);
         sinkHandler.sinkData(dataInfo);
     }
 
     @Override
     public void accept(Judger judger) {
-        workBuffer.accept(judger);
+        consumeBuffer.accept(judger);
     }
 
     @Override
     public int getBufferSize() {
-        return workBuffer.getBufferSize();
+        return consumeBuffer.getBufferSize();
+    }
+
+    @Override
+    public void setBufferSize(int size) {
+        consumeBuffer.setBufferSize(size);
     }
 
     @Override
@@ -149,16 +165,16 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             if (startFlag) {
                 if (delta > 0) {
                     for (int i = 0; i < delta; i++) {
-                        WorkTask workTask = new WorkTask(workBuffer, repositoryHandler, sinkHandler);
-                        threadPoolTaskExecutor.execute(workTask);
-                        processingWorkTasks.add(workTask);
+                        ConsumeTask consumeTask = new ConsumeTask(consumeBuffer, repositoryHandler, sinkHandler);
+                        threadPoolTaskExecutor.execute(consumeTask);
+                        processingConsumeTasks.add(consumeTask);
                     }
                 } else if (delta < 0) {
-                    endingWorkTasks.removeIf(AbstractTask::isFinished);
+                    endingConsumeTasks.removeIf(AbstractTask::isFinished);
                     for (int i = 0; i < -delta; i++) {
-                        WorkTask workTask = processingWorkTasks.remove(0);
-                        workTask.shutdown();
-                        endingWorkTasks.add(workTask);
+                        ConsumeTask consumeTask = processingConsumeTasks.remove(0);
+                        consumeTask.shutdown();
+                        endingConsumeTasks.add(consumeTask);
                     }
                 }
             }
@@ -171,30 +187,30 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     public boolean isIdle() {
         lock.lock();
         try {
-            if (workBuffer.bufferedSize() > 0) {
+            if (consumeBuffer.bufferedSize() > 0) {
                 return false;
             }
-            if (!processingWorkTasks.isEmpty()) {
+            if (!processingConsumeTasks.isEmpty()) {
                 return false;
             }
-            endingWorkTasks.removeIf(AbstractTask::isFinished);
-            return endingWorkTasks.isEmpty();
+            endingConsumeTasks.removeIf(AbstractTask::isFinished);
+            return endingConsumeTasks.isEmpty();
         } finally {
             lock.unlock();
         }
     }
 
-    private static final class WorkTask extends AbstractTask {
+    private static final class ConsumeTask extends AbstractTask {
 
-        private static final Logger LOGGER = LoggerFactory.getLogger(WorkTask.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(ConsumeTask.class);
 
-        private final WorkBuffer workBuffer;
+        private final ConsumeBuffer consumeBuffer;
         private final RepositoryHandler repositoryHandler;
         private final SinkHandler sinkHandler;
         private final AtomicBoolean runningFlag = new AtomicBoolean(true);
 
-        public WorkTask(WorkBuffer workBuffer, RepositoryHandler repositoryHandler, SinkHandler sinkHandler) {
-            this.workBuffer = workBuffer;
+        public ConsumeTask(ConsumeBuffer consumeBuffer, RepositoryHandler repositoryHandler, SinkHandler sinkHandler) {
+            this.consumeBuffer = consumeBuffer;
             this.repositoryHandler = repositoryHandler;
             this.sinkHandler = sinkHandler;
         }
@@ -204,9 +220,9 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             while (runningFlag.get()) {
                 Judger judger = null;
                 try {
-                    judger = workBuffer.poll();
+                    judger = consumeBuffer.poll();
                     if (Objects.nonNull(judger)) {
-                        work(judger);
+                        consume(judger);
                     }
                 } catch (Exception e) {
                     if (Objects.nonNull(judger)) {
@@ -221,13 +237,17 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             runningFlag.set(false);
         }
 
-        private void work(Judger judger) throws Exception {
+        private void consume(Judger judger) throws Exception {
+            TimeMeasurer tm = new TimeMeasurer();
+            tm.start();
             DataInfo dataInfo = judger.judge(repositoryHandler);
             sinkHandler.sinkData(dataInfo);
+            tm.stop();
+            LOGGER.info("消费者完成消费, 生成数据对象为 " + dataInfo + ", 用时 " + tm.getTimeMs() + " 毫秒");
         }
     }
 
-    private static class WorkBuffer {
+    private static class ConsumeBuffer {
 
         private final Lock lock = new ReentrantLock();
         private final Condition provideCondition = lock.newCondition();
@@ -265,9 +285,13 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                 }
 
                 // 取出缓冲器中的第一个元素。
-                Judger judger = buffer.remove(0);
-                provideCondition.signalAll();
-                return judger;
+                if (buffer.isEmpty()) {
+                    return null;
+                } else {
+                    Judger judger = buffer.remove(0);
+                    provideCondition.signalAll();
+                    return judger;
+                }
             } finally {
                 lock.unlock();
             }
@@ -283,7 +307,23 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         }
 
         public int getBufferSize() {
-            return bufferSize;
+            lock.lock();
+            try {
+                return bufferSize;
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public void setBufferSize(int bufferSize) {
+            lock.lock();
+            try {
+                this.bufferSize = Math.max(1, bufferSize);
+                provideCondition.signalAll();
+                consumeCondition.signalAll();
+            } finally {
+                lock.unlock();
+            }
         }
 
         public void block() {

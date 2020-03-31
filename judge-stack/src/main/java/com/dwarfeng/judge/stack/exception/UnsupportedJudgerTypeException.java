@@ -33,6 +33,6 @@ public class UnsupportedJudgerTypeException extends JudgerException {
 
     @Override
     public String getMessage() {
-        return "不支持的判断类型: " + type;
+        return "不支持的判断器类型: " + type;
     }
 }

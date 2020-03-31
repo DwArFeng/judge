@@ -22,8 +22,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 10, "repository failed");
     public static final ServiceException.Code SINK_FAILED =
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 20, "sink failed");
-    public static final ServiceException.Code DRIVE_FAILED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 30, "drive failed");
+    public static final ServiceException.Code DRIVER_FAILED =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 30, "driver failed");
+    public static final ServiceException.Code DRIVER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 31, "driver type unsupported");
     public static final ServiceException.Code JUDGE_WORK_FAILED =
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 40, "judge work failed");
     public static final ServiceException.Code JUDGE_WORK_DISABLED =

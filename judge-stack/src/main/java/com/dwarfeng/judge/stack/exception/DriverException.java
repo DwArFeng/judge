@@ -8,22 +8,22 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public class DriveException extends HandlerException {
+public class DriverException extends HandlerException {
 
     private static final long serialVersionUID = 628446198025045030L;
 
-    public DriveException() {
+    public DriverException() {
     }
 
-    public DriveException(String message, Throwable cause) {
+    public DriverException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public DriveException(String message) {
+    public DriverException(String message) {
         super(message);
     }
 
-    public DriveException(Throwable cause) {
+    public DriverException(Throwable cause) {
         super(cause);
     }
 }

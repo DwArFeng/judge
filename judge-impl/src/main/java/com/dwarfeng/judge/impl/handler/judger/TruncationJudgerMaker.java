@@ -44,6 +44,7 @@ public class TruncationJudgerMaker implements JudgerMaker {
         try {
             TruncationJudger judger = ctx.getBean(TruncationJudger.class);
             judger.setJudgerInfoKey(judgerInfo.getKey());
+            judger.setConfig(JSON.parseObject(judgerInfo.getContent(), Config.class));
             return judger;
         } catch (Exception e) {
             throw new JudgerMakeException(e);

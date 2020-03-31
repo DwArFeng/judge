@@ -50,6 +50,14 @@ public interface ConsumeHandler extends Handler {
     int getBufferSize() throws HandlerException;
 
     /**
+     * 设置缓冲器的容量。
+     *
+     * @param size 缓冲器的容量。
+     * @throws HandlerException 处理器异常。
+     */
+    void setBufferSize(int size) throws HandlerException;
+
+    /**
      * 获取消费者的线程数量。
      *
      * @return 消费者的线程数量。

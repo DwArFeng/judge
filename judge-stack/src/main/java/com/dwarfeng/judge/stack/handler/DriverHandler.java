@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.judge.stack.exception.DriveException;
+import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
 /**
@@ -21,14 +21,14 @@ public interface DriverHandler extends Handler {
     /**
      * 注册。
      *
-     * @throws DriveException 驱动异常。
+     * @throws HandlerException 处理器异常。
      */
-    void register() throws DriveException;
+    void register() throws HandlerException;
 
     /**
      * 取消注册。
      *
-     * @throws DriveException 驱动异常。
+     * @throws HandlerException 处理器异常。
      */
-    void unregister() throws DriveException;
+    void unregister() throws HandlerException;
 }

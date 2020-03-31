@@ -1,4 +1,4 @@
-package com.dwarfeng.judge.impl.configuration;
+package com.dwarfeng.judge.node.all.configuration;
 
 import com.dwarfeng.judge.sdk.util.ServiceExceptionCodes;
 import com.dwarfeng.judge.stack.exception.*;

@@ -29,7 +29,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class CronDriver implements Driver {
 
-    public static final String SUPPORT_TYPE = "cron";
+    public static final String SUPPORT_TYPE = "cron_driver";
 
     @Autowired
     private ThreadPoolTaskScheduler scheduler;
@@ -86,7 +86,6 @@ public class CronDriver implements Driver {
 
     @Override
     public String provideLabel() {
-
         return null;
     }
 
@@ -123,6 +122,7 @@ public class CronDriver implements Driver {
                     return;
                 }
 
+                LOGGER.debug("计划时间已到达, cron驱动器驱动 " + sectionKey + " 部件执行分析动作...");
                 analyseHandler.analyse(sectionKey);
             } catch (Exception e) {
                 LOGGER.warn("记录 " + sectionKey + " 时出现异常, 放弃本次记录", e);

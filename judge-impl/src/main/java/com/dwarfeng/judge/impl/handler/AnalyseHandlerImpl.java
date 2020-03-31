@@ -81,7 +81,7 @@ public class AnalyseHandlerImpl implements AnalyseHandler {
             }
 
             // 0. 记录日志，准备工作。
-            LOGGER.debug("对指定部件进行判断: " + sectionKey);
+            LOGGER.debug("驱动器使能, 驱动判断指定部件: " + sectionKey);
 
             // 1. 获取 JudgeContext。
             JudgeContext judgeContext = localCacheHandler.getJudgeContext(sectionKey);
