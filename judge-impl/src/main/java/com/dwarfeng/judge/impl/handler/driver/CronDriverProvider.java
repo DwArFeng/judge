@@ -3,7 +3,7 @@ package com.dwarfeng.judge.impl.handler.driver;
 import com.dwarfeng.judge.impl.handler.DriverProvider;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.handler.Driver;
-import com.dwarfeng.judge.stack.handler.EvaluateHandler;
+import com.dwarfeng.judge.stack.service.EvaluateService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +69,7 @@ public class CronDriverProvider implements DriverProvider {
         @Autowired
         private ThreadPoolTaskScheduler scheduler;
         @Autowired
-        private EvaluateHandler evaluateHandler;
+        private EvaluateService evaluateService;
 
         private final Lock lock = new ReentrantLock();
         private final Set<ScheduledFuture<?>> scheduledFutures = new HashSet<>();
@@ -82,7 +82,7 @@ public class CronDriverProvider implements DriverProvider {
                 LongIdKey sectionKey = driverInfo.getSectionKey();
                 String cron = driverInfo.getContent();
                 CronProcessor cronProcessor = new CronProcessor(
-                        evaluateHandler,
+                        evaluateService,
                         sectionKey
                 );
                 CronTrigger cronTrigger = new CronTrigger(cron);
@@ -114,14 +114,14 @@ public class CronDriverProvider implements DriverProvider {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(CronProcessor.class);
 
-        private final EvaluateHandler evaluateHandler;
+        private final EvaluateService evaluateService;
         private final LongIdKey sectionKey;
 
         private final Lock lock = new ReentrantLock();
         private boolean runningFlag = true;
 
-        private CronProcessor(EvaluateHandler evaluateHandler, LongIdKey sectionKey) {
-            this.evaluateHandler = evaluateHandler;
+        private CronProcessor(EvaluateService evaluateService, LongIdKey sectionKey) {
+            this.evaluateService = evaluateService;
             this.sectionKey = sectionKey;
         }
 
@@ -134,7 +134,7 @@ public class CronDriverProvider implements DriverProvider {
                 }
 
                 LOGGER.debug("计划时间已到达, cron驱动器驱动 " + sectionKey + " 部件执行评估动作...");
-                evaluateHandler.evaluate(sectionKey);
+                evaluateService.evaluate(sectionKey);
             } catch (Exception e) {
                 LOGGER.warn("记录 " + sectionKey + " 时出现异常, 放弃本次记录", e);
             } finally {

@@ -1,7 +1,9 @@
 package com.dwarfeng.judge.impl.service;
 
-import com.dwarfeng.judge.stack.handler.*;
-import com.dwarfeng.judge.stack.service.JudgeQosService;
+import com.dwarfeng.judge.stack.handler.ConsumeHandler;
+import com.dwarfeng.judge.stack.handler.EvaluateHandler;
+import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
+import com.dwarfeng.judge.stack.service.EvaluateQosService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
@@ -16,18 +18,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Service
-public class JudgeQosServiceImpl implements JudgeQosService {
+public class EvaluateQosServiceImpl implements EvaluateQosService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JudgeQosServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateQosServiceImpl.class);
 
     @Autowired
     private ConsumeHandler consumeHandler;
     @Autowired
     private EvaluateHandler evaluateHandler;
-    @Autowired
-    private AssignHandler assignHandler;
-    @Autowired
-    private AssignLocalCacheHandler assignLocalCacheHandler;
     @Autowired
     private EvaluateLocalCacheHandler evaluateLocalCacheHandler;
 
@@ -39,22 +37,21 @@ public class JudgeQosServiceImpl implements JudgeQosService {
 
     @PreDestroy
     private void dispose() throws ServiceException {
-        stopJudge();
+        stopEvaluate();
     }
 
     @Override
-    public void startJudge() throws ServiceException {
+    public void startEvaluate() throws ServiceException {
         lock.lock();
         try {
             if (!startFlag) {
-                LOGGER.info("开启判断服务...");
+                LOGGER.info("开启评估服务...");
                 consumeHandler.start();
                 evaluateHandler.enable();
-                assignHandler.online();
                 startFlag = true;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("开启判断服务时发生异常",
+            throw ServiceExceptionHelper.logAndThrow("开启评估服务时发生异常",
                     LogLevel.WARN, sem, e
             );
         } finally {
@@ -63,16 +60,11 @@ public class JudgeQosServiceImpl implements JudgeQosService {
     }
 
     @Override
-    public void stopJudge() throws ServiceException {
+    public void stopEvaluate() throws ServiceException {
         lock.lock();
         try {
             if (startFlag) {
                 LOGGER.info("关闭判断服务...");
-                assignHandler.offline();
-                try {
-                    Thread.sleep(500);
-                } catch (Exception ignored) {
-                }
                 evaluateHandler.disable();
                 try {
                     Thread.sleep(1000);
@@ -82,7 +74,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
                 startFlag = false;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("关闭判断服务时发生异常",
+            throw ServiceExceptionHelper.logAndThrow("关闭评估服务时发生异常",
                     LogLevel.WARN, sem, e
             );
         } finally {
@@ -94,7 +86,6 @@ public class JudgeQosServiceImpl implements JudgeQosService {
     public void clearLocalCache() throws ServiceException {
         lock.lock();
         try {
-            assignLocalCacheHandler.clear();
             evaluateLocalCacheHandler.clear();
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常",
