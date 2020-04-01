@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Beta_1.1.0_20200331_build_A
+### Beta_1.1.0_20200401_build_A
 
 #### 功能构建
 
@@ -10,6 +10,7 @@
 - 完成node-maintain模块以及测试通过。
 - 完成node-assign模块以及测试通过。
 - 完成node-evaluate模块以及测试通过。
+- 编写完成项目的assembly文件。
 
 #### Bug修复
 
