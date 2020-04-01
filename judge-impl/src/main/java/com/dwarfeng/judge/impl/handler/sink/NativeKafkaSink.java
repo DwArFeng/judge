@@ -2,10 +2,8 @@ package com.dwarfeng.judge.impl.handler.sink;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
-import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.Sink;
-import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgementInfo;
+import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgedValue;
 import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -28,21 +26,21 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 标准数据采集接口Kafka水槽。
+ * 原生Kafka水槽。
  *
  * @author DwArFeng
  * @since beta-1.0.0
  */
 @Component
-public class DctiKafkaSink implements Sink {
+public class NativeKafkaSink implements Sink {
 
-    public static final String SUPPORT_TYPE = "dcti.kafka";
+    public static final String SUPPORT_TYPE = "native.kafka";
 
     @Autowired
-    @Qualifier("dctiKafkaSink.kafkaTemplate")
+    @Qualifier("nativeKafkaSink.kafkaTemplate")
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${sink.dcti.kafka.topic}")
+    @Value("${sink.native.kafka.topic}")
     private String topic;
 
     @Override
@@ -51,15 +49,10 @@ public class DctiKafkaSink implements Sink {
     }
 
     @Override
-    @Transactional(transactionManager = "dctiKafkaSink.kafkaTransactionManager")
+    @Transactional(transactionManager = "nativeKafkaSink.kafkaTransactionManager")
     public void sinkData(JudgedValue judgedValue) {
-        DataInfo dataInfo = new DataInfo(
-                judgedValue.getJudgerKey().getLongId(),
-                JSON.toJSONString(FastJsonJudgementInfo.of(judgedValue.getJudgementInfo()),
-                        SerializerFeature.DisableCircularReferenceDetect),
-                judgedValue.getHappenedDate()
-        );
-        kafkaTemplate.send(topic, DataInfoUtil.toMessage(dataInfo));
+        String message = JSON.toJSONString(FastJsonJudgedValue.of(judgedValue), SerializerFeature.WriteClassName);
+        kafkaTemplate.send(topic, message);
     }
 
     @Configuration
@@ -67,22 +60,22 @@ public class DctiKafkaSink implements Sink {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(KafkaSinkConfiguration.class);
 
-        @Value("${sink.dcti.kafka.bootstrap_servers}")
+        @Value("${sink.native.kafka.bootstrap_servers}")
         private String producerBootstrapServers;
-        @Value("${sink.dcti.kafka.retries}")
+        @Value("${sink.native.kafka.retries}")
         private int retries;
-        @Value("${sink.dcti.kafka.linger}")
+        @Value("${sink.native.kafka.linger}")
         private long linger;
-        @Value("${sink.dcti.kafka.buffer_memory}")
+        @Value("${sink.native.kafka.buffer_memory}")
         private long bufferMemory;
-        @Value("${sink.dcti.kafka.batch_size}")
+        @Value("${sink.native.kafka.batch_size}")
         private int batchSize;
-        @Value("${sink.dcti.kafka.acks}")
+        @Value("${sink.native.kafka.acks}")
         private String acks;
-        @Value("${sink.dcti.kafka.transaction_prefix}")
+        @Value("${sink.native.kafka.transaction_prefix}")
         private String transactionPrefix;
 
-        @Bean("dctiKafkaSink.producerProperties")
+        @Bean("nativeKafkaSink.producerProperties")
         public Map<String, Object> producerProperties() {
             LOGGER.info("配置Kafka生产者属性...");
             Map<String, Object> props = new HashMap<>();
@@ -96,7 +89,7 @@ public class DctiKafkaSink implements Sink {
             return props;
         }
 
-        @Bean("dctiKafkaSink.producerFactory")
+        @Bean("nativeKafkaSink.producerFactory")
         public ProducerFactory<String, String> producerFactory() {
             LOGGER.info("配置Kafka生产者工厂...");
             Map<String, Object> properties = producerProperties();
@@ -108,7 +101,7 @@ public class DctiKafkaSink implements Sink {
             return factory;
         }
 
-        @Bean("dctiKafkaSink.kafkaTemplate")
+        @Bean("nativeKafkaSink.kafkaTemplate")
         public KafkaTemplate<String, String> kafkaTemplate() {
             LOGGER.info("生成KafkaTemplate...");
             ProducerFactory<String, String> producerFactory = producerFactory();
@@ -117,7 +110,7 @@ public class DctiKafkaSink implements Sink {
             return kafkaTemplate;
         }
 
-        @Bean("dctiKafkaSink.kafkaTransactionManager")
+        @Bean("nativeKafkaSink.kafkaTransactionManager")
         public KafkaTransactionManager<String, String> kafkaTransactionManager() {
             LOGGER.info("生成KafkaTransactionManager...");
             ProducerFactory<String, String> producerFactory = producerFactory();
