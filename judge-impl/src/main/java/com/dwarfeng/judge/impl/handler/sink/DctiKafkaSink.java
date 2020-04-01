@@ -1,9 +1,11 @@
 package com.dwarfeng.judge.impl.handler.sink;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.Sink;
-import com.dwarfeng.judge.sdk.bean.dto.JudgedValueUtil;
+import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgementInfo;
 import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -19,6 +21,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +34,9 @@ import java.util.Objects;
  * @since beta-1.0.0
  */
 @Component
-public class KafkaSink implements Sink {
+public class DctiKafkaSink implements Sink {
 
-    public static final String SUPPORT_TYPE = "kafka";
+    public static final String SUPPORT_TYPE = "dcti.kafka";
 
     @Autowired
     @Qualifier("kafkaSink.kafkaTemplate")
@@ -48,11 +51,15 @@ public class KafkaSink implements Sink {
     }
 
     @Override
+    @Transactional(transactionManager = "kafkaSink.kafkaTransactionManager")
     public void sinkData(JudgedValue judgedValue) {
-        DataInfo dataInfo = JudgedValueUtil.toDataInfo(judgedValue);
-        if (Objects.nonNull(dataInfo)) {
-            kafkaTemplate.send(topic, DataInfoUtil.toMessage(dataInfo));
-        }
+        DataInfo dataInfo = new DataInfo(
+                judgedValue.getJudgerKey().getLongId(),
+                JSON.toJSONString(FastJsonJudgementInfo.of(judgedValue.getJudgementInfo()),
+                        SerializerFeature.DisableCircularReferenceDetect),
+                judgedValue.getHappenedDate()
+        );
+        kafkaTemplate.send(topic, DataInfoUtil.toMessage(dataInfo));
     }
 
     @Configuration
