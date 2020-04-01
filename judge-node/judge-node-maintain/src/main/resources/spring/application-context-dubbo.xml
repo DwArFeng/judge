@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
-    <dubbo:application name="judge-test">
+    <dubbo:application name="fdr-test">
         <dubbo:parameter key="qos.enable" value="true"/>
         <dubbo:parameter key="qos.accept.foreign.ip" value="false"/>
         <dubbo:parameter key="qos.port" value="${dubbo.qos.port}"/>
@@ -28,8 +28,6 @@
                    ref="enabledDriverInfoLookupServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.judge.stack.service.EnabledJudgerInfoLookupService"
                    ref="enabledJudgerInfoLookupServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.judge.stack.service.JudgeQosService"
-                   ref="judgeQosServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.judge.stack.service.JudgerInfoMaintainService"
                    ref="judgerInfoMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.judge.stack.service.JudgerSupportMaintainService"
