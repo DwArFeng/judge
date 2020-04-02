@@ -13,6 +13,7 @@
   - com.dwarfeng.judge.impl.handler.driver.DctiKafkaDriverProvider
   - com.dwarfeng.judge.impl.handler.driver.FixedDelayDriverProvider
   - com.dwarfeng.judge.impl.handler.driver.FixedRateDriverProvider
+- 完善RandomNumberRepository。
 
 #### Bug修复
 

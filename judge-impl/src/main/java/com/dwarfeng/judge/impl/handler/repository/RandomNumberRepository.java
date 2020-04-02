@@ -25,6 +25,11 @@ public class RandomNumberRepository implements Repository {
 
     public static final String SUPPORT_TYPE = "random_number";
 
+    @Value("${repository.random_number.section.min}")
+    private double sectionMin;
+    @Value("${repository.random_number.section.max}")
+    private double sectionMax;
+
     private final Random random;
 
     public RandomNumberRepository(
@@ -46,25 +51,21 @@ public class RandomNumberRepository implements Repository {
     }
 
     @Override
-    public TimedValue realtimeValue(
-            LongIdKey pointKey,
-            String processPreset, Object[] args) {
+    public TimedValue realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) {
         return new TimedValue(
-                Double.toString(random.nextDouble()),
+                Double.toString(random.nextDouble() * (sectionMax - sectionMin) + sectionMin),
                 new Date()
         );
     }
 
     @Override
-    public List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate) {
+    public List<TimedValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate) {
         return Collections.emptyList();
     }
 
     @Override
     public List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate,
-            String processPreset, Object[] args) {
+            LongIdKey pointKey, Date startDate, Date endDate, String processPreset, Object[] args) {
         return Collections.emptyList();
     }
 
