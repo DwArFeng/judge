@@ -5,6 +5,9 @@
 #### 功能构建
 
 - dcti.kafka水槽开发完成并通过测试。
+- 开发 judge-api 模块。
+  - 编写 JudgedValueFilterMaker。
+  - 编写 JudgedValueTriggerMaker。
 
 #### Bug修复
 
