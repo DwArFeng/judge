@@ -8,6 +8,11 @@
 - 开发 judge-api 模块。
   - 编写 JudgedValueFilterMaker。
   - 编写 JudgedValueTriggerMaker。
+- 完善多种Driver。
+  - com.dwarfeng.judge.impl.handler.driver.CronDriverProvider
+  - com.dwarfeng.judge.impl.handler.driver.DctiKafkaDriverProvider
+  - com.dwarfeng.judge.impl.handler.driver.FixedDelayDriverProvider
+  - com.dwarfeng.judge.impl.handler.driver.FixedRateDriverProvider
 
 #### Bug修复
 
