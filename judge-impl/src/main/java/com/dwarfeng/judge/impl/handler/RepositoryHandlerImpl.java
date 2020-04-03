@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.TimedValue;
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -35,22 +35,20 @@ public class RepositoryHandlerImpl implements RepositoryHandler {
     }
 
     @Override
-    public TimedValue realtimeValue(
-            LongIdKey pointKey,
-            String processPreset, Object[] args) throws HandlerException {
+    public List<TimedValue> realtimeValue(
+            LongIdKey pointKey, String processPreset, Object[] args) throws HandlerException {
         return repository.realtimeValue(pointKey, processPreset, args);
     }
 
     @Override
-    public List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate) throws HandlerException {
+    public List<TimedValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate) throws HandlerException {
         return repository.persistenceValue(pointKey, startDate, endDate);
     }
 
     @Override
     public List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate,
-            String processPreset, Object[] args) throws HandlerException {
+            LongIdKey pointKey, Date startDate, Date endDate, String processPreset, Object[] args)
+            throws HandlerException {
         return repository.persistenceValue(pointKey, startDate, endDate, processPreset, args);
     }
 }

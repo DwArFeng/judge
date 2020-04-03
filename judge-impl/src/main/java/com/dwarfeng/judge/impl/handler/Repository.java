@@ -1,8 +1,8 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.TimedValue;
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
+import com.dwarfeng.judge.stack.exception.RepositoryException;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 import java.util.Date;
 import java.util.List;
@@ -28,9 +28,9 @@ public interface Repository {
      *
      * @param pointKey 指定的数据点主键。
      * @return 指定的数据点主键对应的仓库的实时值。
-     * @throws HandlerException 处理器异常。
+     * @throws RepositoryException 仓库异常。
      */
-    TimedValue realtimeValue(LongIdKey pointKey) throws HandlerException;
+    TimedValue realtimeValue(LongIdKey pointKey) throws RepositoryException;
 
     /**
      * 获取仓库中的实时值。
@@ -39,11 +39,9 @@ public interface Repository {
      * @param processPreset 处理预设名称。
      * @param args          处理预设参数。
      * @return 指定的数据点主键对应的仓库的实时值。
-     * @throws HandlerException 处理器异常。
+     * @throws RepositoryException 仓库异常。
      */
-    TimedValue realtimeValue(
-            LongIdKey pointKey,
-            String processPreset, Object[] args) throws HandlerException;
+    List<TimedValue> realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) throws RepositoryException;
 
     /**
      * 获取仓库的持久化值。
@@ -52,10 +50,9 @@ public interface Repository {
      * @param startDate 起始时间。
      * @param endDate   结束时间。
      * @return 指定的数据点主键对应的仓库持久化值。
-     * @throws HandlerException 处理器异常。
+     * @throws RepositoryException 仓库异常。
      */
-    List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate) throws HandlerException;
+    List<TimedValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate) throws RepositoryException;
 
     /**
      * 获取仓库的持久化值。
@@ -66,9 +63,9 @@ public interface Repository {
      * @param processPreset 处理预设名称。
      * @param args          处理预设参数。
      * @return 指定的数据点主键对应的仓库持久化值。
-     * @throws HandlerException 处理器异常。
+     * @throws RepositoryException 仓库异常。
      */
     List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate,
-            String processPreset, Object[] args) throws HandlerException;
+            LongIdKey pointKey, Date startDate, Date endDate, String processPreset, Object[] args)
+            throws RepositoryException;
 }

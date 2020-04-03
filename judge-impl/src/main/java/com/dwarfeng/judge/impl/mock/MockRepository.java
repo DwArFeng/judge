@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.mock;
 
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.impl.handler.Repository;
-import com.dwarfeng.judge.stack.bean.dto.TimedValue;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public class MockRepository implements Repository {
     }
 
     @Override
-    public TimedValue realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) {
+    public List<TimedValue> realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) {
         return null;
     }
 

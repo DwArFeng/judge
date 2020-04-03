@@ -24,9 +24,6 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 public class DaoConfiguration {
 
     @Autowired
-    private ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
-
-    @Autowired
     private HibernateTemplate hibernateTemplate;
     @Autowired
     private Mapper mapper;

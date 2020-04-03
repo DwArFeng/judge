@@ -2,10 +2,10 @@ package com.dwarfeng.judge.impl.handler.judger;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.impl.handler.JudgerMaker;
 import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import com.dwarfeng.judge.stack.bean.dto.JudgementInfo;
-import com.dwarfeng.judge.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;
 import com.dwarfeng.judge.stack.exception.JudgerMakeException;

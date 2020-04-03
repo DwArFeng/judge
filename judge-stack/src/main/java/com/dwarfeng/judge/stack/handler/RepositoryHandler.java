@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.TimedValue;
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
@@ -34,9 +34,7 @@ public interface RepositoryHandler extends Handler {
      * @return 指定的数据点主键对应的仓库的实时值。
      * @throws HandlerException 处理器异常。
      */
-    TimedValue realtimeValue(
-            LongIdKey pointKey,
-            String processPreset, Object[] args) throws HandlerException;
+    List<TimedValue> realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) throws HandlerException;
 
     /**
      * 获取仓库的持久化值。
@@ -47,8 +45,7 @@ public interface RepositoryHandler extends Handler {
      * @return 指定的数据点主键对应的仓库持久化值。
      * @throws HandlerException 处理器异常。
      */
-    List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate) throws HandlerException;
+    List<TimedValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate) throws HandlerException;
 
     /**
      * 获取仓库的持久化值。
@@ -62,6 +59,6 @@ public interface RepositoryHandler extends Handler {
      * @throws HandlerException 处理器异常。
      */
     List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate,
-            String processPreset, Object[] args) throws HandlerException;
+            LongIdKey pointKey, Date startDate, Date endDate, String processPreset, Object[] args)
+            throws HandlerException;
 }

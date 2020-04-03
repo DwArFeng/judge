@@ -1,5 +1,27 @@
 # ChangeLog
 
+### Release_1.0.0_20200403_build_B
+
+#### 功能构建
+
+- 调整com.dwarfeng.judge.impl.handler.repository.RandomNumberRepository的Autowired方式。
+- 调整com.dwarfeng.judge.impl.handler.Repository接口方法异常的类型。
+- 调整com.dwarfeng.judge.impl.handler.Repository接口中部分方法的返回值。
+- 调整com.dwarfeng.judge.stack.handler.RepositoryHandler接口中部分方法的返回值。
+- 删除DaoConfiguration中不使用的字段。
+- 升级dcti依赖至1.1.0.a。
+- 删除项目自身TimedValue，使用dcti的TimedValue对象。
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Release_1.0.0_20200402_build_A
 
 #### 功能构建

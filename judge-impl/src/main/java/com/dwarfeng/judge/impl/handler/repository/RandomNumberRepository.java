@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler.repository;
 
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.impl.handler.Repository;
-import com.dwarfeng.judge.stack.bean.dto.TimedValue;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,12 +30,9 @@ public class RandomNumberRepository implements Repository {
     @Value("${repository.random_number.section.max}")
     private double sectionMax;
 
-    private final Random random;
-
-    public RandomNumberRepository(
-            @Autowired @Qualifier("randomNumberRepository.random") Random random) {
-        this.random = random;
-    }
+    @Autowired
+    @Qualifier("randomNumberRepository.random")
+    private Random random;
 
     @Override
     public boolean supportType(String type) {
@@ -51,11 +48,11 @@ public class RandomNumberRepository implements Repository {
     }
 
     @Override
-    public TimedValue realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) {
-        return new TimedValue(
+    public List<TimedValue> realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) {
+        return Collections.singletonList(new TimedValue(
                 Double.toString(random.nextDouble() * (sectionMax - sectionMin) + sectionMin),
                 new Date()
-        );
+        ));
     }
 
     @Override
