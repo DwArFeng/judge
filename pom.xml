@@ -60,7 +60,8 @@
         <subgrade.version>beta-0.3.2.b</subgrade.version>
         <spring-terminator.version>1.0.2.b</spring-terminator.version>
         <dcti.version>1.1.0.a</dcti.version>
-        <fdr.version>1.4.2.d</fdr.version>
+        <fdr.version>1.5.2.b</fdr.version>
+        <groovy.version>3.0.2</groovy.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -402,6 +403,13 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>fdr-impl</artifactId>
                 <version>${fdr.version}</version>
+            </dependency>
+            <!-- groovy支持 -->
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <type>pom</type>
+                <version>${groovy.version}</version>
             </dependency>
             <!-- 程序自身组件 -->
             <dependency>

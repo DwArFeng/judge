@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 实现com.dwarfeng.judge.impl.handler.judger.GroovyJudgerMaker。
 
 #### Bug修复
 
