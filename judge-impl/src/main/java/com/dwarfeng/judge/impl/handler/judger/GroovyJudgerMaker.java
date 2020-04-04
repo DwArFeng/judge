@@ -9,8 +9,6 @@ import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import groovy.lang.GroovyClassLoader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -99,8 +97,6 @@ public class GroovyJudgerMaker implements JudgerMaker {
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public static class GroovyJudger implements Judger {
-
-        private static final Logger LOGGER = LoggerFactory.getLogger(GroovyJudger.class);
 
         private LongIdKey judgerInfoKey;
         private Processor processor;
