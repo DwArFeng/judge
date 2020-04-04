@@ -1,4 +1,4 @@
-package com.dwarfeng.judge.api.integration.fdr;
+package com.dwarfeng.judge.api.fdr;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;

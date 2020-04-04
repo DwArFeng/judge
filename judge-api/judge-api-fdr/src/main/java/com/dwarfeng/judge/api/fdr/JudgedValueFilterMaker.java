@@ -1,4 +1,4 @@
-package com.dwarfeng.judge.api.integration.fdr;
+package com.dwarfeng.judge.api.fdr;
 
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
