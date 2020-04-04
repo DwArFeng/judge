@@ -75,7 +75,7 @@ public class ThresholdJudgerMaker implements JudgerMaker {
 
     @Override
     public String provideExampleContent() {
-        Config config = new Config();
+        Config config = new Config(692151005587959809L, 15.0, Config.GT);
         return JSON.toJSONString(config) +
                 '\n' +
                 "# 以下的内容为注释，在实际配置时删除这些注释。\n" +
@@ -105,11 +105,10 @@ public class ThresholdJudgerMaker implements JudgerMaker {
         public JudgedValue judge(RepositoryHandler repositoryHandler) throws JudgerException {
             try {
                 Date happenedDate = new Date();
-                LongIdKey realtimePointKey = new LongIdKey(config.realtimePointKey);
+                LongIdKey realtimePointKey = new LongIdKey(config.getPointKey());
 
                 double judgementValue = 0.0;
-                @SuppressWarnings("UnusedAssignment")
-                double realtimeValue = 0.0;
+                double realtimeValue;
 
                 String constraint = config.getConstraint().toUpperCase();
                 TimedValue timedValue;
@@ -210,8 +209,8 @@ public class ThresholdJudgerMaker implements JudgerMaker {
 
         private static final long serialVersionUID = -8951793052735614431L;
 
-        @JSONField(name = "realtime_point_key")
-        private Long realtimePointKey;
+        @JSONField(name = "point_key")
+        private Long pointKey;
 
         @JSONField(name = "value")
         private Double value;
@@ -222,18 +221,18 @@ public class ThresholdJudgerMaker implements JudgerMaker {
         public Config() {
         }
 
-        public Config(Long realtimePointKey, Double value, String constraint) {
-            this.realtimePointKey = realtimePointKey;
+        public Config(Long pointKey, Double value, String constraint) {
+            this.pointKey = pointKey;
             this.value = value;
             this.constraint = constraint;
         }
 
-        public Long getRealtimePointKey() {
-            return realtimePointKey;
+        public Long getPointKey() {
+            return pointKey;
         }
 
-        public void setRealtimePointKey(Long realtimePointKey) {
-            this.realtimePointKey = realtimePointKey;
+        public void setPointKey(Long pointKey) {
+            this.pointKey = pointKey;
         }
 
         public Double getValue() {
@@ -255,7 +254,7 @@ public class ThresholdJudgerMaker implements JudgerMaker {
         @Override
         public String toString() {
             return "Config{" +
-                    "realtimePointKey=" + realtimePointKey +
+                    "realtimePointKey=" + pointKey +
                     ", value=" + value +
                     ", constraint='" + constraint + '\'' +
                     '}';

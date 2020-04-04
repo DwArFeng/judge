@@ -6,6 +6,7 @@
 
 - 实现com.dwarfeng.judge.impl.handler.judger.GroovyJudgerMaker。
 - 实现com.dwarfeng.judge.impl.handler.judger.ThresholdJudgerMaker。
+- 优化com.dwarfeng.judge.impl.handler.judger.TruncationJudgerMaker。
 
 #### Bug修复
 

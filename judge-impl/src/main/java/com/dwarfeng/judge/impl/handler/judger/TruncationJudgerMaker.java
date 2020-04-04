@@ -6,6 +6,7 @@ import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.impl.handler.JudgerMaker;
 import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import com.dwarfeng.judge.stack.bean.dto.JudgementInfo;
+import com.dwarfeng.judge.stack.bean.dto.JudgementInfo.RealtimeInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;
 import com.dwarfeng.judge.stack.exception.JudgerMakeException;
@@ -13,6 +14,8 @@ import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -66,14 +69,17 @@ public class TruncationJudgerMaker implements JudgerMaker {
 
     @Override
     public String provideDescription() {
-        return "处理指定点位的实时数据，如果数据小于0，则取0；如果数据大于1，则取1；如果数据处于0.0-1.0之间，则取其本身。";
+        return "给定一个最大值和最小值，并取出指定数据点的实时值。" +
+                "若实时值低于最小值，则返回0.0; " +
+                "若实时值高于最大值，则返回1.0;" +
+                "若实时值介于最小值和最大值之间，则返回线性的中间值。" +
+                "如果反转属性为true，则反过来，低于最小值是1.0，高于最大值是0.0";
     }
 
     @Override
     public String provideExampleContent() {
-        return JSON.toJSONString(new Config(
-                692151005587959809L
-        ), true);
+        Config config = new Config(692151005587959809L, -50.0, 100.0, false);
+        return JSON.toJSONString(config, true);
     }
 
     @Component
@@ -81,6 +87,7 @@ public class TruncationJudgerMaker implements JudgerMaker {
     public static class TruncationJudger implements Judger, Bean {
 
         private static final long serialVersionUID = -3161256701795506170L;
+        private static final Logger LOGGER = LoggerFactory.getLogger(TruncationJudger.class);
 
         private LongIdKey judgerInfoKey;
         private Config config;
@@ -91,27 +98,49 @@ public class TruncationJudgerMaker implements JudgerMaker {
         @Override
         public JudgedValue judge(RepositoryHandler repositoryHandler) throws JudgerException {
             try {
-                LongIdKey realtimeKey = new LongIdKey(config.getPointKey());
-                TimedValue timedValue = repositoryHandler.realtimeValue(realtimeKey);
-                String value = timedValue.getValue();
-                double doubleValue = Double.parseDouble(value);
-                if (doubleValue < 0.0) {
-                    doubleValue = 0.0;
-                } else {
-                    doubleValue = Math.min(doubleValue, 1.0);
+                Date happenedDate = new Date();
+                LongIdKey realtimePointKey = new LongIdKey(config.getPointKey());
+
+                double judgementValue;
+                double realtimeValue;
+                TimedValue timedValue;
+                
+                try {
+                    timedValue = repositoryHandler.realtimeValue(realtimePointKey);
+                } catch (Exception e) {
+                    LOGGER.warn("获取数据点 " + realtimePointKey + " 的实时值时发生错误，将抛出异常");
+                    throw e;
+                }
+                try {
+                    realtimeValue = Double.parseDouble(timedValue.getValue());
+                } catch (Exception e) {
+                    LOGGER.warn("将字符串 " + timedValue.getValue() + " 解析为 double 时发生错误，将抛出异常");
+                    throw e;
                 }
 
-                JudgementInfo judgementInfo = new JudgementInfo(
-                        doubleValue,
-                        Collections.singletonList(new JudgementInfo.RealtimeInfo(realtimeKey, value)),
-                        Collections.emptyList()
-                );
+                if (realtimeValue > config.getMax()) {
+                    judgementValue = 1.0;
+                } else if (realtimeValue < config.getMin()) {
+                    judgementValue = 0.0;
+                } else {
+                    double offset = realtimeValue - config.getMin();
+                    double length = config.getMax() - config.getMin();
+                    judgementValue = offset / length;
+                }
 
-                return new JudgedValue(
-                        judgerInfoKey,
-                        judgementInfo,
-                        new Date()
-                );
+                if (config.getInverse()) {
+                    judgementValue = judgementValue * -1 + 1;
+                }
+
+                judgementValue = Math.min(judgementValue, 0.0);
+                judgementValue = Math.max(judgementValue, 1.0);
+
+                RealtimeInfo realtimeInfo = new RealtimeInfo(realtimePointKey, timedValue.getValue());
+                JudgementInfo judgementInfo = new JudgementInfo(
+                        judgementValue,
+                        Collections.singletonList(realtimeInfo),
+                        Collections.emptyList());
+                return new JudgedValue(judgerInfoKey, judgementInfo, happenedDate);
             } catch (Exception e) {
                 throw new JudgerException(e);
             }
@@ -147,27 +176,66 @@ public class TruncationJudgerMaker implements JudgerMaker {
         private static final long serialVersionUID = -887631237829999860L;
 
         @JSONField(name = "point_key")
-        private long pointKey;
+        private Long pointKey;
+
+        @JSONField(name = "min")
+        private Double min;
+
+        @JSONField(name = "max")
+        private Double max;
+
+        @JSONField(name = "inverse")
+        private Boolean inverse;
 
         public Config() {
         }
 
-        public Config(long pointKey) {
+        public Config(Long pointKey, Double min, Double max, Boolean inverse) {
             this.pointKey = pointKey;
+            this.min = min;
+            this.max = max;
+            this.inverse = inverse;
         }
 
-        public long getPointKey() {
+        public Long getPointKey() {
             return pointKey;
         }
 
-        public void setPointKey(long pointKey) {
+        public void setPointKey(Long pointKey) {
             this.pointKey = pointKey;
+        }
+
+        public Double getMin() {
+            return min;
+        }
+
+        public void setMin(Double min) {
+            this.min = min;
+        }
+
+        public Double getMax() {
+            return max;
+        }
+
+        public void setMax(Double max) {
+            this.max = max;
+        }
+
+        public Boolean getInverse() {
+            return inverse;
+        }
+
+        public void setInverse(Boolean inverse) {
+            this.inverse = inverse;
         }
 
         @Override
         public String toString() {
             return "Config{" +
                     "pointKey=" + pointKey +
+                    ", min=" + min +
+                    ", max=" + max +
+                    ", inverse=" + inverse +
                     '}';
         }
     }
