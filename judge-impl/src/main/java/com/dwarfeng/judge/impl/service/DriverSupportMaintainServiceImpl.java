@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,8 +30,8 @@ public class DriverSupportMaintainServiceImpl implements DriverSupportMaintainSe
     private DaoOnlyEntireLookupService<DriverSupport> entireLookupService;
     @Autowired
     private DaoOnlyPresetLookupService<DriverSupport> presetLookupService;
-    @Autowired
-    private List<DriverProvider> driverProviders;
+    @Autowired(required = false)
+    private List<DriverProvider> driverProviders = new ArrayList<>();
 
     @Autowired
     private ServiceExceptionMapper sem;

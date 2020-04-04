@@ -7,13 +7,14 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class DriverHandlerImpl implements DriverHandler {
 
-    @Autowired
-    private List<DriverProvider> driverProviders;
+    @Autowired(required = false)
+    private List<DriverProvider> driverProviders = new ArrayList<>();
 
     @Override
     public Driver find(String type) throws HandlerException {

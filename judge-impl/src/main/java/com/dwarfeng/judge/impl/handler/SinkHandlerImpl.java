@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class SinkHandlerImpl implements SinkHandler {
 
-    @Autowired
-    private List<Sink> sinks;
+    @Autowired(required = false)
+    private List<Sink> sinks = new ArrayList<>();
 
     @Value("${sink.type}")
     private String sinkType;

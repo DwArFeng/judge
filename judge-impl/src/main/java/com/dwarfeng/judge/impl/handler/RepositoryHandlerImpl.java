@@ -9,14 +9,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Component
 public class RepositoryHandlerImpl implements RepositoryHandler {
 
-    @Autowired
-    private List<Repository> repositories;
+    @Autowired(required = false)
+    private List<Repository> repositories = new ArrayList<>();
 
     @Value("${repository.type}")
     private String repositoryType;
@@ -26,7 +27,7 @@ public class RepositoryHandlerImpl implements RepositoryHandler {
     @PostConstruct
     public void init() throws HandlerException {
         this.repository = repositories.stream().filter(p -> p.supportType(repositoryType)).findAny()
-                .orElseThrow(() -> new HandlerException("未知的 pusher 类型: " + repositoryType));
+                .orElseThrow(() -> new HandlerException("未知的 repository 类型: " + repositoryType));
     }
 
     @Override

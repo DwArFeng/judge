@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,8 +30,8 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
     private DaoOnlyEntireLookupService<JudgerSupport> entireLookupService;
     @Autowired
     private DaoOnlyPresetLookupService<JudgerSupport> presetLookupService;
-    @Autowired
-    private List<JudgerMaker> judgerMakers;
+    @Autowired(required = false)
+    private List<JudgerMaker> judgerMakers = new ArrayList<>();
 
     @Autowired
     private ServiceExceptionMapper sem;

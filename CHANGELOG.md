@@ -5,6 +5,13 @@
 #### 功能构建
 
 - 细分judge-api模块。
+- 将可放宽装配的组件列表设置为 @Autowired(required = false)
+  - com.dwarfeng.judge.impl.handler.DriverHandlerImpl
+  - com.dwarfeng.judge.impl.handler.JudgerHandlerImpl
+  - com.dwarfeng.judge.impl.handler.RepositoryHandlerImpl
+  - com.dwarfeng.judge.impl.handler.SinkHandlerImpl
+  - com.dwarfeng.judge.impl.service.DriverSupportMaintainServiceImpl
+  - com.dwarfeng.judge.impl.service.JudgerSupportMaintainServiceImpl
 
 #### Bug修复
 

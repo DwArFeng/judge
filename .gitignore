@@ -66,3 +66,27 @@ buildNumber.properties
 /judge-node/judge-node-assign/conf/
 /judge-node/judge-node-evaluate/conf/
 /judge-node/judge-node-all/conf/
+
+#################
+## Libext Files
+#################
+/judge-node/judge-node-maintain/libext/
+/judge-node/judge-node-assign/libext/
+/judge-node/judge-node-evaluate/libext/
+/judge-node/judge-node-all/libext/
+
+#################
+## Opt Files
+#################
+/judge-node/judge-node-maintain/opt/
+/judge-node/judge-node-assign/opt/
+/judge-node/judge-node-evaluate/opt/
+/judge-node/judge-node-all/opt/
+
+#################
+## Optext Files
+#################
+/judge-node/judge-node-maintain/optext/
+/judge-node/judge-node-assign/optext/
+/judge-node/judge-node-evaluate/optext/
+/judge-node/judge-node-all/optext/

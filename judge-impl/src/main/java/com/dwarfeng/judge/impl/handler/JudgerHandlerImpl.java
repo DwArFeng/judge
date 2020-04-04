@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -17,8 +18,8 @@ public class JudgerHandlerImpl implements JudgerHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JudgerHandlerImpl.class);
 
-    @Autowired
-    private List<JudgerMaker> judgerMakers;
+    @Autowired(required = false)
+    private List<JudgerMaker> judgerMakers = new ArrayList<>();
 
     @Override
     public Judger make(JudgerInfo judgerInfo) throws HandlerException {
