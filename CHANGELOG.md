@@ -12,6 +12,7 @@
   - com.dwarfeng.judge.impl.handler.SinkHandlerImpl
   - com.dwarfeng.judge.impl.service.DriverSupportMaintainServiceImpl
   - com.dwarfeng.judge.impl.service.JudgerSupportMaintainServiceImpl
+- 更改优化node-all模块的程序结构。
 
 #### Bug修复
 

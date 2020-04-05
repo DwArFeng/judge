@@ -14,9 +14,10 @@
     </context:component-scan>
     <!--扫描handler的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler">
-        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.sink\.MultiSink.*$"/>
-        <context:exclude-filter type="regex"
-                                expression="^com\.dwarfeng\.judge\.impl\.handler\.sink\.NativeKafkaSink.*$"/>
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.driver.*$"/>
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.judger.*$"/>
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.repository.*$"/>
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.sink.*$"/>
     </context:component-scan>
     <!--扫描dao的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.dao"/>
