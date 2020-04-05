@@ -15,6 +15,7 @@
 - 更改优化node模块的程序结构。
   - node-all
   - node-assign
+  - node-evaluate
 
 #### Bug修复
 
