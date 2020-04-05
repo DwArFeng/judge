@@ -132,8 +132,8 @@ public class TruncationJudgerMaker implements JudgerMaker {
                     judgementValue = judgementValue * -1 + 1;
                 }
 
-                judgementValue = Math.min(judgementValue, 0.0);
-                judgementValue = Math.max(judgementValue, 1.0);
+                judgementValue = Math.max(judgementValue, 0.0);
+                judgementValue = Math.min(judgementValue, 1.0);
 
                 RealtimeInfo realtimeInfo = new RealtimeInfo(realtimePointKey, timedValue.getValue());
                 JudgementInfo judgementInfo = new JudgementInfo(
