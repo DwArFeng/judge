@@ -43,26 +43,6 @@ public class FixedDelayDriverProvider implements DriverProvider {
         return fixedDelayDriver;
     }
 
-    @Override
-    public String provideType() {
-        return SUPPORT_TYPE;
-    }
-
-    @Override
-    public String provideLabel() {
-        return "固定间隔驱动器";
-    }
-
-    @Override
-    public String provideDescription() {
-        return "根据指定的间隔定时驱动，如果某一次驱动晚于间隔，则后续驱动的时间相应的顺延。";
-    }
-
-    @Override
-    public String provideExampleContent() {
-        return "60000";
-    }
-
     @Component
     public static class FixedDelayDriver implements Driver {
 

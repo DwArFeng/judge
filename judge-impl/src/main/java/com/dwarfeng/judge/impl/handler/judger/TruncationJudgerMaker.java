@@ -57,31 +57,6 @@ public class TruncationJudgerMaker implements JudgerMaker {
         }
     }
 
-    @Override
-    public String provideType() {
-        return SUPPORT_TYPE;
-    }
-
-    @Override
-    public String provideLabel() {
-        return "截断判断器";
-    }
-
-    @Override
-    public String provideDescription() {
-        return "给定一个最大值和最小值，并取出指定数据点的实时值。" +
-                "若实时值低于最小值，则返回0.0; " +
-                "若实时值高于最大值，则返回1.0;" +
-                "若实时值介于最小值和最大值之间，则返回线性的中间值。" +
-                "如果反转属性为true，则反过来，低于最小值是1.0，高于最大值是0.0";
-    }
-
-    @Override
-    public String provideExampleContent() {
-        Config config = new Config(692151005587959809L, -50.0, 100.0, false);
-        return JSON.toJSONString(config, true);
-    }
-
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public static class TruncationJudger implements Judger, Bean {

@@ -16,6 +16,7 @@
   - node-all
   - node-assign
   - node-evaluate
+  - node-maintain
 
 #### Bug修复
 

@@ -15,12 +15,6 @@
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.service.EvaluateQosService"/>
     </context:component-scan>
     <!--扫描handler的实现包。 -->
-    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger">
-        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.Judger"/>
-    </context:component-scan>
-    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.driver">
-        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.Driver"/>
-    </context:component-scan>
     <context:component-scan base-package="com.dwarfeng.judge.impl.mock">
         <context:include-filter type="assignable" expression="com.dwarfeng.judge.impl.mock.MockEvaluateService"/>
         <context:include-filter type="assignable" expression="com.dwarfeng.judge.impl.mock.MockRepository"/>

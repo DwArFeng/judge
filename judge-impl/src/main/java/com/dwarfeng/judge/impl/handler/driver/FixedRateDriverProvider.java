@@ -43,26 +43,6 @@ public class FixedRateDriverProvider implements DriverProvider {
         return fixedRateDriver;
     }
 
-    @Override
-    public String provideType() {
-        return SUPPORT_TYPE;
-    }
-
-    @Override
-    public String provideLabel() {
-        return "固定频率驱动器";
-    }
-
-    @Override
-    public String provideDescription() {
-        return "根据指定的间隔定时驱动，如果某一次驱动晚于间隔，则后续驱动的时间会提前，以保持频率不变。";
-    }
-
-    @Override
-    public String provideExampleContent() {
-        return "60000";
-    }
-
     @Component
     public static class FixedRateDriver implements Driver {
 

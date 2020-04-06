@@ -57,26 +57,6 @@ public class DctiKafkaDriverProvider implements DriverProvider {
         return dctiKafkaDriver;
     }
 
-    @Override
-    public String provideType() {
-        return SUPPORT_TYPE;
-    }
-
-    @Override
-    public String provideLabel() {
-        return "Dcti标准数据采集接口Kafka驱动器";
-    }
-
-    @Override
-    public String provideDescription() {
-        return "从Kafka中接收到标准Dcti数据，并根据接收到的数据的主键对不同的部件进行触发。";
-    }
-
-    @Override
-    public String provideExampleContent() {
-        return "692653993448435712";
-    }
-
     @Component
     public static class DctiKafkaDriver implements Driver {
 

@@ -44,26 +44,6 @@ public class CronDriverProvider implements DriverProvider {
         return cronDriver;
     }
 
-    @Override
-    public String provideType() {
-        return SUPPORT_TYPE;
-    }
-
-    @Override
-    public String provideLabel() {
-        return "Cron驱动器";
-    }
-
-    @Override
-    public String provideDescription() {
-        return "根据指定的Cron表达式定时驱动的驱动器";
-    }
-
-    @Override
-    public String provideExampleContent() {
-        return "0/2 * * * * *";
-    }
-
     @Component
     public static class CronDriver implements Driver {
 

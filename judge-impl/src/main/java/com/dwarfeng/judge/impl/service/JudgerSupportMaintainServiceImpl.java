@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.service;
 
-import com.dwarfeng.judge.impl.handler.JudgerMaker;
+import com.dwarfeng.judge.impl.handler.JudgerSupporter;
 import com.dwarfeng.judge.stack.bean.entity.JudgerSupport;
 import com.dwarfeng.judge.stack.service.JudgerSupportMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
@@ -31,7 +31,7 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
     @Autowired
     private DaoOnlyPresetLookupService<JudgerSupport> presetLookupService;
     @Autowired(required = false)
-    private List<JudgerMaker> judgerMakers = new ArrayList<>();
+    private List<JudgerSupporter> judgerSupporters = new ArrayList<>();
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -138,14 +138,14 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void reset() throws ServiceException {
-        for (JudgerMaker judgerMaker : judgerMakers) {
+        for (JudgerSupporter judgerSupporter : judgerSupporters) {
             try {
                 crudService.insertIfNotExists(
                         new JudgerSupport(
-                                new StringIdKey(judgerMaker.provideType()),
-                                judgerMaker.provideLabel(),
-                                judgerMaker.provideDescription(),
-                                judgerMaker.provideExampleContent()
+                                new StringIdKey(judgerSupporter.provideType()),
+                                judgerSupporter.provideLabel(),
+                                judgerSupporter.provideDescription(),
+                                judgerSupporter.provideExampleContent()
                         )
                 );
             } catch (Exception e) {

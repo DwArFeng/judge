@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.service;
 
-import com.dwarfeng.judge.impl.handler.DriverProvider;
+import com.dwarfeng.judge.impl.handler.DriverSupporter;
 import com.dwarfeng.judge.stack.bean.entity.DriverSupport;
 import com.dwarfeng.judge.stack.service.DriverSupportMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
@@ -31,7 +31,7 @@ public class DriverSupportMaintainServiceImpl implements DriverSupportMaintainSe
     @Autowired
     private DaoOnlyPresetLookupService<DriverSupport> presetLookupService;
     @Autowired(required = false)
-    private List<DriverProvider> driverProviders = new ArrayList<>();
+    private List<DriverSupporter> driverSupporters = new ArrayList<>();
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -138,14 +138,14 @@ public class DriverSupportMaintainServiceImpl implements DriverSupportMaintainSe
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void reset() throws ServiceException {
-        for (DriverProvider driverProvider : driverProviders) {
+        for (DriverSupporter driverSupporter : driverSupporters) {
             try {
                 crudService.insertIfNotExists(
                         new DriverSupport(
-                                new StringIdKey(driverProvider.provideType()),
-                                driverProvider.provideLabel(),
-                                driverProvider.provideDescription(),
-                                driverProvider.provideExampleContent()
+                                new StringIdKey(driverSupporter.provideType()),
+                                driverSupporter.provideLabel(),
+                                driverSupporter.provideDescription(),
+                                driverSupporter.provideExampleContent()
                         )
                 );
             } catch (Exception e) {
