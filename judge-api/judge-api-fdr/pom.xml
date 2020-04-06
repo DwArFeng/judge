@@ -12,7 +12,7 @@
 
     <artifactId>judge-api-fdr</artifactId>
     <name>judge-api-fdr</name>
-    <version>1.1.0.a-SNAPSHOT</version>
+    <url>http://maven.apache.org</url>
 
     <properties>
         <!-- 进行工程编码声明 -->

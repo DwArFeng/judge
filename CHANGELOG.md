@@ -17,6 +17,9 @@
   - node-assign
   - node-evaluate
   - node-maintain
+- Driver,Judger相关结构实现功能分离。
+  - com.dwarfeng.judge.impl.handler.DriverSupporter
+  - com.dwarfeng.judge.impl.handler.JudgerSupporter
 
 #### Bug修复
 
