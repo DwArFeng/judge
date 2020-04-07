@@ -4,7 +4,6 @@
 
 #### 功能构建
 
-- 细分judge-api模块。
 - 将可放宽装配的组件列表设置为 @Autowired(required = false)
   - com.dwarfeng.judge.impl.handler.DriverHandlerImpl
   - com.dwarfeng.judge.impl.handler.JudgerHandlerImpl
@@ -27,7 +26,7 @@
 
 #### 功能移除
 
-- (无)
+- ~~删除api模块以及解除fdr依赖~~
 
 ---
 
