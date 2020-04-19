@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 WebInputJudgerInfo.toStackBean 的参数错误。
 
 #### 功能移除
 

@@ -15,18 +15,18 @@ public class WebInputJudgerInfo implements Bean {
 
     private static final long serialVersionUID = -7706153657541723646L;
 
-    public static JudgerInfo toStackBean(WebInputDriverInfo webInputDriverInfo) {
-        if (Objects.isNull(webInputDriverInfo)) {
+    public static JudgerInfo toStackBean(WebInputJudgerInfo webInputJudgerInfo) {
+        if (Objects.isNull(webInputJudgerInfo)) {
             return null;
         }
 
         return new JudgerInfo(
-                WebInputLongIdKey.toStackBean(webInputDriverInfo.getKey()),
-                WebInputLongIdKey.toStackBean(webInputDriverInfo.getSectionKey()),
-                webInputDriverInfo.isEnabled(),
-                webInputDriverInfo.getType(),
-                webInputDriverInfo.getContent(),
-                webInputDriverInfo.getRemark()
+                WebInputLongIdKey.toStackBean(webInputJudgerInfo.getKey()),
+                WebInputLongIdKey.toStackBean(webInputJudgerInfo.getSectionKey()),
+                webInputJudgerInfo.isEnabled(),
+                webInputJudgerInfo.getType(),
+                webInputJudgerInfo.getContent(),
+                webInputJudgerInfo.getRemark()
         );
     }
 
