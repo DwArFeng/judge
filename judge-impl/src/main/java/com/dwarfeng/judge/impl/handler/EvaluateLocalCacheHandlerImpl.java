@@ -24,9 +24,9 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
     @Autowired
     private JudgeContextFetcher judgeContextFetcher;
 
-    private ReadWriteLock lock = new ReentrantReadWriteLock();
-    private Map<LongIdKey, EvaluateContext> contextMap = new HashMap<>();
-    private Set<LongIdKey> notExistSections = new HashSet<>();
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Map<LongIdKey, EvaluateContext> contextMap = new HashMap<>();
+    private final Set<LongIdKey> notExistSections = new HashSet<>();
 
     @Override
     public boolean existsSection(LongIdKey sectionKey) throws HandlerException {

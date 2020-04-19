@@ -23,10 +23,10 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
     @Autowired
     private DriveContextFetcher driveContextFetcher;
 
-    private ReadWriteLock lock = new ReentrantReadWriteLock();
-    private Map<LongIdKey, AssignContext> contextMap = new HashMap<>();
-    private Set<LongIdKey> notExistSections = new HashSet<>();
-    private List<LongIdKey> allSectionKeys = new ArrayList<>();
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Map<LongIdKey, AssignContext> contextMap = new HashMap<>();
+    private final Set<LongIdKey> notExistSections = new HashSet<>();
+    private final List<LongIdKey> allSectionKeys = new ArrayList<>();
 
     @Override
     public List<LongIdKey> getSectionKeys() throws HandlerException {

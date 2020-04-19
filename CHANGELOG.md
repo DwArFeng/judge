@@ -10,6 +10,9 @@
 #### Bug修复
 
 - 修复 WebInputJudgerInfo.toStackBean 的参数错误。
+- 修复项目中的警告。
+  - com.dwarfeng.judge.impl.handler.AssignLocalCacheHandlerImpl
+  - com.dwarfeng.judge.impl.handler.EvaluateLocalCacheHandlerImpl
 
 #### 功能移除
 
