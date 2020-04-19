@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 添加实体 com.dwarfeng.judge.sdk.bean.entity.WebInputDriverSupport。
 
 #### Bug修复
 
