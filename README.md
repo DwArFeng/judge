@@ -2,6 +2,58 @@
 
 一款开箱即用的用于评判数据的软件架构。
 
+## 安装说明
+
+1. 下载源码
+
+   使用git进行源码下载。
+   ```
+   git clone git@github.com:DwArFeng/judge.git
+   ```
+   对于中国用户，可以使用gitee进行高速下载。
+   ```
+   git clone git@gitee.com:dwarfeng/judge.git
+   ```
+   
+2. 项目打包
+
+   进入项目根目录，执行maven命令
+   ```
+   mvn clean package
+   ```
+   
+3. 解压
+
+   找到打包后的目标文件 
+   ```
+   judge-node/judge-node-all/target/judge-node-all-[version]-release.tar.gz
+   judge-node/judge-node-assign/target/judge-node-assign-[version]-release.tar.gz
+   judge-node/judge-node-evaluate/target/judge-node-evaluate-[version]-release.tar.gz
+   judge-node/judge-node-maintain/target/judge-node-maintain-[version]-release.tar.gz
+   ```
+   将其解压至windows系统或者linux系统
+   
+4. 配置
+
+   1. 进入工程下的`bin`目录，修改所有执行脚本的`basedir`和`logdir`
+      
+   2. 修改conf文件夹下的配置文件，着重修改各连接的url与密码。
+   
+5. enjoy it
+
+---
+
+## 分布式说明
+
+该项目使用`dubbo`作为RPC框架，本身支持分布式，但是在实际使用过程中，由于项目本身的逻辑所致，该项目分布式部署应该遵守如下规则，
+否则会导致报警处理流程的行为不正常：
+
+1. 在一个独立的项目中，`node-all`与`node-assign`的数量加起来不大于1个，即一个项目中，只保留一个数据分析任务下达模块。
+2. 在任何情况下，`node-maintain`模块的数量允许部署任意多个。
+2. 在任何情况下，`node-evaluate`模块的数量允许部署任意多个。
+
+---
+
 ## 特性
 
 - 部件实体关联多个驱动信息与判断信息，整个数据评估步骤如下进行。
@@ -29,10 +81,6 @@
 ---
 
 ## 项目的使用
-
-### 分布式使用说明
-
-该项目支持分布式，在分布式部署的时候，请注意：node-assign模块在一个系统中至允许有一个，而node-evaluate模块可以部署任意多个。
 
 ### 部件的定义
 
