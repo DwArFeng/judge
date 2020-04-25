@@ -2,7 +2,7 @@ package com.dwarfeng.judge.stack.service;
 
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
@@ -12,7 +12,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface SectionMaintainService extends CrudService<LongIdKey, Section>, EntireLookupService<Section>,
+public interface SectionMaintainService extends BatchCrudService<LongIdKey, Section>, EntireLookupService<Section>,
         PresetLookupService<Section> {
 
     String NAME_LIKE = "name_like";

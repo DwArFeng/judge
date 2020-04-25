@@ -2,7 +2,7 @@ package com.dwarfeng.judge.stack.service;
 
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
@@ -12,7 +12,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface JudgerInfoMaintainService extends CrudService<LongIdKey, JudgerInfo>, EntireLookupService<JudgerInfo>,
+public interface JudgerInfoMaintainService extends BatchCrudService<LongIdKey, JudgerInfo>, EntireLookupService<JudgerInfo>,
         PresetLookupService<JudgerInfo> {
 
     String CHILD_FOR_SECTION = "child_for_section";

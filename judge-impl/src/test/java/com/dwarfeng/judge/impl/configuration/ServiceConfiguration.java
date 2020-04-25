@@ -9,7 +9,7 @@ import com.dwarfeng.judge.stack.cache.JudgerSupportCache;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
-import com.dwarfeng.subgrade.impl.service.CustomCrudService;
+import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralCrudService;
@@ -60,8 +60,8 @@ public class ServiceConfiguration {
     private long judgerSupportTimeout;
 
     @Bean
-    public CustomCrudService<LongIdKey, DriverInfo> driverInfoCustomCrudService() {
-        return new CustomCrudService<>(
+    public CustomBatchCrudService<LongIdKey, DriverInfo> driverInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 driverInfoCrudOperation,
                 longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
@@ -79,8 +79,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public CustomCrudService<LongIdKey, Section> sectionCustomCrudService() {
-        return new CustomCrudService<>(
+    public CustomBatchCrudService<LongIdKey, Section> sectionCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 sectionCrudOperation,
                 longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
@@ -107,8 +107,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public CustomCrudService<LongIdKey, JudgerInfo> judgerInfoCustomCrudService() {
-        return new CustomCrudService<>(
+    public CustomBatchCrudService<LongIdKey, JudgerInfo> judgerInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 judgerInfoCrudOperation,
                 longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),

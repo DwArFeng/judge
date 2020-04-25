@@ -5,17 +5,19 @@ import com.dwarfeng.judge.stack.cache.EnabledJudgerInfoCache;
 import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
-import com.dwarfeng.subgrade.sdk.service.custom.operation.CrudOperation;
+import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
-public class JudgerInfoCrudOperation implements CrudOperation<LongIdKey, JudgerInfo> {
+public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, JudgerInfo> {
 
     @Autowired
     private JudgerInfoDao judgerInfoDao;
@@ -26,7 +28,7 @@ public class JudgerInfoCrudOperation implements CrudOperation<LongIdKey, JudgerI
     private EnabledJudgerInfoCache enabledJudgerInfoCache;
 
     @Value("${cache.timeout.entity.judger_info}")
-    private long driveTimeout;
+    private long judgerInfoTimeout;
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {
@@ -42,7 +44,7 @@ public class JudgerInfoCrudOperation implements CrudOperation<LongIdKey, JudgerI
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
             JudgerInfo judgerInfo = judgerInfoDao.get(key);
-            judgerInfoCache.push(judgerInfo, driveTimeout);
+            judgerInfoCache.push(judgerInfo, judgerInfoTimeout);
             return judgerInfo;
         }
     }
@@ -53,7 +55,7 @@ public class JudgerInfoCrudOperation implements CrudOperation<LongIdKey, JudgerI
             enabledJudgerInfoCache.delete(judgerInfo.getSectionKey());
         }
 
-        judgerInfoCache.push(judgerInfo, driveTimeout);
+        judgerInfoCache.push(judgerInfo, judgerInfoTimeout);
         return judgerInfoDao.insert(judgerInfo);
     }
 
@@ -68,7 +70,7 @@ public class JudgerInfoCrudOperation implements CrudOperation<LongIdKey, JudgerI
             enabledJudgerInfoCache.delete(judgerInfo.getSectionKey());
         }
 
-        judgerInfoCache.push(judgerInfo, driveTimeout);
+        judgerInfoCache.push(judgerInfo, judgerInfoTimeout);
         judgerInfoDao.update(judgerInfo);
     }
 
@@ -81,5 +83,52 @@ public class JudgerInfoCrudOperation implements CrudOperation<LongIdKey, JudgerI
 
         judgerInfoDao.delete(key);
         judgerInfoCache.delete(key);
+    }
+
+    @Override
+    public boolean allExists(List<LongIdKey> keys) throws Exception {
+        return judgerInfoCache.allExists(keys) || judgerInfoDao.allExists(keys);
+    }
+
+    @Override
+    public boolean nonExists(List<LongIdKey> keys) throws Exception {
+        return judgerInfoCache.nonExists(keys) && judgerInfoCache.nonExists(keys);
+    }
+
+    @Override
+    public List<JudgerInfo> batchGet(List<LongIdKey> keys) throws Exception {
+        if (judgerInfoCache.allExists(keys)) {
+            return judgerInfoCache.batchGet(keys);
+        } else {
+            if (!judgerInfoDao.allExists(keys)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            }
+            List<JudgerInfo> judgerInfos = judgerInfoDao.batchGet(keys);
+            judgerInfoCache.batchPush(judgerInfos, judgerInfoTimeout);
+            return judgerInfos;
+        }
+    }
+
+    @Override
+    public List<LongIdKey> batchInsert(List<JudgerInfo> judgerInfos) throws Exception {
+        List<LongIdKey> keys = new ArrayList<>();
+        for (JudgerInfo judgerInfo : judgerInfos) {
+            keys.add(insert(judgerInfo));
+        }
+        return keys;
+    }
+
+    @Override
+    public void batchUpdate(List<JudgerInfo> judgerInfos) throws Exception {
+        for (JudgerInfo judgerInfo : judgerInfos) {
+            update(judgerInfo);
+        }
+    }
+
+    @Override
+    public void batchDelete(List<LongIdKey> keys) throws Exception {
+        for (LongIdKey key : keys) {
+            delete(key);
+        }
     }
 }

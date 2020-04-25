@@ -4,7 +4,10 @@
 
 #### 功能构建
 
-- (无)
+- 将部分实体的Crud服务升级为BatchCrud服务。
+  - com.dwarfeng.judge.stack.service.SectionMaintainService
+  - com.dwarfeng.judge.stack.service.DriverInfoMaintainService
+  - com.dwarfeng.judge.stack.service.JudgerInfoMaintainService
 
 #### Bug修复
 

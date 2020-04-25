@@ -2,7 +2,7 @@ package com.dwarfeng.judge.stack.service;
 
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
@@ -12,8 +12,8 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface DriverInfoMaintainService extends CrudService<LongIdKey, DriverInfo>, EntireLookupService<DriverInfo>,
-        PresetLookupService<DriverInfo> {
+public interface DriverInfoMaintainService extends BatchCrudService<LongIdKey, DriverInfo>,
+        EntireLookupService<DriverInfo>, PresetLookupService<DriverInfo> {
 
     String CHILD_FOR_SECTION = "child_for_section";
     String CHILD_FOR_SECTION_SET = "child_for_section_set";
