@@ -100,7 +100,7 @@ public class JudgerInfoDaoImpl implements JudgerInfoDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public List<JudgerInfo> batchGet(List<LongIdKey> keys) {
+    public List<JudgerInfo> batchGet(List<LongIdKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 

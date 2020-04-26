@@ -100,7 +100,7 @@ public class DriverInfoDaoImpl implements DriverInfoDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public List<DriverInfo> batchGet(List<LongIdKey> keys) {
+    public List<DriverInfo> batchGet(List<LongIdKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 

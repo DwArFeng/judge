@@ -100,7 +100,7 @@ public class SectionDaoImpl implements SectionDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public List<Section> batchGet(List<LongIdKey> keys) {
+    public List<Section> batchGet(List<LongIdKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 
