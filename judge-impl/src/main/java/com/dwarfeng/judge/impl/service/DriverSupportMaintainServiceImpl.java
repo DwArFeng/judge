@@ -31,112 +31,112 @@ public class DriverSupportMaintainServiceImpl implements DriverSupportMaintainSe
     @Autowired
     private DaoOnlyPresetLookupService<DriverSupport> presetLookupService;
     @Autowired(required = false)
-    private List<DriverSupporter> driverSupporters = new ArrayList<>();
+    private final List<DriverSupporter> driverSupporters = new ArrayList<>();
 
     @Autowired
     private ServiceExceptionMapper sem;
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(StringIdKey key) throws ServiceException {
         return crudService.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public DriverSupport get(StringIdKey key) throws ServiceException {
         return crudService.get(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insert(DriverSupport element) throws ServiceException {
         return crudService.insert(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(DriverSupport element) throws ServiceException {
         crudService.update(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(StringIdKey key) throws ServiceException {
         crudService.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public DriverSupport getIfExists(StringIdKey key) throws ServiceException {
         return crudService.getIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertIfNotExists(DriverSupport element) throws ServiceException {
         return crudService.insertIfNotExists(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void updateIfExists(DriverSupport element) throws ServiceException {
         crudService.updateIfExists(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void deleteIfExists(StringIdKey key) throws ServiceException {
         crudService.deleteIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertOrUpdate(DriverSupport element) throws ServiceException {
         return crudService.insertOrUpdate(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<DriverSupport> lookup() throws ServiceException {
         return entireLookupService.lookup();
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<DriverSupport> lookup(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookup(pagingInfo);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<DriverSupport> lookup(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookup(preset, objs);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<DriverSupport> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         return presetLookupService.lookup(preset, objs, pagingInfo);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void reset() throws ServiceException {
         for (DriverSupporter driverSupporter : driverSupporters) {
             try {

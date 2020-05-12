@@ -114,14 +114,14 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
         private EnabledDriverInfoLookupService enabledDriverInfoLookupService;
 
         @BehaviorAnalyse
-        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
         public List<LongIdKey> fetchAllSectionKeys() throws Exception {
             return sectionMaintainService.lookup().getData()
                     .stream().map(Section::getKey).collect(Collectors.toList());
         }
 
         @BehaviorAnalyse
-        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
         public AssignContext fetchContext(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;

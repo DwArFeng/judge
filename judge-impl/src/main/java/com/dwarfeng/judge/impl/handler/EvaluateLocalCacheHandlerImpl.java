@@ -125,7 +125,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
         private JudgerHandler judgerHandler;
 
         @BehaviorAnalyse
-        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
         public EvaluateContext fetchContext(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;

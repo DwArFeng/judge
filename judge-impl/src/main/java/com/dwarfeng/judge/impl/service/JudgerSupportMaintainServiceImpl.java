@@ -31,112 +31,112 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
     @Autowired
     private DaoOnlyPresetLookupService<JudgerSupport> presetLookupService;
     @Autowired(required = false)
-    private List<JudgerSupporter> judgerSupporters = new ArrayList<>();
+    private final List<JudgerSupporter> judgerSupporters = new ArrayList<>();
 
     @Autowired
     private ServiceExceptionMapper sem;
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(StringIdKey key) throws ServiceException {
         return crudService.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public JudgerSupport get(StringIdKey key) throws ServiceException {
         return crudService.get(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insert(JudgerSupport element) throws ServiceException {
         return crudService.insert(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(JudgerSupport element) throws ServiceException {
         crudService.update(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(StringIdKey key) throws ServiceException {
         crudService.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public JudgerSupport getIfExists(StringIdKey key) throws ServiceException {
         return crudService.getIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertIfNotExists(JudgerSupport element) throws ServiceException {
         return crudService.insertIfNotExists(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void updateIfExists(JudgerSupport element) throws ServiceException {
         crudService.updateIfExists(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void deleteIfExists(StringIdKey key) throws ServiceException {
         crudService.deleteIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertOrUpdate(JudgerSupport element) throws ServiceException {
         return crudService.insertOrUpdate(element);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerSupport> lookup() throws ServiceException {
         return entireLookupService.lookup();
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerSupport> lookup(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookup(pagingInfo);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerSupport> lookup(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookup(preset, objs);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerSupport> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         return presetLookupService.lookup(preset, objs, pagingInfo);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void reset() throws ServiceException {
         for (JudgerSupporter judgerSupporter : judgerSupporters) {
             try {

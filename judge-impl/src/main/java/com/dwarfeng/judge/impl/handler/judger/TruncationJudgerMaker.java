@@ -79,7 +79,7 @@ public class TruncationJudgerMaker implements JudgerMaker {
                 double judgementValue;
                 double realtimeValue;
                 TimedValue timedValue;
-                
+
                 try {
                     timedValue = repositoryHandler.realtimeValue(realtimePointKey);
                 } catch (Exception e) {

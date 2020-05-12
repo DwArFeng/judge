@@ -32,7 +32,7 @@ public class EnabledDriverInfoLookupServiceImpl implements EnabledDriverInfoLook
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<DriverInfo> getEnabledDriverInfos(LongIdKey sectionKey) throws ServiceException {
         try {
             if (cache.exists(sectionKey)) {

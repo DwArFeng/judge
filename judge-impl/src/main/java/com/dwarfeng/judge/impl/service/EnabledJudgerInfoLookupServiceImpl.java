@@ -32,7 +32,7 @@ public class EnabledJudgerInfoLookupServiceImpl implements EnabledJudgerInfoLook
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<JudgerInfo> getEnabledJudgerInfos(LongIdKey sectionKey) throws ServiceException {
         try {
             if (cache.exists(sectionKey)) {
