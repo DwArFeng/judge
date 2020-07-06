@@ -10,6 +10,7 @@
   - 因此改动，程序的部分功能被去除，详见功能移除列表。
 - 规范停止脚本 judge-stop.sh。
 - 增强 com.dwarfeng.judge.impl.handler.repository.RandomRepository。
+- 新建 com.dwarfeng.judge.impl.handler.repository.RoutedRepository。
 
 #### Bug修复
 
