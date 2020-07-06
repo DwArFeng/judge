@@ -1,8 +1,6 @@
 package com.dwarfeng.judge.impl.handler.repository;
 
-import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.judge.impl.handler.Repository;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * 随机数仓库。
@@ -40,30 +39,8 @@ public class RandomNumberRepository implements Repository {
     }
 
     @Override
-    public TimedValue realtimeValue(LongIdKey pointKey) {
-        return new TimedValue(
-                Double.toString(random.nextDouble()),
-                new Date()
-        );
-    }
-
-    @Override
-    public List<TimedValue> realtimeValue(LongIdKey pointKey, String processPreset, Object[] args) {
-        return Collections.singletonList(new TimedValue(
-                Double.toString(random.nextDouble() * (sectionMax - sectionMin) + sectionMin),
-                new Date()
-        ));
-    }
-
-    @Override
-    public List<TimedValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate, String processPreset, Object[] args) {
-        return Collections.emptyList();
+    public Object getData(String category, Object... args) {
+        return random.nextLong();
     }
 
     @Configuration

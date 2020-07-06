@@ -24,10 +24,6 @@
                    ref="driverInfoMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.judge.stack.service.DriverSupportMaintainService"
                    ref="driverSupportMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.judge.stack.service.EnabledDriverInfoLookupService"
-                   ref="enabledDriverInfoLookupServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.judge.stack.service.EnabledJudgerInfoLookupService"
-                   ref="enabledJudgerInfoLookupServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.judge.stack.service.JudgerInfoMaintainService"
                    ref="judgerInfoMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.judge.stack.service.JudgerSupportMaintainService"

@@ -1,8 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
+import com.dwarfeng.judge.stack.exception.RepositoryException;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
 public class RepositoryHandlerImpl implements RepositoryHandler {
 
+    @SuppressWarnings("FieldMayBeFinal")
     @Autowired(required = false)
     private List<Repository> repositories = new ArrayList<>();
 
@@ -31,25 +30,7 @@ public class RepositoryHandlerImpl implements RepositoryHandler {
     }
 
     @Override
-    public TimedValue realtimeValue(LongIdKey pointKey) throws HandlerException {
-        return repository.realtimeValue(pointKey);
-    }
-
-    @Override
-    public List<TimedValue> realtimeValue(
-            LongIdKey pointKey, String processPreset, Object[] args) throws HandlerException {
-        return repository.realtimeValue(pointKey, processPreset, args);
-    }
-
-    @Override
-    public List<TimedValue> persistenceValue(LongIdKey pointKey, Date startDate, Date endDate) throws HandlerException {
-        return repository.persistenceValue(pointKey, startDate, endDate);
-    }
-
-    @Override
-    public List<TimedValue> persistenceValue(
-            LongIdKey pointKey, Date startDate, Date endDate, String processPreset, Object[] args)
-            throws HandlerException {
-        return repository.persistenceValue(pointKey, startDate, endDate, processPreset, args);
+    public Object getData(String category, Object... args) throws RepositoryException {
+        return repository.getData(category, args);
     }
 }

@@ -5,6 +5,9 @@
 #### 功能构建
 
 - 升级subgrade依赖版本至1.1.1.b。
+- 更改 RepositoryHandler 的接口结构。
+  - 这将导致该版本与上一个版本直接的不兼容。
+  - 因此改动，程序的部分功能被去除，详见功能移除列表。
 
 #### Bug修复
 
@@ -12,7 +15,12 @@
 
 #### 功能移除
 
-- (无)
+- ~~com.dwarfeng.judge.impl.mock.MockEvaluateService~~
+- ~~com.dwarfeng.judge.impl.mock.MockRepository~~
+- ~~com.dwarfeng.judge.impl.mock.ThresholdJudgerMaker~~
+- ~~com.dwarfeng.judge.impl.mock.ThresholdJudgerSupporter~~
+- ~~com.dwarfeng.judge.impl.mock.TruncationJudgerMaker~~
+- ~~com.dwarfeng.judge.impl.mock.TruncationJudgerSupporter~~
 
 ---
 

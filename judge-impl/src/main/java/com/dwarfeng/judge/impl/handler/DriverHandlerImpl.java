@@ -13,6 +13,7 @@ import java.util.List;
 @Component
 public class DriverHandlerImpl implements DriverHandler {
 
+    @SuppressWarnings("FieldMayBeFinal")
     @Autowired(required = false)
     private List<DriverProvider> driverProviders = new ArrayList<>();
 
