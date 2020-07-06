@@ -9,6 +9,7 @@
   - 这将导致该版本与上一个版本直接的不兼容。
   - 因此改动，程序的部分功能被去除，详见功能移除列表。
 - 规范停止脚本 judge-stop.sh。
+- 增强 com.dwarfeng.judge.impl.handler.repository.RandomRepository。
 
 #### Bug修复
 
