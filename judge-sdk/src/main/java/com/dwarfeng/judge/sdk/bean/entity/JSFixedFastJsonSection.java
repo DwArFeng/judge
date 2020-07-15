@@ -19,6 +19,7 @@ public class JSFixedFastJsonSection implements Bean {
         return new JSFixedFastJsonSection(
                 JSFixedFastJsonLongIdKey.of(section.getKey()),
                 section.getName(),
+                section.isEnabled(),
                 section.getRemark()
         );
     }
@@ -29,16 +30,20 @@ public class JSFixedFastJsonSection implements Bean {
     @JSONField(name = "name", ordinal = 2)
     private String name;
 
-    @JSONField(name = "remark", ordinal = 3)
+    @JSONField(name = "enabled", ordinal = 3)
+    private boolean enabled;
+
+    @JSONField(name = "remark", ordinal = 4)
     private String remark;
 
     public JSFixedFastJsonSection() {
     }
 
     public JSFixedFastJsonSection(
-            JSFixedFastJsonLongIdKey key, String name, String remark) {
+            JSFixedFastJsonLongIdKey key, String name, boolean enabled, String remark) {
         this.key = key;
         this.name = name;
+        this.enabled = enabled;
         this.remark = remark;
     }
 
@@ -58,6 +63,14 @@ public class JSFixedFastJsonSection implements Bean {
         this.name = name;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -71,6 +84,7 @@ public class JSFixedFastJsonSection implements Bean {
         return "JSFixedFastJsonSection{" +
                 "key=" + key +
                 ", name='" + name + '\'' +
+                ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
                 '}';
     }

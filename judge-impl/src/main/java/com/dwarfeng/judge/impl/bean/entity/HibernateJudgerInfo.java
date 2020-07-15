@@ -24,9 +24,6 @@ public class HibernateJudgerInfo implements Bean {
     private Long sectionId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
-    @Column(name = "enabled", nullable = false)
-    private boolean enabled;
-
     @Column(name = "type", length = Constraints.LENGTH_TYPE)
     private String type;
 
@@ -78,14 +75,6 @@ public class HibernateJudgerInfo implements Bean {
         this.sectionId = Optional.ofNullable(parentKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public String getType() {
         return type;
     }
@@ -123,7 +112,6 @@ public class HibernateJudgerInfo implements Bean {
         return "HibernateJudgerInfo{" +
                 "longId=" + longId +
                 ", sectionId=" + sectionId +
-                ", enabled=" + enabled +
                 ", type='" + type + '\'' +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +

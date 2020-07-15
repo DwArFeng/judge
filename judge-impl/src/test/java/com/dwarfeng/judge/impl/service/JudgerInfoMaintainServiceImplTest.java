@@ -35,6 +35,7 @@ public class JudgerInfoMaintainServiceImplTest {
         parentSection = new Section(
                 null,
                 "parent-section",
+                true,
                 "test-section"
         );
         judgerInfos = new ArrayList<>();
@@ -42,7 +43,6 @@ public class JudgerInfoMaintainServiceImplTest {
             JudgerInfo judgerInfo = new JudgerInfo(
                     null,
                     parentSection.getKey(),
-                    true,
                     "filter-info-" + i,
                     "this is a test",
                     "test"

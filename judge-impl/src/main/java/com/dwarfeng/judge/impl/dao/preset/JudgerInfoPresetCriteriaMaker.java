@@ -25,9 +25,6 @@ public class JudgerInfoPresetCriteriaMaker implements PresetCriteriaMaker {
             case JudgerInfoMaintainService.CHILD_FOR_SECTION_SET:
                 childForPointSet(detachedCriteria, objects);
                 break;
-            case JudgerInfoMaintainService.ENABLED_CHILD_FOR_SECTION:
-                enabledChildForPointSet(detachedCriteria, objects);
-                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
@@ -65,23 +62,6 @@ public class JudgerInfoPresetCriteriaMaker implements PresetCriteriaMaker {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }
     }
-
-    private void enabledChildForPointSet(DetachedCriteria detachedCriteria, Object[] objects) {
-        try {
-            if (Objects.isNull(objects[0])) {
-                detachedCriteria.add(Restrictions.eqOrIsNull("enabled", true));
-                detachedCriteria.add(Restrictions.isNull("sectionId"));
-            } else {
-                LongIdKey longIdKey = (LongIdKey) objects[0];
-                detachedCriteria.add(Restrictions.eqOrIsNull("enabled", true));
-                detachedCriteria.add(Restrictions.eqOrIsNull("sectionId", longIdKey.getLongId()));
-            }
-            detachedCriteria.addOrder(Order.asc("longId"));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
-        }
-    }
-
 
     private List<Long> longList(List<LongIdKey> list) {
         return list.stream().map(LongIdKey::getLongId).collect(Collectors.toList());

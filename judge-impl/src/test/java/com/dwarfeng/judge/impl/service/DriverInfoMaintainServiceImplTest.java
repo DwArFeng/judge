@@ -35,6 +35,7 @@ public class DriverInfoMaintainServiceImplTest {
         parentSection = new Section(
                 null,
                 "parent-section",
+                true,
                 "test-section"
         );
         driverInfos = new ArrayList<>();
@@ -42,7 +43,6 @@ public class DriverInfoMaintainServiceImplTest {
             DriverInfo driverInfo = new DriverInfo(
                     null,
                     parentSection.getKey(),
-                    true,
                     "filter-info-" + i,
                     "this is a test",
                     "test"

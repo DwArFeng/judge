@@ -19,7 +19,6 @@ import java.util.concurrent.locks.ReentrantLock;
 @Service
 public class AssignQosServiceImpl implements AssignQosService {
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AssignQosServiceImpl.class);
 
     @Autowired

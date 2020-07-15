@@ -15,7 +15,6 @@ public class JudgerInfo implements Entity<LongIdKey> {
 
     private LongIdKey key;
     private LongIdKey sectionKey;
-    private boolean enabled;
     private String type;
     private String content;
     private String remark;
@@ -24,10 +23,9 @@ public class JudgerInfo implements Entity<LongIdKey> {
     }
 
     public JudgerInfo(
-            LongIdKey key, LongIdKey sectionKey, boolean enabled, String type, String content, String remark) {
+            LongIdKey key, LongIdKey sectionKey, String type, String content, String remark) {
         this.key = key;
         this.sectionKey = sectionKey;
-        this.enabled = enabled;
         this.type = type;
         this.content = content;
         this.remark = remark;
@@ -49,14 +47,6 @@ public class JudgerInfo implements Entity<LongIdKey> {
 
     public void setSectionKey(LongIdKey sectionKey) {
         this.sectionKey = sectionKey;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public String getType() {
@@ -88,7 +78,6 @@ public class JudgerInfo implements Entity<LongIdKey> {
         return "JudgerInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
-                ", enabled=" + enabled +
                 ", type='" + type + '\'' +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +

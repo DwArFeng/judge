@@ -1,7 +1,6 @@
 package com.dwarfeng.judge.impl.service.operation;
 
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
-import com.dwarfeng.judge.stack.cache.EnabledJudgerInfoCache;
 import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
@@ -14,18 +13,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, JudgerInfo> {
 
     @Autowired
     private JudgerInfoDao judgerInfoDao;
-
     @Autowired
     private JudgerInfoCache judgerInfoCache;
-    @Autowired
-    private EnabledJudgerInfoCache enabledJudgerInfoCache;
 
     @Value("${cache.timeout.entity.judger_info}")
     private long judgerInfoTimeout;
@@ -51,36 +46,18 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
 
     @Override
     public LongIdKey insert(JudgerInfo judgerInfo) throws Exception {
-        if (Objects.nonNull(judgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(judgerInfo.getSectionKey());
-        }
-
         judgerInfoCache.push(judgerInfo, judgerInfoTimeout);
         return judgerInfoDao.insert(judgerInfo);
     }
 
     @Override
     public void update(JudgerInfo judgerInfo) throws Exception {
-        JudgerInfo oldJudgerInfo = get(judgerInfo.getKey());
-        if (Objects.nonNull(oldJudgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(oldJudgerInfo.getSectionKey());
-        }
-
-        if (Objects.nonNull(judgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(judgerInfo.getSectionKey());
-        }
-
         judgerInfoCache.push(judgerInfo, judgerInfoTimeout);
         judgerInfoDao.update(judgerInfo);
     }
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        JudgerInfo oldJudgerInfo = get(key);
-        if (Objects.nonNull(oldJudgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(oldJudgerInfo.getSectionKey());
-        }
-
         judgerInfoDao.delete(key);
         judgerInfoCache.delete(key);
     }

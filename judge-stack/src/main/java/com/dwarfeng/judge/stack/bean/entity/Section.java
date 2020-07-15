@@ -15,14 +15,16 @@ public class Section implements Entity<LongIdKey> {
 
     private LongIdKey key;
     private String name;
+    private boolean enabled;
     private String remark;
 
     public Section() {
     }
 
-    public Section(LongIdKey key, String name, String remark) {
+    public Section(LongIdKey key, String name, boolean enabled, String remark) {
         this.key = key;
         this.name = name;
+        this.enabled = enabled;
         this.remark = remark;
     }
 
@@ -44,6 +46,14 @@ public class Section implements Entity<LongIdKey> {
         this.name = name;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -57,6 +67,7 @@ public class Section implements Entity<LongIdKey> {
         return "Section{" +
                 "key=" + key +
                 ", name='" + name + '\'' +
+                ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
                 '}';
     }

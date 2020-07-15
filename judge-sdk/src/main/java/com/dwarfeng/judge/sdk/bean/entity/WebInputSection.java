@@ -23,6 +23,7 @@ public class WebInputSection implements Bean {
         return new Section(
                 WebInputLongIdKey.toStackBean(webInputSection.getKey()),
                 webInputSection.getName(),
+                webInputSection.isEnabled(),
                 webInputSection.getRemark()
         );
     }
@@ -37,15 +38,19 @@ public class WebInputSection implements Bean {
     @NotEmpty
     private String name;
 
+    @JSONField(name = "enabled")
+    private boolean enabled;
+
     @JSONField(name = "remark")
     private String remark;
 
     public WebInputSection() {
     }
 
-    public WebInputSection(WebInputLongIdKey key, String name, String remark) {
+    public WebInputSection(WebInputLongIdKey key, String name, boolean enabled, String remark) {
         this.key = key;
         this.name = name;
+        this.enabled = enabled;
         this.remark = remark;
     }
 
@@ -65,6 +70,14 @@ public class WebInputSection implements Bean {
         this.name = name;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -78,6 +91,7 @@ public class WebInputSection implements Bean {
         return "WebInputSection{" +
                 "key=" + key +
                 ", name='" + name + '\'' +
+                ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
                 '}';
     }

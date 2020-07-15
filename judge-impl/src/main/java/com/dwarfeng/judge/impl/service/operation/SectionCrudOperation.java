@@ -3,7 +3,9 @@ package com.dwarfeng.judge.impl.service.operation;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
-import com.dwarfeng.judge.stack.cache.*;
+import com.dwarfeng.judge.stack.cache.DriverInfoCache;
+import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
+import com.dwarfeng.judge.stack.cache.SectionCache;
 import com.dwarfeng.judge.stack.dao.DriverInfoDao;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
 import com.dwarfeng.judge.stack.dao.SectionDao;
@@ -36,11 +38,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
     private DriverInfoCache driverInfoCache;
     @Autowired
     private JudgerInfoCache judgerInfoCache;
-
-    @Autowired
-    private EnabledDriverInfoCache enabledDriverInfoCache;
-    @Autowired
-    private EnabledJudgerInfoCache enabledJudgerInfoCache;
 
     @Value("${cache.timeout.entity.section}")
     private long sectionTimeout;
@@ -91,12 +88,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             driverInfoCache.batchDelete(driverInfoKeys);
             judgerInfoDao.batchDelete(judgerInfoKeys);
             judgerInfoCache.batchDelete(judgerInfoKeys);
-        }
-
-        //使能过滤器信息和使能触发器缓存信息删除。
-        {
-            enabledDriverInfoCache.delete(key);
-            enabledJudgerInfoCache.delete(key);
         }
 
         sectionDao.delete(key);

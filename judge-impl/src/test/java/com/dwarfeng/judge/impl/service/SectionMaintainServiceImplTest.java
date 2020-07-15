@@ -32,6 +32,7 @@ public class SectionMaintainServiceImplTest {
             Section section = new Section(
                     null,
                     "section-" + (i + 1),
+                    true,
                     "test-section"
             );
             sections.add(section);

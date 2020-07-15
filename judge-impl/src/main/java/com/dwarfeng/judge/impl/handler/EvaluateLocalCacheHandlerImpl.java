@@ -5,7 +5,7 @@ import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.JudgerHandler;
-import com.dwarfeng.judge.stack.service.EnabledJudgerInfoLookupService;
+import com.dwarfeng.judge.stack.service.JudgerInfoMaintainService;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+@SuppressWarnings("DuplicatedCode")
 @Component
 public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler {
 
@@ -119,7 +120,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
         @Autowired
         private SectionMaintainService sectionMaintainService;
         @Autowired
-        private EnabledJudgerInfoLookupService enabledJudgerInfoLookupService;
+        private JudgerInfoMaintainService judgerInfoMaintainService;
 
         @Autowired
         private JudgerHandler judgerHandler;
@@ -132,7 +133,8 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
             }
 
             Section section = sectionMaintainService.get(sectionKey);
-            List<JudgerInfo> judgerInfos = enabledJudgerInfoLookupService.getEnabledJudgerInfos(sectionKey);
+            List<JudgerInfo> judgerInfos = judgerInfoMaintainService.lookup(
+                    JudgerInfoMaintainService.CHILD_FOR_SECTION, new Object[]{sectionKey}).getData();
 
             List<Judger> judgers = new ArrayList<>();
 

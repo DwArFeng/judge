@@ -23,7 +23,6 @@ public class WebInputJudgerInfo implements Bean {
         return new JudgerInfo(
                 WebInputLongIdKey.toStackBean(webInputJudgerInfo.getKey()),
                 WebInputLongIdKey.toStackBean(webInputJudgerInfo.getSectionKey()),
-                webInputJudgerInfo.isEnabled(),
                 webInputJudgerInfo.getType(),
                 webInputJudgerInfo.getContent(),
                 webInputJudgerInfo.getRemark()
@@ -38,9 +37,6 @@ public class WebInputJudgerInfo implements Bean {
     @JSONField(name = "section_key")
     @Valid
     private WebInputLongIdKey sectionKey;
-
-    @JSONField(name = "enabled")
-    private boolean enabled;
 
     @JSONField(name = "type")
     @NotNull
@@ -57,11 +53,10 @@ public class WebInputJudgerInfo implements Bean {
     }
 
     public WebInputJudgerInfo(
-            WebInputLongIdKey key, WebInputLongIdKey sectionKey, boolean enabled, String type, String content,
+            WebInputLongIdKey key, WebInputLongIdKey sectionKey, String type, String content,
             String remark) {
         this.key = key;
         this.sectionKey = sectionKey;
-        this.enabled = enabled;
         this.type = type;
         this.content = content;
         this.remark = remark;
@@ -81,14 +76,6 @@ public class WebInputJudgerInfo implements Bean {
 
     public void setSectionKey(WebInputLongIdKey sectionKey) {
         this.sectionKey = sectionKey;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public String getType() {
@@ -120,7 +107,6 @@ public class WebInputJudgerInfo implements Bean {
         return "WebInputJudgerInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
-                ", enabled=" + enabled +
                 ", type='" + type + '\'' +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +

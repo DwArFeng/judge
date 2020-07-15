@@ -25,6 +25,9 @@ public class HibernateSection implements Bean {
     @Column(name = "name", length = Constraints.LENGTH_NAME, nullable = false)
     private String name;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
@@ -61,6 +64,14 @@ public class HibernateSection implements Bean {
         this.name = name;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -90,7 +101,10 @@ public class HibernateSection implements Bean {
         return "HibernateSection{" +
                 "longId=" + longId +
                 ", name='" + name + '\'' +
+                ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
+                ", driverInfos=" + driverInfos +
+                ", judgerInfos=" + judgerInfos +
                 '}';
     }
 }

@@ -19,7 +19,6 @@ public class FastJsonJudgerInfo implements Bean {
         return new FastJsonJudgerInfo(
                 FastJsonLongIdKey.of(judgerInfo.getKey()),
                 FastJsonLongIdKey.of(judgerInfo.getSectionKey()),
-                judgerInfo.isEnabled(),
                 judgerInfo.getType(),
                 judgerInfo.getContent(),
                 judgerInfo.getRemark()
@@ -32,27 +31,22 @@ public class FastJsonJudgerInfo implements Bean {
     @JSONField(name = "section_key", ordinal = 2)
     private FastJsonLongIdKey sectionKey;
 
-    @JSONField(name = "enabled", ordinal = 3)
-    private boolean enabled;
-
-    @JSONField(name = "type", ordinal = 4)
+    @JSONField(name = "type", ordinal = 3)
     private String type;
 
-    @JSONField(name = "content", ordinal = 5)
+    @JSONField(name = "content", ordinal = 4)
     private String content;
 
-    @JSONField(name = "remark", ordinal = 6)
+    @JSONField(name = "remark", ordinal = 5)
     private String remark;
 
     public FastJsonJudgerInfo() {
     }
 
     public FastJsonJudgerInfo(
-            FastJsonLongIdKey key, FastJsonLongIdKey sectionKey, boolean enabled, String type, String content,
-            String remark) {
+            FastJsonLongIdKey key, FastJsonLongIdKey sectionKey, String type, String content, String remark) {
         this.key = key;
         this.sectionKey = sectionKey;
-        this.enabled = enabled;
         this.type = type;
         this.content = content;
         this.remark = remark;
@@ -72,14 +66,6 @@ public class FastJsonJudgerInfo implements Bean {
 
     public void setSectionKey(FastJsonLongIdKey sectionKey) {
         this.sectionKey = sectionKey;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public String getType() {
@@ -111,7 +97,6 @@ public class FastJsonJudgerInfo implements Bean {
         return "FastJsonJudgerInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
-                ", enabled=" + enabled +
                 ", type='" + type + '\'' +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +
