@@ -70,7 +70,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         lock.lock();
         try {
             if (!startFlag) {
-                LOGGER.info("Judge consumeer handler 开启消费线程...");
+                LOGGER.info("Judge consumer handler 开启消费线程...");
                 consumeBuffer.block();
                 for (int i = 0; i < thread; i++) {
                     ConsumeTask consumeTask = new ConsumeTask(consumeBuffer, repositoryHandler, sinkHandler);
@@ -125,6 +125,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void consume(Judger judger) throws Exception {
         TimeMeasurer tm = new TimeMeasurer();
         tm.start();
@@ -132,7 +133,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         sinkHandler.sinkData(judgedValue);
         tm.stop();
         LOGGER.info("消费者完成消费, 判断器主键为 " + judgedValue.getJudgerKey() + ", 判断值为 " +
-                judgedValue.getJudgementInfo().getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
+                judgedValue.getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
     }
 
     @Override
@@ -242,6 +243,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             runningFlag.set(false);
         }
 
+        @SuppressWarnings("DuplicatedCode")
         private void consume(Judger judger) throws Exception {
             TimeMeasurer tm = new TimeMeasurer();
             tm.start();
@@ -249,7 +251,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             sinkHandler.sinkData(judgedValue);
             tm.stop();
             LOGGER.info("消费者完成消费, 判断器主键为 " + judgedValue.getJudgerKey() + ", 判断值为 " +
-                    judgedValue.getJudgementInfo().getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
+                    judgedValue.getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
         }
     }
 

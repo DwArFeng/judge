@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 更改 com.dwarfeng.judge.stack.bean.dto.JudgedValue 实体结构。
+  - 这将导致该版本与上一个版本直接的不兼容。
+  - 因此改动，程序的部分功能被去除，详见功能移除列表。
 
 #### Bug修复
 

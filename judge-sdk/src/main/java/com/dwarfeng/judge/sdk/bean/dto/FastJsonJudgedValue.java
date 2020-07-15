@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class FastJsonJudgedValue implements Dto {
 
-    private static final long serialVersionUID = 7057049183015803910L;
+    private static final long serialVersionUID = 6641831770759037754L;
 
     public static FastJsonJudgedValue of(JudgedValue judgedValue) {
         if (Objects.isNull(judgedValue)) {
@@ -20,7 +20,8 @@ public class FastJsonJudgedValue implements Dto {
 
         return new FastJsonJudgedValue(
                 FastJsonLongIdKey.of(judgedValue.getJudgerKey()),
-                FastJsonJudgementInfo.of(judgedValue.getJudgementInfo()),
+                judgedValue.getValue(),
+                judgedValue.getDetail(),
                 judgedValue.getHappenedDate()
         );
     }
@@ -32,7 +33,8 @@ public class FastJsonJudgedValue implements Dto {
 
         return new JudgedValue(
                 new LongIdKey(fastJsonJudgedValue.getJudgerKey().getLongId()),
-                FastJsonJudgementInfo.toStackBean(fastJsonJudgedValue.getJudgementInfo()),
+                fastJsonJudgedValue.getValue(),
+                fastJsonJudgedValue.getDetail(),
                 fastJsonJudgedValue.getHappenedDate()
         );
     }
@@ -40,18 +42,22 @@ public class FastJsonJudgedValue implements Dto {
     @JSONField(name = "judger_key", ordinal = 1)
     private FastJsonLongIdKey judgerKey;
 
-    @JSONField(name = "judgement_info", ordinal = 2)
-    private FastJsonJudgementInfo judgementInfo;
+    @JSONField(name = "value", ordinal = 2)
+    private double value;
 
-    @JSONField(name = "happened_date", ordinal = 3)
+    @JSONField(name = "detail", ordinal = 3)
+    private String detail;
+
+    @JSONField(name = "happened_date", ordinal = 4)
     private Date happenedDate;
 
     public FastJsonJudgedValue() {
     }
 
-    public FastJsonJudgedValue(FastJsonLongIdKey judgerKey, FastJsonJudgementInfo judgementInfo, Date happenedDate) {
+    public FastJsonJudgedValue(FastJsonLongIdKey judgerKey, double value, String detail, Date happenedDate) {
         this.judgerKey = judgerKey;
-        this.judgementInfo = judgementInfo;
+        this.value = value;
+        this.detail = detail;
         this.happenedDate = happenedDate;
     }
 
@@ -63,12 +69,20 @@ public class FastJsonJudgedValue implements Dto {
         this.judgerKey = judgerKey;
     }
 
-    public FastJsonJudgementInfo getJudgementInfo() {
-        return judgementInfo;
+    public double getValue() {
+        return value;
     }
 
-    public void setJudgementInfo(FastJsonJudgementInfo judgementInfo) {
-        this.judgementInfo = judgementInfo;
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public Date getHappenedDate() {
@@ -83,7 +97,8 @@ public class FastJsonJudgedValue implements Dto {
     public String toString() {
         return "FastJsonJudgedValue{" +
                 "judgerKey=" + judgerKey +
-                ", judgementInfo=" + judgementInfo +
+                ", value=" + value +
+                ", detail='" + detail + '\'' +
                 ", happenedDate=" + happenedDate +
                 '}';
     }

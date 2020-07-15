@@ -5,7 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.Sink;
-import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgementInfo;
+import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgedValue;
 import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -55,7 +55,7 @@ public class DctiKafkaSink implements Sink {
     public void sinkData(JudgedValue judgedValue) {
         DataInfo dataInfo = new DataInfo(
                 judgedValue.getJudgerKey().getLongId(),
-                JSON.toJSONString(FastJsonJudgementInfo.of(judgedValue.getJudgementInfo()),
+                JSON.toJSONString(FastJsonJudgedValue.of(judgedValue),
                         SerializerFeature.DisableCircularReferenceDetect),
                 judgedValue.getHappenedDate()
         );

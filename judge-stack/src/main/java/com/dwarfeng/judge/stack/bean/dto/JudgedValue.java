@@ -13,18 +13,20 @@ import java.util.Date;
  */
 public class JudgedValue implements Dto {
 
-    private static final long serialVersionUID = 1576579760877791081L;
+    private static final long serialVersionUID = 5245537708632282369L;
 
     private LongIdKey judgerKey;
-    private JudgementInfo judgementInfo;
+    private double value;
+    private String detail;
     private Date happenedDate;
 
     public JudgedValue() {
     }
 
-    public JudgedValue(LongIdKey judgerKey, JudgementInfo judgementInfo, Date happenedDate) {
+    public JudgedValue(LongIdKey judgerKey, double value, String detail, Date happenedDate) {
         this.judgerKey = judgerKey;
-        this.judgementInfo = judgementInfo;
+        this.value = value;
+        this.detail = detail;
         this.happenedDate = happenedDate;
     }
 
@@ -36,12 +38,20 @@ public class JudgedValue implements Dto {
         this.judgerKey = judgerKey;
     }
 
-    public JudgementInfo getJudgementInfo() {
-        return judgementInfo;
+    public double getValue() {
+        return value;
     }
 
-    public void setJudgementInfo(JudgementInfo judgementInfo) {
-        this.judgementInfo = judgementInfo;
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public Date getHappenedDate() {
@@ -56,7 +66,8 @@ public class JudgedValue implements Dto {
     public String toString() {
         return "JudgedValue{" +
                 "judgerKey=" + judgerKey +
-                ", judgementInfo=" + judgementInfo +
+                ", value=" + value +
+                ", detail='" + detail + '\'' +
                 ", happenedDate=" + happenedDate +
                 '}';
     }
