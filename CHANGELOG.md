@@ -12,6 +12,14 @@
   - com.dwarfeng.judge.stack.bean.entity.Section
 - 为实体对象新增属性。
   - com.dwarfeng.judge.stack.bean.entity.Section
+- 新增 DTO。
+  - com.dwarfeng.judge.stack.bean.dto.JudgerReport
+  - com.dwarfeng.judge.stack.bean.dto.JudgerResult
+  - com.dwarfeng.judge.stack.bean.dto.SectionReport
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgerReport
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport
+  - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonJudgerReport
+  - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSectionReport
 
 **注意：此版本还有大量的改动会导致该版本与低版本不兼容，所有不兼容的改动使用 (不兼容) 单独标注。**
 
