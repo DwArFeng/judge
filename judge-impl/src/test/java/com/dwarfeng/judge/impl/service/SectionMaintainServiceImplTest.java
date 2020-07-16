@@ -33,6 +33,8 @@ public class SectionMaintainServiceImplTest {
                     null,
                     "section-" + (i + 1),
                     true,
+                    0,
+                    1,
                     "test-section"
             );
             sections.add(section);

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class FastJsonSection implements Bean {
 
-    private static final long serialVersionUID = 5130460618264200912L;
+    private static final long serialVersionUID = -6607787681724250881L;
 
     public static FastJsonSection of(Section section) {
         if (Objects.isNull(section)) {
@@ -20,6 +20,8 @@ public class FastJsonSection implements Bean {
                 FastJsonLongIdKey.of(section.getKey()),
                 section.getName(),
                 section.isEnabled(),
+                section.getExpected(),
+                section.getVariance(),
                 section.getRemark()
         );
     }
@@ -33,16 +35,25 @@ public class FastJsonSection implements Bean {
     @JSONField(name = "enabled", ordinal = 3)
     private boolean enabled;
 
-    @JSONField(name = "remark", ordinal = 4)
+    @JSONField(name = "expected", ordinal = 4)
+    private double expected;
+
+    @JSONField(name = "variance", ordinal = 5)
+    private double variance;
+
+    @JSONField(name = "remark", ordinal = 6)
     private String remark;
 
     public FastJsonSection() {
     }
 
-    public FastJsonSection(FastJsonLongIdKey key, String name, boolean enabled, String remark) {
+    public FastJsonSection(
+            FastJsonLongIdKey key, String name, boolean enabled, double expected, double variance, String remark) {
         this.key = key;
         this.name = name;
         this.enabled = enabled;
+        this.expected = expected;
+        this.variance = variance;
         this.remark = remark;
     }
 
@@ -70,6 +81,22 @@ public class FastJsonSection implements Bean {
         this.enabled = enabled;
     }
 
+    public double getExpected() {
+        return expected;
+    }
+
+    public void setExpected(double expected) {
+        this.expected = expected;
+    }
+
+    public double getVariance() {
+        return variance;
+    }
+
+    public void setVariance(double variance) {
+        this.variance = variance;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -84,6 +111,8 @@ public class FastJsonSection implements Bean {
                 "key=" + key +
                 ", name='" + name + '\'' +
                 ", enabled=" + enabled +
+                ", expected=" + expected +
+                ", variance=" + variance +
                 ", remark='" + remark + '\'' +
                 '}';
     }

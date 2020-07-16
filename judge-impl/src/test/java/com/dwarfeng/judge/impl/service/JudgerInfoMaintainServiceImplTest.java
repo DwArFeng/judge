@@ -36,6 +36,8 @@ public class JudgerInfoMaintainServiceImplTest {
                 null,
                 "parent-section",
                 true,
+                0,
+                1,
                 "test-section"
         );
         judgerInfos = new ArrayList<>();

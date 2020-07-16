@@ -11,20 +11,25 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class Section implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = 2344580531092590473L;
+    private static final long serialVersionUID = -7044877098866471878L;
 
     private LongIdKey key;
     private String name;
     private boolean enabled;
+    private double expected;
+    private double variance;
     private String remark;
 
     public Section() {
     }
 
-    public Section(LongIdKey key, String name, boolean enabled, String remark) {
+    public Section(
+            LongIdKey key, String name, boolean enabled, double expected, double variance, String remark) {
         this.key = key;
         this.name = name;
         this.enabled = enabled;
+        this.expected = expected;
+        this.variance = variance;
         this.remark = remark;
     }
 
@@ -54,6 +59,22 @@ public class Section implements Entity<LongIdKey> {
         this.enabled = enabled;
     }
 
+    public double getExpected() {
+        return expected;
+    }
+
+    public void setExpected(double expected) {
+        this.expected = expected;
+    }
+
+    public double getVariance() {
+        return variance;
+    }
+
+    public void setVariance(double variance) {
+        this.variance = variance;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -68,6 +89,8 @@ public class Section implements Entity<LongIdKey> {
                 "key=" + key +
                 ", name='" + name + '\'' +
                 ", enabled=" + enabled +
+                ", expected=" + expected +
+                ", variance=" + variance +
                 ", remark='" + remark + '\'' +
                 '}';
     }

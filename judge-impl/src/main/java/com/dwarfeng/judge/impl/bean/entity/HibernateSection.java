@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_section")
 public class HibernateSection implements Bean {
 
-    private static final long serialVersionUID = -821143822988116128L;
+    private static final long serialVersionUID = 7973234211349406595L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -27,6 +27,12 @@ public class HibernateSection implements Bean {
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
+
+    @Column(name = "expected", nullable = false)
+    private double expected;
+
+    @Column(name = "variance", nullable = false)
+    private double variance;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -72,6 +78,22 @@ public class HibernateSection implements Bean {
         this.enabled = enabled;
     }
 
+    public double getExpected() {
+        return expected;
+    }
+
+    public void setExpected(double expected) {
+        this.expected = expected;
+    }
+
+    public double getVariance() {
+        return variance;
+    }
+
+    public void setVariance(double variance) {
+        this.variance = variance;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -102,6 +124,8 @@ public class HibernateSection implements Bean {
                 "longId=" + longId +
                 ", name='" + name + '\'' +
                 ", enabled=" + enabled +
+                ", expected=" + expected +
+                ", variance=" + variance +
                 ", remark='" + remark + '\'' +
                 ", driverInfos=" + driverInfos +
                 ", judgerInfos=" + judgerInfos +

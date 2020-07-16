@@ -8,12 +8,13 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.groups.Default;
 import java.util.Objects;
 
 public class WebInputSection implements Bean {
 
-    private static final long serialVersionUID = 7801737047743075703L;
+    private static final long serialVersionUID = -2768437209877111532L;
 
     public static Section toStackBean(WebInputSection webInputSection) {
         if (Objects.isNull(webInputSection)) {
@@ -24,6 +25,8 @@ public class WebInputSection implements Bean {
                 WebInputLongIdKey.toStackBean(webInputSection.getKey()),
                 webInputSection.getName(),
                 webInputSection.isEnabled(),
+                webInputSection.getExpected(),
+                webInputSection.getVariance(),
                 webInputSection.getRemark()
         );
     }
@@ -41,16 +44,26 @@ public class WebInputSection implements Bean {
     @JSONField(name = "enabled")
     private boolean enabled;
 
+    @JSONField(name = "expected")
+    private double expected;
+
+    @JSONField(name = "variance")
+    @Positive
+    private double variance;
+
     @JSONField(name = "remark")
     private String remark;
 
     public WebInputSection() {
     }
 
-    public WebInputSection(WebInputLongIdKey key, String name, boolean enabled, String remark) {
+    public WebInputSection(
+            WebInputLongIdKey key, String name, boolean enabled, double expected, double variance, String remark) {
         this.key = key;
         this.name = name;
         this.enabled = enabled;
+        this.expected = expected;
+        this.variance = variance;
         this.remark = remark;
     }
 
@@ -78,6 +91,22 @@ public class WebInputSection implements Bean {
         this.enabled = enabled;
     }
 
+    public double getExpected() {
+        return expected;
+    }
+
+    public void setExpected(double expected) {
+        this.expected = expected;
+    }
+
+    public double getVariance() {
+        return variance;
+    }
+
+    public void setVariance(double variance) {
+        this.variance = variance;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -92,6 +121,8 @@ public class WebInputSection implements Bean {
                 "key=" + key +
                 ", name='" + name + '\'' +
                 ", enabled=" + enabled +
+                ", expected=" + expected +
+                ", variance=" + variance +
                 ", remark='" + remark + '\'' +
                 '}';
     }

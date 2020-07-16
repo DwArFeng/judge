@@ -36,6 +36,8 @@ public class DriverInfoMaintainServiceImplTest {
                 null,
                 "parent-section",
                 true,
+                0,
+                1,
                 "test-section"
         );
         driverInfos = new ArrayList<>();
