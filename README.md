@@ -50,18 +50,19 @@
 
 1. 在一个独立的项目中，`node-all`与`node-assign`的数量加起来不大于1个，即一个项目中，只保留一个数据分析任务下达模块。
 2. 在任何情况下，`node-maintain`模块的数量允许部署任意多个。
-2. 在任何情况下，`node-evaluate`模块的数量允许部署任意多个。
+3. 在任何情况下，`node-evaluate`模块的数量允许部署任意多个。
 
 ---
 
 ## 特性
 
 - 部件实体关联多个驱动信息与判断信息，整个数据评估步骤如下进行。
-  1. 任务分配模块在启动后注册所有驱动。
+  1. 任务分配模块在启动后读取有效部件，并注册所有驱动。
   2. 驱动按照一定的规则定期给评估模块下发评估任务。
-  3. 评估模块接收到评估任务后，调取部件的所有判断器，放进评估消费者中。
-  4. 消费者调用判断器中的判断方法，该方法会拉取数据仓库中的数据，根据数据评估出一个介于0-1之间的数。
-  5. 被评估后生成的评估信息通过水槽进行下沉，最终逃出该架构，进入消息队列或其它组件。
+  3. 评估模块接收到评估任务后，调取任务的评估信息，放进评估消费者中。
+  4. 消费者根据评估信息对不仅进行评估，该方法会根据评估信息中的判断器以及部件的相关信息进行数据处理，
+  根据数据计算出一个部件报告。
+  5. 被评估后生成的部件报告通过水槽进行下沉，最终逃出该架构，进入消息队列或其它组件。
 - 可配置的部件、驱动信息、判断信息。
 - 一个系统中只能有一个任务分配模块，但评估模块是分布式的。
 - 相关的驱动器、判断器、数据仓库、水槽均可以自己定义并扩展。
@@ -70,13 +71,14 @@
 
 ## 项目的工作流程
 
-1. 项目运行后，数据指派框架会读取框架内的所有部件，并且取出这些部件的驱动器，进行注册。
+1. 项目运行后，评估任务指派处理器会获取项目中所有使能的部件，并且取出这些部件的驱动器，进行注册。
 
-2. 驱动器判断是否满足数据判断条件，一旦有个驱动器满足数据判断条件后，就会向数据评估模块下发数据评估任务。
+2. 驱动器判断是否满足数据判断条件，一旦有个驱动器满足数据判断条件后，就会向数据评估模块下发数据评估任务，
+任务的核心是数据评估信息 `com.dwarfeng.judge.stack.bean.EvaluateInfo`。
 
-3. 数据评估模块接收到评估任务后，从数据仓库中读取响应的数据，进行评估，并返回一个评估信息。
+3. 数据评估模块接收到评估任务后，根据评估信息中的内容进行具体的评估操作，并返回部件报告。。
 
-4. 下沉模块将获得的数据评估信息下沉，使得数据离开该框架，进入下一个环节。
+4. 下沉模块将获得的部件报告下沉，使得数据离开该框架，进入下一个环节。
 
 ---
 
@@ -86,7 +88,18 @@
 
 部件是judge框架中的根实体，judge中，所有的数据评价功能都是以部件为单位的。
 
-部件具有 主键，名称，备注 三个字段。一个部件拥有多个驱动器和多个判断器。
+一个部件拥有多个驱动器和多个判断器。
+
+部件的字段如下：
+
+|字段名称|备注|
+|---|---|
+|key|主键|
+|name|部件的名称|
+|enabled|部件是否被启用|
+|expected|部件所属的驱动器长期判断数据之和的期望值|
+|variance|部件所属的驱动器长期判断数据之和的方差值|
+|remark|备注|
 
 ### 驱动器的定义
 
@@ -99,7 +112,6 @@
 |---|---|
 |key|主键|
 |sectionKey|所属的部件的主键|
-|enabled|是否启用|
 |type|驱动器类型|
 |content|驱动器内容|
 |remark|备注|
@@ -119,7 +131,6 @@
 |---|---|
 |key|主键|
 |sectionKey|所属的部件的主键|
-|enabled|是否启用|
 |type|判断器类型|
 |content|判断器内容|
 |remark|备注|
@@ -127,6 +138,99 @@
 其中，判断器的类型和内容根据一定的规则开发，可以扩展。
 
 *详细的用法可以查阅判断器支持。*
+
+---
+
+## 评估过程以及结果的意义
+
+### 数据评估的方法的简要说明
+
+评估信息被传到评估信息消费者中，判断正式开始。
+
+评估信息中含有某个部件的部件信息，以及部件所属的判断器信息以及对应的判断器。
+首先将所有的判断器以及对应的判断器去除，让所有判断器执行判断方法，得出判断结果。
+其中，最重要的数据是`judgerResult.getValue()`。
+
+所有的判断器执行完判断操作后，将每个判断结果的`judgerResult.getValue()`加起来，得到`sum`。
+对`sum`使用高斯分布累积函数（本框架使用其近似函数代替），将其标准化，得到`normalization`。
+
+将以上的所有结果组合成`SectionReport`，并进行下沉。
+
+高斯分布累积函数的近似函数使用的是Sigmoid-like形式的逼近函数
+
+> 文章摘录:
+> 
+> 杨正瓴等发现了Sigmoid-like形式的逼近函数，如下:Q(x)=1/(1+exp(-kx))。当k=1.70174454109时，
+> 绝对误差maxQ(x)－Φ(x)小于0.00945722832868，是著名的Fisher z变换的误差的21.4%。
+> 
+> 参考文献: 
+> 
+> 王晶晶, 杨正瓴. 累积正态分布函数的逼近函数综述[J]. 计算机应用, 2014(A02):83-84.
+> 
+> YANGH, WUJ. Formal verification of RGPS-S[C] //Proceedings of the 2011 International Conference on Business 
+> Computing and Global Informatization. Washington, DC: IEEE Computer Society, 2011:599-602.
+>
+### 数据评估部分的详细代码
+
+```java
+@Component
+public static class EvaluateInfoConsumer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateInfoConsumer.class);
+
+    @Autowired
+    private RepositoryHandler repositoryHandler;
+    @Autowired
+    private SinkHandler sinkHandler;
+
+    public void consume(EvaluateInfo evaluateInfo) throws Exception {
+        TimeMeasurer tm = new TimeMeasurer();
+        tm.start();
+        double sum = 0;
+        List<JudgerReport> judgerReports = new ArrayList<>();
+        for (Map.Entry<JudgerInfo, Judger> entry : evaluateInfo.getJudgerMap().entrySet()) {
+            JudgerInfo judgerInfo = entry.getKey();
+            Judger judger = entry.getValue();
+            JudgerResult judgerResult = judger.judge(repositoryHandler);
+            sum += judgerResult.getValue();
+            judgerReports.add(new JudgerReport(
+                    judgerInfo.getKey(),
+                    judgerResult.getValue(),
+                    judgerResult.getMessage(),
+                    judgerResult.getContextData(),
+                    judgerInfo.getType(),
+                    judgerInfo.getContent()
+            ));
+        }
+        Section section = evaluateInfo.getSection();
+        double normalization = normalization(sum, section.getExpected(), section.getVariance());
+        sinkHandler.sinkData(new SectionReport(
+                section.getKey(),
+                new Date(),
+                normalization,
+                sum,
+                section.getExpected(),
+                section.getVariance(),
+                judgerReports
+        ));
+        tm.stop();
+        LOGGER.info("消费者完成消费, 部件主键为 " + section.getKey() + ", 评估值为 " +
+                normalization + ", 用时 " + tm.getTimeMs() + " 毫秒");
+    }
+
+    private double normalization(double sum, double expected, double variance) {
+        sum = (sum - expected) / Math.sqrt(variance);
+        return 1 / (1 + Math.exp(-1.70174454109 * sum));
+    }
+}
+```
+
+### 评估结果的意义
+
+如果一个部件下的所有判断器的评估得出的数值是独立的（在多次评估后表现出稳定的期望与方差），则部件标准化之后的数据
+具有统计学意义。
+
+假设一个部件报告中的标准化值为0.95，它代表着判断器判断的数据之和在当前的经验情形下，其数值大于所有情形中95%的情形。
 
 ---
 
