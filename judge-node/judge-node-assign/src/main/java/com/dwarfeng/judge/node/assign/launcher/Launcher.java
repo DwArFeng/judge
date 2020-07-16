@@ -26,7 +26,7 @@ public class Launcher {
         ctx.registerShutdownHook();
         ctx.start();
         LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
-        // 指派是否开启指派服务。
+        // 判断是否开启指派服务。
         long startAssignDelay = launcherSettingHandler.getStartAssignDelay();
         AssignQosService assignQosService = ctx.getBean(AssignQosService.class);
         if (startAssignDelay == 0) {

@@ -26,7 +26,7 @@ public class Launcher {
         ctx.registerShutdownHook();
         ctx.start();
         LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
-        // 评估是否开启评估服务。
+        // 判断是否开启评估服务。
         long startEvaluateDelay = launcherSettingHandler.getStartEvaluateDelay();
         EvaluateQosService evaluateQosService = ctx.getBean(EvaluateQosService.class);
         if (startEvaluateDelay == 0) {
