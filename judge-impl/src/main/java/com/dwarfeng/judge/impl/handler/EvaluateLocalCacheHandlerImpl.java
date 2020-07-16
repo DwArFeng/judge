@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.stack.bean.EvaluateInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
@@ -26,53 +27,16 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
     private JudgeContextFetcher judgeContextFetcher;
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
-    private final Map<LongIdKey, EvaluateContext> contextMap = new HashMap<>();
+    private final Map<LongIdKey, EvaluateInfo> infoMap = new HashMap<>();
     private final Set<LongIdKey> notExistSections = new HashSet<>();
 
     @Override
-    public boolean existsSection(LongIdKey sectionKey) throws HandlerException {
+    public EvaluateInfo getEvaluateInfo(LongIdKey sectionKey) throws HandlerException {
         try {
             lock.readLock().lock();
             try {
-                if (contextMap.containsKey(sectionKey)) {
-                    return true;
-                }
-                if (notExistSections.contains(sectionKey)) {
-                    return false;
-                }
-            } finally {
-                lock.readLock().unlock();
-            }
-            lock.writeLock().lock();
-            try {
-                if (contextMap.containsKey(sectionKey)) {
-                    return true;
-                }
-                if (notExistSections.contains(sectionKey)) {
-                    return false;
-                }
-                EvaluateContext evaluateContext = judgeContextFetcher.fetchContext(sectionKey);
-                if (Objects.isNull(evaluateContext)) {
-                    notExistSections.add(sectionKey);
-                    return false;
-                }
-                contextMap.put(sectionKey, evaluateContext);
-                return true;
-            } finally {
-                lock.writeLock().unlock();
-            }
-        } catch (Exception e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    @Override
-    public EvaluateContext getEvaluateContext(LongIdKey sectionKey) throws HandlerException {
-        try {
-            lock.readLock().lock();
-            try {
-                if (contextMap.containsKey(sectionKey)) {
-                    return contextMap.get(sectionKey);
+                if (infoMap.containsKey(sectionKey)) {
+                    return infoMap.get(sectionKey);
                 }
                 if (notExistSections.contains(sectionKey)) {
                     return null;
@@ -82,16 +46,16 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
             }
             lock.writeLock().lock();
             try {
-                if (contextMap.containsKey(sectionKey)) {
-                    return contextMap.get(sectionKey);
+                if (infoMap.containsKey(sectionKey)) {
+                    return infoMap.get(sectionKey);
                 }
                 if (notExistSections.contains(sectionKey)) {
                     return null;
                 }
-                EvaluateContext evaluateContext = judgeContextFetcher.fetchContext(sectionKey);
-                if (Objects.nonNull(evaluateContext)) {
-                    contextMap.put(sectionKey, evaluateContext);
-                    return evaluateContext;
+                EvaluateInfo evaluateInfo = judgeContextFetcher.fetchInfo(sectionKey);
+                if (Objects.nonNull(evaluateInfo)) {
+                    infoMap.put(sectionKey, evaluateInfo);
+                    return evaluateInfo;
                 }
                 notExistSections.add(sectionKey);
                 return null;
@@ -107,7 +71,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
     public void clear() {
         lock.writeLock().lock();
         try {
-            contextMap.clear();
+            infoMap.clear();
             notExistSections.clear();
         } finally {
             lock.writeLock().unlock();
@@ -127,7 +91,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
 
         @BehaviorAnalyse
         @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-        public EvaluateContext fetchContext(LongIdKey sectionKey) throws Exception {
+        public EvaluateInfo fetchInfo(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;
             }
@@ -136,15 +100,15 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
             List<JudgerInfo> judgerInfos = judgerInfoMaintainService.lookup(
                     JudgerInfoMaintainService.CHILD_FOR_SECTION, new Object[]{sectionKey}).getData();
 
-            List<Judger> judgers = new ArrayList<>();
+            Map<JudgerInfo, Judger> judgerMap = new HashMap<>();
 
             for (JudgerInfo judgerInfo : judgerInfos) {
-                judgers.add(judgerHandler.make(judgerInfo));
+                judgerMap.put(judgerInfo, judgerHandler.make(judgerInfo));
             }
 
-            return new EvaluateContext(
+            return new EvaluateInfo(
                     section,
-                    judgers
+                    judgerMap
             );
         }
     }

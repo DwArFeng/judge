@@ -1,13 +1,9 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
-import com.dwarfeng.judge.stack.bean.entity.Section;
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.judge.stack.bean.AssignInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
-
-import java.util.List;
 
 /**
  * 指派用本地缓存处理器。
@@ -21,21 +17,13 @@ import java.util.List;
 public interface AssignLocalCacheHandler extends Handler {
 
     /**
-     * 获取所有的部件主键。
-     *
-     * @return 所有的部件主键组成的列表。
-     * @throws HandlerException 处理器异常。
-     */
-    List<LongIdKey> getSectionKeys() throws HandlerException;
-
-    /**
-     * 获取指定部件的指派上下文。
+     * 获取指定部件的指派信息。
      *
      * @param sectionKey 指定部件的指派上下文，或者是null。
-     * @return 指定部件的指派上下文。
+     * @return 指定部件的指派信息。
      * @throws HandlerException 处理器异常。
      */
-    AssignContext getAssignContext(LongIdKey sectionKey) throws HandlerException;
+    AssignInfo getAssignInfo(LongIdKey sectionKey) throws HandlerException;
 
     /**
      * 清除本地缓存。
@@ -43,50 +31,4 @@ public interface AssignLocalCacheHandler extends Handler {
      * @throws HandlerException 处理器异常。
      */
     void clear() throws HandlerException;
-
-    /**
-     * 指派上下文。
-     *
-     * @author DwArFeng
-     * @since beta-1.0.0
-     */
-    class AssignContext implements Bean {
-
-        private static final long serialVersionUID = -1269757566394917803L;
-
-        private Section section;
-        private List<DriverInfo> driverInfos;
-
-        public AssignContext() {
-        }
-
-        public AssignContext(Section section, List<DriverInfo> driverInfos) {
-            this.section = section;
-            this.driverInfos = driverInfos;
-        }
-
-        public Section getSection() {
-            return section;
-        }
-
-        public void setSection(Section section) {
-            this.section = section;
-        }
-
-        public List<DriverInfo> getDriverInfos() {
-            return driverInfos;
-        }
-
-        public void setDriverInfos(List<DriverInfo> driverInfos) {
-            this.driverInfos = driverInfos;
-        }
-
-        @Override
-        public String toString() {
-            return "AssignContext{" +
-                    "section=" + section +
-                    ", driverInfos=" + driverInfos +
-                    '}';
-        }
-    }
 }

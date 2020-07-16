@@ -3,8 +3,8 @@ package com.dwarfeng.judge.impl.handler.sink;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.judge.impl.handler.Sink;
-import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgedValue;
-import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
+import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -50,8 +50,8 @@ public class NativeKafkaSink implements Sink {
 
     @Override
     @Transactional(transactionManager = "nativeKafkaSink.kafkaTransactionManager")
-    public void sinkData(JudgedValue judgedValue) {
-        String message = JSON.toJSONString(FastJsonJudgedValue.of(judgedValue), SerializerFeature.WriteClassName);
+    public void sinkData(SectionReport sectionReport) {
+        String message = JSON.toJSONString(FastJsonSectionReport.of(sectionReport), SerializerFeature.WriteClassName);
         kafkaTemplate.send(topic, message);
     }
 

@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.judge.stack.exception.SinkException;
 
 /**
@@ -20,10 +20,10 @@ public interface Sink {
     boolean supportType(String type);
 
     /**
-     * 下沉数据。
+     * 下沉部件报告。
      *
-     * @param judgedValue 被判断数据。
+     * @param sectionReport 部件报告。
      * @throws SinkException 水槽异常。
      */
-    void sinkData(JudgedValue judgedValue) throws SinkException;
+    void sinkData(SectionReport sectionReport) throws SinkException;
 }

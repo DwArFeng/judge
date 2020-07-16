@@ -1,11 +1,14 @@
 package com.dwarfeng.judge.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * JSFixed FastJson 部件报告。
@@ -15,7 +18,23 @@ import java.util.List;
  */
 public class JSFixedFastJsonSectionReport implements Dto {
 
-    private static final long serialVersionUID = -4944476960014578413L;
+    private static final long serialVersionUID = 2666078560525545111L;
+
+    public static JSFixedFastJsonSectionReport of(SectionReport sectionReport) {
+        if (Objects.isNull(sectionReport)) {
+            return null;
+        }
+        return new JSFixedFastJsonSectionReport(
+                JSFixedFastJsonLongIdKey.of(sectionReport.getSectionKey()),
+                sectionReport.getHappenedDate(),
+                sectionReport.getNormalization(),
+                sectionReport.getSum(),
+                sectionReport.getExpected(),
+                sectionReport.getVariance(),
+                sectionReport.getJudgerReports().stream().map(JSFixedFastJsonJudgerReport::of)
+                        .collect(Collectors.toList())
+        );
+    }
 
     @JSONField(name = "section_key", ordinal = 1)
     private JSFixedFastJsonLongIdKey sectionKey;

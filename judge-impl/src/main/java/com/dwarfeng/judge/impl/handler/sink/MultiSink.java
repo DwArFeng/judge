@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler.sink;
 
 import com.dwarfeng.judge.impl.handler.Sink;
-import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,10 +51,10 @@ public class MultiSink implements Sink {
     }
 
     @Override
-    public void sinkData(JudgedValue judgedValue) {
+    public void sinkData(SectionReport sectionReport) {
         for (Sink delegate : delegates) {
             try {
-                delegate.sinkData(judgedValue);
+                delegate.sinkData(sectionReport);
             } catch (Exception e) {
                 LOGGER.warn("代理水槽推送数据失败，异常信息如下: ", e);
             }

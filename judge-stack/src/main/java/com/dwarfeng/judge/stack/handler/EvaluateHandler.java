@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.judge.stack.bean.EvaluateInfo;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
@@ -35,10 +35,10 @@ public interface EvaluateHandler extends Handler {
     void disable() throws HandlerException;
 
     /**
-     * 对指定的部件进行评估。
+     * 对指定的评估信息进行评估。
      *
-     * @param sectionKey 部件的主键。
+     * @param evaluateInfo 指定的评估信息。
      * @throws HandlerException 处理器异常。
      */
-    void evaluate(LongIdKey sectionKey) throws HandlerException;
+    void evaluate(EvaluateInfo evaluateInfo) throws HandlerException;
 }

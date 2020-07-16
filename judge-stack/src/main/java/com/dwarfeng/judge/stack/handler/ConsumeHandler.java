@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.stack.handler;
 
+import com.dwarfeng.judge.stack.bean.EvaluateInfo;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
@@ -34,12 +35,12 @@ public interface ConsumeHandler extends Handler {
     void stop() throws HandlerException;
 
     /**
-     * 使消费处理器接受指定的判断器。
+     * 使消费处理器接受指定的评价信息。
      *
-     * @param judger 指定的判断器。
+     * @param evaluateInfo 指定的评价信息。
      * @throws HandlerException 处理器异常。
      */
-    void accept(Judger judger) throws HandlerException;
+    void accept(EvaluateInfo evaluateInfo) throws HandlerException;
 
     /**
      * 获取缓冲器的容量。

@@ -20,6 +20,7 @@
   - com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport
   - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonJudgerReport
   - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSectionReport
+- (不兼容) 重写数据判断逻辑。
 
 **注意：此版本还有大量的改动会导致该版本与低版本不兼容，所有不兼容的改动使用 (不兼容) 单独标注。**
 

@@ -1,13 +1,13 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.stack.bean.AssignInfo;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
+import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.exception.DriverException;
 import com.dwarfeng.judge.stack.handler.AssignHandler;
 import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
-import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler.AssignContext;
 import com.dwarfeng.judge.stack.handler.Driver;
-import com.dwarfeng.judge.stack.handler.DriverHandler;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class AssignHandlerImpl implements AssignHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssignHandlerImpl.class);
 
     @Autowired
-    private DriverHandler driverHandler;
+    private SectionMaintainService sectionMaintainService;
     @Autowired
     private AssignLocalCacheHandler localCacheHandler;
 
@@ -48,33 +48,18 @@ public class AssignHandlerImpl implements AssignHandler {
         try {
             LOGGER.info("指派任务上线...");
             if (!onlineFlag) {
-                List<LongIdKey> sectionKeys = localCacheHandler.getSectionKeys();
-                List<DriverInfo> driverInfos = new ArrayList<>();
-                // 获取所有驱动信息。
-                for (LongIdKey sectionKey : sectionKeys) {
-                    AssignContext assignContext = localCacheHandler.getAssignContext(sectionKey);
-                    if (Objects.isNull(assignContext)) {
-                        throw new DriverException("无法在本地缓存中找到有效的驱动上下文: " + sectionKey);
-                    }
-                    driverInfos.addAll(assignContext.getDriverInfos());
-                }
-                Map<DriverInfo, Driver> driverMap = new HashMap<>();
-                // 确认所有的驱动信息全部存在。
-                for (DriverInfo driverInfo : driverInfos) {
-                    Driver driver = driverHandler.find(driverInfo.getType());
-                    driverMap.put(driverInfo, driver);
-                }
-                // 注册所有驱动。
+                List<Section> sections = sectionMaintainService.lookup(
+                        SectionMaintainService.ENABLED, new Object[]{}).getData();
+                // 注册所有驱动成功标志。
                 boolean successFlag = true;
-                for (Map.Entry<DriverInfo, Driver> entry : driverMap.entrySet()) {
-                    DriverInfo driverInfo = entry.getKey();
-                    Driver driver = entry.getValue();
-                    try {
-                        driver.register(driverInfo);
-                        usedDrivers.add(driver);
-                    } catch (Exception e) {
+                // 获取所有驱动信息。
+                for (Section section : sections) {
+                    AssignInfo assignInfo = localCacheHandler.getAssignInfo(section.getKey());
+                    if (Objects.isNull(assignInfo)) {
+                        throw new DriverException("无法在本地缓存中找到有效的驱动上下文: " + section.getKey());
+                    }
+                    if (!registerDriver(assignInfo)) {
                         successFlag = false;
-                        LOGGER.warn("驱动信息 " + driverInfo + " 注册失败，将忽略此条注册信息", e);
                     }
                 }
                 if (successFlag) {
@@ -91,6 +76,23 @@ public class AssignHandlerImpl implements AssignHandler {
         } finally {
             lock.unlock();
         }
+    }
+
+    private boolean registerDriver(AssignInfo assignInfo) {
+        boolean successFlag = true;
+        Map<DriverInfo, Driver> driverMap = assignInfo.getDriverMap();
+        for (Map.Entry<DriverInfo, Driver> entry : driverMap.entrySet()) {
+            DriverInfo driverInfo = entry.getKey();
+            Driver driver = entry.getValue();
+            try {
+                driver.register(driverInfo);
+                usedDrivers.add(driver);
+            } catch (Exception e) {
+                successFlag = false;
+                LOGGER.warn("驱动信息 " + driverInfo + " 注册失败，将忽略此条注册信息", e);
+            }
+        }
+        return successFlag;
     }
 
     @Override

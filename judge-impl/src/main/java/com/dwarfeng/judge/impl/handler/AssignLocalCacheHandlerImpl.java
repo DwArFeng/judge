@@ -1,8 +1,11 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.stack.bean.AssignInfo;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
+import com.dwarfeng.judge.stack.handler.Driver;
+import com.dwarfeng.judge.stack.handler.DriverHandler;
 import com.dwarfeng.judge.stack.service.DriverInfoMaintainService;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
@@ -15,55 +18,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("DuplicatedCode")
 @Component
 public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
 
     @Autowired
-    private DriveContextFetcher driveContextFetcher;
+    private DriveInfoFetcher driveInfoFetcher;
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
-    private final Map<LongIdKey, AssignContext> contextMap = new HashMap<>();
+    private final Map<LongIdKey, AssignInfo> infoMap = new HashMap<>();
     private final Set<LongIdKey> notExistSections = new HashSet<>();
-    private final List<LongIdKey> allSectionKeys = new ArrayList<>();
 
     @Override
-    public List<LongIdKey> getSectionKeys() throws HandlerException {
+    public AssignInfo getAssignInfo(LongIdKey sectionKey) throws HandlerException {
         try {
             lock.readLock().lock();
             try {
-                if (!allSectionKeys.isEmpty()) {
-                    return new ArrayList<>(allSectionKeys);
-                }
-            } finally {
-                lock.readLock().unlock();
-            }
-            lock.writeLock().lock();
-            try {
-                if (!allSectionKeys.isEmpty()) {
-                    return new ArrayList<>(allSectionKeys);
-                }
-                List<LongIdKey> fetchedKeys = driveContextFetcher.fetchAllSectionKeys();
-                allSectionKeys.clear();
-                allSectionKeys.addAll(fetchedKeys);
-                return new ArrayList<>(allSectionKeys);
-            } finally {
-                lock.writeLock().unlock();
-            }
-        } catch (Exception e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    @Override
-    public AssignContext getAssignContext(LongIdKey sectionKey) throws HandlerException {
-        try {
-            lock.readLock().lock();
-            try {
-                if (contextMap.containsKey(sectionKey)) {
-                    return contextMap.get(sectionKey);
+                if (infoMap.containsKey(sectionKey)) {
+                    return infoMap.get(sectionKey);
                 }
                 if (notExistSections.contains(sectionKey)) {
                     return null;
@@ -73,16 +46,16 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
             }
             lock.writeLock().lock();
             try {
-                if (contextMap.containsKey(sectionKey)) {
-                    return contextMap.get(sectionKey);
+                if (infoMap.containsKey(sectionKey)) {
+                    return infoMap.get(sectionKey);
                 }
                 if (notExistSections.contains(sectionKey)) {
                     return null;
                 }
-                AssignContext assignContext = driveContextFetcher.fetchContext(sectionKey);
-                if (Objects.nonNull(assignContext)) {
-                    contextMap.put(sectionKey, assignContext);
-                    return assignContext;
+                AssignInfo assignInfo = driveInfoFetcher.fetchInfo(sectionKey);
+                if (Objects.nonNull(assignInfo)) {
+                    infoMap.put(sectionKey, assignInfo);
+                    return assignInfo;
                 }
                 notExistSections.add(sectionKey);
                 return null;
@@ -98,32 +71,27 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
     public void clear() {
         lock.writeLock().lock();
         try {
-            contextMap.clear();
+            infoMap.clear();
             notExistSections.clear();
-            allSectionKeys.clear();
         } finally {
             lock.writeLock().unlock();
         }
     }
 
     @Component
-    public static class DriveContextFetcher {
+    public static class DriveInfoFetcher {
 
         @Autowired
         private SectionMaintainService sectionMaintainService;
         @Autowired
         private DriverInfoMaintainService driverInfoMaintainService;
 
-        @BehaviorAnalyse
-        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-        public List<LongIdKey> fetchAllSectionKeys() throws Exception {
-            return sectionMaintainService.lookup().getData()
-                    .stream().map(Section::getKey).collect(Collectors.toList());
-        }
+        @Autowired
+        private DriverHandler driverHandler;
 
         @BehaviorAnalyse
         @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-        public AssignContext fetchContext(LongIdKey sectionKey) throws Exception {
+        public AssignInfo fetchInfo(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;
             }
@@ -132,9 +100,15 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
             List<DriverInfo> driverInfos = driverInfoMaintainService.lookup(
                     DriverInfoMaintainService.CHILD_FOR_SECTION, new Object[]{sectionKey}).getData();
 
-            return new AssignContext(
+            Map<DriverInfo, Driver> driverMap = new HashMap<>();
+
+            for (DriverInfo driverInfo : driverInfos) {
+                driverMap.put(driverInfo, driverHandler.find(driverInfo.getType()));
+            }
+
+            return new AssignInfo(
                     section,
-                    driverInfos
+                    driverMap
             );
         }
     }

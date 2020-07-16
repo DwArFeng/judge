@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.judge.stack.handler.SinkHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 public class SinkHandlerImpl implements SinkHandler {
 
     @Autowired(required = false)
-    private List<Sink> sinks = new ArrayList<>();
+    private final List<Sink> sinks = new ArrayList<>();
 
     @Value("${sink.type}")
     private String sinkType;
@@ -29,9 +29,9 @@ public class SinkHandlerImpl implements SinkHandler {
     }
 
     @Override
-    public void sinkData(JudgedValue judgedValue) throws HandlerException {
+    public void sinkData(SectionReport sectionReport) throws HandlerException {
         try {
-            sink.sinkData(judgedValue);
+            sink.sinkData(sectionReport);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {

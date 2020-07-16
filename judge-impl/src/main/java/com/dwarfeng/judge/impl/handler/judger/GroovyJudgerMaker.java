@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler.judger;
 
 import com.dwarfeng.judge.impl.handler.JudgerMaker;
-import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.stack.bean.dto.JudgerResult;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;
 import com.dwarfeng.judge.stack.exception.JudgerMakeException;
@@ -64,7 +64,7 @@ public class GroovyJudgerMaker implements JudgerMaker {
         }
 
         @Override
-        public JudgedValue judge(RepositoryHandler repositoryHandler) throws JudgerException {
+        public JudgerResult judge(RepositoryHandler repositoryHandler) throws JudgerException {
             try {
                 return processor.judge(judgerInfoKey, repositoryHandler);
             } catch (JudgerException e) {
@@ -110,17 +110,11 @@ public class GroovyJudgerMaker implements JudgerMaker {
         /**
          * 对仓库处理器中的数据做出判断，并生成判断值。
          *
-         * <pre>数据信息有如下要求
-         * 1. 主键是对应的判断器信息的主键。
-         * 2. 发生时间是该数据的生成时间。
-         * 3. 数据值是介于0.0-1.0之间的浮点数。
-         * </pre>
-         *
          * @param judgerInfoKey     判断器的主键。
          * @param repositoryHandler 指定的仓库处理器。
          * @return 判断值。
          * @throws JudgerException 判断异常。
          */
-        JudgedValue judge(LongIdKey judgerInfoKey, RepositoryHandler repositoryHandler) throws JudgerException;
+        JudgerResult judge(LongIdKey judgerInfoKey, RepositoryHandler repositoryHandler) throws JudgerException;
     }
 }

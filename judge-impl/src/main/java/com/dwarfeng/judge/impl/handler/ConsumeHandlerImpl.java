@@ -2,7 +2,12 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.dutil.develop.backgr.AbstractTask;
-import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.stack.bean.EvaluateInfo;
+import com.dwarfeng.judge.stack.bean.dto.JudgerReport;
+import com.dwarfeng.judge.stack.bean.dto.JudgerResult;
+import com.dwarfeng.judge.stack.bean.dto.SectionReport;
+import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
+import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
@@ -11,13 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -29,11 +35,12 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumeHandlerImpl.class);
 
     @Autowired
+    private ApplicationContext applicationContext;
+
+    @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
     @Autowired
-    private RepositoryHandler repositoryHandler;
-    @Autowired
-    private SinkHandler sinkHandler;
+    private EvaluateInfoConsumer evaluateInfoConsumer;
 
     private final List<ConsumeTask> processingConsumeTasks = new ArrayList<>();
     private final List<ConsumeTask> endingConsumeTasks = new ArrayList<>();
@@ -72,8 +79,11 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             if (!startFlag) {
                 LOGGER.info("Judge consumer handler 开启消费线程...");
                 consumeBuffer.block();
+                EvaluateInfoConsumer evaluateInfoConsumer = new EvaluateInfoConsumer(
+
+                );
                 for (int i = 0; i < thread; i++) {
-                    ConsumeTask consumeTask = new ConsumeTask(consumeBuffer, repositoryHandler, sinkHandler);
+                    ConsumeTask consumeTask = new ConsumeTask();
                     threadPoolTaskExecutor.execute(consumeTask);
                     processingConsumeTasks.add(consumeTask);
                 }
@@ -94,11 +104,11 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                 endingConsumeTasks.addAll(processingConsumeTasks);
                 processingConsumeTasks.clear();
                 consumeBuffer.unblock();
-                Judger judger;
-                while (Objects.nonNull(judger = consumeBuffer.poll())) {
+                EvaluateInfo evaluateInfo;
+                while (Objects.nonNull(evaluateInfo = consumeBuffer.poll())) {
                     try {
                         LOGGER.info("判断 judge consume handler 中剩余的元素 1 个...");
-                        consume(judger);
+                        evaluateInfoConsumer.consume(evaluateInfo);
                     } catch (Exception e) {
                         LOGGER.warn("进行判断工作时发生异常, 抛弃 1 次判断", e);
                     }
@@ -125,20 +135,9 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
-    private void consume(Judger judger) throws Exception {
-        TimeMeasurer tm = new TimeMeasurer();
-        tm.start();
-        JudgedValue judgedValue = judger.judge(repositoryHandler);
-        sinkHandler.sinkData(judgedValue);
-        tm.stop();
-        LOGGER.info("消费者完成消费, 判断器主键为 " + judgedValue.getJudgerKey() + ", 判断值为 " +
-                judgedValue.getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
-    }
-
     @Override
-    public void accept(Judger judger) {
-        consumeBuffer.accept(judger);
+    public void accept(EvaluateInfo evaluateInfo) {
+        consumeBuffer.accept(evaluateInfo);
     }
 
     @Override
@@ -171,7 +170,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             if (startFlag) {
                 if (delta > 0) {
                     for (int i = 0; i < delta; i++) {
-                        ConsumeTask consumeTask = new ConsumeTask(consumeBuffer, repositoryHandler, sinkHandler);
+                        ConsumeTask consumeTask = applicationContext.getBean(ConsumeTask.class);
                         threadPoolTaskExecutor.execute(consumeTask);
                         processingConsumeTasks.add(consumeTask);
                     }
@@ -206,32 +205,30 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         }
     }
 
-    private static final class ConsumeTask extends AbstractTask {
+    @Component
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public static class ConsumeTask extends AbstractTask {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(ConsumeTask.class);
 
-        private final ConsumeBuffer consumeBuffer;
-        private final RepositoryHandler repositoryHandler;
-        private final SinkHandler sinkHandler;
-        private final AtomicBoolean runningFlag = new AtomicBoolean(true);
+        @Autowired
+        private ConsumeBuffer consumeBuffer;
+        @Autowired
+        private EvaluateInfoConsumer evaluateInfoConsumer;
 
-        public ConsumeTask(ConsumeBuffer consumeBuffer, RepositoryHandler repositoryHandler, SinkHandler sinkHandler) {
-            this.consumeBuffer = consumeBuffer;
-            this.repositoryHandler = repositoryHandler;
-            this.sinkHandler = sinkHandler;
-        }
+        private final AtomicBoolean runningFlag = new AtomicBoolean(true);
 
         @Override
         protected void todo() {
             while (runningFlag.get()) {
-                Judger judger = null;
+                EvaluateInfo evaluateInfo = null;
                 try {
-                    judger = consumeBuffer.poll();
-                    if (Objects.nonNull(judger)) {
-                        consume(judger);
+                    evaluateInfo = consumeBuffer.poll();
+                    if (Objects.nonNull(evaluateInfo)) {
+                        evaluateInfoConsumer.consume(evaluateInfo);
                     }
                 } catch (Exception e) {
-                    if (Objects.nonNull(judger)) {
+                    if (Objects.nonNull(evaluateInfo)) {
                         LOGGER.warn("进行判断工作时发生异常, 抛弃 1 次判断", e);
                     }
                 }
@@ -242,30 +239,20 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         public void shutdown() {
             runningFlag.set(false);
         }
-
-        @SuppressWarnings("DuplicatedCode")
-        private void consume(Judger judger) throws Exception {
-            TimeMeasurer tm = new TimeMeasurer();
-            tm.start();
-            JudgedValue judgedValue = judger.judge(repositoryHandler);
-            sinkHandler.sinkData(judgedValue);
-            tm.stop();
-            LOGGER.info("消费者完成消费, 判断器主键为 " + judgedValue.getJudgerKey() + ", 判断值为 " +
-                    judgedValue.getValue() + ", 用时 " + tm.getTimeMs() + " 毫秒");
-        }
     }
 
-    private static class ConsumeBuffer {
+    @Component
+    public static class ConsumeBuffer {
 
         private final Lock lock = new ReentrantLock();
         private final Condition provideCondition = lock.newCondition();
         private final Condition consumeCondition = lock.newCondition();
-        private final List<Judger> buffer = new ArrayList<>();
+        private final List<EvaluateInfo> buffer = new ArrayList<>();
 
         private int bufferSize;
         private boolean blockEnabled = true;
 
-        public void accept(Judger judger) {
+        public void accept(EvaluateInfo evaluateInfo) {
             lock.lock();
             try {
                 while (buffer.size() >= bufferSize) {
@@ -275,14 +262,14 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                     }
                 }
 
-                buffer.add(judger);
+                buffer.add(evaluateInfo);
                 consumeCondition.signalAll();
             } finally {
                 lock.unlock();
             }
         }
 
-        public Judger poll() {
+        public EvaluateInfo poll() {
             lock.lock();
             try {
                 while (buffer.isEmpty() && blockEnabled) {
@@ -296,9 +283,9 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                 if (buffer.isEmpty()) {
                     return null;
                 } else {
-                    Judger judger = buffer.remove(0);
+                    EvaluateInfo evaluateInfo = buffer.remove(0);
                     provideCondition.signalAll();
-                    return judger;
+                    return evaluateInfo;
                 }
             } finally {
                 lock.unlock();
@@ -354,6 +341,57 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             } finally {
                 lock.unlock();
             }
+        }
+    }
+
+    @Component
+    public static class EvaluateInfoConsumer {
+
+        private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateInfoConsumer.class);
+
+        @Autowired
+        private RepositoryHandler repositoryHandler;
+        @Autowired
+        private SinkHandler sinkHandler;
+
+        public void consume(EvaluateInfo evaluateInfo) throws Exception {
+            TimeMeasurer tm = new TimeMeasurer();
+            tm.start();
+            double sum = 0;
+            List<JudgerReport> judgerReports = new ArrayList<>();
+            for (Map.Entry<JudgerInfo, Judger> entry : evaluateInfo.getJudgerMap().entrySet()) {
+                JudgerInfo judgerInfo = entry.getKey();
+                Judger judger = entry.getValue();
+                JudgerResult judgerResult = judger.judge(repositoryHandler);
+                sum += judgerResult.getValue();
+                judgerReports.add(new JudgerReport(
+                        judgerInfo.getKey(),
+                        judgerResult.getValue(),
+                        judgerResult.getMessage(),
+                        judgerResult.getContextData(),
+                        judgerInfo.getType(),
+                        judgerInfo.getContent()
+                ));
+            }
+            Section section = evaluateInfo.getSection();
+            double normalization = normalization(sum, section.getExpected(), section.getVariance());
+            sinkHandler.sinkData(new SectionReport(
+                    section.getKey(),
+                    new Date(),
+                    normalization,
+                    sum,
+                    section.getExpected(),
+                    section.getVariance(),
+                    judgerReports
+            ));
+            tm.stop();
+            LOGGER.info("消费者完成消费, 部件主键为 " + section.getKey() + ", 判断值为 " +
+                    normalization + ", 用时 " + tm.getTimeMs() + " 毫秒");
+        }
+
+        private double normalization(double sum, double expected, double variance) {
+            sum = (sum - expected) / Math.sqrt(variance);
+            return 1 / (1 + Math.exp(-1.70174454109 * sum));
         }
     }
 }

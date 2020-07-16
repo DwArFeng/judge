@@ -5,8 +5,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.impl.handler.Sink;
-import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgedValue;
-import com.dwarfeng.judge.stack.bean.dto.JudgedValue;
+import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
+import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -52,12 +52,12 @@ public class DctiKafkaSink implements Sink {
 
     @Override
     @Transactional(transactionManager = "dctiKafkaSink.kafkaTransactionManager")
-    public void sinkData(JudgedValue judgedValue) {
+    public void sinkData(SectionReport sectionReport) {
         DataInfo dataInfo = new DataInfo(
-                judgedValue.getJudgerKey().getLongId(),
-                JSON.toJSONString(FastJsonJudgedValue.of(judgedValue),
+                sectionReport.getSectionKey().getLongId(),
+                JSON.toJSONString(FastJsonSectionReport.of(sectionReport),
                         SerializerFeature.DisableCircularReferenceDetect),
-                judgedValue.getHappenedDate()
+                sectionReport.getHappenedDate()
         );
         kafkaTemplate.send(topic, DataInfoUtil.toMessage(dataInfo));
     }
