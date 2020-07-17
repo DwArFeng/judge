@@ -7,8 +7,6 @@
 - (不兼容) 更改 com.dwarfeng.judge.stack.bean.dto.JudgedValue 实体结构。
 - (不兼容) 更改实体对象的结构。
   - 该改动包含对框架分配任务、评估任务的更改。
-  - com.dwarfeng.judge.stack.bean.entity.DriverInfo
-  - com.dwarfeng.judge.stack.bean.entity.JudgerInfo
   - com.dwarfeng.judge.stack.bean.entity.Section
 - 为实体对象新增属性。
   - com.dwarfeng.judge.stack.bean.entity.Section
@@ -64,7 +62,7 @@
 
 - 升级subgrade依赖版本至1.1.1.b。
 - 更改 RepositoryHandler 的接口结构。
-  - 这将导致该版本与上一个版本直接的不兼容。
+  - 这将导致该版本与上一个版本不兼容。
   - 因此改动，程序的部分功能被去除，详见功能移除列表。
 - 规范停止脚本 judge-stop.sh。
 - 增强 com.dwarfeng.judge.impl.handler.repository.RandomRepository。

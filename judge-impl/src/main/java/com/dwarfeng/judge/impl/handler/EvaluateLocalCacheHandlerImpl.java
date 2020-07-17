@@ -6,7 +6,7 @@ import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.JudgerHandler;
-import com.dwarfeng.judge.stack.service.JudgerInfoMaintainService;
+import com.dwarfeng.judge.stack.service.EnabledJudgerInfoLookupService;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -84,7 +84,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
         @Autowired
         private SectionMaintainService sectionMaintainService;
         @Autowired
-        private JudgerInfoMaintainService judgerInfoMaintainService;
+        private EnabledJudgerInfoLookupService enabledJudgerInfoLookupService;
 
         @Autowired
         private JudgerHandler judgerHandler;
@@ -97,8 +97,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
             }
 
             Section section = sectionMaintainService.get(sectionKey);
-            List<JudgerInfo> judgerInfos = judgerInfoMaintainService.lookup(
-                    JudgerInfoMaintainService.CHILD_FOR_SECTION, new Object[]{sectionKey}).getData();
+            List<JudgerInfo> judgerInfos = enabledJudgerInfoLookupService.getEnabledJudgerInfos(sectionKey);
 
             Map<JudgerInfo, Judger> judgerMap = new HashMap<>();
 

@@ -4,7 +4,7 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--扫描service的实现包。 -->
@@ -19,7 +19,6 @@
     </context:component-scan>
     <!--扫描handler的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler">
-        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.ConsumeHandler"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.EvaluateHandler"/>
         <context:exclude-filter type="assignable"
                                 expression="com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler"/>
@@ -36,6 +35,7 @@
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.judger.*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.repository.*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.sink.*$"/>
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.ConsumeHandlerImpl.*$"/>
     </context:component-scan>
     <!--扫描dao的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.dao"/>

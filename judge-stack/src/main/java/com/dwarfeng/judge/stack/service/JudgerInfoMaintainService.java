@@ -17,4 +17,5 @@ public interface JudgerInfoMaintainService extends BatchCrudService<LongIdKey, J
 
     String CHILD_FOR_SECTION = "child_for_section";
     String CHILD_FOR_SECTION_SET = "child_for_section_set";
+    String ENABLED_CHILD_FOR_SECTION = "enabled_child_for_section";
 }

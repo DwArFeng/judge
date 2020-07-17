@@ -2,9 +2,12 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
+import com.dwarfeng.judge.stack.cache.EnabledDriverInfoCache;
 import com.dwarfeng.judge.stack.service.DriverInfoMaintainService;
+import com.dwarfeng.judge.stack.service.EnabledDriverInfoLookupService;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
-import org.apache.commons.beanutils.BeanUtils;
+import com.dwarfeng.subgrade.stack.exception.CacheException;
+import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,12 +23,16 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/application-context*.xml")
-public class DriverInfoMaintainServiceImplTest {
+public class EnabledDriverInfoLookupServiceImplTest {
 
     @Autowired
     private SectionMaintainService sectionMaintainService;
     @Autowired
     private DriverInfoMaintainService driverInfoMaintainService;
+    @Autowired
+    private EnabledDriverInfoLookupService enabledDriverInfoLookupService;
+    @Autowired
+    private EnabledDriverInfoCache enabledDriverInfoCache;
 
     private Section parentSection;
     private List<DriverInfo> driverInfos;
@@ -46,7 +53,18 @@ public class DriverInfoMaintainServiceImplTest {
                     null,
                     parentSection.getKey(),
                     true,
-                    "filter-info-" + i,
+                    "filter-info-enabled-" + i,
+                    "this is a test",
+                    "test"
+            );
+            driverInfos.add(driverInfo);
+        }
+        for (int i = 0; i < 5; i++) {
+            DriverInfo driverInfo = new DriverInfo(
+                    null,
+                    parentSection.getKey(),
+                    false,
+                    "filter-info-disabled-" + i,
                     "this is a test",
                     "test"
             );
@@ -61,16 +79,25 @@ public class DriverInfoMaintainServiceImplTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void test() throws ServiceException, CacheException {
         try {
             parentSection.setKey(sectionMaintainService.insertOrUpdate(parentSection));
             for (DriverInfo driverInfo : driverInfos) {
                 driverInfo.setKey(driverInfoMaintainService.insertOrUpdate(driverInfo));
                 driverInfo.setSectionKey(parentSection.getKey());
                 driverInfoMaintainService.update(driverInfo);
-                DriverInfo testDriverInfo = driverInfoMaintainService.get(driverInfo.getKey());
-                assertEquals(BeanUtils.describe(driverInfo), BeanUtils.describe(testDriverInfo));
             }
+            assertEquals(5, driverInfoMaintainService.lookup(DriverInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
+            assertEquals(5, enabledDriverInfoLookupService.getEnabledDriverInfos(parentSection.getKey()).size());
+            assertEquals(5, enabledDriverInfoCache.get(parentSection.getKey()).size());
+            DriverInfo driverInfo = driverInfos.get(0);
+            driverInfoMaintainService.deleteIfExists(driverInfo.getKey());
+            assertEquals(0, enabledDriverInfoCache.get(parentSection.getKey()).size());
+            driverInfoMaintainService.insertOrUpdate(driverInfo);
+            assertEquals(0, enabledDriverInfoCache.get(parentSection.getKey()).size());
+            assertEquals(5, driverInfoMaintainService.lookup(DriverInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
+            assertEquals(5, enabledDriverInfoLookupService.getEnabledDriverInfos(parentSection.getKey()).size());
+            assertEquals(5, enabledDriverInfoCache.get(parentSection.getKey()).size());
         } finally {
             for (DriverInfo driverInfo : driverInfos) {
                 driverInfoMaintainService.deleteIfExists(driverInfo.getKey());

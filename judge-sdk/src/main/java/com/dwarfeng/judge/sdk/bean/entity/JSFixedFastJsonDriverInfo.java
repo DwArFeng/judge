@@ -19,6 +19,7 @@ public class JSFixedFastJsonDriverInfo implements Bean {
         return new JSFixedFastJsonDriverInfo(
                 JSFixedFastJsonLongIdKey.of(driverInfo.getKey()),
                 JSFixedFastJsonLongIdKey.of(driverInfo.getSectionKey()),
+                driverInfo.isEnabled(),
                 driverInfo.getType(),
                 driverInfo.getContent(),
                 driverInfo.getRemark()
@@ -31,23 +32,27 @@ public class JSFixedFastJsonDriverInfo implements Bean {
     @JSONField(name = "section_key", ordinal = 2)
     private JSFixedFastJsonLongIdKey sectionKey;
 
-    @JSONField(name = "type", ordinal = 3)
+    @JSONField(name = "enabled", ordinal = 3)
+    private boolean enabled;
+
+    @JSONField(name = "type", ordinal = 4)
     private String type;
 
-    @JSONField(name = "content", ordinal = 4)
+    @JSONField(name = "content", ordinal = 5)
     private String content;
 
-    @JSONField(name = "remark", ordinal = 5)
+    @JSONField(name = "remark", ordinal = 6)
     private String remark;
 
     public JSFixedFastJsonDriverInfo() {
     }
 
     public JSFixedFastJsonDriverInfo(
-            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, String type, String content,
+            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, boolean enabled, String type, String content,
             String remark) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.enabled = enabled;
         this.type = type;
         this.content = content;
         this.remark = remark;
@@ -67,6 +72,14 @@ public class JSFixedFastJsonDriverInfo implements Bean {
 
     public void setSectionKey(JSFixedFastJsonLongIdKey sectionKey) {
         this.sectionKey = sectionKey;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getType() {
@@ -98,6 +111,7 @@ public class JSFixedFastJsonDriverInfo implements Bean {
         return "JSFixedFastJsonDriverInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", enabled=" + enabled +
                 ", type='" + type + '\'' +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +

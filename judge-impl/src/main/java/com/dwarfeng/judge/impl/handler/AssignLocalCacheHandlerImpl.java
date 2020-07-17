@@ -6,7 +6,7 @@ import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.Driver;
 import com.dwarfeng.judge.stack.handler.DriverHandler;
-import com.dwarfeng.judge.stack.service.DriverInfoMaintainService;
+import com.dwarfeng.judge.stack.service.EnabledDriverInfoLookupService;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -84,7 +84,7 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
         @Autowired
         private SectionMaintainService sectionMaintainService;
         @Autowired
-        private DriverInfoMaintainService driverInfoMaintainService;
+        private EnabledDriverInfoLookupService enabledDriverInfoLookupService;
 
         @Autowired
         private DriverHandler driverHandler;
@@ -97,8 +97,7 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
             }
 
             Section section = sectionMaintainService.get(sectionKey);
-            List<DriverInfo> driverInfos = driverInfoMaintainService.lookup(
-                    DriverInfoMaintainService.CHILD_FOR_SECTION, new Object[]{sectionKey}).getData();
+            List<DriverInfo> driverInfos = enabledDriverInfoLookupService.getEnabledDriverInfos(sectionKey);
 
             Map<DriverInfo, Driver> driverMap = new HashMap<>();
 
