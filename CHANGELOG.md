@@ -23,6 +23,8 @@
 - (不兼容) 重写数据判断逻辑。
 - 修改节中点启动器的日志文本的错误。
 - 补充 README.md
+- 细化 com.dwarfeng.judge.stack.exception.RepositoryException 报警分类。
+  - com.dwarfeng.judge.stack.exception.UnsupportedRepositoryCategoryException: 当Category不支持时抛出的异常
 
 **注意：此版本还有大量的改动会导致该版本与低版本不兼容，所有不兼容的改动使用 (不兼容) 单独标注。**
 

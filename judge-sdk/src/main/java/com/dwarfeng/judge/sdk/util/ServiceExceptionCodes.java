@@ -20,6 +20,8 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 2, "judger type unsupported");
     public static final ServiceException.Code REPOSITORY_FAILED =
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 10, "repository failed");
+    public static final ServiceException.Code REPOSITORY_CATEGORY_UNSUPPORTED =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 11, "repository category unsupported");
     public static final ServiceException.Code SINK_FAILED =
             new ServiceException.Code(EXCEPTION_CODE_OFFSET + 20, "sink failed");
     public static final ServiceException.Code DRIVER_FAILED =
