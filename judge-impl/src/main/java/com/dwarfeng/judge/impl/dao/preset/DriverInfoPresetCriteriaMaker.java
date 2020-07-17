@@ -82,7 +82,6 @@ public class DriverInfoPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-
     private List<Long> longList(List<LongIdKey> list) {
         return list.stream().map(LongIdKey::getLongId).collect(Collectors.toList());
     }

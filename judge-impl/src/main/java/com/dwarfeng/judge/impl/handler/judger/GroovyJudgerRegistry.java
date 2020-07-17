@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.impl.handler.judger;
 
-import com.dwarfeng.judge.impl.handler.JudgerMaker;
+import com.dwarfeng.dutil.basic.io.IOUtil;
+import com.dwarfeng.dutil.basic.io.StringOutputStream;
 import com.dwarfeng.judge.stack.bean.dto.JudgerResult;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;
@@ -9,31 +10,64 @@ import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import groovy.lang.GroovyClassLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
- * Groovy判断器生成器。
+ * Groovy判断器注册。
  *
  * @author DwArFeng
- * @since beta-1.0.1
+ * @since 1.3.0
  */
 @Component
-public class GroovyJudgerMaker implements JudgerMaker {
+public class GroovyJudgerRegistry extends AbstractJudgerRegistry {
 
-    public static final String SUPPORT_TYPE = "groovy_judger";
+    public static final String JUDGER_TYPE = "groovy_judger";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GroovyJudgerRegistry.class);
 
     @Autowired
     private ApplicationContext ctx;
 
+    public GroovyJudgerRegistry() {
+        super(JUDGER_TYPE);
+    }
+
     @Override
-    public boolean supportType(String type) {
-        return Objects.equals(SUPPORT_TYPE, type);
+    public String provideLabel() {
+        return "Groovy判断器";
+    }
+
+    @Override
+    public String provideDescription() {
+        return "通过自定义的Groovy脚本对数据进行判断。";
+    }
+
+    @Override
+    public String provideExampleContent() {
+        try {
+            Resource resource = ctx.getResource("classpath:groovy/ExampleJudgerProcessor.groovy");
+            String example;
+            try (InputStream sin = resource.getInputStream();
+                 StringOutputStream sout = new StringOutputStream(StandardCharsets.UTF_8, true)) {
+                IOUtil.trans(sin, sout, 4096);
+                sout.flush();
+                example = sout.toString();
+            }
+            return example;
+        } catch (Exception e) {
+            LOGGER.warn("读取文件 classpath:groovy/ExampleFilterProcessor.groovy 时出现异常", e);
+            return "";
+        }
     }
 
     @Override

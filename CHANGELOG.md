@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化 Driver, Judger 的代码结构。
+  - com.dwarfeng.judge.impl.handler.driver.AbstractDriverRegistry
+  - com.dwarfeng.judge.impl.handler.judger.AbstractJudgerRegistry
 - (不兼容) 更改 com.dwarfeng.judge.stack.bean.dto.JudgedValue 实体结构。
 - (不兼容) 更改实体对象的结构。
   - 该改动包含对框架分配任务、评估任务的更改。

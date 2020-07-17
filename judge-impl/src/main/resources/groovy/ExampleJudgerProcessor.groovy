@@ -1,4 +1,4 @@
-import com.dwarfeng.judge.impl.handler.judger.GroovyJudgerMaker
+import com.dwarfeng.judge.impl.handler.judger.GroovyJudgerRegistry
 import com.dwarfeng.judge.stack.bean.dto.JudgerResult
 import com.dwarfeng.judge.stack.exception.JudgerException
 import com.dwarfeng.judge.stack.handler.RepositoryHandler
@@ -9,7 +9,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
  * <p> 取判断启动的系统时间，取模1000，得出的数据除以1000，得到介于0.0和1.0之间的数。
  */
 @SuppressWarnings("GrPackage")
-class ExampleJudgerProcessor implements GroovyJudgerMaker.Processor {
+class ExampleJudgerProcessor implements GroovyJudgerRegistry.Processor {
 
     @Override
     JudgerResult judge(LongIdKey judgerInfoKey, RepositoryHandler repositoryHandler) throws JudgerException {
