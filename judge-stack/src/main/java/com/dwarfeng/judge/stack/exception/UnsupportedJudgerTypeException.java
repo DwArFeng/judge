@@ -8,26 +8,11 @@ package com.dwarfeng.judge.stack.exception;
  */
 public class UnsupportedJudgerTypeException extends JudgerException {
 
-    private static final long serialVersionUID = -1519636454442356727L;
+    private static final long serialVersionUID = -4562245164963855692L;
 
     private final String type;
 
     public UnsupportedJudgerTypeException(String type) {
-        this.type = type;
-    }
-
-    public UnsupportedJudgerTypeException(String message, Throwable cause, String type) {
-        super(message, cause);
-        this.type = type;
-    }
-
-    public UnsupportedJudgerTypeException(String message, String type) {
-        super(message);
-        this.type = type;
-    }
-
-    public UnsupportedJudgerTypeException(Throwable cause, String type) {
-        super(cause);
         this.type = type;
     }
 

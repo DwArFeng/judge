@@ -25,6 +25,10 @@
 - 补充 README.md
 - 细化 com.dwarfeng.judge.stack.exception.RepositoryException 报警分类。
   - com.dwarfeng.judge.stack.exception.UnsupportedRepositoryCategoryException: 当Category不支持时抛出的异常
+- 优化部分异常的构造器方法。
+  - com.dwarfeng.judge.stack.exception.UnsupportedDriverTypeException
+  - com.dwarfeng.judge.stack.exception.UnsupportedJudgerTypeException
+  - com.dwarfeng.judge.stack.exception.UnsupportedRepositoryCategoryException
 
 **注意：此版本还有大量的改动会导致该版本与低版本不兼容，所有不兼容的改动使用 (不兼容) 单独标注。**
 

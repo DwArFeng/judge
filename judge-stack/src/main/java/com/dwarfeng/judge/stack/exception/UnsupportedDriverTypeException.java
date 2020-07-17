@@ -8,26 +8,11 @@ package com.dwarfeng.judge.stack.exception;
  */
 public class UnsupportedDriverTypeException extends DriverException {
 
-    private static final long serialVersionUID = -5375806453349262055L;
+    private static final long serialVersionUID = -4895040572599866757L;
 
     private final String type;
 
     public UnsupportedDriverTypeException(String type) {
-        this.type = type;
-    }
-
-    public UnsupportedDriverTypeException(String message, Throwable cause, String type) {
-        super(message, cause);
-        this.type = type;
-    }
-
-    public UnsupportedDriverTypeException(String message, String type) {
-        super(message);
-        this.type = type;
-    }
-
-    public UnsupportedDriverTypeException(Throwable cause, String type) {
-        super(cause);
         this.type = type;
     }
 
