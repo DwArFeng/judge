@@ -87,6 +87,14 @@ public class GroovyJudgerRegistry extends AbstractJudgerRegistry {
         }
     }
 
+    @Override
+    public String toString() {
+        return "GroovyJudgerRegistry{" +
+                "ctx=" + ctx +
+                ", judgerType='" + judgerType + '\'' +
+                '}';
+    }
+
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public static class GroovyJudger implements Judger {

@@ -56,6 +56,14 @@ public class CronDriverRegistry extends AbstractDriverRegistry {
         return cronDriver;
     }
 
+    @Override
+    public String toString() {
+        return "CronDriverRegistry{" +
+                "cronDriver=" + cronDriver +
+                ", driverType='" + driverType + '\'' +
+                '}';
+    }
+
     @Component
     public static class CronDriver implements Driver {
 

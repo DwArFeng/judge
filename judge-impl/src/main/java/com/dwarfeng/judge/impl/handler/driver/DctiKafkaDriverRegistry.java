@@ -70,6 +70,14 @@ public class DctiKafkaDriverRegistry extends AbstractDriverRegistry {
         return dctiKafkaDriver;
     }
 
+    @Override
+    public String toString() {
+        return "DctiKafkaDriverRegistry{" +
+                "dctiKafkaDriver=" + dctiKafkaDriver +
+                ", driverType='" + driverType + '\'' +
+                '}';
+    }
+
     @Component
     public static class DctiKafkaDriver implements Driver {
 

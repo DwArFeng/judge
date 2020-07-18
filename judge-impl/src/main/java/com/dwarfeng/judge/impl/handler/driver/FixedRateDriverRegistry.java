@@ -55,6 +55,14 @@ public class FixedRateDriverRegistry extends AbstractDriverRegistry {
         return fixedRateDriver;
     }
 
+    @Override
+    public String toString() {
+        return "FixedRateDriverRegistry{" +
+                "fixedRateDriver=" + fixedRateDriver +
+                ", driverType='" + driverType + '\'' +
+                '}';
+    }
+
     @Component
     public static class FixedRateDriver implements Driver {
 

@@ -55,6 +55,14 @@ public class FixedDelayDriverRegistry extends AbstractDriverRegistry {
         return fixedDelayDriver;
     }
 
+    @Override
+    public String toString() {
+        return "FixedDelayDriverRegistry{" +
+                "fixedDelayDriver=" + fixedDelayDriver +
+                ", driverType='" + driverType + '\'' +
+                '}';
+    }
+
     @Component
     public static class FixedDelayDriver implements Driver {
 
