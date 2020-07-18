@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.impl.handler.repository;
 
-import com.dwarfeng.judge.impl.handler.Repository;
 import com.dwarfeng.judge.stack.exception.RepositoryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -21,9 +19,9 @@ import java.util.Random;
  * @since beta-1.0.0
  */
 @Component
-public class RandomRepository implements Repository {
+public class RandomRepository extends ReadOnlyRepository {
 
-    public static final String SUPPORT_TYPE = "random";
+    public static final String REPOSITORY_TYPE = "random";
 
     public static final String CATEGORY_LONG = "category_long";
     public static final String CATEGORY_INT = "category_int";
@@ -37,9 +35,8 @@ public class RandomRepository implements Repository {
     @Qualifier("randomRepository.random")
     private Random random;
 
-    @Override
-    public boolean supportType(String type) {
-        return Objects.equals(SUPPORT_TYPE, type);
+    public RandomRepository() {
+        super(REPOSITORY_TYPE);
     }
 
     @Override
@@ -72,6 +69,14 @@ public class RandomRepository implements Repository {
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "RandomRepository{" +
+                "random=" + random +
+                ", repositoryType='" + repositoryType + '\'' +
+                '}';
     }
 
     @Configuration

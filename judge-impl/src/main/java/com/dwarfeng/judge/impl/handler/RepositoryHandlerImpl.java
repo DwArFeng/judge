@@ -33,4 +33,9 @@ public class RepositoryHandlerImpl implements RepositoryHandler {
     public Object getData(String category, Object... args) throws RepositoryException {
         return repository.getData(category, args);
     }
+
+    @Override
+    public void putData(String category, Object... args) throws HandlerException {
+        repository.putData(category, args);
+    }
 }

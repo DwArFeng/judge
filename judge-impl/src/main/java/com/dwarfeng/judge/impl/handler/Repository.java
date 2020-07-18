@@ -27,4 +27,13 @@ public interface Repository {
      * @throws RepositoryException 仓库异常。
      */
     Object getData(String category, Object... args) throws RepositoryException;
+
+    /**
+     * 向仓库中推送数据。
+     *
+     * @param category 数据的分类。
+     * @param args     数据的详细参数。
+     * @throws RepositoryException 仓库异常。
+     */
+    void putData(String category, Object[] args) throws RepositoryException;
 }

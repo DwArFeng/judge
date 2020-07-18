@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- RepositoryHandler新增方法。
+  - com.dwarfeng.judge.stack.handler.RepositoryHandler.putData
 - 优化 Driver, Judger 的代码结构。
   - com.dwarfeng.judge.impl.handler.driver.AbstractDriverRegistry
   - com.dwarfeng.judge.impl.handler.judger.AbstractJudgerRegistry
