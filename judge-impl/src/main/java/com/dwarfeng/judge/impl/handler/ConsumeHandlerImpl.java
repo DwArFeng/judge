@@ -41,6 +41,8 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
     @Autowired
     private EvaluateInfoConsumer evaluateInfoConsumer;
+    @Autowired
+    private ConsumeBuffer consumeBuffer;
 
     private final List<ConsumeTask> processingConsumeTasks = new ArrayList<>();
     private final List<ConsumeTask> endingConsumeTasks = new ArrayList<>();
@@ -51,7 +53,6 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     private int bufferSize;
 
     private final Lock lock = new ReentrantLock();
-    private final ConsumeBuffer consumeBuffer = new ConsumeBuffer();
 
     private boolean startFlag = false;
     private int thread;
@@ -79,11 +80,8 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             if (!startFlag) {
                 LOGGER.info("Judge consumer handler 开启消费线程...");
                 consumeBuffer.block();
-                EvaluateInfoConsumer evaluateInfoConsumer = new EvaluateInfoConsumer(
-
-                );
                 for (int i = 0; i < thread; i++) {
-                    ConsumeTask consumeTask = new ConsumeTask();
+                    ConsumeTask consumeTask = applicationContext.getBean(ConsumeTask.class);
                     threadPoolTaskExecutor.execute(consumeTask);
                     processingConsumeTasks.add(consumeTask);
                 }
