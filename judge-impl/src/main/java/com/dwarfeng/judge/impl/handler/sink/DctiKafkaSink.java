@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
-import com.dwarfeng.judge.impl.handler.Sink;
 import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -25,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 标准数据采集接口Kafka水槽。
@@ -34,9 +32,9 @@ import java.util.Objects;
  * @since beta-1.0.0
  */
 @Component
-public class DctiKafkaSink implements Sink {
+public class DctiKafkaSink extends AbstractSink {
 
-    public static final String SUPPORT_TYPE = "dcti.kafka";
+    public static final String SINK_TYPE = "dcti.kafka";
 
     @Autowired
     @Qualifier("dctiKafkaSink.kafkaTemplate")
@@ -45,9 +43,8 @@ public class DctiKafkaSink implements Sink {
     @Value("${sink.dcti.kafka.topic}")
     private String topic;
 
-    @Override
-    public boolean supportType(String type) {
-        return Objects.equals(SUPPORT_TYPE, type);
+    public DctiKafkaSink() {
+        super(SINK_TYPE);
     }
 
     @Override
@@ -60,6 +57,15 @@ public class DctiKafkaSink implements Sink {
                 sectionReport.getHappenedDate()
         );
         kafkaTemplate.send(topic, DataInfoUtil.toMessage(dataInfo));
+    }
+
+    @Override
+    public String toString() {
+        return "DctiKafkaSink{" +
+                "kafkaTemplate=" + kafkaTemplate +
+                ", topic='" + topic + '\'' +
+                ", sinkType='" + sinkType + '\'' +
+                '}';
     }
 
     @Configuration

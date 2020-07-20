@@ -6,9 +6,12 @@
 
 - RepositoryHandler新增方法。
   - com.dwarfeng.judge.stack.handler.RepositoryHandler.putData
-- 优化 Driver, Judger 的代码结构。
+- 优化 Driver, Judger, Repository, Sink 的代码结构。
   - com.dwarfeng.judge.impl.handler.driver.AbstractDriverRegistry
   - com.dwarfeng.judge.impl.handler.judger.AbstractJudgerRegistry
+  - com.dwarfeng.judge.impl.handler.repository.AbstractRepository
+  - com.dwarfeng.judge.impl.handler.repository.ReadOnlyRepository
+  - com.dwarfeng.judge.impl.handler.sink.AbstractSink
 - (不兼容) 更改 com.dwarfeng.judge.stack.bean.dto.JudgedValue 实体结构。
 - (不兼容) 更改实体对象的结构。
   - 该改动包含对框架分配任务、评估任务的更改。

@@ -2,7 +2,6 @@ package com.dwarfeng.judge.impl.handler.sink;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.dwarfeng.judge.impl.handler.Sink;
 import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 原生Kafka水槽。
@@ -32,9 +30,9 @@ import java.util.Objects;
  * @since beta-1.0.0
  */
 @Component
-public class NativeKafkaSink implements Sink {
+public class NativeKafkaSink extends AbstractSink {
 
-    public static final String SUPPORT_TYPE = "native.kafka";
+    public static final String SINK_TYPE = "native.kafka";
 
     @Autowired
     @Qualifier("nativeKafkaSink.kafkaTemplate")
@@ -43,9 +41,8 @@ public class NativeKafkaSink implements Sink {
     @Value("${sink.native.kafka.topic}")
     private String topic;
 
-    @Override
-    public boolean supportType(String type) {
-        return Objects.equals(SUPPORT_TYPE, type);
+    public NativeKafkaSink() {
+        super(SINK_TYPE);
     }
 
     @Override
@@ -53,6 +50,15 @@ public class NativeKafkaSink implements Sink {
     public void sinkData(SectionReport sectionReport) {
         String message = JSON.toJSONString(FastJsonSectionReport.of(sectionReport), SerializerFeature.WriteClassName);
         kafkaTemplate.send(topic, message);
+    }
+
+    @Override
+    public String toString() {
+        return "NativeKafkaSink{" +
+                "kafkaTemplate=" + kafkaTemplate +
+                ", topic='" + topic + '\'' +
+                ", sinkType='" + sinkType + '\'' +
+                '}';
     }
 
     @Configuration

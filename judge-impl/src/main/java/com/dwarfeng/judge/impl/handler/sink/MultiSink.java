@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.StringTokenizer;
 
 /**
@@ -22,9 +21,9 @@ import java.util.StringTokenizer;
  * @since beta-1.0.0
  */
 @Component
-public class MultiSink implements Sink {
+public class MultiSink extends AbstractSink {
 
-    public static final String SUPPORT_TYPE = "multi";
+    public static final String SINK_TYPE = "multi";
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiSink.class);
 
     @Autowired
@@ -34,6 +33,10 @@ public class MultiSink implements Sink {
     private String delegateTypes;
 
     private final List<Sink> delegates = new ArrayList<>();
+
+    public MultiSink() {
+        super(SINK_TYPE);
+    }
 
     @PostConstruct
     public void init() throws HandlerException {
@@ -46,11 +49,6 @@ public class MultiSink implements Sink {
     }
 
     @Override
-    public boolean supportType(String type) {
-        return Objects.equals(SUPPORT_TYPE, type);
-    }
-
-    @Override
     public void sinkData(SectionReport sectionReport) {
         for (Sink delegate : delegates) {
             try {
@@ -59,5 +57,13 @@ public class MultiSink implements Sink {
                 LOGGER.warn("代理水槽推送数据失败，异常信息如下: ", e);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MultiSink{" +
+                "delegateTypes='" + delegateTypes + '\'' +
+                ", sinkType='" + sinkType + '\'' +
+                '}';
     }
 }
