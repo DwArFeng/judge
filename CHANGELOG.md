@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 修正sink.properties中sink.native.kafka.topic的默认值。
 
 #### Bug修复
 
