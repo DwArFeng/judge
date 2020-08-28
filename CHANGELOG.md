@@ -5,6 +5,7 @@
 #### 功能构建
 
 - 修正sink.properties中sink.native.kafka.topic的默认值。
+- 修正程序在dubbo中注册的应用名称。
 
 #### Bug修复
 
