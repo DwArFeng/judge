@@ -13,8 +13,10 @@
 
 #### 功能移除
 
-- (无)
-
+- ~~取消 Driver 的代码结构优化。~~
+  - ~~com.dwarfeng.judge.impl.handler.driver.AbstractDriverRegistry~~
+  - 该结构优化会导致 judge-node-maintain 模块无法正常启动。
+  
 ---
 
 ### Release_1.3.0_20200720_build_A

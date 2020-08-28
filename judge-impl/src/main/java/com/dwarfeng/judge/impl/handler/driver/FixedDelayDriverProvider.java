@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler.driver;
 
+import com.dwarfeng.judge.impl.handler.DriverProvider;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.exception.DriverException;
 import com.dwarfeng.judge.stack.handler.Driver;
@@ -12,55 +13,34 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 固定间隔驱动注册。
+ * 固定间隔驱动提供器。
  *
  * @author DwArFeng
- * @since 1.3.0
+ * @since beta-1.0.0
  */
 @Component
-public class FixedDelayDriverRegistry extends AbstractDriverRegistry {
+public class FixedDelayDriverProvider implements DriverProvider {
 
-    public static final String DRIVER_TYPE = "fixed_delay_driver";
+    public static final String SUPPORT_TYPE = "fixed_delay_driver";
 
     @Autowired
     private FixedDelayDriver fixedDelayDriver;
 
-    public FixedDelayDriverRegistry() {
-        super(DRIVER_TYPE);
-    }
-
     @Override
-    public String provideLabel() {
-        return "固定间隔驱动器";
-    }
-
-    @Override
-    public String provideDescription() {
-        return "根据指定的间隔定时驱动，如果某一次驱动晚于间隔，则后续驱动的时间相应的顺延。";
-    }
-
-    @Override
-    public String provideExampleContent() {
-        return "60000";
+    public boolean supportType(String type) {
+        return Objects.equals(SUPPORT_TYPE, type);
     }
 
     @Override
     public Driver provide() {
         return fixedDelayDriver;
-    }
-
-    @Override
-    public String toString() {
-        return "FixedDelayDriverRegistry{" +
-                "fixedDelayDriver=" + fixedDelayDriver +
-                ", driverType='" + driverType + '\'' +
-                '}';
     }
 
     @Component

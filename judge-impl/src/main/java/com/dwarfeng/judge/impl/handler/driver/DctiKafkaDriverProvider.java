@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler.driver;
 
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import com.dwarfeng.judge.impl.handler.DriverProvider;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.exception.DriverException;
 import com.dwarfeng.judge.stack.handler.Driver;
@@ -33,49 +34,27 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Dcti标准数据采集接口Kafka驱动注册。
+ * Dcti标准数据采集接口Kafka驱动提供器。
  *
  * @author DwArFeng
- * @since 1.3.0
+ * @since 1.0.0
  */
 @Component
-public class DctiKafkaDriverRegistry extends AbstractDriverRegistry {
+public class DctiKafkaDriverProvider implements DriverProvider {
 
-    public static final String DRIVER_TYPE = "dcti_kafka_driver";
+    public static final String SUPPORT_TYPE = "dcti_kafka_driver";
 
     @Autowired
     private DctiKafkaDriver dctiKafkaDriver;
 
-    public DctiKafkaDriverRegistry() {
-        super(DRIVER_TYPE);
-    }
-
     @Override
-    public String provideLabel() {
-        return "Dcti标准数据采集接口Kafka驱动器";
-    }
-
-    @Override
-    public String provideDescription() {
-        return "从Kafka中接收到标准Dcti数据，并根据接收到的数据的主键对不同的部件进行触发。";
-    }
-
-    @Override
-    public String provideExampleContent() {
-        return "692653993448435712";
+    public boolean supportType(String type) {
+        return Objects.equals(SUPPORT_TYPE, type);
     }
 
     @Override
     public Driver provide() {
         return dctiKafkaDriver;
-    }
-
-    @Override
-    public String toString() {
-        return "DctiKafkaDriverRegistry{" +
-                "dctiKafkaDriver=" + dctiKafkaDriver +
-                ", driverType='" + driverType + '\'' +
-                '}';
     }
 
     @Component
