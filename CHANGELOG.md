@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Release_1.3.1_20200721_build_A
+### Release_1.3.1_20200828_build_A
 
 #### 功能构建
 
