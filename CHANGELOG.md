@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 com.dwarfeng.judge.stack.handler.AssignHandler 没有继承 Handler 接口的 bug。
 
 #### 功能移除
 

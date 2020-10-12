@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.stack.handler;
 
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.stack.handler.Handler;
 
 /**
  * 指派处理器。
@@ -8,7 +9,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * @author DwArFeng
  * @since beta-1.0.0
  */
-public interface AssignHandler {
+public interface AssignHandler extends Handler {
 
     /**
      * 指派处理器是否上线。
