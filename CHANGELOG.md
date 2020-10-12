@@ -5,7 +5,10 @@
 #### 功能构建
 
 - 升级 spring-terminator 并优化启动器代码。
-
+- 引入 spring-telqos 框架，增加 QOS 功能。
+  - 添加 dubbo 指令。
+  - 添加 shutdown 指令。
+  
 #### Bug修复
 
 - 修复 com.dwarfeng.judge.stack.handler.AssignHandler 没有继承 Handler 接口的 bug。
