@@ -51,7 +51,7 @@ public class Launcher {
             if (startJudgeDelay == 0) {
                 LOGGER.info("立即启动判断服务...");
                 try {
-                    judgeQosService.startJudge();
+                    judgeQosService.start();
                 } catch (ServiceException e) {
                     LOGGER.error("无法启动判断服务，异常原因如下", e);
                 }
@@ -63,7 +63,7 @@ public class Launcher {
                 }
                 LOGGER.info("启动判断服务...");
                 try {
-                    judgeQosService.startJudge();
+                    judgeQosService.start();
                 } catch (ServiceException e) {
                     LOGGER.error("无法启动判断服务，异常原因如下", e);
                 }

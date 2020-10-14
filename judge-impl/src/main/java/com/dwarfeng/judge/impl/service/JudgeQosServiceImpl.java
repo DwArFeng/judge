@@ -1,8 +1,13 @@
 package com.dwarfeng.judge.impl.service;
 
+import com.dwarfeng.judge.stack.bean.AssignInfo;
+import com.dwarfeng.judge.stack.bean.EvaluateInfo;
+import com.dwarfeng.judge.stack.bean.JudgeInfo;
 import com.dwarfeng.judge.stack.handler.*;
 import com.dwarfeng.judge.stack.service.JudgeQosService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -12,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -39,11 +47,11 @@ public class JudgeQosServiceImpl implements JudgeQosService {
 
     @PreDestroy
     private void dispose() throws ServiceException {
-        stopJudge();
+        stop();
     }
 
     @Override
-    public void startJudge() throws ServiceException {
+    public void start() throws ServiceException {
         lock.lock();
         try {
             if (!startFlag) {
@@ -63,7 +71,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
     }
 
     @Override
-    public void stopJudge() throws ServiceException {
+    public void stop() throws ServiceException {
         lock.lock();
         try {
             if (startFlag) {
@@ -83,6 +91,32 @@ public class JudgeQosServiceImpl implements JudgeQosService {
             }
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("关闭判断服务时发生异常",
+                    LogLevel.WARN, sem, e
+            );
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public JudgeInfo getContext(LongIdKey sectionKey) throws ServiceException {
+        lock.lock();
+        try {
+            AssignInfo assignInfo = assignLocalCacheHandler.getAssignInfo(sectionKey);
+            EvaluateInfo evaluateInfo = evaluateLocalCacheHandler.getEvaluateInfo(sectionKey);
+            if (Objects.isNull(assignInfo) && Objects.isNull(evaluateInfo)) {
+                return null;
+            }
+            JudgeInfo judgeInfo = new JudgeInfo();
+            judgeInfo.setSection(
+                    Optional.ofNullable(assignInfo).map(AssignInfo::getSection).orElse(evaluateInfo.getSection()));
+            judgeInfo.setDriverMap(
+                    Optional.of(assignInfo).map(AssignInfo::getDriverMap).orElse(Collections.emptyMap()));
+            judgeInfo.setJudgerMap(
+                    Optional.of(evaluateInfo).map(EvaluateInfo::getJudgerMap).orElse(Collections.emptyMap()));
+            return judgeInfo;
+        } catch (HandlerException e) {
+            throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取判断信息时发生异常",
                     LogLevel.WARN, sem, e
             );
         } finally {

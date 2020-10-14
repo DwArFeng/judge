@@ -30,7 +30,7 @@ public class Launcher {
             if (startAssignDelay == 0) {
                 LOGGER.info("立即启动指派服务...");
                 try {
-                    assignQosService.startAssign();
+                    assignQosService.start();
                 } catch (ServiceException e) {
                     LOGGER.error("无法启动指派服务，异常原因如下", e);
                 }
@@ -42,7 +42,7 @@ public class Launcher {
                 }
                 LOGGER.info("启动指派服务...");
                 try {
-                    assignQosService.startAssign();
+                    assignQosService.start();
                 } catch (ServiceException e) {
                     LOGGER.error("无法启动指派服务，异常原因如下", e);
                 }

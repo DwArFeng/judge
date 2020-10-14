@@ -8,7 +8,11 @@
 - 引入 spring-telqos 框架，增加 QOS 功能。
   - 添加 dubbo 指令。
   - 添加 shutdown 指令。
-  
+- 扩展与补充 QOS 接口。
+  - com.dwarfeng.judge.stack.service.AssignQosService
+  - com.dwarfeng.judge.stack.service.EvaluateQosService
+  - com.dwarfeng.judge.stack.service.JudgeQosService
+
 #### Bug修复
 
 - 修复 com.dwarfeng.judge.stack.handler.AssignHandler 没有继承 Handler 接口的 bug。

@@ -30,7 +30,7 @@ public class Launcher {
             if (startEvaluateDelay == 0) {
                 LOGGER.info("立即启动评估服务...");
                 try {
-                    evaluateQosService.startEvaluate();
+                    evaluateQosService.start();
                 } catch (ServiceException e) {
                     LOGGER.error("无法启动评估服务，异常原因如下", e);
                 }
@@ -42,7 +42,7 @@ public class Launcher {
                 }
                 LOGGER.info("启动评估服务...");
                 try {
-                    evaluateQosService.startEvaluate();
+                    evaluateQosService.start();
                 } catch (ServiceException e) {
                     LOGGER.error("无法启动评估服务，异常原因如下", e);
                 }

@@ -1,9 +1,12 @@
 package com.dwarfeng.judge.impl.service;
 
+import com.dwarfeng.judge.stack.bean.AssignInfo;
 import com.dwarfeng.judge.stack.handler.AssignHandler;
 import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
 import com.dwarfeng.judge.stack.service.AssignQosService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -34,11 +37,11 @@ public class AssignQosServiceImpl implements AssignQosService {
 
     @PreDestroy
     private void dispose() throws ServiceException {
-        stopAssign();
+        stop();
     }
 
     @Override
-    public void startAssign() throws ServiceException {
+    public void start() throws ServiceException {
         lock.lock();
         try {
             if (!startFlag) {
@@ -56,7 +59,7 @@ public class AssignQosServiceImpl implements AssignQosService {
     }
 
     @Override
-    public void stopAssign() throws ServiceException {
+    public void stop() throws ServiceException {
         lock.lock();
         try {
             if (startFlag) {
@@ -70,6 +73,20 @@ public class AssignQosServiceImpl implements AssignQosService {
             }
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("关闭指派服务时发生异常",
+                    LogLevel.WARN, sem, e
+            );
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public AssignInfo getContext(LongIdKey sectionKey) throws ServiceException {
+        lock.lock();
+        try {
+            return assignLocalCacheHandler.getAssignInfo(sectionKey);
+        } catch (HandlerException e) {
+            throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取指派信息时发生异常",
                     LogLevel.WARN, sem, e
             );
         } finally {

@@ -1,10 +1,13 @@
 package com.dwarfeng.judge.impl.service;
 
+import com.dwarfeng.judge.stack.bean.EvaluateInfo;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.EvaluateHandler;
 import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
 import com.dwarfeng.judge.stack.service.EvaluateQosService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -37,11 +40,11 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
 
     @PreDestroy
     private void dispose() throws ServiceException {
-        stopEvaluate();
+        stop();
     }
 
     @Override
-    public void startEvaluate() throws ServiceException {
+    public void start() throws ServiceException {
         lock.lock();
         try {
             if (!startFlag) {
@@ -60,7 +63,7 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
     }
 
     @Override
-    public void stopEvaluate() throws ServiceException {
+    public void stop() throws ServiceException {
         lock.lock();
         try {
             if (startFlag) {
@@ -75,6 +78,20 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
             }
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("关闭评估服务时发生异常",
+                    LogLevel.WARN, sem, e
+            );
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public EvaluateInfo getContext(LongIdKey sectionKey) throws ServiceException {
+        lock.lock();
+        try {
+            return evaluateLocalCacheHandler.getEvaluateInfo(sectionKey);
+        } catch (HandlerException e) {
+            throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取评估信息时发生异常",
                     LogLevel.WARN, sem, e
             );
         } finally {
