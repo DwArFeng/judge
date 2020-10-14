@@ -4,7 +4,7 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--扫描service的实现包。 -->
@@ -15,6 +15,12 @@
                                 expression="com.dwarfeng.judge.stack.service.JudgerSupportMaintainService"/>
         <context:exclude-filter type="assignable"
                                 expression="com.dwarfeng.judge.stack.service.DriverSupportMaintainService"/>
+        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.service.telqos.JudgeCommand"/>
+        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.service.telqos.AssignCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.judge.impl.service.telqos.JudgeLocalCacheCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.judge.impl.service.telqos.AssignLocalCacheCommand"/>
     </context:component-scan>
     <!--扫描handler的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler">

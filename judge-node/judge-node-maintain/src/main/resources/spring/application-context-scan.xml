@@ -13,6 +13,15 @@
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.service.JudgeQosService"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.service.AssignQosService"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.service.EvaluateQosService"/>
+        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.service.telqos.JudgeCommand"/>
+        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.service.telqos.AssignCommand"/>
+        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.service.telqos.EvaluateCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.judge.impl.service.telqos.JudgeLocalCacheCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.judge.impl.service.telqos.AssignLocalCacheCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.judge.impl.service.telqos.EvaluateLocalCacheCommand"/>
     </context:component-scan>
     <!--扫描dao的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.dao"/>
