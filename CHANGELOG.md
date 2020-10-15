@@ -6,7 +6,7 @@
 
 - 升级 spring-terminator 并优化启动器代码。
 - 引入 spring-telqos 框架，增加 QOS 功能。
-- 扩展与补充 QOS 接口。
+- 扩展与补充 QOS 服务接口。
   - com.dwarfeng.judge.stack.service.AssignQosService
   - com.dwarfeng.judge.stack.service.EvaluateQosService
   - com.dwarfeng.judge.stack.service.JudgeQosService
@@ -17,6 +17,8 @@
   - com.dwarfeng.judge.impl.service.telqos.EvaluateLocalCacheCommand
   - com.dwarfeng.judge.impl.service.telqos.JudgeCommand
   - com.dwarfeng.judge.impl.service.telqos.JudgeLocalCacheCommand
+  - com.dwarfeng.judge.impl.service.telqos.EvaluateConsumerCommand
+  - com.dwarfeng.judge.impl.service.telqos.JudgeConsumerCommand
 
 #### Bug修复
 

@@ -30,6 +30,17 @@ class CommandUtils {
         return list;
     }
 
+    public static List<Option> buildCsuOptions() {
+        List<Option> list = new ArrayList<>();
+        list.add(Option.builder("l").optionalArg(true).hasArg(false).desc("查看记录者状态").build());
+        list.add(Option.builder("s").optionalArg(true).hasArg(false).desc("设置记录者参数").build());
+        list.add(Option.builder("b").optionalArg(true).hasArg(true).type(Number.class)
+                .argName("buffer-size").desc("缓冲器的大小").build());
+        list.add(Option.builder("t").optionalArg(true).hasArg(true).type(Number.class)
+                .argName("thread").desc("记录者的线程数量").build());
+        return list;
+    }
+
     public static Pair<String, Integer> analyseOfCommand(CommandLine cmd) {
         int i = 0;
         String subCmd = null;
@@ -51,6 +62,20 @@ class CommandUtils {
         if (cmd.hasOption("c")) {
             i++;
             subCmd = "c";
+        }
+        if (cmd.hasOption("s")) {
+            i++;
+            subCmd = "s";
+        }
+        return Pair.of(subCmd, i);
+    }
+
+    public static Pair<String, Integer> analyseCsuCommand(CommandLine cmd) {
+        int i = 0;
+        String subCmd = null;
+        if (cmd.hasOption("l")) {
+            i++;
+            subCmd = "l";
         }
         if (cmd.hasOption("s")) {
             i++;

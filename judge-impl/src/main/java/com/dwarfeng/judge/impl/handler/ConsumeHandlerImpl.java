@@ -139,6 +139,16 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     }
 
     @Override
+    public int bufferedSize() {
+        lock.lock();
+        try {
+            return consumeBuffer.bufferedSize();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
     public int getBufferSize() {
         return consumeBuffer.getBufferSize();
     }

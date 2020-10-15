@@ -18,6 +18,7 @@
             <telqos:command-impl ref="memoryCommand"/>
             <telqos:command-impl ref="judgeCommand"/>
             <telqos:command-impl ref="judgeLocalCacheCommand"/>
+            <telqos:command-impl ref="judgeConsumerCommand"/>
         </telqos:command>
     </telqos:config>
 

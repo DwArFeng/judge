@@ -17,6 +17,8 @@
                                 expression="com.dwarfeng.judge.impl.service.telqos.AssignLocalCacheCommand"/>
         <context:exclude-filter type="assignable"
                                 expression="com.dwarfeng.judge.impl.service.telqos.EvaluateLocalCacheCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.judge.impl.service.telqos.EvaluateConsumerCommand"/>
     </context:component-scan>
     <!--扫描handler的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler">

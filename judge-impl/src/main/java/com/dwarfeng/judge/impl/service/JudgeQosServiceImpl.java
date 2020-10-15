@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.AssignInfo;
+import com.dwarfeng.judge.stack.bean.ConsumerStatus;
 import com.dwarfeng.judge.stack.bean.EvaluateInfo;
 import com.dwarfeng.judge.stack.bean.JudgeInfo;
 import com.dwarfeng.judge.stack.handler.*;
@@ -132,6 +133,46 @@ public class JudgeQosServiceImpl implements JudgeQosService {
             evaluateLocalCacheHandler.clear();
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常",
+                    LogLevel.WARN, sem, e
+            );
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public ConsumerStatus getConsumerStatus() throws ServiceException {
+        lock.lock();
+        try {
+            return new ConsumerStatus(
+                    consumeHandler.bufferedSize(),
+                    consumeHandler.getBufferSize(),
+                    consumeHandler.getThread(),
+                    consumeHandler.isIdle()
+            );
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("获取消费者状态时发生异常",
+                    LogLevel.WARN, sem, e
+            );
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public void setConsumerParameters(Integer bufferSize, Integer thread) throws ServiceException {
+        lock.lock();
+        try {
+            consumeHandler.setBufferSize(
+                    Objects.isNull(bufferSize) ? consumeHandler.getBufferSize() : bufferSize
+            );
+            consumeHandler.setThread(
+                    Objects.isNull(thread) ? consumeHandler.getThread() : thread
+            );
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("设置消费者参数时发生异常",
                     LogLevel.WARN, sem, e
             );
         } finally {

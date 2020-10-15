@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.stack.service;
 
+import com.dwarfeng.judge.stack.bean.ConsumerStatus;
 import com.dwarfeng.judge.stack.bean.JudgeInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
@@ -42,4 +43,21 @@ public interface JudgeQosService extends Service {
      * @throws ServiceException 服务异常。
      */
     void clearLocalCache() throws ServiceException;
+
+    /**
+     * 获取消费者的消费者状态。
+     *
+     * @return 消费者状态。
+     * @throws ServiceException 服务异常。
+     */
+    ConsumerStatus getConsumerStatus() throws ServiceException;
+
+    /**
+     * 设置消费者的参数。
+     *
+     * @param bufferSize 缓冲器的大小。
+     * @param thread     消费者的线程数量。
+     * @throws ServiceException 服务异常。
+     */
+    void setConsumerParameters(Integer bufferSize, Integer thread) throws ServiceException;
 }

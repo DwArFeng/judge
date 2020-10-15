@@ -43,6 +43,14 @@ public interface ConsumeHandler extends Handler {
     void accept(EvaluateInfo evaluateInfo) throws HandlerException;
 
     /**
+     * 获取缓冲器已经缓冲的容量。
+     *
+     * @return 缓冲器已经缓冲的容量。
+     * @throws HandlerException 处理器异常。
+     */
+    int bufferedSize() throws HandlerException;
+
+    /**
      * 获取缓冲器的容量。
      *
      * @return 缓冲器的容量。
