@@ -21,6 +21,7 @@
   - com.dwarfeng.judge.impl.service.telqos.JudgeLocalCacheCommand
   - com.dwarfeng.judge.impl.service.telqos.EvaluateConsumerCommand
   - com.dwarfeng.judge.impl.service.telqos.JudgeConsumerCommand
+- 优化 task 配置文件，关键属性可配置化。
 
 #### Bug修复
 
