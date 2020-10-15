@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.dutil.develop.backgr.AbstractTask;
+import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.EvaluateInfo;
 import com.dwarfeng.judge.stack.bean.dto.JudgerReport;
 import com.dwarfeng.judge.stack.bean.dto.JudgerResult;
@@ -20,10 +21,12 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -38,7 +41,10 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     private ApplicationContext applicationContext;
 
     @Autowired
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    private ThreadPoolTaskExecutor executor;
+    @Autowired
+    private ThreadPoolTaskScheduler scheduler;
+
     @Autowired
     private EvaluateInfoConsumer evaluateInfoConsumer;
     @Autowired
@@ -51,10 +57,13 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     private int consumerThread;
     @Value("${consume.buffer_size}")
     private int bufferSize;
+    @Value("${consume.threshold.warn}")
+    private double warnThreshold;
 
     private final Lock lock = new ReentrantLock();
 
     private boolean startFlag = false;
+    ScheduledFuture<?> capacityCheckFuture = null;
     private int thread;
 
     @PostConstruct
@@ -82,9 +91,18 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                 consumeBuffer.block();
                 for (int i = 0; i < thread; i++) {
                     ConsumeTask consumeTask = applicationContext.getBean(ConsumeTask.class);
-                    threadPoolTaskExecutor.execute(consumeTask);
+                    executor.execute(consumeTask);
                     processingConsumeTasks.add(consumeTask);
                 }
+                capacityCheckFuture = scheduler.scheduleAtFixedRate(() -> {
+                    double ratio = (double) consumeBuffer.bufferedSize() / (double) consumeBuffer.getBufferSize();
+                    if (ratio >= warnThreshold) {
+                        LOGGER.warn("消费者的待消费元素占用缓存比例为 {}，超过报警值 {}，请检查",
+                                ratio,
+                                warnThreshold
+                        );
+                    }
+                }, Constants.SCHEDULER_CHECK_INTERVAL);
                 startFlag = true;
             }
         } finally {
@@ -98,19 +116,15 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         try {
             if (startFlag) {
                 LOGGER.info("Judge consume handler 结束消费线程...");
+                if (Objects.nonNull(capacityCheckFuture)) {
+                    capacityCheckFuture.cancel(true);
+                    capacityCheckFuture = null;
+                }
                 processingConsumeTasks.forEach(ConsumeTask::shutdown);
                 endingConsumeTasks.addAll(processingConsumeTasks);
                 processingConsumeTasks.clear();
                 consumeBuffer.unblock();
-                EvaluateInfo evaluateInfo;
-                while (Objects.nonNull(evaluateInfo = consumeBuffer.poll())) {
-                    try {
-                        LOGGER.info("判断 judge consume handler 中剩余的元素 1 个...");
-                        evaluateInfoConsumer.consume(evaluateInfo);
-                    } catch (Exception e) {
-                        LOGGER.warn("进行判断工作时发生异常, 抛弃 1 次判断", e);
-                    }
-                }
+                processRemainingElement();
                 endingConsumeTasks.removeIf(AbstractTask::isFinished);
                 if (!endingConsumeTasks.isEmpty()) {
                     LOGGER.info("Consume handler 中的线程还未完全结束, 等待线程结束...");
@@ -131,6 +145,25 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         } finally {
             lock.unlock();
         }
+    }
+
+    private void processRemainingElement() {
+        // 如果没有剩余元素，直接跳过。
+        if (consumeBuffer.bufferedSize() <= 0) return;
+        LOGGER.info("消费 judge handler 中剩余的元素 {} 个...", consumeBuffer.bufferedSize());
+        LOGGER.info("Judge handler 中剩余的元素过多时，需要较长时间消费，请耐心等待...");
+        ScheduledFuture<?> scheduledFuture = scheduler.scheduleAtFixedRate(() ->
+                        LOGGER.info("消费 consume handler 中剩余的元素 {} 个，请耐心等待...", consumeBuffer.bufferedSize()),
+                new Date(System.currentTimeMillis() + Constants.SCHEDULER_CHECK_INTERVAL), Constants.SCHEDULER_CHECK_INTERVAL);
+        EvaluateInfo evaluateInfo2Consume;
+        while (Objects.nonNull(evaluateInfo2Consume = consumeBuffer.poll())) {
+            try {
+                evaluateInfoConsumer.consume(evaluateInfo2Consume);
+            } catch (Exception e) {
+                LOGGER.warn("消费元素时发生异常, 抛弃 DataInfo: " + evaluateInfo2Consume.toString(), e);
+            }
+        }
+        scheduledFuture.cancel(true);
     }
 
     @Override
@@ -179,7 +212,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                 if (delta > 0) {
                     for (int i = 0; i < delta; i++) {
                         ConsumeTask consumeTask = applicationContext.getBean(ConsumeTask.class);
-                        threadPoolTaskExecutor.execute(consumeTask);
+                        executor.execute(consumeTask);
                         processingConsumeTasks.add(consumeTask);
                     }
                 } else if (delta < 0) {
@@ -393,7 +426,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                     judgerReports
             ));
             tm.stop();
-            LOGGER.info("消费者完成消费, 部件主键为 " + section.getKey() + ", 判断值为 " +
+            LOGGER.debug("消费者完成消费, 部件主键为 " + section.getKey() + ", 判断值为 " +
                     normalization + ", 用时 " + tm.getTimeMs() + " 毫秒");
         }
 
