@@ -114,12 +114,6 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>judge-impl</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.codehaus.groovy</groupId>
-                    <artifactId>groovy-all</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

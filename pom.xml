@@ -421,6 +421,12 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-impl</artifactId>
                 <version>1.4.2.a-SNAPSHOT</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
