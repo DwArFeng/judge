@@ -127,8 +127,6 @@ public class HibernateSection implements Bean {
                 ", expected=" + expected +
                 ", variance=" + variance +
                 ", remark='" + remark + '\'' +
-                ", driverInfos=" + driverInfos +
-                ", judgerInfos=" + judgerInfos +
                 '}';
     }
 }
