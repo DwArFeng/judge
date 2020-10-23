@@ -79,7 +79,7 @@ public class EnabledDriverInfoLookupServiceImplTest {
     }
 
     @Test
-    public void test() throws ServiceException, CacheException {
+    public void testDriverInfoCascade() throws ServiceException, CacheException {
         try {
             parentSection.setKey(sectionMaintainService.insertOrUpdate(parentSection));
             for (DriverInfo driverInfo : driverInfos) {
@@ -98,6 +98,30 @@ public class EnabledDriverInfoLookupServiceImplTest {
             assertEquals(5, driverInfoMaintainService.lookup(DriverInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
             assertEquals(5, enabledDriverInfoLookupService.getEnabledDriverInfos(parentSection.getKey()).size());
             assertEquals(5, enabledDriverInfoCache.get(parentSection.getKey()).size());
+        } finally {
+            for (DriverInfo driverInfo : driverInfos) {
+                driverInfoMaintainService.deleteIfExists(driverInfo.getKey());
+            }
+            sectionMaintainService.deleteIfExists(parentSection.getKey());
+        }
+    }
+
+    @Test
+    public void testSectionCascade() throws ServiceException, CacheException {
+        try {
+            parentSection.setKey(sectionMaintainService.insertOrUpdate(parentSection));
+            for (DriverInfo driverInfo : driverInfos) {
+                driverInfo.setKey(driverInfoMaintainService.insertOrUpdate(driverInfo));
+                driverInfo.setSectionKey(parentSection.getKey());
+                driverInfoMaintainService.update(driverInfo);
+            }
+            assertEquals(5, driverInfoMaintainService.lookup(DriverInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
+            assertEquals(5, enabledDriverInfoLookupService.getEnabledDriverInfos(parentSection.getKey()).size());
+            assertEquals(5, enabledDriverInfoCache.get(parentSection.getKey()).size());
+            sectionMaintainService.deleteIfExists(parentSection.getKey());
+            assertEquals(0, enabledDriverInfoCache.get(parentSection.getKey()).size());
+            assertEquals(0, driverInfoMaintainService.lookup(DriverInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
+            assertEquals(0, enabledDriverInfoLookupService.getEnabledDriverInfos(parentSection.getKey()).size());
         } finally {
             for (DriverInfo driverInfo : driverInfos) {
                 driverInfoMaintainService.deleteIfExists(driverInfo.getKey());

@@ -79,7 +79,7 @@ public class EnabledJudgerInfoLookupServiceImplTest {
     }
 
     @Test
-    public void test() throws ServiceException, CacheException {
+    public void testJudgerInfoCascade() throws ServiceException, CacheException {
         try {
             parentSection.setKey(sectionMaintainService.insertOrUpdate(parentSection));
             for (JudgerInfo judgerInfo : judgerInfos) {
@@ -98,6 +98,30 @@ public class EnabledJudgerInfoLookupServiceImplTest {
             assertEquals(5, judgerInfoMaintainService.lookup(JudgerInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
             assertEquals(5, enabledJudgerInfoLookupService.getEnabledJudgerInfos(parentSection.getKey()).size());
             assertEquals(5, enabledJudgerInfoCache.get(parentSection.getKey()).size());
+        } finally {
+            for (JudgerInfo judgerInfo : judgerInfos) {
+                judgerInfoMaintainService.deleteIfExists(judgerInfo.getKey());
+            }
+            sectionMaintainService.deleteIfExists(parentSection.getKey());
+        }
+    }
+
+    @Test
+    public void testSectionCascade() throws ServiceException, CacheException {
+        try {
+            parentSection.setKey(sectionMaintainService.insertOrUpdate(parentSection));
+            for (JudgerInfo judgerInfo : judgerInfos) {
+                judgerInfo.setKey(judgerInfoMaintainService.insertOrUpdate(judgerInfo));
+                judgerInfo.setSectionKey(parentSection.getKey());
+                judgerInfoMaintainService.update(judgerInfo);
+            }
+            assertEquals(5, judgerInfoMaintainService.lookup(JudgerInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
+            assertEquals(5, enabledJudgerInfoLookupService.getEnabledJudgerInfos(parentSection.getKey()).size());
+            assertEquals(5, enabledJudgerInfoCache.get(parentSection.getKey()).size());
+            sectionMaintainService.deleteIfExists(parentSection.getKey());
+            assertEquals(0, enabledJudgerInfoCache.get(parentSection.getKey()).size());
+            assertEquals(0, judgerInfoMaintainService.lookup(JudgerInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{parentSection.getKey()}).getCount());
+            assertEquals(0, enabledJudgerInfoLookupService.getEnabledJudgerInfos(parentSection.getKey()).size());
         } finally {
             for (JudgerInfo judgerInfo : judgerInfos) {
                 judgerInfoMaintainService.deleteIfExists(judgerInfo.getKey());
