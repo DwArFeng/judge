@@ -5,10 +5,12 @@
 #### 功能构建
 
 - 优化不合理的 pom.xml 配置。
+- 补充 judge-sdk 模块下部分实体的注释。
 
 #### Bug修复
 
-- (无)
+- 修复 Section 删除时使能缓存数据不能及时清除的 bug。
+- 修正 HibernateSection 可能引起 StackOverflow 的 toString 方法。
 
 #### 功能移除
 
