@@ -12,6 +12,12 @@ import javax.validation.constraints.Positive;
 import javax.validation.groups.Default;
 import java.util.Objects;
 
+/**
+ * WebInput 部件。
+ *
+ * @author DwArFeng
+ * @since beta-1.0.0
+ */
 public class WebInputSection implements Bean {
 
     private static final long serialVersionUID = -2768437209877111532L;
