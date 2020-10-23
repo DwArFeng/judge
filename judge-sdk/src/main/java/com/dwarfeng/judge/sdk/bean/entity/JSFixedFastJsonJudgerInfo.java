@@ -7,6 +7,12 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import java.util.Objects;
 
+/**
+ * JSFixed FastJson 判断器信息。
+ *
+ * @author DwArFeng
+ * @since beta-1.0.0
+ */
 public class JSFixedFastJsonJudgerInfo implements Bean {
 
     private static final long serialVersionUID = 297472593116907118L;

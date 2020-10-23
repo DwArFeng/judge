@@ -8,6 +8,8 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import java.util.Objects;
 
 /**
+ * FastJson 驱动器支持。
+ *
  * @author DwArFeng
  * @since beta-1.1.0
  */

@@ -11,6 +11,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 import java.util.Objects;
 
+/**
+ * WebInput 判断器信息。
+ *
+ * @author DwArFeng
+ * @since beta-1.0.0
+ */
 public class WebInputJudgerInfo implements Bean {
 
     private static final long serialVersionUID = -7706153657541723646L;

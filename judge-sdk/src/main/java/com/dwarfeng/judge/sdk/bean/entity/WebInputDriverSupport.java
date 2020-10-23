@@ -9,6 +9,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+/**
+ * WebInput 驱动器支持。
+ *
+ * @author DwArFeng
+ * @since beta-1.1.0
+ */
 public class WebInputDriverSupport implements Bean {
 
     private static final long serialVersionUID = -8851012611715817838L;
