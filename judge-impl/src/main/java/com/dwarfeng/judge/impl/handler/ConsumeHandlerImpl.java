@@ -9,10 +9,14 @@ import com.dwarfeng.judge.stack.bean.dto.JudgerResult;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
+import com.dwarfeng.judge.stack.bean.entity.Variable;
+import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.Judger;
-import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.judge.stack.handler.SinkHandler;
+import com.dwarfeng.judge.stack.service.VariableMaintainService;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +164,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             try {
                 evaluateInfoConsumer.consume(evaluateInfo2Consume);
             } catch (Exception e) {
-                LOGGER.warn("消费元素时发生异常, 抛弃 DataInfo: " + evaluateInfo2Consume.toString(), e);
+                LOGGER.warn("消费元素时发生异常, 抛弃 DataInfo: " + evaluateInfo2Consume, e);
             }
         }
         scheduledFuture.cancel(true);
@@ -391,7 +395,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateInfoConsumer.class);
 
         @Autowired
-        private RepositoryHandler repositoryHandler;
+        private ApplicationContext ctx;
         @Autowired
         private SinkHandler sinkHandler;
 
@@ -401,9 +405,15 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             double sum = 0;
             List<JudgerReport> judgerReports = new ArrayList<>();
             for (Map.Entry<JudgerInfo, Judger> entry : evaluateInfo.getJudgerMap().entrySet()) {
+                // 获取判断器相关信息。
                 JudgerInfo judgerInfo = entry.getKey();
                 Judger judger = entry.getValue();
-                JudgerResult judgerResult = judger.judge(repositoryHandler);
+
+                // 构造 VariableRepository。
+                VariableRepositoryImpl variableRepository = ctx.getBean(VariableRepositoryImpl.class);
+                variableRepository.setSectionKey(judgerInfo.getKey());
+
+                JudgerResult judgerResult = judger.judge(variableRepository);
                 sum += judgerResult.getValue();
                 judgerReports.add(new JudgerReport(
                         judgerInfo.getKey(),
@@ -433,6 +443,61 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
         private double normalization(double sum, double expected, double variance) {
             sum = (sum - expected) / Math.sqrt(variance);
             return 1 / (1 + Math.exp(-1.70174454109 * sum));
+        }
+    }
+
+    @Component
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public static class VariableRepositoryImpl implements Judger.VariableRepository {
+
+        @Autowired
+        private VariableMaintainService variableMaintainService;
+
+        private LongIdKey sectionKey;
+
+        @Override
+        public boolean existsData(String category) throws HandlerException {
+            try {
+                VariableKey variableKey = new VariableKey(sectionKey.getLongId(), category);
+                return variableMaintainService.exists(variableKey);
+            } catch (Exception e) {
+                throw new HandlerException(e);
+            }
+        }
+
+        @Override
+        public String getData(String category) throws HandlerException {
+            try {
+                VariableKey variableKey = new VariableKey(sectionKey.getLongId(), category);
+                Variable variable = variableMaintainService.getIfExists(variableKey);
+                return Optional.ofNullable(variable).map(Variable::getValue).orElse(null);
+            } catch (Exception e) {
+                throw new HandlerException(e);
+            }
+        }
+
+        @Override
+        public void putData(String category, String value) throws HandlerException {
+            try {
+                VariableKey variableKey = new VariableKey(sectionKey.getLongId(), category);
+                Variable variable = variableMaintainService.getIfExists(variableKey);
+                if (Objects.nonNull(variable)) {
+                    variable.setValue(value);
+                } else {
+                    variable = new Variable(variableKey, value, null);
+                }
+                variableMaintainService.insertOrUpdate(variable);
+            } catch (Exception e) {
+                throw new HandlerException(e);
+            }
+        }
+
+        public LongIdKey getSectionKey() {
+            return sectionKey;
+        }
+
+        public void setSectionKey(LongIdKey sectionKey) {
+            this.sectionKey = sectionKey;
         }
     }
 }

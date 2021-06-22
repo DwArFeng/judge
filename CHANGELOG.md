@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 使用轻量级的 VariableRepository 代替之前的重量级的 Repository。
 
 #### Bug修复
 
@@ -12,7 +12,7 @@
 
 #### 功能移除
 
-- (无)
+- 移除 Repository 及其处理器、配置。
 
 ---
 
@@ -31,7 +31,7 @@
 #### 功能移除
 
 - (无)
-  
+
 ---
 
 ### Release_1.4.1_20201016_build_A
@@ -64,7 +64,7 @@
 #### 功能移除
 
 - (无)
-  
+
 ---
 
 ### Release_1.3.1_20200828_build_A
@@ -83,7 +83,7 @@
 - ~~取消 Driver 的代码结构优化。~~
   - ~~com.dwarfeng.judge.impl.handler.driver.AbstractDriverRegistry~~
   - 该结构优化会导致 judge-node-maintain 模块无法正常启动。
-  
+
 ---
 
 ### Release_1.3.0_20200720_build_A

@@ -23,6 +23,7 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonDriverSupport.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerSupport.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonVariable.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

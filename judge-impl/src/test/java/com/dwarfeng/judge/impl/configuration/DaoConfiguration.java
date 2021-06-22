@@ -1,8 +1,10 @@
 package com.dwarfeng.judge.impl.configuration;
 
 import com.dwarfeng.judge.impl.bean.entity.*;
+import com.dwarfeng.judge.impl.bean.key.HibernateVariableKey;
 import com.dwarfeng.judge.impl.dao.preset.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
@@ -38,6 +40,8 @@ public class DaoConfiguration {
     private DriverSupportPresetCriteriaMaker driverSupportPresetCriteriaMaker;
     @Autowired
     private JudgerSupportPresetCriteriaMaker judgerSupportPresetCriteriaMaker;
+    @Autowired
+    private VariablePresetCriteriaMaker variablePresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -190,6 +194,37 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(JudgerSupport.class, HibernateJudgerSupport.class, mapper),
                 HibernateJudgerSupport.class,
                 judgerSupportPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<VariableKey, HibernateVariableKey, Variable, HibernateVariable> variableHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(VariableKey.class, HibernateVariableKey.class, mapper),
+                new DozerBeanTransformer<>(Variable.class, HibernateVariable.class, mapper),
+                HibernateVariable.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Variable, HibernateVariable> variableHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(Variable.class, HibernateVariable.class, mapper),
+                HibernateVariable.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Variable, HibernateVariable> variableHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(Variable.class, HibernateVariable.class, mapper),
+                HibernateVariable.class,
+                variablePresetCriteriaMaker
         );
     }
 }

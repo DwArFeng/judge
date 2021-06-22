@@ -7,7 +7,6 @@ import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;
 import com.dwarfeng.judge.stack.exception.JudgerMakeException;
 import com.dwarfeng.judge.stack.handler.Judger;
-import com.dwarfeng.judge.stack.handler.RepositoryHandler;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import groovy.lang.GroovyClassLoader;
 import org.slf4j.Logger;
@@ -106,9 +105,9 @@ public class GroovyJudgerRegistry extends AbstractJudgerRegistry {
         }
 
         @Override
-        public JudgerResult judge(RepositoryHandler repositoryHandler) throws JudgerException {
+        public JudgerResult judge(VariableRepository variableRepository) throws JudgerException {
             try {
-                return processor.judge(judgerInfoKey, repositoryHandler);
+                return processor.judge(judgerInfoKey, variableRepository);
             } catch (JudgerException e) {
                 throw e;
             } catch (Exception e) {
@@ -152,11 +151,11 @@ public class GroovyJudgerRegistry extends AbstractJudgerRegistry {
         /**
          * 对仓库处理器中的数据做出判断，并生成判断值。
          *
-         * @param judgerInfoKey     判断器的主键。
-         * @param repositoryHandler 指定的仓库处理器。
+         * @param judgerInfoKey      判断器的主键。
+         * @param variableRepository 指定的变量仓库。
          * @return 判断值。
          * @throws JudgerException 判断异常。
          */
-        JudgerResult judge(LongIdKey judgerInfoKey, RepositoryHandler repositoryHandler) throws JudgerException;
+        JudgerResult judge(LongIdKey judgerInfoKey, Judger.VariableRepository variableRepository) throws JudgerException;
     }
 }

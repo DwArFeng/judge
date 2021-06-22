@@ -35,15 +35,12 @@
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.JudgerHandler"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.Judger"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.handler.JudgerMaker"/>
-        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.RepositoryHandler"/>
-        <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.handler.Repository"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.stack.handler.SinkHandler"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.judge.impl.handler.Sink"/>
         <context:exclude-filter type="regex"
                                 expression="^com\.dwarfeng\.judge\.impl\.handler\.EvaluateLocalCacheHandlerImpl.*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.driver.*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.judger.*$"/>
-        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.repository.*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.sink.*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.ConsumeHandlerImpl.*$"/>
     </context:component-scan>

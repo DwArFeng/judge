@@ -1,7 +1,9 @@
 package com.dwarfeng.judge.impl.configuration;
 
 import com.dwarfeng.judge.sdk.bean.entity.*;
+import com.dwarfeng.judge.sdk.bean.key.formatter.VariableStringKeyFormatter;
 import com.dwarfeng.judge.stack.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
@@ -39,6 +41,8 @@ public class CacheConfiguration {
     private String driverSupportPrefix;
     @Value("${cache.prefix.entity.judger_support}")
     private String judgerSupportPrefix;
+    @Value("${cache.prefix.entity.variable}")
+    private String variablePrefix;
 
     @Bean
     @SuppressWarnings("unchecked")
@@ -107,6 +111,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonJudgerSupport>) template,
                 new StringIdStringKeyFormatter(judgerSupportPrefix),
                 new DozerBeanTransformer<>(JudgerSupport.class, FastJsonJudgerSupport.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<VariableKey, Variable, FastJsonVariable> variableRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonVariable>) template,
+                new VariableStringKeyFormatter(variablePrefix),
+                new DozerBeanTransformer<>(Variable.class, FastJsonVariable.class, mapper)
         );
     }
 }

@@ -1,7 +1,7 @@
 import com.dwarfeng.judge.impl.handler.judger.GroovyJudgerRegistry
 import com.dwarfeng.judge.stack.bean.dto.JudgerResult
 import com.dwarfeng.judge.stack.exception.JudgerException
-import com.dwarfeng.judge.stack.handler.RepositoryHandler
+import com.dwarfeng.judge.stack.handler.Judger
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
 
 /**
@@ -12,7 +12,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
 class ExampleJudgerProcessor implements GroovyJudgerRegistry.Processor {
 
     @Override
-    JudgerResult judge(LongIdKey judgerInfoKey, RepositoryHandler repositoryHandler) throws JudgerException {
+    JudgerResult judge(LongIdKey judgerInfoKey, Judger.VariableRepository variableRepository) throws JudgerException {
         def happenedDate = new Date()
         def value = (happenedDate.getTime() % 1000) / 1000
         return new JudgerResult(value, "通过计算得到的结果: " + value, Long.toString(happenedDate.getTime()))

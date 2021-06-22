@@ -19,8 +19,6 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(JudgerException.class, ServiceExceptionCodes.JUDGER_FAILED);
         destination.put(JudgerMakeException.class, ServiceExceptionCodes.JUDGER_MAKE_FAILED);
         destination.put(UnsupportedJudgerTypeException.class, ServiceExceptionCodes.JUDGER_TYPE_UNSUPPORTED);
-        destination.put(RepositoryException.class, ServiceExceptionCodes.REPOSITORY_FAILED);
-        destination.put(UnsupportedRepositoryCategoryException.class, ServiceExceptionCodes.REPOSITORY_CATEGORY_UNSUPPORTED);
         destination.put(SinkException.class, ServiceExceptionCodes.SINK_FAILED);
         destination.put(DriverException.class, ServiceExceptionCodes.DRIVER_FAILED);
         destination.put(UnsupportedDriverTypeException.class, ServiceExceptionCodes.DRIVER_TYPE_UNSUPPORTED);

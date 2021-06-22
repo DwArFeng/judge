@@ -4,15 +4,14 @@ import com.dwarfeng.judge.impl.service.operation.DriverInfoCrudOperation;
 import com.dwarfeng.judge.impl.service.operation.JudgerInfoCrudOperation;
 import com.dwarfeng.judge.impl.service.operation.SectionCrudOperation;
 import com.dwarfeng.judge.stack.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.judge.stack.cache.DriverSupportCache;
 import com.dwarfeng.judge.stack.cache.JudgerSupportCache;
+import com.dwarfeng.judge.stack.cache.VariableCache;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralCrudService;
+import com.dwarfeng.subgrade.impl.service.*;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -53,11 +52,17 @@ public class ServiceConfiguration {
     private JudgerSupportCache judgerSupportCache;
     @Autowired
     private JudgerSupportDao judgerSupportDao;
+    @Autowired
+    private VariableDao variableDao;
+    @Autowired
+    private VariableCache variableCache;
 
     @Value("${cache.timeout.entity.driver_support}")
     private long driverSupportTimeout;
     @Value("${cache.timeout.entity.judger_support}")
     private long judgerSupportTimeout;
+    @Value("${cache.timeout.entity.variable}")
+    private long variableTimeout;
 
     @Bean
     public CustomBatchCrudService<LongIdKey, DriverInfo> driverInfoCustomBatchCrudService() {
@@ -198,6 +203,36 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<JudgerSupport> judgerSupportDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 judgerSupportDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<VariableKey, Variable> variableGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                variableDao,
+                variableCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                variableTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Variable> variableDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                variableDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Variable> variableDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                variableDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

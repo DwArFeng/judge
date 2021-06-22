@@ -1,9 +1,14 @@
 package com.dwarfeng.judge.impl.service.operation;
 
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
+import com.dwarfeng.judge.stack.bean.entity.Variable;
+import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.judge.stack.cache.EnabledJudgerInfoCache;
 import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
+import com.dwarfeng.judge.stack.cache.VariableCache;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
+import com.dwarfeng.judge.stack.dao.VariableDao;
+import com.dwarfeng.judge.stack.service.VariableMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -15,15 +20,21 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, JudgerInfo> {
 
     @Autowired
     private JudgerInfoDao judgerInfoDao;
+    @Autowired
+    private VariableDao variableDao;
 
     @Autowired
     private JudgerInfoCache judgerInfoCache;
+    @Autowired
+    private VariableCache variableCache;
+
     @Autowired
     private EnabledJudgerInfoCache enabledJudgerInfoCache;
 
@@ -80,6 +91,12 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
         if (Objects.nonNull(oldJudgerInfo.getSectionKey())) {
             enabledJudgerInfoCache.delete(oldJudgerInfo.getSectionKey());
         }
+
+        // 删除变量。
+        List<VariableKey> variableKeys = variableDao.lookup(VariableMaintainService.LONG_ID_EQUALS, new Object[]{key})
+                .stream().map(Variable::getKey).collect(Collectors.toList());
+        variableCache.batchDelete(variableKeys);
+        variableDao.batchDelete(variableKeys);
 
         judgerInfoDao.delete(key);
         judgerInfoCache.delete(key);
