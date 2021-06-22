@@ -5,6 +5,12 @@
 #### 功能构建
 
 - 使用轻量级的 VariableRepository 代替之前的重量级的 Repository。
+- 增加部分字段 final 修饰符。
+- 更正部分测试文件中不合理的文本值。
+- 修正 AssignQosServiceImpl 中错误的日志文本。
+- 将 application-context-task.xml 中的全部参数设置为可配置参数。
+- 将工具类 CommandUtils 的修饰符设置为。
+- 改进 judge-impl 模块单元测试中的 log4j2.xml 配置文件。
 
 #### Bug修复
 
