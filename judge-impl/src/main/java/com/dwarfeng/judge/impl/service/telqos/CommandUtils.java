@@ -13,7 +13,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 1.4.1
  */
-class CommandUtils {
+final class CommandUtils {
 
     public static List<Option> buildOfOptions() {
         List<Option> list = new ArrayList<>();

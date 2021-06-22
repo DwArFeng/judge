@@ -24,7 +24,7 @@ public class JudgerSupportMaintainServiceImplTest {
     @Autowired
     private JudgerSupportMaintainService service;
 
-    private List<JudgerSupport> judgerSupports = new ArrayList<>();
+    private final List<JudgerSupport> judgerSupports = new ArrayList<>();
 
     @Before
     public void setUp() {

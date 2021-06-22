@@ -46,7 +46,7 @@ public class DriverInfoMaintainServiceImplTest {
                     null,
                     parentSection.getKey(),
                     true,
-                    "filter-info-" + i,
+                    "driver-info-" + i,
                     "this is a test",
                     "test"
             );

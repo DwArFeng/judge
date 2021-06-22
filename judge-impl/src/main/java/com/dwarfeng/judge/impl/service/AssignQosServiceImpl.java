@@ -45,7 +45,7 @@ public class AssignQosServiceImpl implements AssignQosService {
         lock.lock();
         try {
             if (!startFlag) {
-                LOGGER.info("开启判断服务...");
+                LOGGER.info("开启指派服务...");
                 assignHandler.online();
                 startFlag = true;
             }
@@ -63,7 +63,7 @@ public class AssignQosServiceImpl implements AssignQosService {
         lock.lock();
         try {
             if (startFlag) {
-                LOGGER.info("关闭判断服务...");
+                LOGGER.info("关闭指派服务...");
                 assignHandler.offline();
                 try {
                     Thread.sleep(500);

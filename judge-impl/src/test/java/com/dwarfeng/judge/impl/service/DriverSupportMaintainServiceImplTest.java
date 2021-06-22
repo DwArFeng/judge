@@ -24,7 +24,7 @@ public class DriverSupportMaintainServiceImplTest {
     @Autowired
     private DriverSupportMaintainService service;
 
-    private List<DriverSupport> driverSupports = new ArrayList<>();
+    private final List<DriverSupport> driverSupports = new ArrayList<>();
 
     @Before
     public void setUp() {

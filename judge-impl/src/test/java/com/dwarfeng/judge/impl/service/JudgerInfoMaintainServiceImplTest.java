@@ -46,7 +46,7 @@ public class JudgerInfoMaintainServiceImplTest {
                     null,
                     parentSection.getKey(),
                     true,
-                    "filter-info-" + i,
+                    "judger-info-" + i,
                     "this is a test",
                     "test"
             );
