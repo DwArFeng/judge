@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>judge</artifactId>
-    <version>1.5.0.a</version>
+    <version>1.5.1.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -410,17 +410,17 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-stack</artifactId>
-                <version>1.5.0.a</version>
+                <version>1.5.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-sdk</artifactId>
-                <version>1.5.0.a</version>
+                <version>1.5.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-impl</artifactId>
-                <version>1.5.0.a</version>
+                <version>1.5.1.a-SNAPSHOT</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.codehaus.groovy</groupId>
@@ -431,22 +431,22 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-node-maintain</artifactId>
-                <version>1.5.0.a</version>
+                <version>1.5.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-node-assign</artifactId>
-                <version>1.5.0.a</version>
+                <version>1.5.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-node-evaluate</artifactId>
-                <version>1.5.0.a</version>
+                <version>1.5.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-node-all</artifactId>
-                <version>1.5.0.a</version>
+                <version>1.5.1.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
