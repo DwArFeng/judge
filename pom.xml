@@ -430,22 +430,7 @@
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>judge-node-maintain</artifactId>
-                <version>1.6.0.a-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>judge-node-assign</artifactId>
-                <version>1.6.0.a-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>judge-node-evaluate</artifactId>
-                <version>1.6.0.a-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>judge-node-all</artifactId>
+                <artifactId>judge-node</artifactId>
                 <version>1.6.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
