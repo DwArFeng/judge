@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化文件格式。
+  - 优化 `application-context-*.xml` 文件的格式。
+
 - 重构 `node` 模块。
 
 #### Bug修复
