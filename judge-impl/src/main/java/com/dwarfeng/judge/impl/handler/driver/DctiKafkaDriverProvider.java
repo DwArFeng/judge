@@ -12,7 +12,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,8 +43,11 @@ public class DctiKafkaDriverProvider implements DriverProvider {
 
     public static final String SUPPORT_TYPE = "dcti_kafka_driver";
 
-    @Autowired
-    private DctiKafkaDriver dctiKafkaDriver;
+    private final DctiKafkaDriver dctiKafkaDriver;
+
+    public DctiKafkaDriverProvider(DctiKafkaDriver dctiKafkaDriver) {
+        this.dctiKafkaDriver = dctiKafkaDriver;
+    }
 
     @Override
     public boolean supportType(String type) {
@@ -62,14 +64,17 @@ public class DctiKafkaDriverProvider implements DriverProvider {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(DctiKafkaDriver.class);
 
-        @Autowired
-        private EvaluateService evaluateService;
+        private final EvaluateService evaluateService;
 
         @Value("${driver.dcti.kafka.listener_id}")
         private String listenerId;
 
         private final Map<Long, LongIdKey> registerMap = new HashMap<>();
         private final Lock lock = new ReentrantLock();
+
+        public DctiKafkaDriver(EvaluateService evaluateService) {
+            this.evaluateService = evaluateService;
+        }
 
         @Override
         public void register(DriverInfo driverInfo) throws DriverException {

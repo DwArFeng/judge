@@ -7,15 +7,17 @@ import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class JudgerSupportCacheImpl implements JudgerSupportCache {
 
-    @Autowired
-    private RedisBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> baseCache;
+    private final RedisBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> baseCache;
+
+    public JudgerSupportCacheImpl(RedisBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> baseCache) {
+        this.baseCache = baseCache;
+    }
 
     @Override
     @BehaviorAnalyse

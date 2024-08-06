@@ -9,18 +9,25 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EvaluateServiceImpl implements EvaluateService {
 
-    @Autowired
-    private EvaluateHandler evaluateHandler;
-    @Autowired
-    private EvaluateLocalCacheHandler evaluateLocalCacheHandler;
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final EvaluateHandler evaluateHandler;
+    private final EvaluateLocalCacheHandler evaluateLocalCacheHandler;
+
+    private final ServiceExceptionMapper sem;
+
+    public EvaluateServiceImpl(
+            EvaluateHandler evaluateHandler,
+            EvaluateLocalCacheHandler evaluateLocalCacheHandler,
+            ServiceExceptionMapper sem
+    ) {
+        this.evaluateHandler = evaluateHandler;
+        this.evaluateLocalCacheHandler = evaluateLocalCacheHandler;
+        this.sem = sem;
+    }
 
     @Override
     public void evaluate(LongIdKey sectionKey) throws ServiceException {

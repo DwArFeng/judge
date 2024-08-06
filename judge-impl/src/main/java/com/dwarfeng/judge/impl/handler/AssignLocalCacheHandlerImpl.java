@@ -11,7 +11,6 @@ import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +22,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Component
 public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
 
-    @Autowired
-    private DriveInfoFetcher driveInfoFetcher;
+    private final DriveInfoFetcher driveInfoFetcher;
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final Map<LongIdKey, AssignInfo> infoMap = new HashMap<>();
     private final Set<LongIdKey> notExistSections = new HashSet<>();
+
+    public AssignLocalCacheHandlerImpl(DriveInfoFetcher driveInfoFetcher) {
+        this.driveInfoFetcher = driveInfoFetcher;
+    }
 
     @Override
     public AssignInfo getAssignInfo(LongIdKey sectionKey) throws HandlerException {
@@ -81,16 +83,25 @@ public class AssignLocalCacheHandlerImpl implements AssignLocalCacheHandler {
     @Component
     public static class DriveInfoFetcher {
 
-        @Autowired
-        private SectionMaintainService sectionMaintainService;
-        @Autowired
-        private EnabledDriverInfoLookupService enabledDriverInfoLookupService;
+        private final SectionMaintainService sectionMaintainService;
+        private final EnabledDriverInfoLookupService enabledDriverInfoLookupService;
 
-        @Autowired
-        private DriverHandler driverHandler;
+        private final DriverHandler driverHandler;
+
+        public DriveInfoFetcher(
+                SectionMaintainService sectionMaintainService,
+                EnabledDriverInfoLookupService enabledDriverInfoLookupService,
+                DriverHandler driverHandler
+        ) {
+            this.sectionMaintainService = sectionMaintainService;
+            this.enabledDriverInfoLookupService = enabledDriverInfoLookupService;
+            this.driverHandler = driverHandler;
+        }
 
         @BehaviorAnalyse
-        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+        @Transactional(
+                transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
+        )
         public AssignInfo fetchInfo(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;

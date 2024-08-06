@@ -11,7 +11,6 @@ import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +22,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Component
 public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler {
 
-    @Autowired
-    private JudgeContextFetcher judgeContextFetcher;
+    private final JudgeContextFetcher judgeContextFetcher;
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final Map<LongIdKey, EvaluateInfo> infoMap = new HashMap<>();
     private final Set<LongIdKey> notExistSections = new HashSet<>();
+
+    public EvaluateLocalCacheHandlerImpl(JudgeContextFetcher judgeContextFetcher) {
+        this.judgeContextFetcher = judgeContextFetcher;
+    }
 
     @Override
     public EvaluateInfo getEvaluateInfo(LongIdKey sectionKey) throws HandlerException {
@@ -81,16 +83,25 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
     @Component
     public static class JudgeContextFetcher {
 
-        @Autowired
-        private SectionMaintainService sectionMaintainService;
-        @Autowired
-        private EnabledJudgerInfoLookupService enabledJudgerInfoLookupService;
+        private final SectionMaintainService sectionMaintainService;
+        private final EnabledJudgerInfoLookupService enabledJudgerInfoLookupService;
 
-        @Autowired
-        private JudgerHandler judgerHandler;
+        private final JudgerHandler judgerHandler;
+
+        public JudgeContextFetcher(
+                SectionMaintainService sectionMaintainService,
+                EnabledJudgerInfoLookupService enabledJudgerInfoLookupService,
+                JudgerHandler judgerHandler
+        ) {
+            this.sectionMaintainService = sectionMaintainService;
+            this.enabledJudgerInfoLookupService = enabledJudgerInfoLookupService;
+            this.judgerHandler = judgerHandler;
+        }
 
         @BehaviorAnalyse
-        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+        @Transactional(
+                transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
+        )
         public EvaluateInfo fetchInfo(LongIdKey sectionKey) throws Exception {
             if (!sectionMaintainService.exists(sectionKey)) {
                 return null;
@@ -105,10 +116,7 @@ public class EvaluateLocalCacheHandlerImpl implements EvaluateLocalCacheHandler 
                 judgerMap.put(judgerInfo, judgerHandler.make(judgerInfo));
             }
 
-            return new EvaluateInfo(
-                    section,
-                    judgerMap
-            );
+            return new EvaluateInfo(section, judgerMap);
         }
     }
 }

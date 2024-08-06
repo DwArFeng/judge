@@ -7,19 +7,22 @@ import com.dwarfeng.judge.stack.handler.JudgerHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JudgerHandlerImpl implements JudgerHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JudgerHandlerImpl.class);
 
-    @Autowired(required = false)
-    private List<JudgerMaker> judgerMakers = new ArrayList<>();
+    private final List<JudgerMaker> judgerMakers;
+
+    public JudgerHandlerImpl(List<JudgerMaker> judgerMakers) {
+        this.judgerMakers = Optional.ofNullable(judgerMakers).orElse(Collections.emptyList());
+    }
 
     @Override
     public Judger make(JudgerInfo judgerInfo) throws HandlerException {

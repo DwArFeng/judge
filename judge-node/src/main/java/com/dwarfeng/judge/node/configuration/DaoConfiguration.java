@@ -16,7 +16,6 @@ import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,29 +24,42 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 @Configuration
 public class DaoConfiguration {
 
-    @Autowired
-    private HibernateTemplate hibernateTemplate;
-    @Autowired
-    private Mapper mapper;
+    private final HibernateTemplate hibernateTemplate;
+    private final Mapper mapper;
 
-    @Autowired
-    private DriverInfoPresetCriteriaMaker driverInfoPresetCriteriaMaker;
-    @Autowired
-    private SectionPresetCriteriaMaker sectionPresetCriteriaMaker;
-    @Autowired
-    private JudgerInfoPresetCriteriaMaker judgerInfoPresetCriteriaMaker;
-    @Autowired
-    private DriverSupportPresetCriteriaMaker driverSupportPresetCriteriaMaker;
-    @Autowired
-    private JudgerSupportPresetCriteriaMaker judgerSupportPresetCriteriaMaker;
-    @Autowired
-    private VariablePresetCriteriaMaker variablePresetCriteriaMaker;
+    private final DriverInfoPresetCriteriaMaker driverInfoPresetCriteriaMaker;
+    private final SectionPresetCriteriaMaker sectionPresetCriteriaMaker;
+    private final JudgerInfoPresetCriteriaMaker judgerInfoPresetCriteriaMaker;
+    private final DriverSupportPresetCriteriaMaker driverSupportPresetCriteriaMaker;
+    private final JudgerSupportPresetCriteriaMaker judgerSupportPresetCriteriaMaker;
+    private final VariablePresetCriteriaMaker variablePresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
 
+    public DaoConfiguration(
+            HibernateTemplate hibernateTemplate,
+            Mapper mapper,
+            DriverInfoPresetCriteriaMaker driverInfoPresetCriteriaMaker,
+            SectionPresetCriteriaMaker sectionPresetCriteriaMaker,
+            JudgerInfoPresetCriteriaMaker judgerInfoPresetCriteriaMaker,
+            DriverSupportPresetCriteriaMaker driverSupportPresetCriteriaMaker,
+            JudgerSupportPresetCriteriaMaker judgerSupportPresetCriteriaMaker,
+            VariablePresetCriteriaMaker variablePresetCriteriaMaker
+    ) {
+        this.hibernateTemplate = hibernateTemplate;
+        this.mapper = mapper;
+        this.driverInfoPresetCriteriaMaker = driverInfoPresetCriteriaMaker;
+        this.sectionPresetCriteriaMaker = sectionPresetCriteriaMaker;
+        this.judgerInfoPresetCriteriaMaker = judgerInfoPresetCriteriaMaker;
+        this.driverSupportPresetCriteriaMaker = driverSupportPresetCriteriaMaker;
+        this.judgerSupportPresetCriteriaMaker = judgerSupportPresetCriteriaMaker;
+        this.variablePresetCriteriaMaker = variablePresetCriteriaMaker;
+    }
+
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, DriverInfo, HibernateDriverInfo> driverInfoHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, DriverInfo, HibernateDriverInfo>
+    driverInfoHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
@@ -69,7 +81,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Section, HibernateSection> sectionHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Section, HibernateSection>
+    sectionHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
@@ -100,7 +113,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgerInfo, HibernateJudgerInfo> judgerInfoHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgerInfo, HibernateJudgerInfo>
+    judgerInfoHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
@@ -140,7 +154,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport> driverSupportHibernateBaseDao() {
+    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport>
+    driverSupportHibernateBaseDao() {
         return new HibernateBaseDao<>(
                 hibernateTemplate,
                 new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
@@ -169,7 +184,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport> judgerSupportHibernateBaseDao() {
+    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport>
+    judgerSupportHibernateBaseDao() {
         return new HibernateBaseDao<>(
                 hibernateTemplate,
                 new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
@@ -198,7 +214,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<VariableKey, HibernateVariableKey, Variable, HibernateVariable> variableHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<VariableKey, HibernateVariableKey, Variable, HibernateVariable>
+    variableHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new DozerBeanTransformer<>(VariableKey.class, HibernateVariableKey.class, mapper),

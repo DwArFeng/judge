@@ -11,7 +11,6 @@ import com.dwarfeng.judge.stack.service.SectionMaintainService;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -23,14 +22,17 @@ public class AssignHandlerImpl implements AssignHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AssignHandlerImpl.class);
 
-    @Autowired
-    private SectionMaintainService sectionMaintainService;
-    @Autowired
-    private AssignLocalCacheHandler localCacheHandler;
+    private final SectionMaintainService sectionMaintainService;
+    private final AssignLocalCacheHandler localCacheHandler;
 
     private final Lock lock = new ReentrantLock();
     private final Set<Driver> usedDrivers = new HashSet<>();
     private boolean onlineFlag = false;
+
+    public AssignHandlerImpl(SectionMaintainService sectionMaintainService, AssignLocalCacheHandler localCacheHandler) {
+        this.sectionMaintainService = sectionMaintainService;
+        this.localCacheHandler = localCacheHandler;
+    }
 
     @Override
     public boolean isOnline() {

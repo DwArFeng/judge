@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Service
 public class SectionMaintainServiceImpl implements SectionMaintainService {
 
-    @Autowired
-    private CustomBatchCrudService<LongIdKey, Section> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<Section> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<Section> presetLookupService;
+    private final CustomBatchCrudService<LongIdKey, Section> crudService;
+    private final DaoOnlyEntireLookupService<Section> entireLookupService;
+    private final DaoOnlyPresetLookupService<Section> presetLookupService;
+
+    public SectionMaintainServiceImpl(
+            CustomBatchCrudService<LongIdKey, Section> crudService,
+            DaoOnlyEntireLookupService<Section> entireLookupService,
+            DaoOnlyPresetLookupService<Section> presetLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

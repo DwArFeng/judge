@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +19,19 @@ import java.util.List;
 @Repository
 public class JudgerSupportDaoImpl implements JudgerSupportDao {
 
-    @Autowired
-    private HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport> baseDao;
-    @Autowired
-    private HibernateEntireLookupDao<JudgerSupport, HibernateJudgerSupport> entireLookupDao;
-    @Autowired
-    private HibernatePresetLookupDao<JudgerSupport, HibernateJudgerSupport> presetLookupDao;
+    private final HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport> baseDao;
+    private final HibernateEntireLookupDao<JudgerSupport, HibernateJudgerSupport> entireLookupDao;
+    private final HibernatePresetLookupDao<JudgerSupport, HibernateJudgerSupport> presetLookupDao;
+
+    public JudgerSupportDaoImpl(
+            HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport> baseDao,
+            HibernateEntireLookupDao<JudgerSupport, HibernateJudgerSupport> entireLookupDao,
+            HibernatePresetLookupDao<JudgerSupport, HibernateJudgerSupport> presetLookupDao
+    ) {
+        this.baseDao = baseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

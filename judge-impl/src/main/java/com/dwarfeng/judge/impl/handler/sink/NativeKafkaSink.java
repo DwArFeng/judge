@@ -8,7 +8,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,15 +33,16 @@ public class NativeKafkaSink extends AbstractSink {
 
     public static final String SINK_TYPE = "native.kafka";
 
-    @Autowired
-    @Qualifier("nativeKafkaSink.kafkaTemplate")
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Value("${sink.native.kafka.topic}")
     private String topic;
 
-    public NativeKafkaSink() {
+    public NativeKafkaSink(
+            @Qualifier("nativeKafkaSink.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
+    ) {
         super(SINK_TYPE);
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override

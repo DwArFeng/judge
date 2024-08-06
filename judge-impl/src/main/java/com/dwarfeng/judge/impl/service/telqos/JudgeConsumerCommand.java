@@ -11,7 +11,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,12 +27,12 @@ public class JudgeConsumerCommand extends CliCommand {
     private static final String CMD_LINE_SYNTAX_S = "jcsu -s [-b val] [-t val]";
     private static final String CMD_LINE_SYNTAX = CMD_LINE_SYNTAX_L + System.lineSeparator() + CMD_LINE_SYNTAX_S;
 
-    public JudgeConsumerCommand() {
-        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
-    }
+    private final JudgeQosService judgeQosService;
 
-    @Autowired
-    private JudgeQosService judgeQosService;
+    public JudgeConsumerCommand(JudgeQosService judgeQosService) {
+        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
+        this.judgeQosService = judgeQosService;
+    }
 
     @Override
     protected List<Option> buildOptions() {

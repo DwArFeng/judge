@@ -16,7 +16,6 @@ import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,38 +23,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServiceConfiguration {
 
-    @Autowired
-    private ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
+    private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
 
-    @Bean
-    public KeyFetcher<LongIdKey> longIdKeyKeyFetcher() {
-        return new SnowFlakeLongIdKeyFetcher();
-    }
-
-    @Autowired
-    private DriverInfoCrudOperation driverInfoCrudOperation;
-    @Autowired
-    private DriverInfoDao driverInfoDao;
-    @Autowired
-    private SectionCrudOperation sectionCrudOperation;
-    @Autowired
-    private SectionDao sectionDao;
-    @Autowired
-    private JudgerInfoCrudOperation judgerInfoCrudOperation;
-    @Autowired
-    private JudgerInfoDao judgerInfoDao;
-    @Autowired
-    private DriverSupportCache driverSupportCache;
-    @Autowired
-    private DriverSupportDao driverSupportDao;
-    @Autowired
-    private JudgerSupportCache judgerSupportCache;
-    @Autowired
-    private JudgerSupportDao judgerSupportDao;
-    @Autowired
-    private VariableDao variableDao;
-    @Autowired
-    private VariableCache variableCache;
+    private final DriverInfoCrudOperation driverInfoCrudOperation;
+    private final DriverInfoDao driverInfoDao;
+    private final SectionCrudOperation sectionCrudOperation;
+    private final SectionDao sectionDao;
+    private final JudgerInfoCrudOperation judgerInfoCrudOperation;
+    private final JudgerInfoDao judgerInfoDao;
+    private final DriverSupportCache driverSupportCache;
+    private final DriverSupportDao driverSupportDao;
+    private final JudgerSupportCache judgerSupportCache;
+    private final JudgerSupportDao judgerSupportDao;
+    private final VariableDao variableDao;
+    private final VariableCache variableCache;
 
     @Value("${cache.timeout.entity.driver_support}")
     private long driverSupportTimeout;
@@ -63,6 +44,41 @@ public class ServiceConfiguration {
     private long judgerSupportTimeout;
     @Value("${cache.timeout.entity.variable}")
     private long variableTimeout;
+
+    public ServiceConfiguration(
+            ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
+            DriverInfoCrudOperation driverInfoCrudOperation,
+            VariableCache variableCache,
+            DriverInfoDao driverInfoDao,
+            SectionCrudOperation sectionCrudOperation,
+            SectionDao sectionDao,
+            JudgerInfoCrudOperation judgerInfoCrudOperation,
+            JudgerInfoDao judgerInfoDao,
+            VariableDao variableDao,
+            DriverSupportCache driverSupportCache,
+            DriverSupportDao driverSupportDao,
+            JudgerSupportCache judgerSupportCache,
+            JudgerSupportDao judgerSupportDao
+    ) {
+        this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
+        this.driverInfoCrudOperation = driverInfoCrudOperation;
+        this.variableCache = variableCache;
+        this.driverInfoDao = driverInfoDao;
+        this.sectionCrudOperation = sectionCrudOperation;
+        this.sectionDao = sectionDao;
+        this.judgerInfoCrudOperation = judgerInfoCrudOperation;
+        this.judgerInfoDao = judgerInfoDao;
+        this.variableDao = variableDao;
+        this.driverSupportCache = driverSupportCache;
+        this.driverSupportDao = driverSupportDao;
+        this.judgerSupportCache = judgerSupportCache;
+        this.judgerSupportDao = judgerSupportDao;
+    }
+
+    @Bean
+    public KeyFetcher<LongIdKey> longIdKeyKeyFetcher() {
+        return new SnowFlakeLongIdKeyFetcher();
+    }
 
     @Bean
     public CustomBatchCrudService<LongIdKey, DriverInfo> driverInfoCustomBatchCrudService() {

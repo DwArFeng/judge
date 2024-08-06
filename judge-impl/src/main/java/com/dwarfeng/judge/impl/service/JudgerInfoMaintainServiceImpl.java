@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Service
 public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService {
 
-    @Autowired
-    private CustomBatchCrudService<LongIdKey, JudgerInfo> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<JudgerInfo> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<JudgerInfo> presetLookupService;
+    private final CustomBatchCrudService<LongIdKey, JudgerInfo> crudService;
+    private final DaoOnlyEntireLookupService<JudgerInfo> entireLookupService;
+    private final DaoOnlyPresetLookupService<JudgerInfo> presetLookupService;
+
+    public JudgerInfoMaintainServiceImpl(
+            CustomBatchCrudService<LongIdKey, JudgerInfo> crudService,
+            DaoOnlyEntireLookupService<JudgerInfo> entireLookupService,
+            DaoOnlyPresetLookupService<JudgerInfo> presetLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

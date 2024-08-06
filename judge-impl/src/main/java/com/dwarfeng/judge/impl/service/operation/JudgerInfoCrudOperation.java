@@ -13,7 +13,6 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,21 +24,30 @@ import java.util.stream.Collectors;
 @Component
 public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, JudgerInfo> {
 
-    @Autowired
-    private JudgerInfoDao judgerInfoDao;
-    @Autowired
-    private VariableDao variableDao;
+    private final JudgerInfoDao judgerInfoDao;
+    private final JudgerInfoCache judgerInfoCache;
 
-    @Autowired
-    private JudgerInfoCache judgerInfoCache;
-    @Autowired
-    private VariableCache variableCache;
+    private final VariableDao variableDao;
+    private final VariableCache variableCache;
 
-    @Autowired
-    private EnabledJudgerInfoCache enabledJudgerInfoCache;
+    private final EnabledJudgerInfoCache enabledJudgerInfoCache;
 
     @Value("${cache.timeout.entity.judger_info}")
     private long judgerInfoTimeout;
+
+    public JudgerInfoCrudOperation(
+            JudgerInfoDao judgerInfoDao,
+            JudgerInfoCache judgerInfoCache,
+            VariableDao variableDao,
+            VariableCache variableCache,
+            EnabledJudgerInfoCache enabledJudgerInfoCache
+    ) {
+        this.judgerInfoDao = judgerInfoDao;
+        this.judgerInfoCache = judgerInfoCache;
+        this.variableDao = variableDao;
+        this.variableCache = variableCache;
+        this.enabledJudgerInfoCache = enabledJudgerInfoCache;
+    }
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {

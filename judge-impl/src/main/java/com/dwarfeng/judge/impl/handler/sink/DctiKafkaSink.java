@@ -10,7 +10,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -36,15 +35,16 @@ public class DctiKafkaSink extends AbstractSink {
 
     public static final String SINK_TYPE = "dcti.kafka";
 
-    @Autowired
-    @Qualifier("dctiKafkaSink.kafkaTemplate")
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Value("${sink.dcti.kafka.topic}")
     private String topic;
 
-    public DctiKafkaSink() {
+    public DctiKafkaSink(
+            @Qualifier("dctiKafkaSink.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
+    ) {
         super(SINK_TYPE);
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -52,8 +52,9 @@ public class DctiKafkaSink extends AbstractSink {
     public void sinkData(SectionReport sectionReport) {
         DataInfo dataInfo = new DataInfo(
                 sectionReport.getSectionKey().getLongId(),
-                JSON.toJSONString(FastJsonSectionReport.of(sectionReport),
-                        SerializerFeature.DisableCircularReferenceDetect),
+                JSON.toJSONString(
+                        FastJsonSectionReport.of(sectionReport), SerializerFeature.DisableCircularReferenceDetect
+                ),
                 sectionReport.getHappenedDate()
         );
         kafkaTemplate.send(topic, DataInfoUtil.toMessage(dataInfo));

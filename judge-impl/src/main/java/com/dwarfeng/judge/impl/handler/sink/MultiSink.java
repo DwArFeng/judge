@@ -5,14 +5,12 @@ import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * 同时将消息推送给所有代理的多重水槽。
@@ -26,16 +24,16 @@ public class MultiSink extends AbstractSink {
     public static final String SINK_TYPE = "multi";
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiSink.class);
 
-    @Autowired
-    private List<Sink> sinks;
+    private final List<Sink> sinks;
 
     @Value("${sink.multi.delegate_types}")
     private String delegateTypes;
 
     private final List<Sink> delegates = new ArrayList<>();
 
-    public MultiSink() {
+    public MultiSink(@Lazy List<Sink> sinks) {
         super(SINK_TYPE);
+        this.sinks = Optional.ofNullable(sinks).orElse(Collections.emptyList());
     }
 
     @PostConstruct

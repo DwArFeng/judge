@@ -7,7 +7,6 @@ import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,11 @@ import java.util.List;
 @Repository
 public class DriverInfoCacheImpl implements DriverInfoCache {
 
-    @Autowired
-    private RedisBatchBaseCache<LongIdKey, DriverInfo, FastJsonDriverInfo> batchBaseCache;
+    private final RedisBatchBaseCache<LongIdKey, DriverInfo, FastJsonDriverInfo> batchBaseCache;
+
+    public DriverInfoCacheImpl(RedisBatchBaseCache<LongIdKey, DriverInfo, FastJsonDriverInfo> batchBaseCache) {
+        this.batchBaseCache = batchBaseCache;
+    }
 
     @Override
     @BehaviorAnalyse

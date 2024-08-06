@@ -8,7 +8,6 @@ import com.dwarfeng.judge.stack.service.EvaluateService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
@@ -31,8 +30,11 @@ public class CronDriverProvider implements DriverProvider {
 
     public static final String SUPPORT_TYPE = "cron_driver";
 
-    @Autowired
-    private CronDriver cronDriver;
+    private final CronDriver cronDriver;
+
+    public CronDriverProvider(CronDriver cronDriver) {
+        this.cronDriver = cronDriver;
+    }
 
     @Override
     public boolean supportType(String type) {
@@ -47,14 +49,17 @@ public class CronDriverProvider implements DriverProvider {
     @Component
     public static class CronDriver implements Driver {
 
-        @Autowired
-        private ThreadPoolTaskScheduler scheduler;
-        @Autowired
-        private EvaluateService evaluateService;
+        private final ThreadPoolTaskScheduler scheduler;
+        private final EvaluateService evaluateService;
 
         private final Lock lock = new ReentrantLock();
         private final Set<ScheduledFuture<?>> scheduledFutures = new HashSet<>();
         private final Set<CronProcessor> cronProcessors = new HashSet<>();
+
+        public CronDriver(ThreadPoolTaskScheduler scheduler, EvaluateService evaluateService) {
+            this.scheduler = scheduler;
+            this.evaluateService = evaluateService;
+        }
 
         @Override
         public void register(DriverInfo driverInfo) throws DriverException {

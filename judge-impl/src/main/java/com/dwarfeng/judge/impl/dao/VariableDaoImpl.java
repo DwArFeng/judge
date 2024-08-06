@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +19,19 @@ import java.util.List;
 @Repository
 public class VariableDaoImpl implements VariableDao {
 
-    @Autowired
-    private HibernateBatchBaseDao<VariableKey, HibernateVariableKey, Variable, HibernateVariable> batchBaseDao;
-    @Autowired
-    private HibernateEntireLookupDao<Variable, HibernateVariable> entireLookupDao;
-    @Autowired
-    private HibernatePresetLookupDao<Variable, HibernateVariable> presetLookupDao;
+    private final HibernateBatchBaseDao<VariableKey, HibernateVariableKey, Variable, HibernateVariable> batchBaseDao;
+    private final HibernateEntireLookupDao<Variable, HibernateVariable> entireLookupDao;
+    private final HibernatePresetLookupDao<Variable, HibernateVariable> presetLookupDao;
+
+    public VariableDaoImpl(
+            HibernateBatchBaseDao<VariableKey, HibernateVariableKey, Variable, HibernateVariable> batchBaseDao,
+            HibernateEntireLookupDao<Variable, HibernateVariable> entireLookupDao,
+            HibernatePresetLookupDao<Variable, HibernateVariable> presetLookupDao
+    ) {
+        this.batchBaseDao = batchBaseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

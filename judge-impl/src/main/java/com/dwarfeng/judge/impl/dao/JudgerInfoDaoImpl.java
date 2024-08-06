@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +19,19 @@ import java.util.List;
 @Repository
 public class JudgerInfoDaoImpl implements JudgerInfoDao {
 
-    @Autowired
-    private HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgerInfo, HibernateJudgerInfo> batchBaseDao;
-    @Autowired
-    private HibernateEntireLookupDao<JudgerInfo, HibernateJudgerInfo> entireLookupDao;
-    @Autowired
-    private HibernatePresetLookupDao<JudgerInfo, HibernateJudgerInfo> presetLookupDao;
+    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgerInfo, HibernateJudgerInfo> batchBaseDao;
+    private final HibernateEntireLookupDao<JudgerInfo, HibernateJudgerInfo> entireLookupDao;
+    private final HibernatePresetLookupDao<JudgerInfo, HibernateJudgerInfo> presetLookupDao;
+
+    public JudgerInfoDaoImpl(
+            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgerInfo, HibernateJudgerInfo> batchBaseDao,
+            HibernateEntireLookupDao<JudgerInfo, HibernateJudgerInfo> entireLookupDao,
+            HibernatePresetLookupDao<JudgerInfo, HibernateJudgerInfo> presetLookupDao
+    ) {
+        this.batchBaseDao = batchBaseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

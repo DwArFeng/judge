@@ -8,7 +8,6 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -19,16 +18,23 @@ import java.util.Objects;
 @Component
 public class DriverInfoCrudOperation implements BatchCrudOperation<LongIdKey, DriverInfo> {
 
-    @Autowired
-    private DriverInfoDao driverInfoDao;
+    private final DriverInfoDao driverInfoDao;
+    private final DriverInfoCache driverInfoCache;
 
-    @Autowired
-    private DriverInfoCache driverInfoCache;
-    @Autowired
-    private EnabledDriverInfoCache enabledDriverInfoCache;
+    private final EnabledDriverInfoCache enabledDriverInfoCache;
 
     @Value("${cache.timeout.entity.driver_info}")
     private long driverInfoTimeout;
+
+    public DriverInfoCrudOperation(
+            DriverInfoDao driverInfoDao,
+            DriverInfoCache driverInfoCache,
+            EnabledDriverInfoCache enabledDriverInfoCache
+    ) {
+        this.driverInfoDao = driverInfoDao;
+        this.driverInfoCache = driverInfoCache;
+        this.enabledDriverInfoCache = enabledDriverInfoCache;
+    }
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {

@@ -13,7 +13,6 @@ import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +21,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 public class CacheConfiguration {
 
-    @Autowired
-    private RedisTemplate<String, ?> template;
-    @Autowired
-    private Mapper mapper;
+    private final RedisTemplate<String, ?> template;
+    private final Mapper mapper;
 
     @Value("${cache.prefix.entity.driver_info}")
     private String driverInfoPrefix;
@@ -43,6 +40,11 @@ public class CacheConfiguration {
     private String judgerSupportPrefix;
     @Value("${cache.prefix.entity.variable}")
     private String variablePrefix;
+
+    public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
+        this.template = template;
+        this.mapper = mapper;
+    }
 
     @Bean
     @SuppressWarnings("unchecked")

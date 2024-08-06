@@ -8,7 +8,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.locks.Lock;
@@ -19,11 +18,14 @@ public class EvaluateHandlerImpl implements EvaluateHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateHandlerImpl.class);
 
-    @Autowired
-    private ConsumeHandler consumeHandler;
+    private final ConsumeHandler consumeHandler;
 
     private final Lock lock = new ReentrantLock();
     private boolean enabledFlag = false;
+
+    public EvaluateHandlerImpl(ConsumeHandler consumeHandler) {
+        this.consumeHandler = consumeHandler;
+    }
 
     @Override
     public boolean isEnabled() {

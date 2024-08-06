@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +20,23 @@ import java.util.List;
 @Service
 public class EnabledDriverInfoLookupServiceImpl implements EnabledDriverInfoLookupService {
 
-    @Autowired
-    private DriverInfoDao dao;
-    @Autowired
-    private EnabledDriverInfoCache cache;
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final DriverInfoDao dao;
+    private final EnabledDriverInfoCache cache;
+
+    private final ServiceExceptionMapper sem;
+
     @Value("${cache.timeout.key_list.enabled_driver_info}")
     private long timeout;
+
+    public EnabledDriverInfoLookupServiceImpl(
+            DriverInfoDao dao,
+            EnabledDriverInfoCache cache,
+            ServiceExceptionMapper sem
+    ) {
+        this.dao = dao;
+        this.cache = cache;
+        this.sem = sem;
+    }
 
     @Override
     @BehaviorAnalyse
@@ -38,7 +46,9 @@ public class EnabledDriverInfoLookupServiceImpl implements EnabledDriverInfoLook
             if (cache.exists(sectionKey)) {
                 return cache.get(sectionKey);
             }
-            List<DriverInfo> lookup = dao.lookup(DriverInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{sectionKey});
+            List<DriverInfo> lookup = dao.lookup(
+                    DriverInfoMaintainService.ENABLED_CHILD_FOR_SECTION, new Object[]{sectionKey}
+            );
             cache.set(sectionKey, lookup, timeout);
             return lookup;
         } catch (Exception e) {

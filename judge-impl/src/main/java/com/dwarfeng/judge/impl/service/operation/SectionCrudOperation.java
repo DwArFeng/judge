@@ -13,7 +13,6 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,27 +22,40 @@ import java.util.stream.Collectors;
 @Component
 public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Section> {
 
-    @Autowired
-    private SectionDao sectionDao;
-    @Autowired
-    private DriverInfoDao driverInfoDao;
-    @Autowired
-    private JudgerInfoDao judgerInfoDao;
+    private final SectionDao sectionDao;
+    private final SectionCache sectionCache;
 
-    @Autowired
-    private SectionCache sectionCache;
-    @Autowired
-    private DriverInfoCache driverInfoCache;
-    @Autowired
-    private JudgerInfoCache judgerInfoCache;
+    private final DriverInfoDao driverInfoDao;
+    private final DriverInfoCache driverInfoCache;
 
-    @Autowired
-    private EnabledDriverInfoCache enabledDriverInfoCache;
-    @Autowired
-    private EnabledJudgerInfoCache enabledJudgerInfoCache;
+    private final JudgerInfoDao judgerInfoDao;
+    private final JudgerInfoCache judgerInfoCache;
+
+    private final EnabledDriverInfoCache enabledDriverInfoCache;
+    private final EnabledJudgerInfoCache enabledJudgerInfoCache;
 
     @Value("${cache.timeout.entity.section}")
     private long sectionTimeout;
+
+    public SectionCrudOperation(
+            SectionDao sectionDao,
+            SectionCache sectionCache,
+            DriverInfoDao driverInfoDao,
+            DriverInfoCache driverInfoCache,
+            JudgerInfoDao judgerInfoDao,
+            JudgerInfoCache judgerInfoCache,
+            EnabledDriverInfoCache enabledDriverInfoCache,
+            EnabledJudgerInfoCache enabledJudgerInfoCache
+    ) {
+        this.sectionDao = sectionDao;
+        this.sectionCache = sectionCache;
+        this.driverInfoDao = driverInfoDao;
+        this.driverInfoCache = driverInfoCache;
+        this.judgerInfoDao = judgerInfoDao;
+        this.judgerInfoCache = judgerInfoCache;
+        this.enabledDriverInfoCache = enabledDriverInfoCache;
+        this.enabledJudgerInfoCache = enabledJudgerInfoCache;
+    }
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {
@@ -81,10 +93,12 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         //删除与部件相关的子项。
         {
             //查找部件拥有的过驱动器与判断器。
-            List<LongIdKey> driverInfoKeys = driverInfoDao.lookup(DriverInfoMaintainService.CHILD_FOR_SECTION, new Object[]{key})
-                    .stream().map(DriverInfo::getKey).collect(Collectors.toList());
-            List<LongIdKey> judgerInfoKeys = judgerInfoDao.lookup(JudgerInfoMaintainService.CHILD_FOR_SECTION, new Object[]{key})
-                    .stream().map(JudgerInfo::getKey).collect(Collectors.toList());
+            List<LongIdKey> driverInfoKeys = driverInfoDao.lookup(
+                    DriverInfoMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+            ).stream().map(DriverInfo::getKey).collect(Collectors.toList());
+            List<LongIdKey> judgerInfoKeys = judgerInfoDao.lookup(
+                    JudgerInfoMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+            ).stream().map(JudgerInfo::getKey).collect(Collectors.toList());
 
             //删除点位拥有的驱动器与判断器。
             driverInfoDao.batchDelete(driverInfoKeys);

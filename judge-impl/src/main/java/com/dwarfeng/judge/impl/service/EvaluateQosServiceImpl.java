@@ -14,7 +14,6 @@ import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
@@ -27,18 +26,26 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateQosServiceImpl.class);
 
-    @Autowired
-    private ConsumeHandler consumeHandler;
-    @Autowired
-    private EvaluateHandler evaluateHandler;
-    @Autowired
-    private EvaluateLocalCacheHandler evaluateLocalCacheHandler;
+    private final ConsumeHandler consumeHandler;
+    private final EvaluateHandler evaluateHandler;
+    private final EvaluateLocalCacheHandler evaluateLocalCacheHandler;
 
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final ServiceExceptionMapper sem;
 
     private final Lock lock = new ReentrantLock();
     private boolean startFlag = false;
+
+    public EvaluateQosServiceImpl(
+            ConsumeHandler consumeHandler,
+            EvaluateHandler evaluateHandler,
+            EvaluateLocalCacheHandler evaluateLocalCacheHandler,
+            ServiceExceptionMapper sem
+    ) {
+        this.consumeHandler = consumeHandler;
+        this.evaluateHandler = evaluateHandler;
+        this.evaluateLocalCacheHandler = evaluateLocalCacheHandler;
+        this.sem = sem;
+    }
 
     @PreDestroy
     private void dispose() throws ServiceException {

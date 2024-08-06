@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Service
 public class VariableMaintainServiceImpl implements VariableMaintainService {
 
-    @Autowired
-    private GeneralBatchCrudService<VariableKey, Variable> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<Variable> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<Variable> presetLookupService;
+    private final GeneralBatchCrudService<VariableKey, Variable> crudService;
+    private final DaoOnlyEntireLookupService<Variable> entireLookupService;
+    private final DaoOnlyPresetLookupService<Variable> presetLookupService;
+
+    public VariableMaintainServiceImpl(
+            GeneralBatchCrudService<VariableKey, Variable> crudService,
+            DaoOnlyEntireLookupService<Variable> entireLookupService,
+            DaoOnlyPresetLookupService<Variable> presetLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

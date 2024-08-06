@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +19,19 @@ import java.util.List;
 @Repository
 public class SectionDaoImpl implements SectionDao {
 
-    @Autowired
-    private HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Section, HibernateSection> batchBaseDao;
-    @Autowired
-    private HibernateEntireLookupDao<Section, HibernateSection> entireLookupDao;
-    @Autowired
-    private HibernatePresetLookupDao<Section, HibernateSection> presetLookupDao;
+    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Section, HibernateSection> batchBaseDao;
+    private final HibernateEntireLookupDao<Section, HibernateSection> entireLookupDao;
+    private final HibernatePresetLookupDao<Section, HibernateSection> presetLookupDao;
+
+    public SectionDaoImpl(
+            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Section, HibernateSection> batchBaseDao,
+            HibernateEntireLookupDao<Section, HibernateSection> entireLookupDao,
+            HibernatePresetLookupDao<Section, HibernateSection> presetLookupDao
+    ) {
+        this.batchBaseDao = batchBaseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

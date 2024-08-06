@@ -7,7 +7,6 @@ import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,11 @@ import java.util.List;
 @Repository
 public class JudgerInfoCacheImpl implements JudgerInfoCache {
 
-    @Autowired
-    private RedisBatchBaseCache<LongIdKey, JudgerInfo, FastJsonJudgerInfo> batchBaseCache;
+    private final RedisBatchBaseCache<LongIdKey, JudgerInfo, FastJsonJudgerInfo> batchBaseCache;
+
+    public JudgerInfoCacheImpl(RedisBatchBaseCache<LongIdKey, JudgerInfo, FastJsonJudgerInfo> batchBaseCache) {
+        this.batchBaseCache = batchBaseCache;
+    }
 
     @Override
     @BehaviorAnalyse

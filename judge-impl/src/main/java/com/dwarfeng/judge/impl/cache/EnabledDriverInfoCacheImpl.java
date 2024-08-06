@@ -8,7 +8,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Repository
 public class EnabledDriverInfoCacheImpl implements EnabledDriverInfoCache {
 
-    @Autowired
-    private RedisKeyListCache<LongIdKey, DriverInfo, FastJsonDriverInfo> listCache;
+    private final RedisKeyListCache<LongIdKey, DriverInfo, FastJsonDriverInfo> listCache;
+
+    public EnabledDriverInfoCacheImpl(RedisKeyListCache<LongIdKey, DriverInfo, FastJsonDriverInfo> listCache) {
+        this.listCache = listCache;
+    }
 
     @Override
     @BehaviorAnalyse

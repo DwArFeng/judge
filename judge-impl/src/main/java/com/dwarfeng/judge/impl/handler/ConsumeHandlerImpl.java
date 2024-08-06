@@ -19,7 +19,6 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -41,18 +40,13 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumeHandlerImpl.class);
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
-    @Autowired
-    private ThreadPoolTaskExecutor executor;
-    @Autowired
-    private ThreadPoolTaskScheduler scheduler;
+    private final ThreadPoolTaskExecutor executor;
+    private final ThreadPoolTaskScheduler scheduler;
 
-    @Autowired
-    private EvaluateInfoConsumer evaluateInfoConsumer;
-    @Autowired
-    private ConsumeBuffer consumeBuffer;
+    private final EvaluateInfoConsumer evaluateInfoConsumer;
+    private final ConsumeBuffer consumeBuffer;
 
     private final List<ConsumeTask> processingConsumeTasks = new ArrayList<>();
     private final List<ConsumeTask> endingConsumeTasks = new ArrayList<>();
@@ -67,8 +61,22 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     private final Lock lock = new ReentrantLock();
 
     private boolean startFlag = false;
-    ScheduledFuture<?> capacityCheckFuture = null;
+    private ScheduledFuture<?> capacityCheckFuture = null;
     private int thread;
+
+    public ConsumeHandlerImpl(
+            ApplicationContext applicationContext,
+            ThreadPoolTaskExecutor executor,
+            ThreadPoolTaskScheduler scheduler,
+            EvaluateInfoConsumer evaluateInfoConsumer,
+            ConsumeBuffer consumeBuffer
+    ) {
+        this.applicationContext = applicationContext;
+        this.executor = executor;
+        this.scheduler = scheduler;
+        this.evaluateInfoConsumer = evaluateInfoConsumer;
+        this.consumeBuffer = consumeBuffer;
+    }
 
     @PostConstruct
     public void init() {
@@ -256,12 +264,15 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(ConsumeTask.class);
 
-        @Autowired
-        private ConsumeBuffer consumeBuffer;
-        @Autowired
-        private EvaluateInfoConsumer evaluateInfoConsumer;
+        private final ConsumeBuffer consumeBuffer;
+        private final EvaluateInfoConsumer evaluateInfoConsumer;
 
         private final AtomicBoolean runningFlag = new AtomicBoolean(true);
+
+        public ConsumeTask(ConsumeBuffer consumeBuffer, EvaluateInfoConsumer evaluateInfoConsumer) {
+            this.consumeBuffer = consumeBuffer;
+            this.evaluateInfoConsumer = evaluateInfoConsumer;
+        }
 
         @Override
         protected void todo() {
@@ -394,10 +405,13 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateInfoConsumer.class);
 
-        @Autowired
-        private ApplicationContext ctx;
-        @Autowired
-        private SinkHandler sinkHandler;
+        private final ApplicationContext ctx;
+        private final SinkHandler sinkHandler;
+
+        public EvaluateInfoConsumer(ApplicationContext ctx, SinkHandler sinkHandler) {
+            this.ctx = ctx;
+            this.sinkHandler = sinkHandler;
+        }
 
         public void consume(EvaluateInfo evaluateInfo) throws Exception {
             TimeMeasurer tm = new TimeMeasurer();
@@ -450,10 +464,13 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public static class VariableRepositoryImpl implements Judger.VariableRepository {
 
-        @Autowired
-        private VariableMaintainService variableMaintainService;
+        private final VariableMaintainService variableMaintainService;
 
         private LongIdKey sectionKey;
+
+        public VariableRepositoryImpl(VariableMaintainService variableMaintainService) {
+            this.variableMaintainService = variableMaintainService;
+        }
 
         @Override
         public boolean existsData(String category) throws HandlerException {

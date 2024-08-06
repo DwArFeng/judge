@@ -7,7 +7,6 @@ import com.dwarfeng.springtelqos.stack.exception.TelqosException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,12 +21,12 @@ public class AssignCommand extends CliCommand {
     private static final String CMD_LINE_SYNTAX = CMD_LINE_SYNTAX_ONLINE + System.lineSeparator() +
             CMD_LINE_SYNTAX_OFFLINE;
 
-    public AssignCommand() {
-        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
-    }
+    private final AssignQosService assignQosService;
 
-    @Autowired
-    private AssignQosService assignQosService;
+    public AssignCommand(AssignQosService assignQosService) {
+        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
+        this.assignQosService = assignQosService;
+    }
 
     @Override
     protected List<Option> buildOptions() {

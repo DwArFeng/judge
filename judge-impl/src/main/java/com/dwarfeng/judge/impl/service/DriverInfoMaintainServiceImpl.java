@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Service
 public class DriverInfoMaintainServiceImpl implements DriverInfoMaintainService {
 
-    @Autowired
-    private CustomBatchCrudService<LongIdKey, DriverInfo> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<DriverInfo> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<DriverInfo> presetLookupService;
+    private final CustomBatchCrudService<LongIdKey, DriverInfo> crudService;
+    private final DaoOnlyEntireLookupService<DriverInfo> entireLookupService;
+    private final DaoOnlyPresetLookupService<DriverInfo> presetLookupService;
+
+    public DriverInfoMaintainServiceImpl(
+            CustomBatchCrudService<LongIdKey, DriverInfo> crudService,
+            DaoOnlyEntireLookupService<DriverInfo> entireLookupService,
+            DaoOnlyPresetLookupService<DriverInfo> presetLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

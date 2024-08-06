@@ -14,27 +14,37 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainService {
 
-    @Autowired
-    private GeneralCrudService<StringIdKey, JudgerSupport> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<JudgerSupport> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<JudgerSupport> presetLookupService;
-    @Autowired(required = false)
-    private final List<JudgerSupporter> judgerSupporters = new ArrayList<>();
+    private final GeneralCrudService<StringIdKey, JudgerSupport> crudService;
+    private final DaoOnlyEntireLookupService<JudgerSupport> entireLookupService;
+    private final DaoOnlyPresetLookupService<JudgerSupport> presetLookupService;
 
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final List<JudgerSupporter> judgerSupporters;
+
+    private final ServiceExceptionMapper sem;
+
+    public JudgerSupportMaintainServiceImpl(
+            GeneralCrudService<StringIdKey, JudgerSupport> crudService,
+            DaoOnlyEntireLookupService<JudgerSupport> entireLookupService,
+            DaoOnlyPresetLookupService<JudgerSupport> presetLookupService,
+            List<JudgerSupporter> judgerSupporters,
+            ServiceExceptionMapper sem
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+        this.judgerSupporters = Optional.ofNullable(judgerSupporters).orElse(Collections.emptyList());
+        this.sem = sem;
+    }
 
     @Override
     @BehaviorAnalyse

@@ -12,7 +12,6 @@ import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
@@ -24,16 +23,23 @@ public class AssignQosServiceImpl implements AssignQosService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AssignQosServiceImpl.class);
 
-    @Autowired
-    private AssignHandler assignHandler;
-    @Autowired
-    private AssignLocalCacheHandler assignLocalCacheHandler;
+    private final AssignHandler assignHandler;
+    private final AssignLocalCacheHandler assignLocalCacheHandler;
 
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final ServiceExceptionMapper sem;
 
     private final Lock lock = new ReentrantLock();
     private boolean startFlag = false;
+
+    public AssignQosServiceImpl(
+            AssignHandler assignHandler,
+            AssignLocalCacheHandler assignLocalCacheHandler,
+            ServiceExceptionMapper sem
+    ) {
+        this.assignHandler = assignHandler;
+        this.assignLocalCacheHandler = assignLocalCacheHandler;
+        this.sem = sem;
+    }
 
     @PreDestroy
     private void dispose() throws ServiceException {

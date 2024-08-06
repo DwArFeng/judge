@@ -8,7 +8,6 @@ import com.dwarfeng.judge.stack.service.EvaluateService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
@@ -30,8 +29,11 @@ public class FixedDelayDriverProvider implements DriverProvider {
 
     public static final String SUPPORT_TYPE = "fixed_delay_driver";
 
-    @Autowired
-    private FixedDelayDriver fixedDelayDriver;
+    private final FixedDelayDriver fixedDelayDriver;
+
+    public FixedDelayDriverProvider(FixedDelayDriver fixedDelayDriver) {
+        this.fixedDelayDriver = fixedDelayDriver;
+    }
 
     @Override
     public boolean supportType(String type) {
@@ -46,14 +48,17 @@ public class FixedDelayDriverProvider implements DriverProvider {
     @Component
     public static class FixedDelayDriver implements Driver {
 
-        @Autowired
-        private ThreadPoolTaskScheduler scheduler;
-        @Autowired
-        private EvaluateService evaluateService;
+        private final ThreadPoolTaskScheduler scheduler;
+        private final EvaluateService evaluateService;
 
         private final Lock lock = new ReentrantLock();
         private final Set<ScheduledFuture<?>> scheduledFutures = new HashSet<>();
         private final Set<FixedDelayProcessor> fixedDelayProcessors = new HashSet<>();
+
+        public FixedDelayDriver(ThreadPoolTaskScheduler scheduler, EvaluateService evaluateService) {
+            this.scheduler = scheduler;
+            this.evaluateService = evaluateService;
+        }
 
         @Override
         public void register(DriverInfo driverInfo) throws DriverException {

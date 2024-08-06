@@ -11,7 +11,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,12 +27,12 @@ public class EvaluateConsumerCommand extends CliCommand {
     private static final String CMD_LINE_SYNTAX_S = "ecsu -s [-b val] [-t val]";
     private static final String CMD_LINE_SYNTAX = CMD_LINE_SYNTAX_L + System.lineSeparator() + CMD_LINE_SYNTAX_S;
 
-    public EvaluateConsumerCommand() {
-        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
-    }
+    private final EvaluateQosService evaluateQosService;
 
-    @Autowired
-    private EvaluateQosService evaluateQosService;
+    public EvaluateConsumerCommand(EvaluateQosService evaluateQosService) {
+        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
+        this.evaluateQosService = evaluateQosService;
+    }
 
     @Override
     protected List<Option> buildOptions() {

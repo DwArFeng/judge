@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +19,19 @@ import java.util.List;
 @Repository
 public class DriverSupportDaoImpl implements DriverSupportDao {
 
-    @Autowired
-    private HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport> baseDao;
-    @Autowired
-    private HibernateEntireLookupDao<DriverSupport, HibernateDriverSupport> entireLookupDao;
-    @Autowired
-    private HibernatePresetLookupDao<DriverSupport, HibernateDriverSupport> presetLookupDao;
+    private final HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport> baseDao;
+    private final HibernateEntireLookupDao<DriverSupport, HibernateDriverSupport> entireLookupDao;
+    private final HibernatePresetLookupDao<DriverSupport, HibernateDriverSupport> presetLookupDao;
+
+    public DriverSupportDaoImpl(
+            HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport> baseDao,
+            HibernateEntireLookupDao<DriverSupport, HibernateDriverSupport> entireLookupDao,
+            HibernatePresetLookupDao<DriverSupport, HibernateDriverSupport> presetLookupDao
+    ) {
+        this.baseDao = baseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse
