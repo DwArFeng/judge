@@ -151,11 +151,19 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
         return crudService.batchGetIfExists(keys);
     }
 
+    @Deprecated
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public List<LongIdKey> batchInsertIfExists(List<JudgerInfo> elements) throws ServiceException {
         return crudService.batchInsertIfExists(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<LongIdKey> batchInsertIfNotExists(List<JudgerInfo> elements) throws ServiceException {
+        return crudService.batchInsertIfNotExists(elements);
     }
 
     @Override

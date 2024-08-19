@@ -159,9 +159,7 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
                         )
                 );
             } catch (Exception e) {
-                throw ServiceExceptionHelper.logAndThrow("重置判断器支持时发生异常",
-                        LogLevel.WARN, sem, e
-                );
+                throw ServiceExceptionHelper.logParse("重置判断器支持时发生异常", LogLevel.WARN, e, sem);
             }
         }
     }

@@ -56,9 +56,7 @@ public class AssignQosServiceImpl implements AssignQosService {
                 startFlag = true;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("开启指派服务时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("开启指派服务时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -78,9 +76,7 @@ public class AssignQosServiceImpl implements AssignQosService {
                 startFlag = false;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("关闭指派服务时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("关闭指派服务时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -92,9 +88,7 @@ public class AssignQosServiceImpl implements AssignQosService {
         try {
             return assignLocalCacheHandler.getAssignInfo(sectionKey);
         } catch (HandlerException e) {
-            throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取指派信息时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("从本地缓存中获取指派信息时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -106,9 +100,7 @@ public class AssignQosServiceImpl implements AssignQosService {
         try {
             assignLocalCacheHandler.clear();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("清除本地缓存时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }

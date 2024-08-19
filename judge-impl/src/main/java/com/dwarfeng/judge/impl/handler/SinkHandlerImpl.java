@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.judge.stack.handler.SinkHandler;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -35,10 +36,8 @@ public class SinkHandlerImpl implements SinkHandler {
     public void sinkData(SectionReport sectionReport) throws HandlerException {
         try {
             sink.sinkData(sectionReport);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

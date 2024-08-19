@@ -63,9 +63,7 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
                 startFlag = true;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("开启评估服务时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("开启评估服务时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -86,9 +84,7 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
                 startFlag = false;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("关闭评估服务时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("关闭评估服务时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -100,9 +96,7 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
         try {
             return evaluateLocalCacheHandler.getEvaluateInfo(sectionKey);
         } catch (HandlerException e) {
-            throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取评估信息时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("从本地缓存中获取评估信息时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -114,9 +108,7 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
         try {
             evaluateLocalCacheHandler.clear();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("清除本地缓存时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -134,9 +126,7 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
                     consumeHandler.isIdle()
             );
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("获取消费者状态时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("获取消费者状态时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -154,9 +144,7 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
                     Objects.isNull(thread) ? consumeHandler.getThread() : thread
             );
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("设置消费者参数时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("设置消费者参数时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }

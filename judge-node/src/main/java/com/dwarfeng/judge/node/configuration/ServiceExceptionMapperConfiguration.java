@@ -25,6 +25,6 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(JudgeWorkException.class, ServiceExceptionCodes.JUDGE_WORK_FAILED);
         destination.put(JudgeWorkDisabledException.class, ServiceExceptionCodes.JUDGE_WORK_DISABLED);
         destination.put(SectionNotExistsException.class, ServiceExceptionCodes.SECTION_NOT_EXISTS);
-        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
+        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

@@ -8,6 +8,7 @@ import com.dwarfeng.judge.stack.handler.AssignHandler;
 import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.Driver;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,10 +72,8 @@ public class AssignHandlerImpl implements AssignHandler {
                 }
                 onlineFlag = true;
             }
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }
@@ -110,10 +109,8 @@ public class AssignHandlerImpl implements AssignHandler {
                 }
                 onlineFlag = false;
             }
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }

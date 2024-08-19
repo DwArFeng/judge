@@ -4,6 +4,7 @@ import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.UnsupportedJudgerTypeException;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.JudgerHandler;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,8 @@ public class JudgerHandlerImpl implements JudgerHandler {
             LOGGER.debug("判断器构建成功!");
             LOGGER.debug("判断器: " + judger);
             return judger;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

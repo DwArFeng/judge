@@ -159,9 +159,7 @@ public class DriverSupportMaintainServiceImpl implements DriverSupportMaintainSe
                         )
                 );
             } catch (Exception e) {
-                throw ServiceExceptionHelper.logAndThrow("重置驱动器支持时发生异常",
-                        LogLevel.WARN, sem, e
-                );
+                throw ServiceExceptionHelper.logParse("重置驱动器支持时发生异常", LogLevel.WARN, e, sem);
             }
         }
     }

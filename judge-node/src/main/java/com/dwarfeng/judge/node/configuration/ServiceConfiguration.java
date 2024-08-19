@@ -9,10 +9,8 @@ import com.dwarfeng.judge.stack.cache.DriverSupportCache;
 import com.dwarfeng.judge.stack.cache.JudgerSupportCache;
 import com.dwarfeng.judge.stack.cache.VariableCache;
 import com.dwarfeng.judge.stack.dao.*;
-import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
-import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
+import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
 import com.dwarfeng.subgrade.impl.service.*;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -24,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
+    private final GenerateConfiguration generateConfiguration;
 
     private final DriverInfoCrudOperation driverInfoCrudOperation;
     private final DriverInfoDao driverInfoDao;
@@ -47,6 +46,7 @@ public class ServiceConfiguration {
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
+            GenerateConfiguration generateConfiguration,
             DriverInfoCrudOperation driverInfoCrudOperation,
             VariableCache variableCache,
             DriverInfoDao driverInfoDao,
@@ -61,6 +61,7 @@ public class ServiceConfiguration {
             JudgerSupportDao judgerSupportDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
+        this.generateConfiguration = generateConfiguration;
         this.driverInfoCrudOperation = driverInfoCrudOperation;
         this.variableCache = variableCache;
         this.driverInfoDao = driverInfoDao;
@@ -76,102 +77,97 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public KeyFetcher<LongIdKey> longIdKeyKeyFetcher() {
-        return new SnowFlakeLongIdKeyFetcher();
-    }
-
-    @Bean
     public CustomBatchCrudService<LongIdKey, DriverInfo> driverInfoCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
-                driverInfoCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                driverInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<DriverInfo> driverInfoDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                driverInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                driverInfoDao
         );
     }
 
     @Bean
     public CustomBatchCrudService<LongIdKey, Section> sectionCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
-                sectionCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                sectionCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<Section> sectionDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                sectionDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                sectionDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<Section> sectionDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                sectionDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                sectionDao
         );
     }
 
     @Bean
     public CustomBatchCrudService<LongIdKey, JudgerInfo> judgerInfoCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
-                judgerInfoCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                judgerInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<JudgerInfo> judgerInfoDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                judgerInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                judgerInfoDao
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<DriverInfo> driverInfoDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                driverInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                driverInfoDao
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<JudgerInfo> judgerInfoDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                judgerInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                judgerInfoDao
         );
     }
 
     @Bean
     public GeneralCrudService<StringIdKey, DriverSupport> driverSupportGeneralCrudService() {
         return new GeneralCrudService<>(
-                driverSupportDao,
-                driverSupportCache,
-                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
+                driverSupportDao,
+                driverSupportCache,
+                new ExceptionKeyGenerator<>(),
                 driverSupportTimeout
         );
     }
@@ -179,29 +175,29 @@ public class ServiceConfiguration {
     @Bean
     public DaoOnlyEntireLookupService<DriverSupport> driverSupportDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                driverSupportDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                driverSupportDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<DriverSupport> driverSupportDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                driverSupportDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                driverSupportDao
         );
     }
 
     @Bean
     public GeneralCrudService<StringIdKey, JudgerSupport> judgerSupportGeneralCrudService() {
         return new GeneralCrudService<>(
-                judgerSupportDao,
-                judgerSupportCache,
-                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
+                judgerSupportDao,
+                judgerSupportCache,
+                new ExceptionKeyGenerator<>(),
                 judgerSupportTimeout
         );
     }
@@ -209,29 +205,29 @@ public class ServiceConfiguration {
     @Bean
     public DaoOnlyEntireLookupService<JudgerSupport> judgerSupportDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                judgerSupportDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                judgerSupportDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<JudgerSupport> judgerSupportDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                judgerSupportDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                judgerSupportDao
         );
     }
 
     @Bean
     public GeneralBatchCrudService<VariableKey, Variable> variableGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(
-                variableDao,
-                variableCache,
-                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
+                variableDao,
+                variableCache,
+                new ExceptionKeyGenerator<>(),
                 variableTimeout
         );
     }
@@ -239,18 +235,18 @@ public class ServiceConfiguration {
     @Bean
     public DaoOnlyEntireLookupService<Variable> variableDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                variableDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                variableDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<Variable> variableDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                variableDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                variableDao
         );
     }
 }

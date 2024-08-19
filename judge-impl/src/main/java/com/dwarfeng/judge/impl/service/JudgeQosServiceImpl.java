@@ -72,9 +72,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
                 startFlag = true;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("开启判断服务时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("开启判断服务时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -100,9 +98,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
                 startFlag = false;
             }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("关闭判断服务时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("关闭判断服务时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -126,9 +122,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
                     Optional.of(evaluateInfo).map(EvaluateInfo::getJudgerMap).orElse(Collections.emptyMap()));
             return judgeInfo;
         } catch (HandlerException e) {
-            throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取判断信息时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("从本地缓存中获取判断信息时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -141,9 +135,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
             assignLocalCacheHandler.clear();
             evaluateLocalCacheHandler.clear();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("清除本地缓存时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -161,9 +153,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
                     consumeHandler.isIdle()
             );
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("获取消费者状态时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("获取消费者状态时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }
@@ -181,9 +171,7 @@ public class JudgeQosServiceImpl implements JudgeQosService {
                     Objects.isNull(thread) ? consumeHandler.getThread() : thread
             );
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("设置消费者参数时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("设置消费者参数时发生异常", LogLevel.WARN, e, sem);
         } finally {
             lock.unlock();
         }

@@ -35,9 +35,7 @@ public class EvaluateServiceImpl implements EvaluateService {
             EvaluateInfo evaluateInfo = evaluateLocalCacheHandler.getEvaluateInfo(sectionKey);
             evaluateHandler.evaluate(evaluateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断部件时发生异常",
-                    LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("判断部件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

@@ -4,6 +4,7 @@ import com.dwarfeng.judge.stack.bean.EvaluateInfo;
 import com.dwarfeng.judge.stack.exception.JudgeWorkDisabledException;
 import com.dwarfeng.judge.stack.handler.ConsumeHandler;
 import com.dwarfeng.judge.stack.handler.EvaluateHandler;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
@@ -74,10 +75,8 @@ public class EvaluateHandlerImpl implements EvaluateHandler {
             // 记录日志并将判断信息提交到消费处理器中。
             LOGGER.debug("驱动器使能, 驱动判断指定部件: " + evaluateInfo.getSection().getKey());
             consumeHandler.accept(evaluateInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }
