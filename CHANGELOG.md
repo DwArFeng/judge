@@ -4,6 +4,14 @@
 
 #### 功能构建
 
+- 优化部分维护服务实现中的部分方法的性能。
+  - com.dwarfeng.judge.impl.service.DriverInfoMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.DriverSupportMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.JudgerInfoMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.JudgerSupportMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.SectionMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.VariableMaintainServiceImpl。
+
 - 优化部分类中部分方法的行为分析行为。
   - com.dwarfeng.judge.impl.cache.DriverInfoCacheImpl。
   - com.dwarfeng.judge.impl.cache.EnabledDriverInfoCacheImpl。
