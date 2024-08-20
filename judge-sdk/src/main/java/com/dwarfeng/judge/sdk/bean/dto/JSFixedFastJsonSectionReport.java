@@ -8,6 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -31,8 +32,9 @@ public class JSFixedFastJsonSectionReport implements Dto {
                 sectionReport.getSum(),
                 sectionReport.getExpected(),
                 sectionReport.getVariance(),
-                sectionReport.getJudgerReports().stream().map(JSFixedFastJsonJudgerReport::of)
-                        .collect(Collectors.toList())
+                Optional.ofNullable(sectionReport.getJudgerReports()).map(
+                        f -> f.stream().map(JSFixedFastJsonJudgerReport::of).collect(Collectors.toList())
+                ).orElse(null)
         );
     }
 

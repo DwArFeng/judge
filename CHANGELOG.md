@@ -75,7 +75,9 @@
 
 #### Bug修复
 
-- (无)
+- 修复部分功能性实体集合类型的字段在映射时有可能产生空指针异常的问题。
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport。
+  - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSectionReport。
 
 #### 功能移除
 
