@@ -5,6 +5,7 @@ import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.cache.EnabledDriverInfoCache;
 import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
@@ -39,6 +40,7 @@ public class EnabledDriverInfoCacheImpl implements EnabledDriverInfoCache {
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<DriverInfo> get(LongIdKey key) throws CacheException {
         return listCache.get(key);
@@ -46,6 +48,7 @@ public class EnabledDriverInfoCacheImpl implements EnabledDriverInfoCache {
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<DriverInfo> get(LongIdKey key, int beginIndex, int maxEntity) throws CacheException {
         return listCache.get(key, beginIndex, maxEntity);
@@ -53,6 +56,7 @@ public class EnabledDriverInfoCacheImpl implements EnabledDriverInfoCache {
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<DriverInfo> get(LongIdKey key, PagingInfo pagingInfo) throws CacheException {
         return listCache.get(key, pagingInfo);
@@ -61,21 +65,21 @@ public class EnabledDriverInfoCacheImpl implements EnabledDriverInfoCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void set(LongIdKey key, Collection<DriverInfo> entities, long timeout) throws CacheException {
+    public void set(LongIdKey key, @SkipRecord Collection<DriverInfo> entities, long timeout) throws CacheException {
         listCache.set(key, entities, timeout);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void leftPush(LongIdKey key, Collection<DriverInfo> entities, long timeout) throws CacheException {
+    public void leftPush(LongIdKey key, @SkipRecord Collection<DriverInfo> entities, long timeout) throws CacheException {
         listCache.leftPush(key, entities, timeout);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void rightPush(LongIdKey key, Collection<DriverInfo> entities, long timeout) throws CacheException {
+    public void rightPush(LongIdKey key, @SkipRecord Collection<DriverInfo> entities, long timeout) throws CacheException {
         listCache.rightPush(key, entities, timeout);
     }
 

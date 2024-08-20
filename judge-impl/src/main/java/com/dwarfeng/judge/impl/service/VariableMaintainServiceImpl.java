@@ -7,6 +7,7 @@ import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
@@ -105,85 +106,91 @@ public class VariableMaintainServiceImpl implements VariableMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<VariableKey> keys) throws ServiceException {
+    public boolean allExists(@SkipRecord List<VariableKey> keys) throws ServiceException {
         return crudService.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(List<VariableKey> keys) throws ServiceException {
+    public boolean nonExists(@SkipRecord List<VariableKey> keys) throws ServiceException {
         return crudService.nonExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<Variable> batchGet(List<VariableKey> keys) throws ServiceException {
+    public List<Variable> batchGet(@SkipRecord List<VariableKey> keys) throws ServiceException {
         return crudService.batchGet(keys);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<VariableKey> batchInsert(List<Variable> elements) throws ServiceException {
+    public List<VariableKey> batchInsert(@SkipRecord List<Variable> elements) throws ServiceException {
         return crudService.batchInsert(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchUpdate(List<Variable> elements) throws ServiceException {
+    public void batchUpdate(@SkipRecord List<Variable> elements) throws ServiceException {
         crudService.batchUpdate(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(List<VariableKey> keys) throws ServiceException {
+    public void batchDelete(@SkipRecord List<VariableKey> keys) throws ServiceException {
         crudService.batchDelete(keys);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<Variable> batchGetIfExists(List<VariableKey> keys) throws ServiceException {
+    public List<Variable> batchGetIfExists(@SkipRecord List<VariableKey> keys) throws ServiceException {
         return crudService.batchGetIfExists(keys);
     }
 
     @Deprecated
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<VariableKey> batchInsertIfExists(List<Variable> elements) throws ServiceException {
+    public List<VariableKey> batchInsertIfExists(@SkipRecord List<Variable> elements) throws ServiceException {
         return crudService.batchInsertIfExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<VariableKey> batchInsertIfNotExists(List<Variable> elements) throws ServiceException {
+    public List<VariableKey> batchInsertIfNotExists(@SkipRecord List<Variable> elements) throws ServiceException {
         return crudService.batchInsertIfNotExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchUpdateIfExists(List<Variable> elements) throws ServiceException {
+    public void batchUpdateIfExists(@SkipRecord List<Variable> elements) throws ServiceException {
         crudService.batchUpdateIfExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDeleteIfExists(List<VariableKey> keys) throws ServiceException {
+    public void batchDeleteIfExists(@SkipRecord List<VariableKey> keys) throws ServiceException {
         crudService.batchDeleteIfExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<VariableKey> batchInsertOrUpdate(List<Variable> elements) throws ServiceException {
+    public List<VariableKey> batchInsertOrUpdate(@SkipRecord List<Variable> elements) throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
     }
 

@@ -7,6 +7,7 @@ import com.dwarfeng.judge.stack.service.EnabledJudgerInfoLookupService;
 import com.dwarfeng.judge.stack.service.JudgerInfoMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
@@ -40,6 +41,7 @@ public class EnabledJudgerInfoLookupServiceImpl implements EnabledJudgerInfoLook
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<JudgerInfo> getEnabledJudgerInfos(LongIdKey sectionKey) throws ServiceException {
         try {

@@ -4,6 +4,26 @@
 
 #### 功能构建
 
+- 优化部分类中部分方法的行为分析行为。
+  - com.dwarfeng.judge.impl.cache.DriverInfoCacheImpl。
+  - com.dwarfeng.judge.impl.cache.EnabledDriverInfoCacheImpl。
+  - com.dwarfeng.judge.impl.cache.EnabledJudgerInfoCacheImpl。
+  - com.dwarfeng.judge.impl.cache.JudgerInfoCacheImpl。
+  - com.dwarfeng.judge.impl.cache.SectionCacheImpl。
+  - com.dwarfeng.judge.impl.cache.VariableCacheImpl。
+  - com.dwarfeng.judge.impl.dao.DriverInfoDaoImpl。
+  - com.dwarfeng.judge.impl.dao.DriverSupportDaoImpl。
+  - com.dwarfeng.judge.impl.dao.JudgerInfoDaoImpl。
+  - com.dwarfeng.judge.impl.dao.JudgerSupportDaoImpl。
+  - com.dwarfeng.judge.impl.dao.SectionDaoImpl。
+  - com.dwarfeng.judge.impl.dao.VariableDaoImpl。
+  - com.dwarfeng.judge.impl.service.DriverInfoMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.EnabledDriverInfoLookupServiceImpl。
+  - com.dwarfeng.judge.impl.service.EnabledJudgerInfoLookupServiceImpl。
+  - com.dwarfeng.judge.impl.service.JudgerInfoMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.SectionMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.VariableMaintainServiceImpl。
+
 - 使用 `MapStruct` 重构 `BeanTransformer`。
 
 - 插件升级。
