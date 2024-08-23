@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化项目结构，增加项目目录。
+  - `./confext/`。
+
 - 优化部分维护服务实现中的部分方法的性能。
   - com.dwarfeng.judge.impl.service.DriverInfoMaintainServiceImpl。
   - com.dwarfeng.judge.impl.service.DriverSupportMaintainServiceImpl。
