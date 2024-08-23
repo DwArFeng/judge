@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 优化 `node` 模块部分服务启停脚本的注释。
+  - binres/acckeeper-start.bat。
+  - binres/acckeeper-start.sh。
+
 - 优化配置文件。
   - 优化 `application-context-database.xml`，使得更多属性可以在配置文件中配置。
 
