@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 增加预设的运维指令。
+  - com.dwarfeng.springtelqos.api.integration.log4j2.Log4j2Command。
+
 - 升级 spring-telqos 并应用其新功能。
   - 使用包扫描的方式注册指令。
   - 优化 `telqos/connection.properties` 中配置的键名。
