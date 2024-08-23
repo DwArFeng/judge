@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 优化 `application-context-scan.xml` 文件。
+  - 优化 service 的实现包的扫描策略。
+  - 优化注释格式。
+
 - Dubbo 功能优化。
   - 增加超时时间的配置选项。
   - 增加分组配置。
