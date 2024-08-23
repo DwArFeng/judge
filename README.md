@@ -88,14 +88,14 @@
 
 部件的字段如下：
 
-|字段名称|备注|
-|---|---|
-|key|主键|
-|name|部件的名称|
-|enabled|部件是否被启用|
-|expected|部件所属的驱动器长期判断数据之和的期望值|
-|variance|部件所属的驱动器长期判断数据之和的方差值|
-|remark|备注|
+| 字段名称     | 备注                   |
+|----------|----------------------|
+| key      | 主键                   |
+| name     | 部件的名称                |
+| enabled  | 部件是否被启用              |
+| expected | 部件所属的驱动器长期判断数据之和的期望值 |
+| variance | 部件所属的驱动器长期判断数据之和的方差值 |
+| remark   | 备注                   |
 
 ### 驱动器的定义
 
@@ -103,13 +103,13 @@
 
 驱动器的字段如下：
 
-|字段名称|备注|
-|---|---|
-|key|主键|
-|sectionKey|所属的部件的主键|
-|type|驱动器类型|
-|content|驱动器内容|
-|remark|备注|
+| 字段名称       | 备注       |
+|------------|----------|
+| key        | 主键       |
+| sectionKey | 所属的部件的主键 |
+| type       | 驱动器类型    |
+| content    | 驱动器内容    |
+| remark     | 备注       |
 
 其中，驱动器的类型和内容根据一定的规则开发，可以扩展。
 
@@ -122,13 +122,13 @@
 
 判断器的字段如下：
 
-|字段名称|备注|
-|---|---|
-|key|主键|
-|sectionKey|所属的部件的主键|
-|type|判断器类型|
-|content|判断器内容|
-|remark|备注|
+| 字段名称       | 备注       |
+|------------|----------|
+| key        | 主键       |
+| sectionKey | 所属的部件的主键 |
+| type       | 判断器类型    |
+| content    | 判断器内容    |
+| remark     | 备注       |
 
 其中，判断器的类型和内容根据一定的规则开发，可以扩展。
 
@@ -252,7 +252,7 @@ public static class EvaluateInfoConsumer {
 
    实现接口 `com.dwarfeng.judge.impl.handler.JudgerSupporter` 并将实现类注入到spring的IoC容器中。
 
-5. 水槽的扩展
+3. 水槽的扩展
 
    实现接口 `com.dwarfeng.judge.impl.handler.Sink` 并将实现类注入到spring的IoC容器中。
 

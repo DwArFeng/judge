@@ -45,6 +45,7 @@ public class DctiKafkaDriverProvider implements DriverProvider {
 
     private final DctiKafkaDriver dctiKafkaDriver;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public DctiKafkaDriverProvider(DctiKafkaDriver dctiKafkaDriver) {
         this.dctiKafkaDriver = dctiKafkaDriver;
     }

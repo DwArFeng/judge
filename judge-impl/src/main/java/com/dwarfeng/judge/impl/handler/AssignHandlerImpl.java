@@ -90,7 +90,7 @@ public class AssignHandlerImpl implements AssignHandler {
                 usedDrivers.add(driver);
             } catch (Exception e) {
                 successFlag = false;
-                LOGGER.warn("驱动信息 " + driverInfo + " 注册失败，将忽略此条注册信息", e);
+                LOGGER.warn("驱动信息 {} 注册失败，将忽略此条注册信息", driverInfo, e);
             }
         }
         return successFlag;

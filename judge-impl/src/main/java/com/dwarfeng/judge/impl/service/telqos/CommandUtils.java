@@ -55,7 +55,6 @@ final class CommandUtils {
         return Pair.of(subCmd, i);
     }
 
-
     public static Pair<String, Integer> analyseLcCommand(CommandLine cmd) {
         int i = 0;
         String subCmd = null;

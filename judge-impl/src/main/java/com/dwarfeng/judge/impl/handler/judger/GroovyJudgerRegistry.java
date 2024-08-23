@@ -70,9 +70,8 @@ public class GroovyJudgerRegistry extends AbstractJudgerRegistry {
 
     @Override
     public Judger makeJudger(JudgerInfo judgerInfo) throws JudgerException {
-        try {
+        try (GroovyClassLoader classLoader = new GroovyClassLoader()) {
             // 通过Groovy脚本生成处理器。
-            GroovyClassLoader classLoader = new GroovyClassLoader();
             Class<?> aClass = classLoader.parseClass(judgerInfo.getContent());
             Processor processor = (Processor) aClass.newInstance();
             // 构建过滤器对象。

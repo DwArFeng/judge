@@ -114,7 +114,6 @@ public class EvaluateQosServiceImpl implements EvaluateQosService {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public ConsumerStatus getConsumerStatus() throws ServiceException {
         lock.lock();

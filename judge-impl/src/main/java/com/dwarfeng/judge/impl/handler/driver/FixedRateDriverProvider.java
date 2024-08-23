@@ -31,6 +31,7 @@ public class FixedRateDriverProvider implements DriverProvider {
 
     private final FixedRateDriver fixedRateDriver;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public FixedRateDriverProvider(FixedRateDriver fixedRateDriver) {
         this.fixedRateDriver = fixedRateDriver;
     }
@@ -120,10 +121,10 @@ public class FixedRateDriverProvider implements DriverProvider {
                     return;
                 }
 
-                LOGGER.debug("计划时间已到达, fixed rate 驱动器驱动 " + sectionKey + " 部件执行评估动作...");
+                LOGGER.debug("计划时间已到达, fixed rate 驱动器驱动 {} 部件执行评估动作...", sectionKey);
                 evaluateService.evaluate(sectionKey);
             } catch (Exception e) {
-                LOGGER.warn("记录 " + sectionKey + " 时出现异常, 放弃本次记录", e);
+                LOGGER.warn("记录 {} 时出现异常, 放弃本次记录", sectionKey, e);
             } finally {
                 lock.unlock();
             }

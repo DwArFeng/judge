@@ -34,7 +34,7 @@ public class JudgerHandlerImpl implements JudgerHandler {
                     .findFirst().orElseThrow(() -> new UnsupportedJudgerTypeException(judgerInfo.getType()));
             Judger judger = judgerMaker.makeJudger(judgerInfo);
             LOGGER.debug("判断器构建成功!");
-            LOGGER.debug("判断器: " + judger);
+            LOGGER.debug("判断器: {}", judger);
             return judger;
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);

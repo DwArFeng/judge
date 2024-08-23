@@ -172,7 +172,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
             try {
                 evaluateInfoConsumer.consume(evaluateInfo2Consume);
             } catch (Exception e) {
-                LOGGER.warn("消费元素时发生异常, 抛弃 DataInfo: " + evaluateInfo2Consume, e);
+                LOGGER.warn("消费元素时发生异常, 抛弃 DataInfo: {}", evaluateInfo2Consume, e);
             }
         }
         scheduledFuture.cancel(true);
@@ -450,8 +450,7 @@ public class ConsumeHandlerImpl implements ConsumeHandler {
                     judgerReports
             ));
             tm.stop();
-            LOGGER.debug("消费者完成消费, 部件主键为 " + section.getKey() + ", 判断值为 " +
-                    normalization + ", 用时 " + tm.getTimeMs() + " 毫秒");
+            LOGGER.debug("消费者完成消费, 部件主键为 {}, 判断值为 {}, 用时 {} 毫秒", section.getKey(), normalization, tm.getTimeMs());
         }
 
         private double normalization(double sum, double expected, double variance) {

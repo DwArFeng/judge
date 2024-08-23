@@ -141,7 +141,6 @@ public class JudgeQosServiceImpl implements JudgeQosService {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public ConsumerStatus getConsumerStatus() throws ServiceException {
         lock.lock();

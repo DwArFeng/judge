@@ -81,6 +81,7 @@ public class NativeKafkaSink extends AbstractSink {
         @Value("${sink.native.kafka.transaction_prefix}")
         private String transactionPrefix;
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("nativeKafkaSink.producerProperties")
         public Map<String, Object> producerProperties() {
             LOGGER.info("配置Kafka生产者属性...");
@@ -95,6 +96,7 @@ public class NativeKafkaSink extends AbstractSink {
             return props;
         }
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("nativeKafkaSink.producerFactory")
         public ProducerFactory<String, String> producerFactory() {
             LOGGER.info("配置Kafka生产者工厂...");

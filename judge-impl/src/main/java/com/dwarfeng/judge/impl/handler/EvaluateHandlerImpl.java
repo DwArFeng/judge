@@ -73,7 +73,7 @@ public class EvaluateHandlerImpl implements EvaluateHandler {
                 throw new JudgeWorkDisabledException();
             }
             // 记录日志并将判断信息提交到消费处理器中。
-            LOGGER.debug("驱动器使能, 驱动判断指定部件: " + evaluateInfo.getSection().getKey());
+            LOGGER.debug("驱动器使能, 驱动判断指定部件: {}", evaluateInfo.getSection().getKey());
             consumeHandler.accept(evaluateInfo);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
