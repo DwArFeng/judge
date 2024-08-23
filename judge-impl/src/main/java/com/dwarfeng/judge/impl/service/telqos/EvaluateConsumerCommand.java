@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.service.telqos;
 
 import com.dwarfeng.judge.stack.bean.ConsumerStatus;
 import com.dwarfeng.judge.stack.service.EvaluateQosService;
+import com.dwarfeng.springtelqos.node.config.TelqosCommand;
 import com.dwarfeng.springtelqos.sdk.command.CliCommand;
 import com.dwarfeng.springtelqos.stack.command.Context;
 import com.dwarfeng.springtelqos.stack.exception.TelqosException;
@@ -11,12 +12,11 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
 
-@Component
+@TelqosCommand
 public class EvaluateConsumerCommand extends CliCommand {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EvaluateConsumerCommand.class);

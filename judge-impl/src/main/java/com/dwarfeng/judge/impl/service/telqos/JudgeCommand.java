@@ -1,17 +1,17 @@
 package com.dwarfeng.judge.impl.service.telqos;
 
 import com.dwarfeng.judge.stack.service.JudgeQosService;
+import com.dwarfeng.springtelqos.node.config.TelqosCommand;
 import com.dwarfeng.springtelqos.sdk.command.CliCommand;
 import com.dwarfeng.springtelqos.stack.command.Context;
 import com.dwarfeng.springtelqos.stack.exception.TelqosException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@TelqosCommand
 public class JudgeCommand extends CliCommand {
 
     private static final String IDENTITY = "judge";

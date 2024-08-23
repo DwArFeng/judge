@@ -8,19 +8,18 @@
         http://dwarfeng.com/schema/spring-telqos
         http://dwarfeng.com/schema/spring-telqos/spring-telqos.xsd"
 >
+
     <telqos:config>
         <telqos:connection-setting
-                port="${telqos.port}" charset="${telqos.charset}"
-                whitelist-regex="${telqos.whitelist-regex}" blacklist-regex="${telqos.blacklist-regex}"
+                port="${telqos.port}" charset="${telqos.charset}" banner-url="classpath:telqos/my-banner.txt"
+                whitelist-regex="${telqos.whitelist_regex}" blacklist-regex="${telqos.blacklist_regex}"
         />
         <telqos:task-pool ref="executor"/>
         <telqos:command>
             <telqos:command-impl ref="shutdownCommand"/>
             <telqos:command-impl ref="dubboCommand"/>
             <telqos:command-impl ref="memoryCommand"/>
-            <telqos:command-impl ref="judgeCommand"/>
-            <telqos:command-impl ref="judgeLocalCacheCommand"/>
-            <telqos:command-impl ref="judgeConsumerCommand"/>
+            <telqos:command-impl package-scan="com.dwarfeng.judge.impl.service.telqos"/>
         </telqos:command>
     </telqos:config>
 
