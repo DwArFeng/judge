@@ -98,7 +98,7 @@ public class DriverInfoCrudOperation implements BatchCrudOperation<LongIdKey, Dr
 
     @Override
     public boolean nonExists(List<LongIdKey> keys) throws Exception {
-        return driverInfoCache.nonExists(keys) && driverInfoCache.nonExists(keys);
+        return driverInfoCache.nonExists(keys) && driverInfoDao.nonExists(keys);
     }
 
     @Override

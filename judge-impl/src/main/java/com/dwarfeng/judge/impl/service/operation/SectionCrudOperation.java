@@ -122,7 +122,7 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
 
     @Override
     public boolean nonExists(List<LongIdKey> keys) throws Exception {
-        return sectionCache.nonExists(keys) && sectionCache.nonExists(keys);
+        return sectionCache.nonExists(keys) && sectionDao.nonExists(keys);
     }
 
     @Override

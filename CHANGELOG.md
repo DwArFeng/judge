@@ -101,6 +101,11 @@
 
 #### Bug修复
 
+- 修复部分 CrudOperation 中部分存在性判断方法行为异常的 bug。
+  - com.dwarfeng.judge.impl.service.operation.DriverInfoCrudOperation。
+  - com.dwarfeng.judge.impl.service.operation.JudgerInfoCrudOperation。
+  - com.dwarfeng.judge.impl.service.operation.SectionCrudOperation。
+
 - 修复部分功能性实体集合类型的字段在映射时有可能产生空指针异常的问题。
   - com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport。
   - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSectionReport。

@@ -117,7 +117,7 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
 
     @Override
     public boolean nonExists(List<LongIdKey> keys) throws Exception {
-        return judgerInfoCache.nonExists(keys) && judgerInfoCache.nonExists(keys);
+        return judgerInfoCache.nonExists(keys) && judgerInfoDao.nonExists(keys);
     }
 
     @Override
