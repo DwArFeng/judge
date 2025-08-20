@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.SupportCommand。
+
 - 使用 CommandUtil 简化运维指令。
   - com.dwarfeng.judge.impl.service.telqos.JudgeConsumerCommand。
   - com.dwarfeng.judge.impl.service.telqos.AssignCommand。
