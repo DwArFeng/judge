@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 去除支持实体维护服务的重置功能。
+  - com.dwarfeng.judge.stack.service.DriverSupportMaintainService。
+  - com.dwarfeng.judge.stack.service.JudgerSupportMaintainService。
+
 - 优化支持实体机制。
   - com.dwarfeng.judge.stack.service.SupportQosService。
   - 将支持实体维护服务的重置功能迁移至 QoS 服务。

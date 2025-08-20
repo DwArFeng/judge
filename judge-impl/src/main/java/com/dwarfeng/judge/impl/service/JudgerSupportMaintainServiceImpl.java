@@ -6,7 +6,6 @@ import com.dwarfeng.judge.stack.service.JudgerSupportMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
-import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
@@ -14,14 +13,10 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
-import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainService {
@@ -29,10 +24,6 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
     private final GeneralBatchCrudService<StringIdKey, JudgerSupport> crudService;
     private final DaoOnlyEntireLookupService<JudgerSupport> entireLookupService;
     private final DaoOnlyPresetLookupService<JudgerSupport> presetLookupService;
-
-    private final List<JudgerSupporter> judgerSupporters;
-
-    private final ServiceExceptionMapper sem;
 
     public JudgerSupportMaintainServiceImpl(
             GeneralBatchCrudService<StringIdKey, JudgerSupport> crudService,
@@ -44,12 +35,6 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;
         this.presetLookupService = presetLookupService;
-        if (Objects.isNull(judgerSupporters)) {
-            this.judgerSupporters = new ArrayList<>();
-        } else {
-            this.judgerSupporters = judgerSupporters;
-        }
-        this.sem = sem;
     }
 
     @Override
@@ -309,24 +294,5 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public int lookupCount(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookupCount(preset, objs);
-    }
-
-    @Override
-    @BehaviorAnalyse
-    public void reset() throws ServiceException {
-        try {
-            List<StringIdKey> judgerKeys = entireLookupService.lookupAsList().stream()
-                    .map(JudgerSupport::getKey).collect(Collectors.toList());
-            crudService.batchDelete(judgerKeys);
-            List<JudgerSupport> judgerSupports = judgerSupporters.stream().map(supporter -> new JudgerSupport(
-                    new StringIdKey(supporter.provideType()),
-                    supporter.provideLabel(),
-                    supporter.provideDescription(),
-                    supporter.provideExampleContent()
-            )).collect(Collectors.toList());
-            crudService.batchInsert(judgerSupports);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("重置触发器支持时发生异常", LogLevel.WARN, e, sem);
-        }
     }
 }
