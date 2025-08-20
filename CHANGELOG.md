@@ -4,7 +4,9 @@
 
 ### 功能构建
 
-- (无)
+- 为部分实体维护服务增加批量操作功能。
+  - com.dwarfeng.judge.stack.service.DriverSupportMaintainService。
+  - com.dwarfeng.judge.stack.service.JudgerSupportMaintainService。
 
 ### Bug 修复
 

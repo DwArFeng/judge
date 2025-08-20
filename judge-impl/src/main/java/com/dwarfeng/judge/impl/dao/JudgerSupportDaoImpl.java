@@ -3,7 +3,7 @@ package com.dwarfeng.judge.impl.dao;
 import com.dwarfeng.judge.impl.bean.entity.HibernateJudgerSupport;
 import com.dwarfeng.judge.stack.bean.entity.JudgerSupport;
 import com.dwarfeng.judge.stack.dao.JudgerSupportDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBaseDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
@@ -20,16 +20,18 @@ import java.util.List;
 @Repository
 public class JudgerSupportDaoImpl implements JudgerSupportDao {
 
-    private final HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport> baseDao;
+    private final HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport>
+            batchBaseDao;
     private final HibernateEntireLookupDao<JudgerSupport, HibernateJudgerSupport> entireLookupDao;
     private final HibernatePresetLookupDao<JudgerSupport, HibernateJudgerSupport> presetLookupDao;
 
     public JudgerSupportDaoImpl(
-            HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport> baseDao,
+            HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport>
+                    batchBaseDao,
             HibernateEntireLookupDao<JudgerSupport, HibernateJudgerSupport> entireLookupDao,
             HibernatePresetLookupDao<JudgerSupport, HibernateJudgerSupport> presetLookupDao
     ) {
-        this.baseDao = baseDao;
+        this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;
         this.presetLookupDao = presetLookupDao;
     }
@@ -38,35 +40,79 @@ public class JudgerSupportDaoImpl implements JudgerSupportDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insert(JudgerSupport element) throws DaoException {
-        return baseDao.insert(element);
+        return batchBaseDao.insert(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(JudgerSupport element) throws DaoException {
-        baseDao.update(element);
+        batchBaseDao.update(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(StringIdKey key) throws DaoException {
-        baseDao.delete(key);
+        batchBaseDao.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(StringIdKey key) throws DaoException {
-        return baseDao.exists(key);
+        return batchBaseDao.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public JudgerSupport get(StringIdKey key) throws DaoException {
-        return baseDao.get(key);
+        return batchBaseDao.get(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<StringIdKey> batchInsert(@SkipRecord List<JudgerSupport> elements) throws DaoException {
+        return batchBaseDao.batchInsert(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchUpdate(@SkipRecord List<JudgerSupport> elements) throws DaoException {
+        batchBaseDao.batchUpdate(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchDelete(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        batchBaseDao.batchDelete(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public boolean allExists(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        return batchBaseDao.allExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public boolean nonExists(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        return batchBaseDao.nonExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<JudgerSupport> batchGet(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        return batchBaseDao.batchGet(keys);
     }
 
     @Override

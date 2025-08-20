@@ -2,7 +2,7 @@ package com.dwarfeng.judge.stack.dao;
 
 import com.dwarfeng.judge.stack.bean.entity.DriverSupport;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
-import com.dwarfeng.subgrade.stack.dao.BaseDao;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 
@@ -12,6 +12,6 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * @author DwArFeng
  * @since beta-1.1.0
  */
-public interface DriverSupportDao extends BaseDao<StringIdKey, DriverSupport>, EntireLookupDao<DriverSupport>,
+public interface DriverSupportDao extends BatchBaseDao<StringIdKey, DriverSupport>, EntireLookupDao<DriverSupport>,
         PresetLookupDao<DriverSupport> {
 }

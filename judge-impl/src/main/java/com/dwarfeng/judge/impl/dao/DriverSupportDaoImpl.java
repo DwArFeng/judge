@@ -3,7 +3,7 @@ package com.dwarfeng.judge.impl.dao;
 import com.dwarfeng.judge.impl.bean.entity.HibernateDriverSupport;
 import com.dwarfeng.judge.stack.bean.entity.DriverSupport;
 import com.dwarfeng.judge.stack.dao.DriverSupportDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBaseDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
@@ -20,16 +20,18 @@ import java.util.List;
 @Repository
 public class DriverSupportDaoImpl implements DriverSupportDao {
 
-    private final HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport> baseDao;
+    private final HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport>
+            batchBaseDao;
     private final HibernateEntireLookupDao<DriverSupport, HibernateDriverSupport> entireLookupDao;
     private final HibernatePresetLookupDao<DriverSupport, HibernateDriverSupport> presetLookupDao;
 
     public DriverSupportDaoImpl(
-            HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport> baseDao,
+            HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport>
+                    batchBaseDao,
             HibernateEntireLookupDao<DriverSupport, HibernateDriverSupport> entireLookupDao,
             HibernatePresetLookupDao<DriverSupport, HibernateDriverSupport> presetLookupDao
     ) {
-        this.baseDao = baseDao;
+        this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;
         this.presetLookupDao = presetLookupDao;
     }
@@ -38,35 +40,79 @@ public class DriverSupportDaoImpl implements DriverSupportDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insert(DriverSupport element) throws DaoException {
-        return baseDao.insert(element);
+        return batchBaseDao.insert(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(DriverSupport element) throws DaoException {
-        baseDao.update(element);
+        batchBaseDao.update(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(StringIdKey key) throws DaoException {
-        baseDao.delete(key);
+        batchBaseDao.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(StringIdKey key) throws DaoException {
-        return baseDao.exists(key);
+        return batchBaseDao.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public DriverSupport get(StringIdKey key) throws DaoException {
-        return baseDao.get(key);
+        return batchBaseDao.get(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<StringIdKey> batchInsert(@SkipRecord List<DriverSupport> elements) throws DaoException {
+        return batchBaseDao.batchInsert(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchUpdate(@SkipRecord List<DriverSupport> elements) throws DaoException {
+        batchBaseDao.batchUpdate(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchDelete(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        batchBaseDao.batchDelete(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public boolean allExists(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        return batchBaseDao.allExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public boolean nonExists(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        return batchBaseDao.nonExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<DriverSupport> batchGet(@SkipRecord List<StringIdKey> keys) throws DaoException {
+        return batchBaseDao.batchGet(keys);
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.dwarfeng.judge.impl.dao.preset.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
-import com.dwarfeng.subgrade.impl.dao.HibernateBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
@@ -151,9 +150,9 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport>
-    driverSupportHibernateBaseDao() {
-        return new HibernateBaseDao<>(
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, DriverSupport, HibernateDriverSupport>
+    driverSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, HibernateMapper.class),
                 new MapStructBeanTransformer<>(
@@ -187,9 +186,9 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport>
-    judgerSupportHibernateBaseDao() {
-        return new HibernateBaseDao<>(
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, JudgerSupport, HibernateJudgerSupport>
+    judgerSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, HibernateMapper.class),
                 new MapStructBeanTransformer<>(

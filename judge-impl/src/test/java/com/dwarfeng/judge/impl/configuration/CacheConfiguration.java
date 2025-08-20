@@ -6,7 +6,6 @@ import com.dwarfeng.judge.sdk.bean.key.formatter.VariableStringKeyFormatter;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
-import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
@@ -96,8 +95,8 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBaseCache<StringIdKey, DriverSupport, FastJsonDriverSupport> driverSupportRedisBaseCache() {
-        return new RedisBaseCache<>(
+    public RedisBatchBaseCache<StringIdKey, DriverSupport, FastJsonDriverSupport> driverSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonDriverSupport>) template,
                 new StringIdStringKeyFormatter(driverSupportPrefix),
                 new MapStructBeanTransformer<>(DriverSupport.class, FastJsonDriverSupport.class, FastJsonMapper.class)
@@ -106,8 +105,8 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> judgerSupportRedisBaseCache() {
-        return new RedisBaseCache<>(
+    public RedisBatchBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> judgerSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonJudgerSupport>) template,
                 new StringIdStringKeyFormatter(judgerSupportPrefix),
                 new MapStructBeanTransformer<>(JudgerSupport.class, FastJsonJudgerSupport.class, FastJsonMapper.class)

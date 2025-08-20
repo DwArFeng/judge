@@ -3,7 +3,7 @@ package com.dwarfeng.judge.stack.service;
 import com.dwarfeng.judge.stack.bean.entity.DriverSupport;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
@@ -13,7 +13,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * @author DwArFeng
  * @since beta-1.1.0
  */
-public interface DriverSupportMaintainService extends CrudService<StringIdKey, DriverSupport>,
+public interface DriverSupportMaintainService extends BatchCrudService<StringIdKey, DriverSupport>,
         EntireLookupService<DriverSupport>, PresetLookupService<DriverSupport> {
 
     String ID_LIKE = "id_like";

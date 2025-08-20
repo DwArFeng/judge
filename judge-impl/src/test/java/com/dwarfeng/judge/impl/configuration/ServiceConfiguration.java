@@ -10,7 +10,10 @@ import com.dwarfeng.judge.stack.cache.JudgerSupportCache;
 import com.dwarfeng.judge.stack.cache.VariableCache;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
-import com.dwarfeng.subgrade.impl.service.*;
+import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
+import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
+import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
+import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -161,8 +164,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralCrudService<StringIdKey, DriverSupport> driverSupportGeneralCrudService() {
-        return new GeneralCrudService<>(
+    public GeneralBatchCrudService<StringIdKey, DriverSupport> driverSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 driverSupportDao,
@@ -191,8 +194,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralCrudService<StringIdKey, JudgerSupport> judgerSupportGeneralCrudService() {
-        return new GeneralCrudService<>(
+    public GeneralBatchCrudService<StringIdKey, JudgerSupport> judgerSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 judgerSupportDao,
