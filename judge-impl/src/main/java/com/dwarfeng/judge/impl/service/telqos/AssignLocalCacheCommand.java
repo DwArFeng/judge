@@ -16,6 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,11 +26,28 @@ public class AssignLocalCacheCommand extends CliCommand {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AssignLocalCacheCommand.class);
 
+    private static final String COMMAND_OPTION_LOOKUP = "l";
+    private static final String COMMAND_OPTION_CLEAR = "c";
+
+    private static final String[] COMMAND_OPTION_ARRAY = new String[]{
+            COMMAND_OPTION_LOOKUP,
+            COMMAND_OPTION_CLEAR
+    };
+
     private static final String IDENTITY = "alc";
-    private static final String DESCRIPTION = "本地缓存操作";
-    private static final String CMD_LINE_SYNTAX_C = "alc -c";
-    private static final String CMD_LINE_SYNTAX_S = "alc -s section-id";
-    private static final String CMD_LINE_SYNTAX = CMD_LINE_SYNTAX_C + System.lineSeparator() + CMD_LINE_SYNTAX_S;
+    private static final String DESCRIPTION = "指派用本地缓存操作";
+
+    private static final String CMD_LINE_SYNTAX_LOOKUP = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_LOOKUP) + " section-id";
+    private static final String CMD_LINE_SYNTAX_CLEAR = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_CLEAR);
+
+    private static final String[] CMD_LINE_ARRAY = new String[]{
+            CMD_LINE_SYNTAX_LOOKUP,
+            CMD_LINE_SYNTAX_CLEAR
+    };
+
+    private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
 
     private final AssignQosService assignQosService;
 
@@ -38,27 +56,32 @@ public class AssignLocalCacheCommand extends CliCommand {
         this.assignQosService = assignQosService;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     protected List<Option> buildOptions() {
-        return CommandUtils.buildLcOptions();
+        List<Option> list = new ArrayList<>();
+        list.add(Option.builder(COMMAND_OPTION_CLEAR).optionalArg(true).hasArg(false).desc("清除缓存").build());
+        list.add(Option.builder(COMMAND_OPTION_LOOKUP).optionalArg(true).hasArg(true).type(Number.class)
+                .argName("section-id").desc("查看指定部件的详细信息，如果本地缓存中不存在，则尝试抓取").build());
+        return list;
     }
 
     @SuppressWarnings("DuplicatedCode")
     @Override
     protected void executeWithCmd(Context context, CommandLine cmd) throws TelqosException {
         try {
-            Pair<String, Integer> pair = CommandUtils.analyseLcCommand(cmd);
+            Pair<String, Integer> pair = CommandUtil.analyseCommand(cmd, COMMAND_OPTION_ARRAY);
             if (pair.getRight() != 1) {
-                context.sendMessage("下列选项必须且只能含有一个: -c -s");
+                context.sendMessage(CommandUtil.optionMismatchMessage(COMMAND_OPTION_ARRAY));
                 context.sendMessage(CMD_LINE_SYNTAX);
                 return;
             }
             switch (pair.getLeft()) {
-                case "c":
-                    handleC(context);
+                case COMMAND_OPTION_LOOKUP:
+                    handleLookup(context, cmd);
                     break;
-                case "s":
-                    handleS(context, cmd);
+                case COMMAND_OPTION_CLEAR:
+                    handleClear(context);
                     break;
             }
         } catch (Exception e) {
@@ -66,20 +89,16 @@ public class AssignLocalCacheCommand extends CliCommand {
         }
     }
 
-    private void handleC(Context context) throws Exception {
-        assignQosService.clearLocalCache();
-        context.sendMessage("缓存已清空");
-    }
-
     @SuppressWarnings("DuplicatedCode")
-    private void handleS(Context context, CommandLine cmd) throws Exception {
+    private void handleLookup(Context context, CommandLine cmd) throws Exception {
         long sectionId;
         try {
-            sectionId = ((Number) cmd.getParsedOptionValue("s")).longValue();
+            sectionId = ((Number) cmd.getParsedOptionValue(COMMAND_OPTION_LOOKUP)).longValue();
         } catch (ParseException e) {
             LOGGER.warn("解析命令选项时发生异常，异常信息如下", e);
-            context.sendMessage("命令行格式错误，正确的格式为: " + CMD_LINE_SYNTAX_S);
-            context.sendMessage("请留意选项 s 后接参数的类型应该是数字 ");
+            context.sendMessage("命令行格式错误，正确的格式为: " + CMD_LINE_SYNTAX_LOOKUP);
+            context.sendMessage("请留意选项 " + CommandUtil.concatOptionPrefix(COMMAND_OPTION_LOOKUP) +
+                    " 后接参数的类型应该是数字 ");
             return;
         }
         AssignInfo assignInfo = assignQosService.getContext(new LongIdKey(sectionId));
@@ -98,5 +117,10 @@ public class AssignLocalCacheCommand extends CliCommand {
             context.sendMessage(String.format("  %-3d %s", ++index, entry.getKey().toString()));
             context.sendMessage(String.format("  %-3d %s", index, entry.getValue().toString()));
         }
+    }
+
+    private void handleClear(Context context) throws Exception {
+        assignQosService.clearLocalCache();
+        context.sendMessage("缓存已清空");
     }
 }

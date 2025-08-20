@@ -4,6 +4,16 @@
 
 ### 功能构建
 
+- 使用 CommandUtil 简化运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.JudgeConsumerCommand。
+  - com.dwarfeng.judge.impl.service.telqos.AssignCommand。
+  - com.dwarfeng.judge.impl.service.telqos.AssignLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.JudgeCommand。
+  - com.dwarfeng.judge.impl.service.telqos.EvaluateConsumerCommand。
+  - com.dwarfeng.judge.impl.service.telqos.EvaluateLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.EvaluateCommand。
+  - com.dwarfeng.judge.impl.service.telqos.JudgeLocalCacheCommand。
+
 - 去除支持实体维护服务的重置功能。
   - com.dwarfeng.judge.stack.service.DriverSupportMaintainService。
   - com.dwarfeng.judge.stack.service.JudgerSupportMaintainService。

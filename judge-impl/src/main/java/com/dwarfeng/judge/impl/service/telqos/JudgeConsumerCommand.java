@@ -13,6 +13,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,11 +22,28 @@ public class JudgeConsumerCommand extends CliCommand {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JudgeConsumerCommand.class);
 
+    private static final String COMMAND_OPTION_L = "l";
+    private static final String COMMAND_OPTION_S = "s";
+
+    private static final String[] COMMAND_OPTION_ARRAY = new String[]{
+            COMMAND_OPTION_L,
+            COMMAND_OPTION_S,
+    };
+
     private static final String IDENTITY = "jcsu";
     private static final String DESCRIPTION = "消费者操作";
-    private static final String CMD_LINE_SYNTAX_L = "jcsu -l";
-    private static final String CMD_LINE_SYNTAX_S = "jcsu -s [-b val] [-t val]";
-    private static final String CMD_LINE_SYNTAX = CMD_LINE_SYNTAX_L + System.lineSeparator() + CMD_LINE_SYNTAX_S;
+
+    private static final String CMD_LINE_SYNTAX_L = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_L);
+    private static final String CMD_LINE_SYNTAX_S = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_S) + " [-b val] [-t val]";
+
+    private static final String[] CMD_LINE_ARRAY = new String[]{
+            CMD_LINE_SYNTAX_L,
+            CMD_LINE_SYNTAX_S,
+    };
+
+    private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
 
     private final JudgeQosService judgeQosService;
 
@@ -34,26 +52,34 @@ public class JudgeConsumerCommand extends CliCommand {
         this.judgeQosService = judgeQosService;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     protected List<Option> buildOptions() {
-        return CommandUtils.buildCsuOptions();
+        List<Option> list = new ArrayList<>();
+        list.add(Option.builder(COMMAND_OPTION_L).optionalArg(true).hasArg(false).desc("查看记录者状态").build());
+        list.add(Option.builder(COMMAND_OPTION_S).optionalArg(true).hasArg(false).desc("设置记录者参数").build());
+        list.add(Option.builder("b").optionalArg(true).hasArg(true).type(Number.class)
+                .argName("buffer-size").desc("缓冲器的大小").build());
+        list.add(Option.builder("t").optionalArg(true).hasArg(true).type(Number.class)
+                .argName("thread").desc("记录者的线程数量").build());
+        return list;
     }
 
     @SuppressWarnings("DuplicatedCode")
     @Override
     protected void executeWithCmd(Context context, CommandLine cmd) throws TelqosException {
         try {
-            Pair<String, Integer> pair = CommandUtils.analyseCsuCommand(cmd);
+            Pair<String, Integer> pair = CommandUtil.analyseCommand(cmd, COMMAND_OPTION_ARRAY);
             if (pair.getRight() != 1) {
-                context.sendMessage("下列选项必须且只能含有一个: -l -s");
+                context.sendMessage(CommandUtil.optionMismatchMessage(COMMAND_OPTION_ARRAY));
                 context.sendMessage(CMD_LINE_SYNTAX);
                 return;
             }
             switch (pair.getLeft()) {
-                case "l":
+                case COMMAND_OPTION_L:
                     handleL(context);
                     break;
-                case "s":
+                case COMMAND_OPTION_S:
                     handleS(context, cmd);
                     break;
             }
