@@ -1,9 +1,8 @@
 package com.dwarfeng.judge.node.launcher;
 
 import com.dwarfeng.judge.node.handler.LauncherSettingHandler;
-import com.dwarfeng.judge.stack.service.DriverSupportMaintainService;
 import com.dwarfeng.judge.stack.service.JudgeQosService;
-import com.dwarfeng.judge.stack.service.JudgerSupportMaintainService;
+import com.dwarfeng.judge.stack.service.SupportQosService;
 import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.slf4j.Logger;
@@ -44,15 +43,18 @@ public class Launcher {
         // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
         LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
 
-        // 判断是否重置驱动器支持，并按条件执行重置操作。
-        if (launcherSettingHandler.isResetDriverSupport()) {
-            LOGGER.info("重置驱动器支持...");
-            DriverSupportMaintainService maintainService = ctx.getBean(DriverSupportMaintainService.class);
-            try {
-                maintainService.reset();
-            } catch (ServiceException e) {
-                LOGGER.warn("驱动器支持重置失败，异常信息如下", e);
-            }
+        // 如果不重置驱动器，则返回。
+        if (!launcherSettingHandler.isResetDriverSupport()) {
+            return;
+        }
+
+        // 重置驱动器支持。
+        LOGGER.info("重置驱动器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetDriver();
+        } catch (ServiceException e) {
+            LOGGER.warn("驱动器支持重置失败，异常信息如下", e);
         }
     }
 
@@ -60,15 +62,18 @@ public class Launcher {
         // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
         LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
 
-        // 判断是否重置判断器支持，并按条件执行重置操作。
-        if (launcherSettingHandler.isResetJudgerSupport()) {
-            LOGGER.info("重置判断器支持...");
-            JudgerSupportMaintainService maintainService = ctx.getBean(JudgerSupportMaintainService.class);
-            try {
-                maintainService.reset();
-            } catch (ServiceException e) {
-                LOGGER.warn("判断器支持重置失败，异常信息如下", e);
-            }
+        // 如果不重置判断器，则返回。
+        if (!launcherSettingHandler.isResetJudgerSupport()) {
+            return;
+        }
+
+        // 重置判断器支持。
+        LOGGER.info("重置判断器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetJudger();
+        } catch (ServiceException e) {
+            LOGGER.warn("判断器支持重置失败，异常信息如下", e);
         }
     }
 
