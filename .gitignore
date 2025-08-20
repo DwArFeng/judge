@@ -75,3 +75,8 @@ buildNumber.properties
 ## Optext Files
 #################
 /judge-node/optext/
+
+#################
+## Confext Files
+#################
+/judge-node/confext/

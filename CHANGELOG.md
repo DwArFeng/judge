@@ -4,6 +4,8 @@
 
 ### 功能构建
 
+- 增加 `.gitignore` 中缺失的配置。
+
 - 实现运维指令。
   - com.dwarfeng.judge.impl.service.telqos.SupportCommand。
 
