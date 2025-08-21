@@ -4,6 +4,17 @@
 
 ### 功能构建
 
+- 导入运维指令。
+  - com.dwarfeng.datamark.service.telqos.*。
+
+- 增加 Hibernate 实体数据标记字段，并应用相关实体侦听器。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateDriverInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateJudgerInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSection。
+
+- 增加依赖。
+  - 增加依赖 `dwarfeng-datamark` 以应用其新功能，版本为 `1.0.3.a`。
+
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.39` 以规避漏洞。
   - 升级 `protobuf` 依赖版本为 `3.25.5` 以规避漏洞。

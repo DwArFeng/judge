@@ -59,6 +59,7 @@
         <dcti.version>1.1.12.a</dcti.version>
         <jackson.version>2.18.3</jackson.version>
         <groovy.version>4.0.26</groovy.version>
+        <dwarfeng-datamark.version>1.0.3.a</dwarfeng-datamark.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -493,6 +494,12 @@
                         <groupId>org.apache.groovy</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <!-- Dwarfeng-datamark 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dwarfeng-datamark</artifactId>
+                <version>${dwarfeng-datamark.version}</version>
             </dependency>
             <!-- 程序自身组件 -->
             <dependency>

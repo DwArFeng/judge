@@ -36,6 +36,8 @@ public interface HibernateMapper {
     @InheritInverseConfiguration
     VariableKey variableKeyFromHibernate(HibernateVariableKey hibernateVariableKey);
 
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "sectionId", ignore = true)
     @Mapping(target = "section", ignore = true)
     @Mapping(target = "longId", ignore = true)
@@ -50,6 +52,8 @@ public interface HibernateMapper {
     @InheritInverseConfiguration
     DriverSupport driverSupportFromHibernate(HibernateDriverSupport hibernateDriverSupport);
 
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "sectionId", ignore = true)
     @Mapping(target = "section", ignore = true)
     @Mapping(target = "longId", ignore = true)
@@ -64,6 +68,8 @@ public interface HibernateMapper {
     @InheritInverseConfiguration
     JudgerSupport judgerSupportFromHibernate(HibernateJudgerSupport hibernateJudgerSupport);
 
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "judgerInfos", ignore = true)
     @Mapping(target = "driverInfos", ignore = true)

@@ -1,5 +1,7 @@
 package com.dwarfeng.judge.impl.bean.entity;
 
+import com.dwarfeng.datamark.bean.jpa.DatamarkEntityListener;
+import com.dwarfeng.datamark.bean.jpa.DatamarkField;
 import com.dwarfeng.judge.sdk.util.Constraints;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -12,9 +14,10 @@ import java.util.Set;
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_section")
+@EntityListeners(DatamarkEntityListener.class)
 public class HibernateSection implements Bean {
 
-    private static final long serialVersionUID = 7973234211349406595L;
+    private static final long serialVersionUID = 8299763521765832279L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -43,23 +46,41 @@ public class HibernateSection implements Bean {
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgerInfo.class, mappedBy = "section")
     private Set<HibernateJudgerInfo> judgerInfos = new HashSet<>();
 
+    // -----------------------------------------------------------审计-----------------------------------------------------------
+    @DatamarkField(handlerName = "sectionDatamarkHandler")
+    @Column(
+            name = "created_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE,
+            updatable = false
+    )
+    private String createdDatamark;
+
+    @DatamarkField(handlerName = "sectionDatamarkHandler")
+    @Column(
+            name = "modified_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE
+    )
+    private String modifiedDatamark;
+
     public HibernateSection() {
     }
 
-    public Long getLongId() {
-        return longId;
-    }
-
-    public void setLongId(Long longId) {
-        this.longId = longId;
-    }
-
+    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
 
     public void setKey(HibernateLongIdKey idKey) {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    }
+
+    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    public Long getLongId() {
+        return longId;
+    }
+
+    public void setLongId(Long longId) {
+        this.longId = longId;
     }
 
     public String getName() {
@@ -106,8 +127,8 @@ public class HibernateSection implements Bean {
         return driverInfos;
     }
 
-    public void setDriverInfos(Set<HibernateDriverInfo> drives) {
-        this.driverInfos = drives;
+    public void setDriverInfos(Set<HibernateDriverInfo> driverInfos) {
+        this.driverInfos = driverInfos;
     }
 
     public Set<HibernateJudgerInfo> getJudgerInfos() {
@@ -118,15 +139,32 @@ public class HibernateSection implements Bean {
         this.judgerInfos = judgerInfos;
     }
 
+    public String getCreatedDatamark() {
+        return createdDatamark;
+    }
+
+    public void setCreatedDatamark(String createdDatamark) {
+        this.createdDatamark = createdDatamark;
+    }
+
+    public String getModifiedDatamark() {
+        return modifiedDatamark;
+    }
+
+    public void setModifiedDatamark(String modifiedDatamark) {
+        this.modifiedDatamark = modifiedDatamark;
+    }
+
     @Override
     public String toString() {
-        return "HibernateSection{" +
-                "longId=" + longId +
-                ", name='" + name + '\'' +
-                ", enabled=" + enabled +
-                ", expected=" + expected +
-                ", variance=" + variance +
-                ", remark='" + remark + '\'' +
-                '}';
+        return getClass().getSimpleName() + "(" +
+                "longId = " + longId + ", " +
+                "name = " + name + ", " +
+                "enabled = " + enabled + ", " +
+                "expected = " + expected + ", " +
+                "variance = " + variance + ", " +
+                "remark = " + remark + ", " +
+                "createdDatamark = " + createdDatamark + ", " +
+                "modifiedDatamark = " + modifiedDatamark + ")";
     }
 }

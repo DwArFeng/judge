@@ -1,5 +1,7 @@
 package com.dwarfeng.judge.impl.bean.entity;
 
+import com.dwarfeng.datamark.bean.jpa.DatamarkEntityListener;
+import com.dwarfeng.datamark.bean.jpa.DatamarkField;
 import com.dwarfeng.judge.sdk.util.Constraints;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -10,9 +12,10 @@ import java.util.Optional;
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_judger_info")
+@EntityListeners(DatamarkEntityListener.class)
 public class HibernateJudgerInfo implements Bean {
 
-    private static final long serialVersionUID = -2092141606116148616L;
+    private static final long serialVersionUID = 4506719454381355971L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -43,17 +46,26 @@ public class HibernateJudgerInfo implements Bean {
     })
     private HibernateSection section;
 
+    // -----------------------------------------------------------审计-----------------------------------------------------------
+    @DatamarkField(handlerName = "judgerDatamarkHandler")
+    @Column(
+            name = "created_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE,
+            updatable = false
+    )
+    private String createdDatamark;
+
+    @DatamarkField(handlerName = "judgerDatamarkHandler")
+    @Column(
+            name = "modified_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE
+    )
+    private String modifiedDatamark;
+
     public HibernateJudgerInfo() {
     }
 
-    public Long getLongId() {
-        return longId;
-    }
-
-    public void setLongId(Long longId) {
-        this.longId = longId;
-    }
-
+    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -62,20 +74,29 @@ public class HibernateJudgerInfo implements Bean {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    public Long getSectionId() {
-        return sectionId;
-    }
-
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
-    }
-
     public HibernateLongIdKey getSectionKey() {
         return Optional.ofNullable(sectionId).map(HibernateLongIdKey::new).orElse(null);
     }
 
     public void setSectionKey(HibernateLongIdKey parentKey) {
         this.sectionId = Optional.ofNullable(parentKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    }
+
+    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    public Long getLongId() {
+        return longId;
+    }
+
+    public void setLongId(Long longId) {
+        this.longId = longId;
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
     }
 
     public boolean isEnabled() {
@@ -118,15 +139,33 @@ public class HibernateJudgerInfo implements Bean {
         this.section = section;
     }
 
+    public String getCreatedDatamark() {
+        return createdDatamark;
+    }
+
+    public void setCreatedDatamark(String createdDatamark) {
+        this.createdDatamark = createdDatamark;
+    }
+
+    public String getModifiedDatamark() {
+        return modifiedDatamark;
+    }
+
+    public void setModifiedDatamark(String modifiedDatamark) {
+        this.modifiedDatamark = modifiedDatamark;
+    }
+
     @Override
     public String toString() {
-        return "HibernateJudgerInfo{" +
-                "longId=" + longId +
-                ", sectionId=" + sectionId +
-                ", enabled=" + enabled +
-                ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
+        return getClass().getSimpleName() + "(" +
+                "longId = " + longId + ", " +
+                "sectionId = " + sectionId + ", " +
+                "enabled = " + enabled + ", " +
+                "type = " + type + ", " +
+                "content = " + content + ", " +
+                "remark = " + remark + ", " +
+                "section = " + section + ", " +
+                "createdDatamark = " + createdDatamark + ", " +
+                "modifiedDatamark = " + modifiedDatamark + ")";
     }
 }

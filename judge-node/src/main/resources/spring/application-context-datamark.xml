@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:datamark="http://dwarfeng.com/schema/dwarfeng-datamark"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://dwarfeng.com/schema/dwarfeng-datamark
+        http://dwarfeng.com/schema/dwarfeng-datamark/dwarfeng-datamark.xsd"
+>
+
+    <!-- Section 数据标识 -->
+    <datamark:handler
+            handler-name="sectionDatamarkHandler"
+            resource-url="${datamark.section.resource_url}"
+            resource-charset="${datamark.section.resource_charset}"
+            update-allowed="${datamark.section.update_allowed}"
+    />
+
+    <!-- Driver 数据标识 -->
+    <datamark:handler
+            handler-name="driverDatamarkHandler"
+            resource-url="${datamark.driver.resource_url}"
+            resource-charset="${datamark.driver.resource_charset}"
+            update-allowed="${datamark.driver.update_allowed}"
+    />
+
+    <!-- Judger 数据标识 -->
+    <datamark:handler
+            handler-name="judgerDatamarkHandler"
+            resource-url="${datamark.judger.resource_url}"
+            resource-charset="${datamark.judger.resource_charset}"
+            update-allowed="${datamark.judger.update_allowed}"
+    />
+
+    <!-- QoS 服务 -->
+    <datamark:qos/>
+</beans>
