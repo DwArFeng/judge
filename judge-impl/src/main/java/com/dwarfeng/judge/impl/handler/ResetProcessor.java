@@ -1,10 +1,9 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.handler.AssignHandler;
-import com.dwarfeng.judge.stack.handler.AssignLocalCacheHandler;
-import com.dwarfeng.judge.stack.handler.EvaluateHandler;
-import com.dwarfeng.judge.stack.handler.EvaluateLocalCacheHandler;
+import com.dwarfeng.judge.stack.handler.*;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,22 +15,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResetProcessor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResetProcessor.class);
+
     private final AssignHandler assignHandler;
     private final AssignLocalCacheHandler assignLocalCacheHandler;
 
     private final EvaluateHandler evaluateHandler;
     private final EvaluateLocalCacheHandler evaluateLocalCacheHandler;
 
+    private final PushHandler pushHandler;
+
     public ResetProcessor(
             AssignHandler assignHandler,
             AssignLocalCacheHandler assignLocalCacheHandler,
             EvaluateHandler evaluateHandler,
-            EvaluateLocalCacheHandler evaluateLocalCacheHandler
+            EvaluateLocalCacheHandler evaluateLocalCacheHandler,
+            PushHandler pushHandler
     ) {
         this.assignHandler = assignHandler;
         this.assignLocalCacheHandler = assignLocalCacheHandler;
         this.evaluateHandler = evaluateHandler;
         this.evaluateLocalCacheHandler = evaluateLocalCacheHandler;
+        this.pushHandler = pushHandler;
     }
 
     public void resetAssign() throws HandlerException {
@@ -46,6 +51,13 @@ public class ResetProcessor {
         if (onlineFlag) {
             assignHandler.online();
         }
+
+        // 消息推送。
+        try {
+            pushHandler.assignReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送指派功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
     }
 
     public void resetEvaluate() throws HandlerException {
@@ -59,6 +71,13 @@ public class ResetProcessor {
         // 如果评估处理器之前是启用的状态，则重新启用。
         if (enabledFlag) {
             evaluateHandler.enable();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.evaluateReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送评估功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
     }
 }
