@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.impl.handler.sink;
 
-import com.dwarfeng.judge.impl.handler.Sink;
+import com.dwarfeng.judge.sdk.handler.Sink;
+import com.dwarfeng.judge.sdk.handler.sink.AbstractSink;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;

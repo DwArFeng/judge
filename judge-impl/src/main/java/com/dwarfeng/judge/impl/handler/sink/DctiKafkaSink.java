@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
+import com.dwarfeng.judge.sdk.handler.sink.AbstractSink;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

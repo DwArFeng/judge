@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler.sink;
 
+import com.dwarfeng.judge.sdk.handler.sink.AbstractSink;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import org.springframework.stereotype.Component;
 

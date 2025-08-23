@@ -2,7 +2,7 @@ package com.dwarfeng.judge.impl.handler.driver;
 
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
-import com.dwarfeng.judge.impl.handler.DriverProvider;
+import com.dwarfeng.judge.sdk.handler.DriverProvider;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.exception.DriverException;
 import com.dwarfeng.judge.stack.handler.Driver;

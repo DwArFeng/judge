@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.service;
 
-import com.dwarfeng.judge.impl.handler.JudgerSupporter;
+import com.dwarfeng.judge.sdk.handler.JudgerSupporter;
 import com.dwarfeng.judge.stack.bean.entity.JudgerSupport;
 import com.dwarfeng.judge.stack.service.JudgerSupportMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;

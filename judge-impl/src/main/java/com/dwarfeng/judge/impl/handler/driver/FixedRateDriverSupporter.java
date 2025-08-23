@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.handler.driver;
 
-import com.dwarfeng.judge.impl.handler.DriverSupporter;
+import com.dwarfeng.judge.sdk.handler.DriverSupporter;
 import org.springframework.stereotype.Component;
 
 /**

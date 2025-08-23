@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.sdk.handler.Sink;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.judge.stack.handler.SinkHandler;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;

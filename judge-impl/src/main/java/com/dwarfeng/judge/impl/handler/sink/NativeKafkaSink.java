@@ -3,6 +3,7 @@ package com.dwarfeng.judge.impl.handler.sink;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
+import com.dwarfeng.judge.sdk.handler.sink.AbstractSink;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

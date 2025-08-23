@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.sdk.handler.DriverProvider;
 import com.dwarfeng.judge.stack.exception.UnsupportedDriverTypeException;
 import com.dwarfeng.judge.stack.handler.Driver;
 import com.dwarfeng.judge.stack.handler.DriverHandler;

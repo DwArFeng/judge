@@ -1,29 +1,13 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.SectionReport;
-import com.dwarfeng.judge.stack.exception.SinkException;
-
 /**
  * 水槽
  *
  * @author DwArFeng
+ * @see com.dwarfeng.judge.sdk.handler.Sink
  * @since beta-1.0.0
+ * @deprecated 该对象已经被废弃，请使用 sdk 模块下的对应对象代替。
  */
-public interface Sink {
-
-    /**
-     * 返回水槽是否支持指定的类型。
-     *
-     * @param type 指定的类型。
-     * @return 水槽是否支持指定的类型。
-     */
-    boolean supportType(String type);
-
-    /**
-     * 下沉部件报告。
-     *
-     * @param sectionReport 部件报告。
-     * @throws SinkException 水槽异常。
-     */
-    void sinkData(SectionReport sectionReport) throws SinkException;
+@Deprecated
+public interface Sink extends com.dwarfeng.judge.sdk.handler.Sink {
 }

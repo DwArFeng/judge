@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler.sink;
 
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
+import com.dwarfeng.judge.sdk.handler.sink.AbstractSink;
 import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.judge.stack.exception.SinkException;
 import org.slf4j.Logger;

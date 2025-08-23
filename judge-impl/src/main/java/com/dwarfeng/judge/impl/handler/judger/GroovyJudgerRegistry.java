@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler.judger;
 
 import com.dwarfeng.dutil.basic.io.IOUtil;
 import com.dwarfeng.dutil.basic.io.StringOutputStream;
+import com.dwarfeng.judge.sdk.handler.judger.AbstractJudgerRegistry;
 import com.dwarfeng.judge.stack.bean.dto.JudgerResult;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.JudgerException;

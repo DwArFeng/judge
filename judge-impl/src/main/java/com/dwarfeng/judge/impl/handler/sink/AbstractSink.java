@@ -1,46 +1,20 @@
 package com.dwarfeng.judge.impl.handler.sink;
 
-import com.dwarfeng.judge.impl.handler.Sink;
-
-import java.util.Objects;
-
 /**
  * 抽象 Sink。
  *
- * <p>
- * Sink 的抽象实现。
- *
  * @author DwArFeng
+ * @see com.dwarfeng.judge.sdk.handler.sink.AbstractSink
  * @since 1.3.0
+ * @deprecated 该对象已经被废弃，请使用 sdk 模块下的对应对象代替。
  */
-public abstract class AbstractSink implements Sink {
-
-    protected String sinkType;
+@Deprecated
+public abstract class AbstractSink extends com.dwarfeng.judge.sdk.handler.sink.AbstractSink {
 
     public AbstractSink() {
     }
 
     public AbstractSink(String sinkType) {
-        this.sinkType = sinkType;
-    }
-
-    @Override
-    public boolean supportType(String type) {
-        return Objects.equals(sinkType, type);
-    }
-
-    public String getSinkType() {
-        return sinkType;
-    }
-
-    public void setSinkType(String sinkType) {
-        this.sinkType = sinkType;
-    }
-
-    @Override
-    public String toString() {
-        return "AbstractSink{" +
-                "sinkType='" + sinkType + '\'' +
-                '}';
+        super(sinkType);
     }
 }

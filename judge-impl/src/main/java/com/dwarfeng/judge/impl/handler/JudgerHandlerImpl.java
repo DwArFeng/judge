@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.sdk.handler.JudgerMaker;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.exception.UnsupportedJudgerTypeException;
 import com.dwarfeng.judge.stack.handler.Judger;
