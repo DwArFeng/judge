@@ -13,23 +13,27 @@ public final class ServiceExceptionCodes {
     private static int EXCEPTION_CODE_OFFSET = 11000;
 
     public static final ServiceException.Code JUDGER_FAILED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET, "judger failed");
+            new ServiceException.Code(offset(0), "judger failed");
     public static final ServiceException.Code JUDGER_MAKE_FAILED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 1, "judger make failed");
+            new ServiceException.Code(offset(1), "judger make failed");
     public static final ServiceException.Code JUDGER_TYPE_UNSUPPORTED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 2, "judger type unsupported");
+            new ServiceException.Code(offset(2), "judger type unsupported");
     public static final ServiceException.Code SINK_FAILED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 10, "sink failed");
+            new ServiceException.Code(offset(10), "sink failed");
     public static final ServiceException.Code DRIVER_FAILED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 20, "driver failed");
+            new ServiceException.Code(offset(20), "driver failed");
     public static final ServiceException.Code DRIVER_TYPE_UNSUPPORTED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 21, "driver type unsupported");
+            new ServiceException.Code(offset(21), "driver type unsupported");
     public static final ServiceException.Code JUDGE_WORK_FAILED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 30, "judge work failed");
+            new ServiceException.Code(offset(30), "judge work failed");
     public static final ServiceException.Code JUDGE_WORK_DISABLED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 31, "judge work disabled");
+            new ServiceException.Code(offset(31), "judge work disabled");
     public static final ServiceException.Code SECTION_NOT_EXISTS =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 40, "section not exists");
+            new ServiceException.Code(offset(40), "section not exists");
+
+    private static int offset(int i) {
+        return EXCEPTION_CODE_OFFSET + i;
+    }
 
     /**
      * 获取异常代号的偏移量。
@@ -46,7 +50,19 @@ public final class ServiceExceptionCodes {
      * @param exceptionCodeOffset 指定的异常代号的偏移量。
      */
     public static void setExceptionCodeOffset(int exceptionCodeOffset) {
+        // 设置 EXCEPTION_CODE_OFFSET 的值。
         EXCEPTION_CODE_OFFSET = exceptionCodeOffset;
+
+        // 以新的 EXCEPTION_CODE_OFFSET 为基准，更新异常代码的值。
+        JUDGER_FAILED.setCode(offset(0));
+        JUDGER_MAKE_FAILED.setCode(offset(1));
+        JUDGER_TYPE_UNSUPPORTED.setCode(offset(2));
+        SINK_FAILED.setCode(offset(10));
+        DRIVER_FAILED.setCode(offset(20));
+        DRIVER_TYPE_UNSUPPORTED.setCode(offset(21));
+        JUDGE_WORK_FAILED.setCode(offset(30));
+        JUDGE_WORK_DISABLED.setCode(offset(31));
+        SECTION_NOT_EXISTS.setCode(offset(40));
     }
 
     private ServiceExceptionCodes() {
