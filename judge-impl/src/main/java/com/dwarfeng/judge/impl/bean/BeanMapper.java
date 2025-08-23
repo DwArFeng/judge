@@ -13,14 +13,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
- * Hibernate Bean 映射器。
+ * Bean 映射器。
+ *
+ * <p>
+ * 该映射器中包含了 <code>impl</code> 模块中所有实体与 <code>stack</code> 模块中对应实体的映射方法。
  *
  * @author DwArFeng
- * @since 1.6.0
+ * @since 1.7.0
  */
 @Mapper
-public interface HibernateMapper {
+public interface BeanMapper {
 
+    // -----------------------------------------------------------Subgrade Key-----------------------------------------------------------
     HibernateLongIdKey longIdKeyToHibernate(LongIdKey longIdKey);
 
     @InheritInverseConfiguration
@@ -31,16 +35,18 @@ public interface HibernateMapper {
     @InheritInverseConfiguration
     StringIdKey stringIdKeyFromHibernate(HibernateStringIdKey hibernateStringIdKey);
 
+    // -----------------------------------------------------------Judge Key-----------------------------------------------------------
     HibernateVariableKey variableKeyToHibernate(VariableKey variableKey);
 
     @InheritInverseConfiguration
     VariableKey variableKeyFromHibernate(HibernateVariableKey hibernateVariableKey);
 
-    @Mapping(target = "modifiedDatamark", ignore = true)
-    @Mapping(target = "createdDatamark", ignore = true)
+    // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     @Mapping(target = "sectionId", ignore = true)
     @Mapping(target = "section", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
     HibernateDriverInfo driverInfoToHibernate(DriverInfo driverInfo);
 
     @InheritInverseConfiguration
@@ -52,11 +58,11 @@ public interface HibernateMapper {
     @InheritInverseConfiguration
     DriverSupport driverSupportFromHibernate(HibernateDriverSupport hibernateDriverSupport);
 
-    @Mapping(target = "modifiedDatamark", ignore = true)
-    @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "sectionId", ignore = true)
     @Mapping(target = "section", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
     HibernateJudgerInfo judgerInfoToHibernate(JudgerInfo judgerInfo);
 
     @InheritInverseConfiguration
@@ -69,10 +75,10 @@ public interface HibernateMapper {
     JudgerSupport judgerSupportFromHibernate(HibernateJudgerSupport hibernateJudgerSupport);
 
     @Mapping(target = "modifiedDatamark", ignore = true)
-    @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "judgerInfos", ignore = true)
     @Mapping(target = "driverInfos", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
     HibernateSection sectionToHibernate(Section section);
 
     @InheritInverseConfiguration

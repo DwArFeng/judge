@@ -4,6 +4,8 @@
 
 ### 功能构建
 
+- 优化实体映射器机制。
+
 - 优化 impl 模块下的 `logging` 目录结构。
   - 将 `logging/settings-windows.xml` 重命名为 `settings-ref-windows.xml`，以消除文件名的歧义。
   - 更新 `logging/README.md` 中的相关说明。

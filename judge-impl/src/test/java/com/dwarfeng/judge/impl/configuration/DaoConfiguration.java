@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.configuration;
 
-import com.dwarfeng.judge.impl.bean.HibernateMapper;
+import com.dwarfeng.judge.impl.bean.BeanMapper;
 import com.dwarfeng.judge.impl.bean.entity.*;
 import com.dwarfeng.judge.impl.bean.key.HibernateVariableKey;
 import com.dwarfeng.judge.impl.dao.preset.*;
@@ -58,8 +58,8 @@ public class DaoConfiguration {
     driverInfoHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
-                new MapStructBeanTransformer<>(DriverInfo.class, HibernateDriverInfo.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(DriverInfo.class, HibernateDriverInfo.class, BeanMapper.class),
                 HibernateDriverInfo.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -70,7 +70,7 @@ public class DaoConfiguration {
     public HibernatePresetLookupDao<DriverInfo, HibernateDriverInfo> driverInfoHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(DriverInfo.class, HibernateDriverInfo.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(DriverInfo.class, HibernateDriverInfo.class, BeanMapper.class),
                 HibernateDriverInfo.class,
                 driverInfoPresetCriteriaMaker
         );
@@ -81,8 +81,8 @@ public class DaoConfiguration {
     sectionHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
-                new MapStructBeanTransformer<>(Section.class, HibernateSection.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(Section.class, HibernateSection.class, BeanMapper.class),
                 HibernateSection.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -93,7 +93,7 @@ public class DaoConfiguration {
     public HibernateEntireLookupDao<Section, HibernateSection> sectionHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(Section.class, HibernateSection.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(Section.class, HibernateSection.class, BeanMapper.class),
                 HibernateSection.class
         );
     }
@@ -102,7 +102,7 @@ public class DaoConfiguration {
     public HibernatePresetLookupDao<Section, HibernateSection> sectionHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(Section.class, HibernateSection.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(Section.class, HibernateSection.class, BeanMapper.class),
                 HibernateSection.class,
                 sectionPresetCriteriaMaker
         );
@@ -113,8 +113,8 @@ public class DaoConfiguration {
     judgerInfoHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
-                new MapStructBeanTransformer<>(JudgerInfo.class, HibernateJudgerInfo.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(JudgerInfo.class, HibernateJudgerInfo.class, BeanMapper.class),
                 HibernateJudgerInfo.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -125,7 +125,7 @@ public class DaoConfiguration {
     public HibernatePresetLookupDao<JudgerInfo, HibernateJudgerInfo> judgerInfoHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(JudgerInfo.class, HibernateJudgerInfo.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(JudgerInfo.class, HibernateJudgerInfo.class, BeanMapper.class),
                 HibernateJudgerInfo.class,
                 judgerInfoPresetCriteriaMaker
         );
@@ -135,7 +135,7 @@ public class DaoConfiguration {
     public HibernateEntireLookupDao<DriverInfo, HibernateDriverInfo> driverInfoHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(DriverInfo.class, HibernateDriverInfo.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(DriverInfo.class, HibernateDriverInfo.class, BeanMapper.class),
                 HibernateDriverInfo.class
         );
     }
@@ -144,7 +144,7 @@ public class DaoConfiguration {
     public HibernateEntireLookupDao<JudgerInfo, HibernateJudgerInfo> judgerInfoHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(JudgerInfo.class, HibernateJudgerInfo.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(JudgerInfo.class, HibernateJudgerInfo.class, BeanMapper.class),
                 HibernateJudgerInfo.class
         );
     }
@@ -154,9 +154,9 @@ public class DaoConfiguration {
     driverSupportHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
                 new MapStructBeanTransformer<>(
-                        DriverSupport.class, HibernateDriverSupport.class, HibernateMapper.class
+                        DriverSupport.class, HibernateDriverSupport.class, BeanMapper.class
                 ),
                 HibernateDriverSupport.class
         );
@@ -167,7 +167,7 @@ public class DaoConfiguration {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(
-                        DriverSupport.class, HibernateDriverSupport.class, HibernateMapper.class
+                        DriverSupport.class, HibernateDriverSupport.class, BeanMapper.class
                 ),
                 HibernateDriverSupport.class
         );
@@ -178,7 +178,7 @@ public class DaoConfiguration {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(
-                        DriverSupport.class, HibernateDriverSupport.class, HibernateMapper.class
+                        DriverSupport.class, HibernateDriverSupport.class, BeanMapper.class
                 ),
                 HibernateDriverSupport.class,
                 driverSupportPresetCriteriaMaker
@@ -190,9 +190,9 @@ public class DaoConfiguration {
     judgerSupportHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
                 new MapStructBeanTransformer<>(
-                        JudgerSupport.class, HibernateJudgerSupport.class, HibernateMapper.class
+                        JudgerSupport.class, HibernateJudgerSupport.class, BeanMapper.class
                 ),
                 HibernateJudgerSupport.class
         );
@@ -203,7 +203,7 @@ public class DaoConfiguration {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(
-                        JudgerSupport.class, HibernateJudgerSupport.class, HibernateMapper.class
+                        JudgerSupport.class, HibernateJudgerSupport.class, BeanMapper.class
                 ),
                 HibernateJudgerSupport.class
         );
@@ -214,7 +214,7 @@ public class DaoConfiguration {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(
-                        JudgerSupport.class, HibernateJudgerSupport.class, HibernateMapper.class
+                        JudgerSupport.class, HibernateJudgerSupport.class, BeanMapper.class
                 ),
                 HibernateJudgerSupport.class,
                 judgerSupportPresetCriteriaMaker
@@ -226,8 +226,8 @@ public class DaoConfiguration {
     variableHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(VariableKey.class, HibernateVariableKey.class, HibernateMapper.class),
-                new MapStructBeanTransformer<>(Variable.class, HibernateVariable.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(VariableKey.class, HibernateVariableKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(Variable.class, HibernateVariable.class, BeanMapper.class),
                 HibernateVariable.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -238,7 +238,7 @@ public class DaoConfiguration {
     public HibernateEntireLookupDao<Variable, HibernateVariable> variableHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(Variable.class, HibernateVariable.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(Variable.class, HibernateVariable.class, BeanMapper.class),
                 HibernateVariable.class
         );
     }
@@ -247,7 +247,7 @@ public class DaoConfiguration {
     public HibernatePresetLookupDao<Variable, HibernateVariable> variableHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
-                new MapStructBeanTransformer<>(Variable.class, HibernateVariable.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(Variable.class, HibernateVariable.class, BeanMapper.class),
                 HibernateVariable.class,
                 variablePresetCriteriaMaker
         );

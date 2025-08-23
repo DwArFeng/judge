@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.node.configuration;
 
-import com.dwarfeng.judge.sdk.bean.FastJsonMapper;
+import com.dwarfeng.judge.sdk.bean.BeanMapper;
 import com.dwarfeng.judge.sdk.bean.entity.*;
 import com.dwarfeng.judge.sdk.bean.key.formatter.VariableStringKeyFormatter;
 import com.dwarfeng.judge.stack.bean.entity.*;
@@ -49,7 +49,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonDriverInfo>) template,
                 new LongIdStringKeyFormatter(driverInfoPrefix),
-                new MapStructBeanTransformer<>(DriverInfo.class, FastJsonDriverInfo.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(DriverInfo.class, FastJsonDriverInfo.class, BeanMapper.class)
         );
     }
 
@@ -59,7 +59,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonSection>) template,
                 new LongIdStringKeyFormatter(sectionPrefix),
-                new MapStructBeanTransformer<>(Section.class, FastJsonSection.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(Section.class, FastJsonSection.class, BeanMapper.class)
         );
     }
 
@@ -69,7 +69,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonJudgerInfo>) template,
                 new LongIdStringKeyFormatter(judgerInfoPrefix),
-                new MapStructBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, BeanMapper.class)
         );
     }
 
@@ -79,7 +79,7 @@ public class CacheConfiguration {
         return new RedisKeyListCache<>(
                 (RedisTemplate<String, FastJsonDriverInfo>) template,
                 new LongIdStringKeyFormatter(enabledDriverInfoPrefix),
-                new MapStructBeanTransformer<>(DriverInfo.class, FastJsonDriverInfo.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(DriverInfo.class, FastJsonDriverInfo.class, BeanMapper.class)
         );
     }
 
@@ -89,7 +89,7 @@ public class CacheConfiguration {
         return new RedisKeyListCache<>(
                 (RedisTemplate<String, FastJsonJudgerInfo>) template,
                 new LongIdStringKeyFormatter(enabledJudgerInfoPrefix),
-                new MapStructBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, BeanMapper.class)
         );
     }
 
@@ -99,7 +99,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonDriverSupport>) template,
                 new StringIdStringKeyFormatter(driverSupportPrefix),
-                new MapStructBeanTransformer<>(DriverSupport.class, FastJsonDriverSupport.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(DriverSupport.class, FastJsonDriverSupport.class, BeanMapper.class)
         );
     }
 
@@ -109,7 +109,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonJudgerSupport>) template,
                 new StringIdStringKeyFormatter(judgerSupportPrefix),
-                new MapStructBeanTransformer<>(JudgerSupport.class, FastJsonJudgerSupport.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(JudgerSupport.class, FastJsonJudgerSupport.class, BeanMapper.class)
         );
     }
 
@@ -119,7 +119,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonVariable>) template,
                 new VariableStringKeyFormatter(variablePrefix),
-                new MapStructBeanTransformer<>(Variable.class, FastJsonVariable.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(Variable.class, FastJsonVariable.class, BeanMapper.class)
         );
     }
 }
