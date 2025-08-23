@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 依赖优化。
+  - 优化部分依赖的排除项，以避免潜在的 `netty` 版本冲突问题。
+
 - 优化项目的启停脚本，以规避潜在的路径问题。
   - binres/judge-start.sh。
   - binres/judge-stop.sh。
