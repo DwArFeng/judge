@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 优化项目的启停脚本，以规避潜在的路径问题。
+  - binres/judge-start.sh。
+  - binres/judge-stop.sh。
+
 - 优化实体映射器机制。
 
 - 优化 impl 模块下的 `logging` 目录结构。
