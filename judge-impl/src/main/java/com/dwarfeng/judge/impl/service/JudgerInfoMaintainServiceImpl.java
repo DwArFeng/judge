@@ -196,6 +196,7 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerInfo> lookup() throws ServiceException {
         return entireLookupService.lookup();
@@ -203,6 +204,7 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerInfo> lookup(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookup(pagingInfo);
@@ -210,6 +212,7 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerInfo> lookup(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookup(preset, objs);
@@ -217,6 +220,7 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerInfo> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         return presetLookupService.lookup(preset, objs, pagingInfo);
