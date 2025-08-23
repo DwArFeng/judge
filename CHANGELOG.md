@@ -4,7 +4,15 @@
 
 ### 功能构建
 
-- (无)
+- 实现预重置器。
+  - com.dwarfeng.judge.impl.handler.resetter.CronResetter。
+  - com.dwarfeng.judge.impl.handler.resetter.DubboResetter。
+  - com.dwarfeng.judge.impl.handler.resetter.FixedDelayResetter。
+  - com.dwarfeng.judge.impl.handler.resetter.FixedRateResetter。
+  - com.dwarfeng.judge.impl.handler.resetter.NeverResetter。
+
+- 实现核心机制。
+  - 重置机制。
 
 ### Bug 修复
 

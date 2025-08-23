@@ -11,8 +11,12 @@ public class LauncherSettingHandler implements Handler {
     private boolean resetDriverSupport;
     @Value("${launcher.reset_judger_support}")
     private boolean resetJudgerSupport;
+
     @Value("${launcher.start_judge_delay}")
     private long startJudgeDelay;
+
+    @Value("${launcher.start_reset_delay}")
+    private long startResetDelay;
 
     public boolean isResetDriverSupport() {
         return resetDriverSupport;
@@ -24,5 +28,19 @@ public class LauncherSettingHandler implements Handler {
 
     public long getStartJudgeDelay() {
         return startJudgeDelay;
+    }
+
+    public long getStartResetDelay() {
+        return startResetDelay;
+    }
+
+    @Override
+    public String toString() {
+        return "LauncherSettingHandler{" +
+                "resetDriverSupport=" + resetDriverSupport +
+                ", resetJudgerSupport=" + resetJudgerSupport +
+                ", startJudgeDelay=" + startJudgeDelay +
+                ", startResetDelay=" + startResetDelay +
+                '}';
     }
 }
