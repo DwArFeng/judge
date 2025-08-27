@@ -30,6 +30,7 @@ public class EvaluateConsumerCommand extends CliCommand {
             COMMAND_OPTION_S,
     };
 
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String IDENTITY = "ecsu";
     private static final String DESCRIPTION = "消费者操作";
 

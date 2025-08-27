@@ -30,6 +30,7 @@ public class JudgeConsumerCommand extends CliCommand {
             COMMAND_OPTION_S,
     };
 
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String IDENTITY = "jcsu";
     private static final String DESCRIPTION = "消费者操作";
 
