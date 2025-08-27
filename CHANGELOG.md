@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 可执行制品目录结构优化。
+  - 增加 `docs` 目录，以提供项目的文档和指南。
+
 - 实现预设推送器。
   - com.dwarfeng.judge.impl.handler.pusher.DrainPusher。
   - com.dwarfeng.judge.impl.handler.pusher.LogPusher。
