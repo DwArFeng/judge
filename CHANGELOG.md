@@ -29,7 +29,9 @@
 
 ### Bug 修复
 
-- (无)
+- 删除部分配置文件中的敏感内容。
+  - database/connection.properties。
+  - redis/connection.properties。
 
 ### 功能移除
 
