@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.impl.service;
 
-import com.dwarfeng.judge.sdk.handler.DriverSupporter;
 import com.dwarfeng.judge.stack.bean.entity.DriverSupport;
 import com.dwarfeng.judge.stack.service.DriverSupportMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
@@ -12,7 +11,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +26,7 @@ public class DriverSupportMaintainServiceImpl implements DriverSupportMaintainSe
     public DriverSupportMaintainServiceImpl(
             GeneralBatchCrudService<StringIdKey, DriverSupport> crudService,
             DaoOnlyEntireLookupService<DriverSupport> entireLookupService,
-            DaoOnlyPresetLookupService<DriverSupport> presetLookupService,
-            List<DriverSupporter> driverSupporters,
-            ServiceExceptionMapper sem
+            DaoOnlyPresetLookupService<DriverSupport> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

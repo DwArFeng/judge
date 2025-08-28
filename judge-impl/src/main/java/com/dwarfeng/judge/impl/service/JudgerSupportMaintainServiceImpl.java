@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.impl.service;
 
-import com.dwarfeng.judge.sdk.handler.JudgerSupporter;
 import com.dwarfeng.judge.stack.bean.entity.JudgerSupport;
 import com.dwarfeng.judge.stack.service.JudgerSupportMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
@@ -12,7 +11,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +26,7 @@ public class JudgerSupportMaintainServiceImpl implements JudgerSupportMaintainSe
     public JudgerSupportMaintainServiceImpl(
             GeneralBatchCrudService<StringIdKey, JudgerSupport> crudService,
             DaoOnlyEntireLookupService<JudgerSupport> entireLookupService,
-            DaoOnlyPresetLookupService<JudgerSupport> presetLookupService,
-            List<JudgerSupporter> judgerSupporters,
-            ServiceExceptionMapper sem
+            DaoOnlyPresetLookupService<JudgerSupport> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

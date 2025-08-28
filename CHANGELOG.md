@@ -9,7 +9,9 @@
 
 ### Bug 修复
 
-- (无)
+- 删除部分服务实现中不必要的构造器参数。
+  - com.dwarfeng.judge.impl.service.DriverSupportMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.JudgerSupportMaintainServiceImpl。
 
 ### 功能移除
 
