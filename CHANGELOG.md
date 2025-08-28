@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/ShellScripts.md。
+  - docs/wiki/zh-CN/BatchScripts.md。
+
 - 实现运维指令。
   - com.dwarfeng.judge.impl.service.telqos.ResetCommand。
 
