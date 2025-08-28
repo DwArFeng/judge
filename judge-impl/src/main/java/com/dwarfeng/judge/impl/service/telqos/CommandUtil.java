@@ -39,6 +39,7 @@ final class CommandUtil {
         return sj.toString();
     }
 
+    @SuppressWarnings("unused")
     public static Pair<String, Integer> analyseCommand(
             @Nonnull CommandLine commandLine, @Nonnull String... commandOptions
     ) {
@@ -53,6 +54,7 @@ final class CommandUtil {
         return Pair.of(subCmd, i);
     }
 
+    @SuppressWarnings("unused")
     public static String optionMismatchMessage(@Nonnull String... patterns) {
         StringJoiner sj = new StringJoiner(", ", "下列选项必须且只能含有一个: ", "");
         for (String pattern : patterns) {

@@ -42,19 +42,5 @@ public interface Resetter {
      * @since 1.8.0
      */
     interface Context {
-
-        /**
-         * 重置指派。
-         *
-         * @throws Exception 执行重置时抛出的任何异常。
-         */
-        void resetAssign() throws Exception;
-
-        /**
-         * 重置评估。
-         *
-         * @throws Exception 执行重置时抛出的任何异常。
-         */
-        void resetEvaluate() throws Exception;
     }
 }

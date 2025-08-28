@@ -1,13 +1,7 @@
 package com.dwarfeng.judge.sdk.bean;
 
-import com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgerReport;
-import com.dwarfeng.judge.sdk.bean.dto.FastJsonSectionReport;
-import com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonJudgerReport;
-import com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSectionReport;
 import com.dwarfeng.judge.sdk.bean.entity.*;
 import com.dwarfeng.judge.sdk.bean.key.FastJsonVariableKey;
-import com.dwarfeng.judge.stack.bean.dto.JudgerReport;
-import com.dwarfeng.judge.stack.bean.dto.SectionReport;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.VariableKey;
 import com.dwarfeng.subgrade.sdk.bean.key.*;
@@ -130,25 +124,4 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     Section sectionFromWebInput(WebInputSection webInputSection);
-
-    // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
-    FastJsonJudgerReport judgerReportToFastJson(JudgerReport judgerReport);
-
-    @InheritInverseConfiguration
-    JudgerReport judgerReportFromFastJson(FastJsonJudgerReport fastJsonJudgerReport);
-
-    FastJsonSectionReport sectionReportToFastJson(SectionReport sectionReport);
-
-    @InheritInverseConfiguration
-    SectionReport sectionReportFromFastJson(FastJsonSectionReport fastJsonSectionReport);
-
-    JSFixedFastJsonJudgerReport judgerReportToJSFixedFastJson(JudgerReport judgerReport);
-
-    @InheritInverseConfiguration
-    JudgerReport judgerReportFromJSFixedFastJson(JSFixedFastJsonJudgerReport jSFixedFastJsonJudgerReport);
-
-    JSFixedFastJsonSectionReport sectionReportToJSFixedFastJson(SectionReport sectionReport);
-
-    @InheritInverseConfiguration
-    SectionReport sectionReportFromJSFixedFastJson(JSFixedFastJsonSectionReport jSFixedFastJsonSectionReport);
 }

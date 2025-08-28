@@ -43,18 +43,4 @@ public interface ResetQosService extends Service {
      * @throws ServiceException 服务异常。
      */
     void stop() throws ServiceException;
-
-    /**
-     * 重置指派。
-     *
-     * @throws ServiceException 服务异常。
-     */
-    void resetAssign() throws ServiceException;
-
-    /**
-     * 重置评估。
-     *
-     * @throws ServiceException 服务异常。
-     */
-    void resetEvaluate() throws ServiceException;
 }

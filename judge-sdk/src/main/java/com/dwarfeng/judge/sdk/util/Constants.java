@@ -8,11 +8,6 @@ package com.dwarfeng.judge.sdk.util;
  */
 public final class Constants {
 
-    /**
-     * 检查任务的执行间隔。
-     */
-    public static final long SCHEDULER_CHECK_INTERVAL = 5000L;
-
     private Constants() {
         throw new IllegalStateException("禁止实例化");
     }

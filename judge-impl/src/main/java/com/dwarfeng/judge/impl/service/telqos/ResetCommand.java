@@ -20,16 +20,12 @@ public class ResetCommand extends CliCommand {
     private static final String COMMAND_OPTION_START = "start";
     private static final String COMMAND_OPTION_STOP = "stop";
     private static final String COMMAND_OPTION_STATUS = "status";
-    private static final String COMMAND_OPTION_RESET_ASSIGN = "reset-assign";
-    private static final String COMMAND_OPTION_RESET_EVALUATE = "reset-evaluate";
 
     private static final String[] COMMAND_OPTION_ARRAY = new String[]{
             COMMAND_OPTION_LOOKUP,
             COMMAND_OPTION_START,
             COMMAND_OPTION_STOP,
-            COMMAND_OPTION_STATUS,
-            COMMAND_OPTION_RESET_ASSIGN,
-            COMMAND_OPTION_RESET_EVALUATE
+            COMMAND_OPTION_STATUS
     };
 
     private static final String IDENTITY = "reset";
@@ -43,18 +39,12 @@ public class ResetCommand extends CliCommand {
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_STOP);
     private static final String CMD_LINE_SYNTAX_STATUS = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_STATUS);
-    private static final String CMD_LINE_SYNTAX_RESET_ASSIGN = IDENTITY + " " +
-            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_ASSIGN);
-    private static final String CMD_LINE_SYNTAX_RESET_EVALUATE = IDENTITY + " " +
-            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_EVALUATE);
 
     private static final String[] CMD_LINE_ARRAY = new String[]{
             CMD_LINE_SYNTAX_LOOKUP,
             CMD_LINE_SYNTAX_START,
             CMD_LINE_SYNTAX_STOP,
-            CMD_LINE_SYNTAX_STATUS,
-            CMD_LINE_SYNTAX_RESET_ASSIGN,
-            CMD_LINE_SYNTAX_RESET_EVALUATE
+            CMD_LINE_SYNTAX_STATUS
     };
 
     private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
@@ -73,8 +63,6 @@ public class ResetCommand extends CliCommand {
         list.add(Option.builder().longOpt(COMMAND_OPTION_START).desc("启动重置处理器").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_STOP).desc("停止重置处理器").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_STATUS).desc("查看重置处理器状态").build());
-        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_ASSIGN).desc("评估重置指派功能操作").build());
-        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_EVALUATE).desc("评估重置评估功能操作").build());
         return list;
     }
 
@@ -101,14 +89,6 @@ public class ResetCommand extends CliCommand {
                     break;
                 case COMMAND_OPTION_STATUS:
                     printStatus(context);
-                    break;
-                case COMMAND_OPTION_RESET_ASSIGN:
-                    resetQosService.resetAssign();
-                    context.sendMessage("重置成功!");
-                    break;
-                case COMMAND_OPTION_RESET_EVALUATE:
-                    resetQosService.resetEvaluate();
-                    context.sendMessage("重置成功!");
                     break;
             }
         } catch (Exception e) {

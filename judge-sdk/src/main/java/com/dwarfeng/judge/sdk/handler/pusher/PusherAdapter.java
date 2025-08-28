@@ -1,7 +1,5 @@
 package com.dwarfeng.judge.sdk.handler.pusher;
 
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
-
 /**
  * 推送器适配器。
  *
@@ -26,16 +24,6 @@ public abstract class PusherAdapter extends AbstractPusher {
 
     public PusherAdapter(String pusherType) {
         super(pusherType);
-    }
-
-    @SuppressWarnings("RedundantThrows")
-    @Override
-    public void assignReset() throws HandlerException {
-    }
-
-    @SuppressWarnings("RedundantThrows")
-    @Override
-    public void evaluateReset() throws HandlerException {
     }
 
     @Override

@@ -71,22 +71,4 @@ public class ResetQosServiceImpl implements ResetQosService {
             throw ServiceExceptionHelper.logParse("重置服务停止时发生异常", LogLevel.WARN, e, sem);
         }
     }
-
-    @Override
-    public void resetAssign() throws ServiceException {
-        try {
-            resetHandler.resetAssign();
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("重置指派时发生异常", LogLevel.WARN, e, sem);
-        }
-    }
-
-    @Override
-    public void resetEvaluate() throws ServiceException {
-        try {
-            resetHandler.resetEvaluate();
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("重置评估时发生异常", LogLevel.WARN, e, sem);
-        }
-    }
 }

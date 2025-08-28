@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
 /**
@@ -10,18 +9,4 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
  * @since 1.7.0
  */
 public interface SupportHandler extends Handler {
-
-    /**
-     * 重置驱动器。
-     *
-     * @throws HandlerException 处理器异常。
-     */
-    void resetDriver() throws HandlerException;
-
-    /**
-     * 重置判断器。
-     *
-     * @throws HandlerException 处理器异常。
-     */
-    void resetJudger() throws HandlerException;
 }

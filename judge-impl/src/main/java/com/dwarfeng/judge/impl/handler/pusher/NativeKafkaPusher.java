@@ -1,7 +1,6 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,11 +31,6 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${pusher.kafka.native.topic.assign_reset}")
-    private String assignResetTopic;
-    @Value("${pusher.kafka.native.topic.evaluate_reset}")
-    private String evaluateResetTopic;
-
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
     ) {
@@ -45,24 +38,10 @@ public class NativeKafkaPusher extends AbstractPusher {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
-    @Override
-    public void assignReset() {
-        kafkaTemplate.send(assignResetTopic, StringUtils.EMPTY);
-    }
-
-    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
-    @Override
-    public void evaluateReset() {
-        kafkaTemplate.send(evaluateResetTopic, StringUtils.EMPTY);
-    }
-
     @Override
     public String toString() {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
-                ", assignResetTopic='" + assignResetTopic + '\'' +
-                ", evaluateResetTopic='" + evaluateResetTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';
     }
@@ -87,7 +66,6 @@ public class NativeKafkaPusher extends AbstractPusher {
         @Value("${pusher.kafka.native.transaction_prefix}")
         private String transactionPrefix;
 
-        @SuppressWarnings("DuplicatedCode")
         @Bean("nativeKafkaPusher.producerProperties")
         public Map<String, Object> producerProperties() {
             LOGGER.info("配置Kafka生产者属性...");
@@ -102,7 +80,6 @@ public class NativeKafkaPusher extends AbstractPusher {
             return props;
         }
 
-        @SuppressWarnings("DuplicatedCode")
         @Bean("nativeKafkaPusher.producerFactory")
         public ProducerFactory<String, String> producerFactory() {
             LOGGER.info("配置Kafka生产者工厂...");

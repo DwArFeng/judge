@@ -34,20 +34,7 @@ public class LogPusher extends AbstractPusher {
         super(PUSHER_TYPE);
     }
 
-    @Override
-    public void assignReset() throws HandlerException {
-        String title = "指派功能重置:";
-        String message = StringUtils.EMPTY;
-        logData(title, message);
-    }
-
-    @Override
-    public void evaluateReset() throws HandlerException {
-        String title = "评估功能重置:";
-        String message = StringUtils.EMPTY;
-        logData(title, message);
-    }
-
+    @SuppressWarnings("unused")
     private void logData(String title, String message) throws HandlerException {
         String logLevel = this.logLevel.toUpperCase();
         logString(title, logLevel);

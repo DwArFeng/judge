@@ -19,14 +19,6 @@ public class DrainPusher extends AbstractPusher {
     }
 
     @Override
-    public void assignReset() {
-    }
-
-    @Override
-    public void evaluateReset() {
-    }
-
-    @Override
     public String toString() {
         return "DrainPusher{" +
                 "pusherType='" + pusherType + '\'' +

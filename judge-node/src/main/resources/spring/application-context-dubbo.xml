@@ -22,6 +22,52 @@
     />
 
     <!-- 向注册中心注册暴露服务地址,注册服务 -->
+
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service. AlarmHistoryMaintainService"
+            ref="alarmHistoryMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmModalMaintainService"
+            ref="alarmModalMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmSettingMaintainService"
+            ref="alarmSettingMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalyserInfoMaintainService"
+            ref="analyserInfoMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalyserSupportMaintainService"
+            ref="analyserSupportMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalyserVariableMaintainService"
+            ref="analyserVariableMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalyseTaskMaintainService"
+            ref="analyseTaskMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalyseTaskEventMaintainService"
+            ref="analyseTaskEventMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalysisMaintainService"
+            ref="analysisMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
     <dubbo:service
             interface="com.dwarfeng.judge.stack.service.DriverInfoMaintainService"
             ref="driverInfoMaintainServiceImpl"
@@ -33,8 +79,13 @@
             group="${dubbo.provider.group}"
     />
     <dubbo:service
-            interface="com.dwarfeng.judge.stack.service.JudgeQosService"
-            ref="judgeQosServiceImpl"
+            interface="com.dwarfeng.judge.stack.service.JudgementHistoryMaintainService"
+            ref="judgementHistoryMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.JudgementModalMaintainService"
+            ref="judgementModalMaintainServiceImpl"
             group="${dubbo.provider.group}"
     />
     <dubbo:service
@@ -48,8 +99,23 @@
             group="${dubbo.provider.group}"
     />
     <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.JudgerVariableMaintainService"
+            ref="judgerVariableMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
             interface="com.dwarfeng.judge.stack.service.SectionMaintainService"
             ref="sectionMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.VisualizerInfoMaintainService"
+            ref="visualizerInfoMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.VisualizerSupportMaintainService"
+            ref="visualizerSupportMaintainServiceImpl"
             group="${dubbo.provider.group}"
     />
 

@@ -33,16 +33,6 @@ public class PushHandlerImpl implements PushHandler {
     }
 
     @Override
-    public void assignReset() throws HandlerException {
-        pusher.assignReset();
-    }
-
-    @Override
-    public void evaluateReset() throws HandlerException {
-        pusher.evaluateReset();
-    }
-
-    @Override
     public String toString() {
         return "PushHandlerImpl{" +
                 "pushers=" + pushers +
