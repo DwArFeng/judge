@@ -2,7 +2,6 @@ package com.dwarfeng.judge.impl.service.operation;
 
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.cache.DriverInfoCache;
-import com.dwarfeng.judge.stack.cache.EnabledDriverInfoCache;
 import com.dwarfeng.judge.stack.dao.DriverInfoDao;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class DriverInfoCrudOperation implements BatchCrudOperation<LongIdKey, DriverInfo> {
@@ -21,19 +19,15 @@ public class DriverInfoCrudOperation implements BatchCrudOperation<LongIdKey, Dr
     private final DriverInfoDao driverInfoDao;
     private final DriverInfoCache driverInfoCache;
 
-    private final EnabledDriverInfoCache enabledDriverInfoCache;
-
     @Value("${cache.timeout.entity.driver_info}")
     private long driverInfoTimeout;
 
     public DriverInfoCrudOperation(
             DriverInfoDao driverInfoDao,
-            DriverInfoCache driverInfoCache,
-            EnabledDriverInfoCache enabledDriverInfoCache
+            DriverInfoCache driverInfoCache
     ) {
         this.driverInfoDao = driverInfoDao;
         this.driverInfoCache = driverInfoCache;
-        this.enabledDriverInfoCache = enabledDriverInfoCache;
     }
 
     @Override
@@ -57,36 +51,18 @@ public class DriverInfoCrudOperation implements BatchCrudOperation<LongIdKey, Dr
 
     @Override
     public LongIdKey insert(DriverInfo driverInfo) throws Exception {
-        if (Objects.nonNull(driverInfo.getSectionKey())) {
-            enabledDriverInfoCache.delete(driverInfo.getSectionKey());
-        }
-
         driverInfoCache.push(driverInfo, driverInfoTimeout);
         return driverInfoDao.insert(driverInfo);
     }
 
     @Override
     public void update(DriverInfo driverInfo) throws Exception {
-        DriverInfo oldDriverInfo = get(driverInfo.getKey());
-        if (Objects.nonNull(oldDriverInfo.getSectionKey())) {
-            enabledDriverInfoCache.delete(oldDriverInfo.getSectionKey());
-        }
-
-        if (Objects.nonNull(driverInfo.getSectionKey())) {
-            enabledDriverInfoCache.delete(driverInfo.getSectionKey());
-        }
-
         driverInfoCache.push(driverInfo, driverInfoTimeout);
         driverInfoDao.update(driverInfo);
     }
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        DriverInfo oldDriverInfo = get(key);
-        if (Objects.nonNull(oldDriverInfo.getSectionKey())) {
-            enabledDriverInfoCache.delete(oldDriverInfo.getSectionKey());
-        }
-
         driverInfoDao.delete(key);
         driverInfoCache.delete(key);
     }

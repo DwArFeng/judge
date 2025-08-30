@@ -3,7 +3,6 @@ package com.dwarfeng.judge.impl.service.operation;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Variable;
 import com.dwarfeng.judge.stack.bean.key.VariableKey;
-import com.dwarfeng.judge.stack.cache.EnabledJudgerInfoCache;
 import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
 import com.dwarfeng.judge.stack.cache.VariableCache;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,8 +28,6 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
     private final VariableDao variableDao;
     private final VariableCache variableCache;
 
-    private final EnabledJudgerInfoCache enabledJudgerInfoCache;
-
     @Value("${cache.timeout.entity.judger_info}")
     private long judgerInfoTimeout;
 
@@ -39,14 +35,12 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
             JudgerInfoDao judgerInfoDao,
             JudgerInfoCache judgerInfoCache,
             VariableDao variableDao,
-            VariableCache variableCache,
-            EnabledJudgerInfoCache enabledJudgerInfoCache
+            VariableCache variableCache
     ) {
         this.judgerInfoDao = judgerInfoDao;
         this.judgerInfoCache = judgerInfoCache;
         this.variableDao = variableDao;
         this.variableCache = variableCache;
-        this.enabledJudgerInfoCache = enabledJudgerInfoCache;
     }
 
     @Override
@@ -70,36 +64,18 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
 
     @Override
     public LongIdKey insert(JudgerInfo judgerInfo) throws Exception {
-        if (Objects.nonNull(judgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(judgerInfo.getSectionKey());
-        }
-
         judgerInfoCache.push(judgerInfo, judgerInfoTimeout);
         return judgerInfoDao.insert(judgerInfo);
     }
 
     @Override
     public void update(JudgerInfo judgerInfo) throws Exception {
-        JudgerInfo oldJudgerInfo = get(judgerInfo.getKey());
-        if (Objects.nonNull(oldJudgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(oldJudgerInfo.getSectionKey());
-        }
-
-        if (Objects.nonNull(judgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(judgerInfo.getSectionKey());
-        }
-
         judgerInfoCache.push(judgerInfo, judgerInfoTimeout);
         judgerInfoDao.update(judgerInfo);
     }
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        JudgerInfo oldJudgerInfo = get(key);
-        if (Objects.nonNull(oldJudgerInfo.getSectionKey())) {
-            enabledJudgerInfoCache.delete(oldJudgerInfo.getSectionKey());
-        }
-
         // 删除变量。
         List<VariableKey> variableKeys = variableDao.lookup(VariableMaintainService.LONG_ID_EQUALS, new Object[]{key})
                 .stream().map(Variable::getKey).collect(Collectors.toList());

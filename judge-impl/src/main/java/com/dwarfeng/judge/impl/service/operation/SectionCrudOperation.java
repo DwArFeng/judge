@@ -3,7 +3,9 @@ package com.dwarfeng.judge.impl.service.operation;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
-import com.dwarfeng.judge.stack.cache.*;
+import com.dwarfeng.judge.stack.cache.DriverInfoCache;
+import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
+import com.dwarfeng.judge.stack.cache.SectionCache;
 import com.dwarfeng.judge.stack.dao.DriverInfoDao;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
 import com.dwarfeng.judge.stack.dao.SectionDao;
@@ -31,9 +33,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
     private final JudgerInfoDao judgerInfoDao;
     private final JudgerInfoCache judgerInfoCache;
 
-    private final EnabledDriverInfoCache enabledDriverInfoCache;
-    private final EnabledJudgerInfoCache enabledJudgerInfoCache;
-
     @Value("${cache.timeout.entity.section}")
     private long sectionTimeout;
 
@@ -43,9 +42,7 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             DriverInfoDao driverInfoDao,
             DriverInfoCache driverInfoCache,
             JudgerInfoDao judgerInfoDao,
-            JudgerInfoCache judgerInfoCache,
-            EnabledDriverInfoCache enabledDriverInfoCache,
-            EnabledJudgerInfoCache enabledJudgerInfoCache
+            JudgerInfoCache judgerInfoCache
     ) {
         this.sectionDao = sectionDao;
         this.sectionCache = sectionCache;
@@ -53,8 +50,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         this.driverInfoCache = driverInfoCache;
         this.judgerInfoDao = judgerInfoDao;
         this.judgerInfoCache = judgerInfoCache;
-        this.enabledDriverInfoCache = enabledDriverInfoCache;
-        this.enabledJudgerInfoCache = enabledJudgerInfoCache;
     }
 
     @Override
@@ -106,10 +101,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             judgerInfoDao.batchDelete(judgerInfoKeys);
             judgerInfoCache.batchDelete(judgerInfoKeys);
         }
-
-        //删除对应的使能缓存。
-        enabledDriverInfoCache.delete(key);
-        enabledJudgerInfoCache.delete(key);
 
         sectionDao.delete(key);
         sectionCache.delete(key);
