@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 重构核心机制。
+  - 支持机制。
+
 - 重构实体以及维护服务，并通过单元测试。
   - com.dwarfeng.judge.stack.service.AlarmHistoryMaintainService。
   - com.dwarfeng.judge.stack.service.AlarmModalMaintainService。

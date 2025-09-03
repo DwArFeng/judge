@@ -2,6 +2,7 @@ package com.dwarfeng.judge.node.launcher;
 
 import com.dwarfeng.judge.node.handler.LauncherSettingHandler;
 import com.dwarfeng.judge.stack.service.ResetQosService;
+import com.dwarfeng.judge.stack.service.SupportQosService;
 import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.slf4j.Logger;
@@ -21,16 +22,81 @@ public class Launcher {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(Launcher.class);
 
-    @SuppressWarnings("Convert2MethodRef")
     public static void main(String[] args) {
         ApplicationUtil.launch(new String[]{
                 "classpath:spring/application-context*.xml",
                 "file:opt/opt*.xml",
                 "file:optext/opt*.xml"
         }, ctx -> {
+            // 根据启动器设置处理器的设置，选择性重置分析器。
+            mayResetAnalyser(ctx);
+
+            // 根据启动器设置处理器的设置，选择性重置驱动器。
+            mayResetDriver(ctx);
+
+            // 根据启动器设置处理器的设置，选择性重置判断器。
+            mayResetJudger(ctx);
+
             // 根据启动器设置处理器的设置，选择性开启重置服务。
             mayStartReset(ctx);
         });
+    }
+
+    private static void mayResetAnalyser(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 如果不重置分析器，则返回。
+        if (!launcherSettingHandler.isResetAnalyserSupport()) {
+            return;
+        }
+
+        // 重置分析器支持。
+        LOGGER.info("重置分析器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetAnalyser();
+        } catch (ServiceException e) {
+            LOGGER.warn("分析器支持重置失败，异常信息如下", e);
+        }
+    }
+
+    private static void mayResetDriver(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 如果不重置驱动器，则返回。
+        if (!launcherSettingHandler.isResetDriverSupport()) {
+            return;
+        }
+
+        // 重置驱动器支持。
+        LOGGER.info("重置驱动器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetDriver();
+        } catch (ServiceException e) {
+            LOGGER.warn("驱动器支持重置失败，异常信息如下", e);
+        }
+    }
+
+    private static void mayResetJudger(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 如果不重置判断器，则返回。
+        if (!launcherSettingHandler.isResetJudgerSupport()) {
+            return;
+        }
+
+        // 重置判断器支持。
+        LOGGER.info("重置判断器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetJudger();
+        } catch (ServiceException e) {
+            LOGGER.warn("判断器支持重置失败，异常信息如下", e);
+        }
     }
 
     private static void mayStartReset(ApplicationContext ctx) {
