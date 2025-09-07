@@ -212,6 +212,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>dwarfeng-datamark</artifactId>
         </dependency>
+        <!-- Dwarfeng-ftp 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dwarfeng-ftp</artifactId>
+        </dependency>
         <!-- 程序自身模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

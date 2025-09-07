@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd"
@@ -21,4 +21,8 @@
     <context:component-scan base-package="com.dwarfeng.judge.impl.configuration"/>
     <!--扫描 aop 增强所在的包。 -->
     <context:component-scan base-package="com.dwarfeng.subgrade.sdk.interceptor.analyse"/>
+    <!--扫描dwarfeng-ftp的包。 -->
+    <context:component-scan base-package="com.dwarfeng.ftp.configuration" use-default-filters="false">
+        <context:include-filter type="assignable" expression="com.dwarfeng.ftp.configuration.SingletonConfiguration"/>
+    </context:component-scan>
 </beans>

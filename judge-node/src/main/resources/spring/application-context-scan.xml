@@ -26,4 +26,8 @@
     <context:component-scan base-package="com.dwarfeng.judge.node.handler"/>
     <!--扫描 aop 增强所在的包。 -->
     <context:component-scan base-package="com.dwarfeng.subgrade.sdk.interceptor.analyse"/>
+    <!--扫描dwarfeng-ftp的包。 -->
+    <context:component-scan base-package="com.dwarfeng.ftp.configuration" use-default-filters="false">
+        <context:include-filter type="assignable" expression="com.dwarfeng.ftp.configuration.SingletonConfiguration"/>
+    </context:component-scan>
 </beans>

@@ -80,3 +80,9 @@ buildNumber.properties
 ## Confext Files
 #################
 /judge-node/confext/
+
+#################
+## Temp Files
+#################
+/judge-impl/temp/
+/judge-node/temp/
