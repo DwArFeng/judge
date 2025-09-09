@@ -1,0 +1,39 @@
+package com.dwarfeng.judge.stack.bean.dto;
+
+import com.dwarfeng.subgrade.stack.bean.dto.Dto;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+
+/**
+ * 分析结果图片文件下载信息。
+ *
+ * @author DwArFeng
+ * @since 2.0.0
+ */
+public class AnalysisPictureFileDownloadInfo implements Dto {
+
+    private static final long serialVersionUID = 1429624196251050811L;
+
+    private LongIdKey analysisPictureInfoKey;
+
+    public AnalysisPictureFileDownloadInfo() {
+    }
+
+    public AnalysisPictureFileDownloadInfo(LongIdKey analysisPictureInfoKey) {
+        this.analysisPictureInfoKey = analysisPictureInfoKey;
+    }
+
+    public LongIdKey getAnalysisPictureInfoKey() {
+        return analysisPictureInfoKey;
+    }
+
+    public void setAnalysisPictureInfoKey(LongIdKey analysisPictureInfoKey) {
+        this.analysisPictureInfoKey = analysisPictureInfoKey;
+    }
+
+    @Override
+    public String toString() {
+        return "AnalysisPictureFileDownloadInfo{" +
+                "analysisPictureInfoKey=" + analysisPictureInfoKey +
+                '}';
+    }
+}

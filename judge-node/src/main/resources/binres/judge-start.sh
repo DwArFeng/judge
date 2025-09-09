@@ -22,6 +22,12 @@ java_jmxremote_opts=""
 # -Dcom.sun.management.jmxremote.authenticate=false \
 # -Dcom.sun.management.jmxremote.ssl=false"
 
+# JAVA AWT HEADLESS 配置。
+# 如果该项目运行在有显示设备、键盘或鼠标的环境中，请注释下方内容...
+java_awt_headless_opts="-Djava.awt.headless=true"
+# 并取消下方注释。
+# java_awt_headless_opts=""
+
 # JAVA 日志配置。
 # 固定配置，请勿编辑此行。
 java_logging_opts="\
@@ -35,6 +41,7 @@ eval \
 nohup /bin/java -classpath "lib/*:libext/*" \
 "$jvm_memory_opts" \
 "$java_jmxremote_opts" \
+"$java_awt_headless_opts" \
 "$java_logging_opts" \
 "${mainClass}" \
 >/dev/null 2>&1 "&"

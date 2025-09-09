@@ -28,6 +28,18 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(60), "task status mismatch");
     public static final ServiceException.Code INVALID_TASK_STATUS =
             new ServiceException.Code(offset(70), "invalid task status");
+    public static final ServiceException.Code ANALYSIS_FILE_NOT_EXISTS =
+            new ServiceException.Code(offset(80), "analysis file not exists");
+    public static final ServiceException.Code ANALYSIS_FILE_PACK_ITEM_NOT_EXISTS =
+            new ServiceException.Code(offset(90), "analysis file pack item not exists");
+    public static final ServiceException.Code ANALYSIS_FILE_PACK_NOT_EXISTS =
+            new ServiceException.Code(offset(100), "analysis file pack not exists");
+    public static final ServiceException.Code ANALYSIS_PICTURE_NOT_EXISTS =
+            new ServiceException.Code(offset(110), "analysis picture not exists");
+    public static final ServiceException.Code ANALYSIS_PICTURE_PACK_ITEM_NOT_EXISTS =
+            new ServiceException.Code(offset(120), "analysis picture pack item not exists");
+    public static final ServiceException.Code ANALYSIS_PICTURE_PACK_NOT_EXISTS =
+            new ServiceException.Code(offset(130), "analysis picture pack not exists");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -60,6 +72,12 @@ public final class ServiceExceptionCodes {
         TASK_NOT_EXISTS.setCode(offset(50));
         TASK_STATUS_MISMATCH.setCode(offset(60));
         INVALID_TASK_STATUS.setCode(offset(70));
+        ANALYSIS_FILE_NOT_EXISTS.setCode(offset(80));
+        ANALYSIS_FILE_PACK_ITEM_NOT_EXISTS.setCode(offset(90));
+        ANALYSIS_FILE_PACK_NOT_EXISTS.setCode(offset(100));
+        ANALYSIS_PICTURE_NOT_EXISTS.setCode(offset(110));
+        ANALYSIS_PICTURE_PACK_ITEM_NOT_EXISTS.setCode(offset(120));
+        ANALYSIS_PICTURE_PACK_NOT_EXISTS.setCode(offset(130));
     }
 
     private ServiceExceptionCodes() {

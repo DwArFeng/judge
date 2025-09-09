@@ -23,6 +23,12 @@ rem -Dcom.sun.management.jmxremote.port=23000 ^
 rem -Dcom.sun.management.jmxremote.authenticate=false ^
 rem -Dcom.sun.management.jmxremote.ssl=false
 
+rem JAVA AWT HEADLESS 配置。
+rem 如果该项目运行在有显示设备、键盘或鼠标的环境中，请注释下方内容...
+SET java_awt_headless_opts=-Djava.awt.headless=true
+rem 并取消下方注释。
+rem SET java_awt_headless_opts=
+
 rem JAVA 日志配置。
 rem 固定配置，请勿编辑此行。
 SET java_logging_opts=^
@@ -36,5 +42,6 @@ start "Judge" /MAX ^
 java -classpath "lib\*;libext\*" ^
 %jvm_memory_opts% ^
 %java_jmxremote_opts% ^
+%java_awt_headless_opts% ^
 %java_logging_opts% ^
 ${mainClass}
