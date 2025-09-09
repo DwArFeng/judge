@@ -1,7 +1,9 @@
 package com.dwarfeng.judge.sdk.bean;
 
+import com.dwarfeng.judge.sdk.bean.dto.*;
 import com.dwarfeng.judge.sdk.bean.entity.*;
 import com.dwarfeng.judge.sdk.bean.key.*;
+import com.dwarfeng.judge.stack.bean.dto.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
@@ -363,5 +365,60 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromJSFixedFastJson(
             JSFixedFastJsonAnalysisPicturePackItemInfo jSFixedFastJsonAnalysisPicturePackItemInfo
+    );
+
+    // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
+    WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(
+            AnalysisFileFileDownloadInfo analysisFileFileDownloadInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisFileFileDownloadInfo analysisFileFileDownloadInfoFromWebInput(
+            WebInputAnalysisFileFileDownloadInfo webInputAnalysisFileFileDownloadInfo
+    );
+
+    WebInputAnalysisFilePackItemFileDownloadInfo analysisFilePackItemFileDownloadInfoToWebInput(
+            AnalysisFilePackItemFileDownloadInfo analysisFilePackItemFileDownloadInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisFilePackItemFileDownloadInfo analysisFilePackItemFileDownloadInfoFromWebInput(
+            WebInputAnalysisFilePackItemFileDownloadInfo webInputAnalysisFilePackItemFileDownloadInfo
+    );
+
+    WebInputAnalysisPictureFileDownloadInfo analysisPictureFileDownloadInfoToWebInput(
+            AnalysisPictureFileDownloadInfo analysisPictureFileDownloadInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisPictureFileDownloadInfo analysisPictureFileDownloadInfoFromWebInput(
+            WebInputAnalysisPictureFileDownloadInfo webInputAnalysisPictureFileDownloadInfo
+    );
+
+    WebInputAnalysisPicturePackItemFileDownloadInfo analysisPicturePackItemFileDownloadInfoToWebInput(
+            AnalysisPicturePackItemFileDownloadInfo analysisPicturePackItemFileDownloadInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisPicturePackItemFileDownloadInfo analysisPicturePackItemFileDownloadInfoFromWebInput(
+            WebInputAnalysisPicturePackItemFileDownloadInfo webInputAnalysisPicturePackItemFileDownloadInfo
+    );
+
+    WebInputAnalysisPicturePackItemThumbnailDownloadInfo analysisPicturePackItemThumbnailDownloadInfoToWebInput(
+            AnalysisPicturePackItemThumbnailDownloadInfo analysisPicturePackItemThumbnailDownloadInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisPicturePackItemThumbnailDownloadInfo analysisPicturePackItemThumbnailDownloadInfoFromWebInput(
+            WebInputAnalysisPicturePackItemThumbnailDownloadInfo webInputAnalysisPicturePackItemThumbnailDownloadInfo
+    );
+
+    WebInputAnalysisPictureThumbnailDownloadInfo analysisPictureThumbnailDownloadInfoToWebInput(
+            AnalysisPictureThumbnailDownloadInfo analysisPictureThumbnailDownloadInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisPictureThumbnailDownloadInfo analysisPictureThumbnailDownloadInfoFromWebInput(
+            WebInputAnalysisPictureThumbnailDownloadInfo webInputAnalysisPictureThumbnailDownloadInfo
     );
 }

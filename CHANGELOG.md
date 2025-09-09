@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 增加操作服务。
+  - com.dwarfeng.judge.stack.service.AnalysisFileFileOperateService。
+  - com.dwarfeng.judge.stack.service.AnalysisFilePackItemFileOperateService。
+  - com.dwarfeng.judge.stack.service.AnalysisPictureFileOperateService。
+  - com.dwarfeng.judge.stack.service.AnalysisPicturePackItemFileOperateService。
+
 - 增加依赖。
   - 增加依赖 `hessian` 以应用其新功能，版本为 `4.0.38`。
   - 增加依赖 `javax.servlet-api` 以应用其新功能，版本为 `4.0.1`。
