@@ -1,6 +1,9 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
+import com.alibaba.fastjson.JSON;
+import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.judge.stack.bean.entity.Section;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -31,6 +34,15 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
+    @Value("${pusher.kafka.native.topic.task_finished}")
+    private String taskFinishedTopic;
+    @Value("${pusher.kafka.native.topic.task_failed}")
+    private String taskFailedTopic;
+    @Value("${pusher.kafka.native.topic.task_expired}")
+    private String taskExpiredTopic;
+    @Value("${pusher.kafka.native.topic.task_died}")
+    private String taskDiedTopic;
+
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
     ) {
@@ -39,9 +51,33 @@ public class NativeKafkaPusher extends AbstractPusher {
     }
 
     @Override
+    public void taskFinished(Section section) {
+        kafkaTemplate.send(taskFinishedTopic, JSON.toJSONString(FastJsonSection.of(section)));
+    }
+
+    @Override
+    public void taskFailed(Section section) {
+        kafkaTemplate.send(taskFailedTopic, JSON.toJSONString(FastJsonSection.of(section)));
+    }
+
+    @Override
+    public void taskExpired(Section section) {
+        kafkaTemplate.send(taskExpiredTopic, JSON.toJSONString(FastJsonSection.of(section)));
+    }
+
+    @Override
+    public void taskDied(Section section) {
+        kafkaTemplate.send(taskDiedTopic, JSON.toJSONString(FastJsonSection.of(section)));
+    }
+
+    @Override
     public String toString() {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
+                ", taskFinishedTopic='" + taskFinishedTopic + '\'' +
+                ", taskFailedTopic='" + taskFailedTopic + '\'' +
+                ", taskExpiredTopic='" + taskExpiredTopic + '\'' +
+                ", taskDiedTopic='" + taskDiedTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';
     }

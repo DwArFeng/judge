@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.handler.Pusher;
+import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,26 @@ public class PushHandlerImpl implements PushHandler {
         this.pusher = pushers.stream().filter(p -> p.supportType(pusherType)).findAny().orElseThrow(
                 () -> new HandlerException("未知的 pusher 类型: " + pusherType)
         );
+    }
+
+    @Override
+    public void taskFinished(Section section) throws HandlerException {
+        pusher.taskFinished(section);
+    }
+
+    @Override
+    public void taskFailed(Section section) throws HandlerException {
+        pusher.taskFailed(section);
+    }
+
+    @Override
+    public void taskExpired(Section section) throws HandlerException {
+        pusher.taskExpired(section);
+    }
+
+    @Override
+    public void taskDied(Section section) throws HandlerException {
+        pusher.taskDied(section);
     }
 
     @Override

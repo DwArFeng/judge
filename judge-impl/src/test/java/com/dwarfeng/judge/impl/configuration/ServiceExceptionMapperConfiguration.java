@@ -1,10 +1,7 @@
 package com.dwarfeng.judge.impl.configuration;
 
 import com.dwarfeng.judge.sdk.util.ServiceExceptionCodes;
-import com.dwarfeng.judge.stack.exception.AnalyserInfoNotExistsException;
-import com.dwarfeng.judge.stack.exception.AnalyserVariableNotExistsException;
-import com.dwarfeng.judge.stack.exception.JudgerInfoNotExistsException;
-import com.dwarfeng.judge.stack.exception.JudgerVariableNotExistsException;
+import com.dwarfeng.judge.stack.exception.*;
 import com.dwarfeng.subgrade.impl.exception.MapServiceExceptionMapper;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
@@ -24,6 +21,10 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(JudgerInfoNotExistsException.class, ServiceExceptionCodes.JUDGER_INFO_NOT_EXISTS);
         destination.put(AnalyserVariableNotExistsException.class, ServiceExceptionCodes.ANALYSER_VARIABLE_NOT_EXISTS);
         destination.put(JudgerVariableNotExistsException.class, ServiceExceptionCodes.JUDGER_VARIABLE_NOT_EXISTS);
+        destination.put(SectionNotExistsException.class, ServiceExceptionCodes.SECTION_NOT_EXISTS);
+        destination.put(TaskNotExistsException.class, ServiceExceptionCodes.TASK_NOT_EXISTS);
+        destination.put(TaskStatusMismatchException.class, ServiceExceptionCodes.TASK_STATUS_MISMATCH);
+        destination.put(InvalidTaskStatusException.class, ServiceExceptionCodes.INVALID_TASK_STATUS);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

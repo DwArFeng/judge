@@ -20,6 +20,14 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(20), "analyser variable not exists");
     public static final ServiceException.Code JUDGER_VARIABLE_NOT_EXISTS =
             new ServiceException.Code(offset(30), "judger variable not exists");
+    public static final ServiceException.Code SECTION_NOT_EXISTS =
+            new ServiceException.Code(offset(40), "section not exists");
+    public static final ServiceException.Code TASK_NOT_EXISTS =
+            new ServiceException.Code(offset(50), "task not exists");
+    public static final ServiceException.Code TASK_STATUS_MISMATCH =
+            new ServiceException.Code(offset(60), "task status mismatch");
+    public static final ServiceException.Code INVALID_TASK_STATUS =
+            new ServiceException.Code(offset(70), "invalid task status");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -48,6 +56,10 @@ public final class ServiceExceptionCodes {
         JUDGER_INFO_NOT_EXISTS.setCode(offset(10));
         ANALYSER_VARIABLE_NOT_EXISTS.setCode(offset(20));
         JUDGER_VARIABLE_NOT_EXISTS.setCode(offset(30));
+        SECTION_NOT_EXISTS.setCode(offset(40));
+        TASK_NOT_EXISTS.setCode(offset(50));
+        TASK_STATUS_MISMATCH.setCode(offset(60));
+        INVALID_TASK_STATUS.setCode(offset(70));
     }
 
     private ServiceExceptionCodes() {

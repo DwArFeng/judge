@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.judge.stack.bean.entity.Section;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +17,22 @@ public class DrainPusher extends AbstractPusher {
 
     public DrainPusher() {
         super(PUSHER_TYPE);
+    }
+
+    @Override
+    public void taskFinished(Section section) {
+    }
+
+    @Override
+    public void taskFailed(Section section) {
+    }
+
+    @Override
+    public void taskExpired(Section section) {
+    }
+
+    @Override
+    public void taskDied(Section section) {
     }
 
     @Override

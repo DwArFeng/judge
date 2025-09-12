@@ -1,6 +1,9 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
+import com.alibaba.fastjson.JSON;
+import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,7 +37,46 @@ public class LogPusher extends AbstractPusher {
         super(PUSHER_TYPE);
     }
 
-    @SuppressWarnings("unused")
+    @Override
+    public void taskFinished(Section section) throws HandlerException {
+        String title = "推送任务完成消息:";
+        String message = String.format(
+                "部件:\n%s",
+                JSON.toJSONString(FastJsonSection.of(section), true)
+        );
+        logData(title, message);
+    }
+
+    @Override
+    public void taskFailed(Section section) throws HandlerException {
+        String title = "推送任务失败消息:";
+        String message = String.format(
+                "部件:\n%s",
+                JSON.toJSONString(FastJsonSection.of(section), true)
+        );
+        logData(title, message);
+    }
+
+    @Override
+    public void taskExpired(Section section) throws HandlerException {
+        String title = "推送任务过期消息:";
+        String message = String.format(
+                "部件:\n%s",
+                JSON.toJSONString(FastJsonSection.of(section), true)
+        );
+        logData(title, message);
+    }
+
+    @Override
+    public void taskDied(Section section) throws HandlerException {
+        String title = "推送任务死亡消息:";
+        String message = String.format(
+                "部件:\n%s",
+                JSON.toJSONString(FastJsonSection.of(section), true)
+        );
+        logData(title, message);
+    }
+
     private void logData(String title, String message) throws HandlerException {
         String logLevel = this.logLevel.toUpperCase();
         logString(title, logLevel);
