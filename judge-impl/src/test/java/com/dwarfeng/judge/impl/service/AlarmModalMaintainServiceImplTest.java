@@ -36,7 +36,9 @@ public class AlarmModalMaintainServiceImplTest {
     @Before
     public void setUp() {
         section = new Section(new LongIdKey(SECTION_LONG_ID), "name", true, "remark");
-        alarmModal = new AlarmModal(new LongIdKey(SECTION_LONG_ID), new Date(), 12.450, true, "alarmMessage");
+        alarmModal = new AlarmModal(
+                new LongIdKey(SECTION_LONG_ID), "alarmLevel", new Date(), true, "alarmMessage"
+        );
     }
 
     @After

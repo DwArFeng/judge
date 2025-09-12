@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 public class WebInputAnalyserInfo implements Bean {
 
-    private static final long serialVersionUID = 5457858617463136900L;
+    private static final long serialVersionUID = 7298912252093270054L;
 
     public static AnalyserInfo toStackBean(WebInputAnalyserInfo webInput) {
         if (Objects.isNull(webInput)) {
@@ -68,19 +68,6 @@ public class WebInputAnalyserInfo implements Bean {
     private String remark;
 
     public WebInputAnalyserInfo() {
-    }
-
-    public WebInputAnalyserInfo(
-            WebInputLongIdKey key, WebInputLongIdKey sectionKey, int index, boolean enabled, String type, String param,
-            String remark
-    ) {
-        this.key = key;
-        this.sectionKey = sectionKey;
-        this.index = index;
-        this.enabled = enabled;
-        this.type = type;
-        this.param = param;
-        this.remark = remark;
     }
 
     public WebInputLongIdKey getKey() {

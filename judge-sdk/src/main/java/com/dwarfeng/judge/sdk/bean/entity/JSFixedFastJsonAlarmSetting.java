@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = -7087636371011615558L;
+    private static final long serialVersionUID = -4041853359518281795L;
 
     public static JSFixedFastJsonAlarmSetting of(AlarmSetting alarmSetting) {
         if (Objects.isNull(alarmSetting)) {
@@ -24,6 +24,7 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
             return new JSFixedFastJsonAlarmSetting(
                     JSFixedFastJsonLongIdKey.of(alarmSetting.getKey()),
                     JSFixedFastJsonLongIdKey.of(alarmSetting.getSectionKey()),
+                    alarmSetting.getAlarmLevel(),
                     alarmSetting.isEnabled(),
                     alarmSetting.getThreshold(),
                     alarmSetting.getAlarmMessage(),
@@ -38,27 +39,31 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
     @JSONField(name = "section_key", ordinal = 2)
     private JSFixedFastJsonLongIdKey sectionKey;
 
-    @JSONField(name = "enabled", ordinal = 3)
+    @JSONField(name = "alarm_level", ordinal = 3)
+    private String alarmLevel;
+
+    @JSONField(name = "enabled", ordinal = 4)
     private boolean enabled;
 
-    @JSONField(name = "threshold", ordinal = 4)
+    @JSONField(name = "threshold", ordinal = 5)
     private double threshold;
 
-    @JSONField(name = "alarm_message", ordinal = 5)
+    @JSONField(name = "alarm_message", ordinal = 6)
     private String alarmMessage;
 
-    @JSONField(name = "remark", ordinal = 6)
+    @JSONField(name = "remark", ordinal = 7)
     private String remark;
 
     public JSFixedFastJsonAlarmSetting() {
     }
 
     public JSFixedFastJsonAlarmSetting(
-            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, boolean enabled, double threshold,
-            String alarmMessage, String remark
+            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, String alarmLevel, boolean enabled,
+            double threshold, String alarmMessage, String remark
     ) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.alarmLevel = alarmLevel;
         this.enabled = enabled;
         this.threshold = threshold;
         this.alarmMessage = alarmMessage;
@@ -79,6 +84,14 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
 
     public void setSectionKey(JSFixedFastJsonLongIdKey sectionKey) {
         this.sectionKey = sectionKey;
+    }
+
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
     }
 
     public boolean isEnabled() {
@@ -118,6 +131,7 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
         return "JSFixedFastJsonAlarmSetting{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", alarmLevel='" + alarmLevel + '\'' +
                 ", enabled=" + enabled +
                 ", threshold=" + threshold +
                 ", alarmMessage='" + alarmMessage + '\'' +

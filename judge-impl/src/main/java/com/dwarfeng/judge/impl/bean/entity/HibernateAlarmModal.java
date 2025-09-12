@@ -19,7 +19,7 @@ import java.util.Optional;
 @Table(name = "tbl_alarm_modal")
 public class HibernateAlarmModal implements Bean {
 
-    private static final long serialVersionUID = 2906345216825546449L;
+    private static final long serialVersionUID = 6711697672206596219L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -27,12 +27,12 @@ public class HibernateAlarmModal implements Bean {
     private Long longId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    @Column(name = "alarm_level", length = Constraints.LENGTH_TYPE)
+    private String alarmLevel;
+
     @Column(name = "happened_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date happenedDate;
-
-    @Column(name = "value", nullable = false)
-    private double value;
 
     @Column(name = "alarming", nullable = false)
     private boolean alarming;
@@ -68,20 +68,20 @@ public class HibernateAlarmModal implements Bean {
         this.longId = longId;
     }
 
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
+    }
+
     public Date getHappenedDate() {
         return happenedDate;
     }
 
     public void setHappenedDate(Date happenedDate) {
         this.happenedDate = happenedDate;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
     }
 
     public boolean isAlarming() {
@@ -110,12 +110,13 @@ public class HibernateAlarmModal implements Bean {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "longId = " + longId + ", " +
-                "happenedDate = " + happenedDate + ", " +
-                "value = " + value + ", " +
-                "alarming = " + alarming + ", " +
-                "alarmMessage = " + alarmMessage + ", " +
-                "section = " + section + ")";
+        return "HibernateAlarmModal{" +
+                "longId=" + longId +
+                ", alarmLevel='" + alarmLevel + '\'' +
+                ", happenedDate=" + happenedDate +
+                ", alarming=" + alarming +
+                ", alarmMessage='" + alarmMessage + '\'' +
+                ", section=" + section +
+                '}';
     }
 }

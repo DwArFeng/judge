@@ -19,11 +19,11 @@ import java.util.Optional;
 @Table(name = "tbl_alarm_history")
 public class HibernateAlarmHistory implements Bean {
 
-    private static final long serialVersionUID = 2356897938951354716L;
+    private static final long serialVersionUID = -2914587434820787512L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", length = Constraints.LENGTH_TYPE, nullable = false, unique = true)
     private Long longId;
 
     // -----------------------------------------------------------外键-----------------------------------------------------------
@@ -31,6 +31,9 @@ public class HibernateAlarmHistory implements Bean {
     private Long sectionLongId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    @Column(name = "alarm_level", length = Constraints.LENGTH_TYPE)
+    private String alarmLevel;
+
     @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
@@ -41,9 +44,6 @@ public class HibernateAlarmHistory implements Bean {
 
     @Column(name = "duration", nullable = false)
     private long duration;
-
-    @Column(name = "value", nullable = false)
-    private double value;
 
     @Column(name = "alarm_message", length = Constraints.LENGTH_MESSAGE)
     private String alarmMessage;
@@ -92,6 +92,14 @@ public class HibernateAlarmHistory implements Bean {
         this.sectionLongId = sectionLongId;
     }
 
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
+    }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -116,14 +124,6 @@ public class HibernateAlarmHistory implements Bean {
         this.duration = duration;
     }
 
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public String getAlarmMessage() {
         return alarmMessage;
     }
@@ -145,10 +145,10 @@ public class HibernateAlarmHistory implements Bean {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
                 "sectionLongId = " + sectionLongId + ", " +
+                "alarmLevel = " + alarmLevel + ", " +
                 "startDate = " + startDate + ", " +
                 "endDate = " + endDate + ", " +
                 "duration = " + duration + ", " +
-                "value = " + value + ", " +
                 "alarmMessage = " + alarmMessage + ", " +
                 "section = " + section + ")";
     }

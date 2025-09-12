@@ -367,6 +367,16 @@ public interface BeanMapper {
             JSFixedFastJsonAnalysisPicturePackItemInfo jSFixedFastJsonAnalysisPicturePackItemInfo
     );
 
+    FastJsonAlarmLevelIndicator alarmLevelIndicatorToFastJson(AlarmLevelIndicator alarmLevelIndicator);
+
+    @InheritInverseConfiguration
+    AlarmLevelIndicator alarmLevelIndicatorFromFastJson(FastJsonAlarmLevelIndicator fastJsonAlarmLevelIndicator);
+
+    WebInputAlarmLevelIndicator alarmLevelIndicatorToWebInput(AlarmLevelIndicator alarmLevelIndicator);
+
+    @InheritInverseConfiguration
+    AlarmLevelIndicator alarmLevelIndicatorFromWebInput(WebInputAlarmLevelIndicator webInputAlarmLevelIndicator);
+
     // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(
             AnalysisFileFileDownloadInfo analysisFileFileDownloadInfo

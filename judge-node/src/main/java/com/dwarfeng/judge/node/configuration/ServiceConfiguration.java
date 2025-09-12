@@ -71,6 +71,8 @@ public class ServiceConfiguration {
     private final AnalysisPicturePackDao analysisPicturePackDao;
     private final AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation;
     private final AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao;
+    private final AlarmLevelIndicatorDao alarmLevelIndicatorDao;
+    private final AlarmLevelIndicatorCache alarmLevelIndicatorCache;
 
     @Value("${cache.timeout.entity.alarm_history}")
     private long alarmHistoryTimeout;
@@ -96,6 +98,8 @@ public class ServiceConfiguration {
     private long judgerVariableTimeout;
     @Value("${cache.timeout.entity.task_event}")
     private long taskEventTimeout;
+    @Value("${cache.timeout.entity.alarm_level_indicator}")
+    private long alarmLevelIndicatorTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -145,7 +149,9 @@ public class ServiceConfiguration {
             AnalysisPicturePackCrudOperation analysisPicturePackCrudOperation,
             AnalysisPicturePackDao analysisPicturePackDao,
             AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation,
-            AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao
+            AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao,
+            AlarmLevelIndicatorDao alarmLevelIndicatorDao,
+            AlarmLevelIndicatorCache alarmLevelIndicatorCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -195,6 +201,8 @@ public class ServiceConfiguration {
         this.analysisPicturePackDao = analysisPicturePackDao;
         this.analysisPicturePackItemInfoCrudOperation = analysisPicturePackItemInfoCrudOperation;
         this.analysisPicturePackItemInfoDao = analysisPicturePackItemInfoDao;
+        this.alarmLevelIndicatorDao = alarmLevelIndicatorDao;
+        this.alarmLevelIndicatorCache = alarmLevelIndicatorCache;
     }
 
     @Bean
@@ -866,6 +874,36 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 analysisPicturePackItemInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, AlarmLevelIndicator> alarmLevelIndicatorGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmLevelIndicatorDao,
+                alarmLevelIndicatorCache,
+                new ExceptionKeyGenerator<>(),
+                alarmLevelIndicatorTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmLevelIndicator> alarmLevelIndicatorDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmLevelIndicatorDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmLevelIndicator> alarmLevelIndicatorDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmLevelIndicatorDao
         );
     }
 }

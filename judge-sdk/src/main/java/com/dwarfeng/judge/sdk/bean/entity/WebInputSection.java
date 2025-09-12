@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputSection implements Bean {
 
-    private static final long serialVersionUID = 2717372824048191151L;
+    private static final long serialVersionUID = 1868546018373641224L;
 
     public static Section toStackBean(WebInputSection webInput) {
         if (Objects.isNull(webInput)) {
@@ -53,13 +53,6 @@ public class WebInputSection implements Bean {
     private String remark;
 
     public WebInputSection() {
-    }
-
-    public WebInputSection(WebInputLongIdKey key, String name, boolean enabled, String remark) {
-        this.key = key;
-        this.name = name;
-        this.enabled = enabled;
-        this.remark = remark;
     }
 
     public WebInputLongIdKey getKey() {

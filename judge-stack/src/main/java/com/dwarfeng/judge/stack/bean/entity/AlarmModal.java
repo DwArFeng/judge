@@ -13,21 +13,21 @@ import java.util.Date;
  */
 public class AlarmModal implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -8015018046003987350L;
+    private static final long serialVersionUID = 1478552200515290176L;
 
     private LongIdKey key;
+    private String alarmLevel;
     private Date happenedDate;
-    private double value;
     private boolean alarming;
     private String alarmMessage;
 
     public AlarmModal() {
     }
 
-    public AlarmModal(LongIdKey key, Date happenedDate, double value, boolean alarming, String alarmMessage) {
+    public AlarmModal(LongIdKey key, String alarmLevel, Date happenedDate, boolean alarming, String alarmMessage) {
         this.key = key;
+        this.alarmLevel = alarmLevel;
         this.happenedDate = happenedDate;
-        this.value = value;
         this.alarming = alarming;
         this.alarmMessage = alarmMessage;
     }
@@ -42,20 +42,20 @@ public class AlarmModal implements Entity<LongIdKey> {
         this.key = key;
     }
 
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
+    }
+
     public Date getHappenedDate() {
         return happenedDate;
     }
 
     public void setHappenedDate(Date happenedDate) {
         this.happenedDate = happenedDate;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
     }
 
     public boolean isAlarming() {
@@ -78,8 +78,8 @@ public class AlarmModal implements Entity<LongIdKey> {
     public String toString() {
         return "AlarmModal{" +
                 "key=" + key +
+                ", alarmLevel='" + alarmLevel + '\'' +
                 ", happenedDate=" + happenedDate +
-                ", value=" + value +
                 ", alarming=" + alarming +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 '}';

@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 public class WebInputAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = 8121225188288071284L;
+    private static final long serialVersionUID = -260435746604539213L;
 
     public static AlarmSetting toStackBean(WebInputAlarmSetting webInput) {
         if (Objects.isNull(webInput)) {
@@ -30,6 +30,7 @@ public class WebInputAlarmSetting implements Bean {
             return new AlarmSetting(
                     WebInputLongIdKey.toStackBean(webInput.getKey()),
                     WebInputLongIdKey.toStackBean(webInput.getSectionKey()),
+                    webInput.getAlarmLevel(),
                     webInput.isEnabled(),
                     webInput.getThreshold(),
                     webInput.getAlarmMessage(),
@@ -45,6 +46,10 @@ public class WebInputAlarmSetting implements Bean {
     @JSONField(name = "section_key")
     @Valid
     private WebInputLongIdKey sectionKey;
+
+    @JSONField(name = "alarm_level")
+    @Length(max = Constraints.LENGTH_TYPE)
+    private String alarmLevel;
 
     @JSONField(name = "enabled")
     private boolean enabled;
@@ -66,18 +71,6 @@ public class WebInputAlarmSetting implements Bean {
     public WebInputAlarmSetting() {
     }
 
-    public WebInputAlarmSetting(
-            WebInputLongIdKey key, WebInputLongIdKey sectionKey, boolean enabled, double threshold,
-            String alarmMessage, String remark
-    ) {
-        this.key = key;
-        this.sectionKey = sectionKey;
-        this.enabled = enabled;
-        this.threshold = threshold;
-        this.alarmMessage = alarmMessage;
-        this.remark = remark;
-    }
-
     public WebInputLongIdKey getKey() {
         return key;
     }
@@ -92,6 +85,14 @@ public class WebInputAlarmSetting implements Bean {
 
     public void setSectionKey(WebInputLongIdKey sectionKey) {
         this.sectionKey = sectionKey;
+    }
+
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
     }
 
     public boolean isEnabled() {
@@ -131,6 +132,7 @@ public class WebInputAlarmSetting implements Bean {
         return "WebInputAlarmSetting{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", alarmLevel='" + alarmLevel + '\'' +
                 ", enabled=" + enabled +
                 ", threshold=" + threshold +
                 ", alarmMessage='" + alarmMessage + '\'' +

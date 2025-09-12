@@ -39,7 +39,7 @@ public class AlarmHistoryMaintainServiceImplTest {
         alarmHistories = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             AlarmHistory alarmHistory = new AlarmHistory(
-                    null, null, new Date(), new Date(), 12450, 12.450, "alarmMessage"
+                    null, null, "alarmLevel", new Date(), new Date(), 12450, "alarmMessage"
             );
             alarmHistories.add(alarmHistory);
         }

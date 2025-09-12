@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class FastJsonAlarmModal implements Bean {
 
-    private static final long serialVersionUID = -5403239153462511715L;
+    private static final long serialVersionUID = 3712366346359139409L;
 
     public static FastJsonAlarmModal of(AlarmModal alarmModal) {
         if (Objects.isNull(alarmModal)) {
@@ -24,8 +24,8 @@ public class FastJsonAlarmModal implements Bean {
         } else {
             return new FastJsonAlarmModal(
                     FastJsonLongIdKey.of(alarmModal.getKey()),
+                    alarmModal.getAlarmLevel(),
                     alarmModal.getHappenedDate(),
-                    alarmModal.getValue(),
                     alarmModal.isAlarming(),
                     alarmModal.getAlarmMessage()
             );
@@ -35,27 +35,27 @@ public class FastJsonAlarmModal implements Bean {
     @JSONField(name = "key", ordinal = 1)
     private FastJsonLongIdKey key;
 
-    @JSONField(name = "happened_date", ordinal = 2)
+    @JSONField(name = "alarm_level", ordinal = 2)
+    private String alarmLevel;
+
+    @JSONField(name = "happened_date", ordinal = 3)
     private Date happenedDate;
 
-    @JSONField(name = "value", ordinal = 3)
-    private double value;
-
-    @JSONField(name = "alarming", ordinal = 4)
+    @JSONField(name = "alarming", ordinal = 5)
     private boolean alarming;
 
-    @JSONField(name = "alarm_message", ordinal = 5)
+    @JSONField(name = "alarm_message", ordinal = 6)
     private String alarmMessage;
 
     public FastJsonAlarmModal() {
     }
 
     public FastJsonAlarmModal(
-            FastJsonLongIdKey key, Date happenedDate, double value, boolean alarming, String alarmMessage
+            FastJsonLongIdKey key, String alarmLevel, Date happenedDate, boolean alarming, String alarmMessage
     ) {
         this.key = key;
+        this.alarmLevel = alarmLevel;
         this.happenedDate = happenedDate;
-        this.value = value;
         this.alarming = alarming;
         this.alarmMessage = alarmMessage;
     }
@@ -68,20 +68,20 @@ public class FastJsonAlarmModal implements Bean {
         this.key = key;
     }
 
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
+    }
+
     public Date getHappenedDate() {
         return happenedDate;
     }
 
     public void setHappenedDate(Date happenedDate) {
         this.happenedDate = happenedDate;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
     }
 
     public boolean isAlarming() {
@@ -104,8 +104,8 @@ public class FastJsonAlarmModal implements Bean {
     public String toString() {
         return "FastJsonAlarmModal{" +
                 "key=" + key +
+                ", alarmLevel='" + alarmLevel + '\'' +
                 ", happenedDate=" + happenedDate +
-                ", value=" + value +
                 ", alarming=" + alarming +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 '}';

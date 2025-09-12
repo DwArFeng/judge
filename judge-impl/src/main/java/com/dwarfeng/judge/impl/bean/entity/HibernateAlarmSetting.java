@@ -21,7 +21,7 @@ import java.util.Optional;
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = -7993141607185640507L;
+    private static final long serialVersionUID = -7372941895645700735L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -33,6 +33,9 @@ public class HibernateAlarmSetting implements Bean {
     private Long sectionLongId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    @Column(name = "alarm_level", length = Constraints.LENGTH_TYPE)
+    private String alarmLevel;
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
@@ -105,6 +108,14 @@ public class HibernateAlarmSetting implements Bean {
         this.sectionLongId = sectionLongId;
     }
 
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -166,6 +177,7 @@ public class HibernateAlarmSetting implements Bean {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
                 "sectionLongId = " + sectionLongId + ", " +
+                "alarmLevel = " + alarmLevel + ", " +
                 "enabled = " + enabled + ", " +
                 "threshold = " + threshold + ", " +
                 "alarmMessage = " + alarmMessage + ", " +

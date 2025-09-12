@@ -13,29 +13,29 @@ import java.util.Date;
  */
 public class AlarmHistory implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = 8074696989649762599L;
+    private static final long serialVersionUID = 97328886318422287L;
 
     private LongIdKey key;
     private LongIdKey sectionKey;
+    private String alarmLevel;
     private Date startDate;
     private Date endDate;
     private long duration;
-    private double value;
     private String alarmMessage;
 
     public AlarmHistory() {
     }
 
     public AlarmHistory(
-            LongIdKey key, LongIdKey sectionKey, Date startDate, Date endDate, long duration, double value,
+            LongIdKey key, LongIdKey sectionKey, String alarmLevel, Date startDate, Date endDate, long duration,
             String alarmMessage
     ) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.alarmLevel = alarmLevel;
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = duration;
-        this.value = value;
         this.alarmMessage = alarmMessage;
     }
 
@@ -55,6 +55,14 @@ public class AlarmHistory implements Entity<LongIdKey> {
 
     public void setSectionKey(LongIdKey sectionKey) {
         this.sectionKey = sectionKey;
+    }
+
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
     }
 
     public Date getStartDate() {
@@ -81,14 +89,6 @@ public class AlarmHistory implements Entity<LongIdKey> {
         this.duration = duration;
     }
 
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public String getAlarmMessage() {
         return alarmMessage;
     }
@@ -102,10 +102,10 @@ public class AlarmHistory implements Entity<LongIdKey> {
         return "AlarmHistory{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", alarmLevel='" + alarmLevel + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", duration=" + duration +
-                ", value=" + value +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 '}';
     }

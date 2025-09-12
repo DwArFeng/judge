@@ -37,7 +37,7 @@ public class AlarmSettingMaintainServiceImplTest {
         section = new Section(null, "name", true, "remark");
         alarmSettings = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            AlarmSetting alarmSetting = new AlarmSetting(null, null, true, 12.450, "alarmMessage", "remark");
+            AlarmSetting alarmSetting = new AlarmSetting(null, null, "alarmLevel", true, 12.450, "alarmMessage", "remark");
             alarmSettings.add(alarmSetting);
         }
     }

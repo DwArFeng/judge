@@ -260,4 +260,12 @@ public interface BeanMapper {
     AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromHibernate(
             HibernateAnalysisPicturePackItemInfo hibernateAnalysisPicturePackItemInfo
     );
+
+    @Mapping(target = "stringId", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateAlarmLevelIndicator alarmLevelIndicatorToHibernate(AlarmLevelIndicator alarmLevelIndicator);
+
+    @InheritInverseConfiguration
+    AlarmLevelIndicator alarmLevelIndicatorFromHibernate(HibernateAlarmLevelIndicator hibernateAlarmLevelIndicator);
 }

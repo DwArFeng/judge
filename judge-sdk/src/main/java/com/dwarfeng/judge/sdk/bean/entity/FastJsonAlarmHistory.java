@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class FastJsonAlarmHistory implements Bean {
 
-    private static final long serialVersionUID = 651878453481063893L;
+    private static final long serialVersionUID = 7612450017770266028L;
 
     public static FastJsonAlarmHistory of(AlarmHistory alarmHistory) {
         if (Objects.isNull(alarmHistory)) {
@@ -25,8 +25,10 @@ public class FastJsonAlarmHistory implements Bean {
             return new FastJsonAlarmHistory(
                     FastJsonLongIdKey.of(alarmHistory.getKey()),
                     FastJsonLongIdKey.of(alarmHistory.getSectionKey()),
-                    alarmHistory.getStartDate(), alarmHistory.getEndDate(),
-                    alarmHistory.getDuration(), alarmHistory.getValue(),
+                    alarmHistory.getAlarmLevel(),
+                    alarmHistory.getStartDate(),
+                    alarmHistory.getEndDate(),
+                    alarmHistory.getDuration(),
                     alarmHistory.getAlarmMessage()
             );
         }
@@ -38,17 +40,17 @@ public class FastJsonAlarmHistory implements Bean {
     @JSONField(name = "section_key", ordinal = 2)
     private FastJsonLongIdKey sectionKey;
 
-    @JSONField(name = "start_date", ordinal = 3)
+    @JSONField(name = "alarm_level", ordinal = 3)
+    private String alarmLevel;
+
+    @JSONField(name = "start_date", ordinal = 4)
     private Date startDate;
 
-    @JSONField(name = "end_date", ordinal = 4)
+    @JSONField(name = "end_date", ordinal = 5)
     private Date endDate;
 
-    @JSONField(name = "duration", ordinal = 5)
+    @JSONField(name = "duration", ordinal = 6)
     private long duration;
-
-    @JSONField(name = "value", ordinal = 6)
-    private double value;
 
     @JSONField(name = "alarm_message", ordinal = 7)
     private String alarmMessage;
@@ -57,15 +59,15 @@ public class FastJsonAlarmHistory implements Bean {
     }
 
     public FastJsonAlarmHistory(
-            FastJsonLongIdKey key, FastJsonLongIdKey sectionKey, Date startDate, Date endDate, long duration,
-            double value, String alarmMessage
+            FastJsonLongIdKey key, FastJsonLongIdKey sectionKey, String alarmLevel, Date startDate, Date endDate,
+            long duration, String alarmMessage
     ) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.alarmLevel = alarmLevel;
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = duration;
-        this.value = value;
         this.alarmMessage = alarmMessage;
     }
 
@@ -83,6 +85,14 @@ public class FastJsonAlarmHistory implements Bean {
 
     public void setSectionKey(FastJsonLongIdKey sectionKey) {
         this.sectionKey = sectionKey;
+    }
+
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
     }
 
     public Date getStartDate() {
@@ -109,14 +119,6 @@ public class FastJsonAlarmHistory implements Bean {
         this.duration = duration;
     }
 
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public String getAlarmMessage() {
         return alarmMessage;
     }
@@ -130,10 +132,10 @@ public class FastJsonAlarmHistory implements Bean {
         return "FastJsonAlarmHistory{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", alarmLevel='" + alarmLevel + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", duration=" + duration +
-                ", value=" + value +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 '}';
     }

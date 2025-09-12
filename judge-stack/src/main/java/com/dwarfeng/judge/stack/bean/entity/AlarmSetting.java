@@ -11,10 +11,11 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class AlarmSetting implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -3230523827641294643L;
+    private static final long serialVersionUID = -6154080565342126051L;
 
     private LongIdKey key;
     private LongIdKey sectionKey;
+    private String alarmLevel;
     private boolean enabled;
     private double threshold;
     private String alarmMessage;
@@ -24,10 +25,12 @@ public class AlarmSetting implements Entity<LongIdKey> {
     }
 
     public AlarmSetting(
-            LongIdKey key, LongIdKey sectionKey, boolean enabled, double threshold, String alarmMessage, String remark
+            LongIdKey key, LongIdKey sectionKey, String alarmLevel, boolean enabled, double threshold,
+            String alarmMessage, String remark
     ) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.alarmLevel = alarmLevel;
         this.enabled = enabled;
         this.threshold = threshold;
         this.alarmMessage = alarmMessage;
@@ -50,6 +53,14 @@ public class AlarmSetting implements Entity<LongIdKey> {
 
     public void setSectionKey(LongIdKey sectionKey) {
         this.sectionKey = sectionKey;
+    }
+
+    public String getAlarmLevel() {
+        return alarmLevel;
+    }
+
+    public void setAlarmLevel(String alarmLevel) {
+        this.alarmLevel = alarmLevel;
     }
 
     public boolean isEnabled() {
@@ -89,6 +100,7 @@ public class AlarmSetting implements Entity<LongIdKey> {
         return "AlarmSetting{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", alarmLevel='" + alarmLevel + '\'' +
                 ", enabled=" + enabled +
                 ", threshold=" + threshold +
                 ", alarmMessage='" + alarmMessage + '\'' +

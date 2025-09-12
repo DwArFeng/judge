@@ -31,6 +31,7 @@
   - 支持机制。
 
 - 重构实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmLevelIndicator。
   - com.dwarfeng.judge.stack.service.AlarmHistoryMaintainService。
   - com.dwarfeng.judge.stack.service.AlarmModalMaintainService。
   - com.dwarfeng.judge.stack.service.AlarmSettingMaintainService。

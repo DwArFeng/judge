@@ -166,6 +166,11 @@
             protocol="hessian"
             group="${dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmLevelIndicatorMaintainService"
+            ref="alarmLevelIndicatorMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
 
     <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
     <dubbo:reference

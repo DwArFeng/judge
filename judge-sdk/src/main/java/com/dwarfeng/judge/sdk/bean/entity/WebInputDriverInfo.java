@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputDriverInfo implements Bean {
 
-    private static final long serialVersionUID = -5884715160085440956L;
+    private static final long serialVersionUID = 2205608153313399391L;
 
     public static DriverInfo toStackBean(WebInputDriverInfo webInput) {
         if (Objects.isNull(webInput)) {
@@ -62,18 +62,6 @@ public class WebInputDriverInfo implements Bean {
     private String remark;
 
     public WebInputDriverInfo() {
-    }
-
-    public WebInputDriverInfo(
-            WebInputLongIdKey key, WebInputLongIdKey sectionKey, boolean enabled, String type, String param,
-            String remark
-    ) {
-        this.key = key;
-        this.sectionKey = sectionKey;
-        this.enabled = enabled;
-        this.type = type;
-        this.param = param;
-        this.remark = remark;
     }
 
     public WebInputLongIdKey getKey() {
