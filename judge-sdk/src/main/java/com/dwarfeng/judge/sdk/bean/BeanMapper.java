@@ -1,9 +1,11 @@
 package com.dwarfeng.judge.sdk.bean;
 
 import com.dwarfeng.judge.sdk.bean.entity.*;
-import com.dwarfeng.judge.sdk.bean.key.FastJsonVariableKey;
+import com.dwarfeng.judge.sdk.bean.key.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.VariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.subgrade.sdk.bean.key.*;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -17,7 +19,7 @@ import org.mapstruct.Mapper;
  * 该映射器中包含了 <code>sdk</code> 模块中所有实体与 <code>stack</code> 模块中对应实体的映射方法。
  *
  * @author DwArFeng
- * @since 1.7.0
+ * @since 2.0.0
  */
 @Mapper
 public interface BeanMapper {
@@ -49,12 +51,87 @@ public interface BeanMapper {
     StringIdKey stringIdKeyFromWebInput(WebInputStringIdKey webInputStringIdKey);
 
     // -----------------------------------------------------------Judge Key-----------------------------------------------------------
-    FastJsonVariableKey variableKeyToFastJson(VariableKey variableKey);
+    FastJsonAnalyserVariableKey analyserVariableKeyToFastJson(AnalyserVariableKey analyserVariableKey);
 
     @InheritInverseConfiguration
-    VariableKey variableKeyFromFastJson(FastJsonVariableKey fastJsonVariableKey);
+    AnalyserVariableKey analyserVariableKeyFromFastJson(FastJsonAnalyserVariableKey fastJsonAnalyserVariableKey);
+
+    FastJsonAnalysisKey analysisKeyToFastJson(AnalysisKey analysisKey);
+
+    @InheritInverseConfiguration
+    AnalysisKey analysisKeyFromFastJson(FastJsonAnalysisKey fastJsonAnalysisKey);
+
+    FastJsonJudgerVariableKey judgerVariableKeyToFastJson(JudgerVariableKey judgerVariableKey);
+
+    @InheritInverseConfiguration
+    JudgerVariableKey judgerVariableKeyFromFastJson(FastJsonJudgerVariableKey fastJsonJudgerVariableKey);
+
+    JSFixedFastJsonAnalyserVariableKey analyserVariableKeyToJSFixedFastJson(AnalyserVariableKey analyserVariableKey);
+
+    @InheritInverseConfiguration
+    AnalyserVariableKey analyserVariableKeyFromJSFixedFastJson(JSFixedFastJsonAnalyserVariableKey jSFixedFastJsonAnalyserVariableKey);
+
+    JSFixedFastJsonAnalysisKey analysisKeyToJSFixedFastJson(AnalysisKey analysisKey);
+
+    @InheritInverseConfiguration
+    AnalysisKey analysisKeyFromJSFixedFastJson(JSFixedFastJsonAnalysisKey jSFixedFastJsonAnalysisKey);
+
+    JSFixedFastJsonJudgerVariableKey judgerVariableKeyToJSFixedFastJson(JudgerVariableKey judgerVariableKey);
+
+    @InheritInverseConfiguration
+    JudgerVariableKey judgerVariableKeyFromJSFixedFastJson(JSFixedFastJsonJudgerVariableKey jSFixedFastJsonJudgerVariableKey);
+
+    WebInputAnalyserVariableKey analyserVariableKeyToWebInput(AnalyserVariableKey analyserVariableKey);
+
+    @InheritInverseConfiguration
+    AnalyserVariableKey analyserVariableKeyFromWebInput(WebInputAnalyserVariableKey webInputAnalyserVariableKey);
+
+    WebInputAnalysisKey analysisKeyToWebInput(AnalysisKey analysisKey);
+
+    @InheritInverseConfiguration
+    AnalysisKey analysisKeyFromWebInput(WebInputAnalysisKey webInputAnalysisKey);
+
+    WebInputJudgerVariableKey judgerVariableKeyToWebInput(JudgerVariableKey judgerVariableKey);
+
+    @InheritInverseConfiguration
+    JudgerVariableKey judgerVariableKeyFromWebInput(WebInputJudgerVariableKey webInputJudgerVariableKey);
 
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
+    FastJsonAlarmHistory alarmHistoryToFastJson(AlarmHistory alarmHistory);
+
+    @InheritInverseConfiguration
+    AlarmHistory alarmHistoryFromFastJson(FastJsonAlarmHistory fastJsonAlarmHistory);
+
+    FastJsonAlarmModal alarmModalToFastJson(AlarmModal alarmModal);
+
+    @InheritInverseConfiguration
+    AlarmModal alarmModalFromFastJson(FastJsonAlarmModal fastJsonAlarmModal);
+
+    FastJsonAlarmSetting alarmSettingToFastJson(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromFastJson(FastJsonAlarmSetting fastJsonAlarmSetting);
+
+    FastJsonAnalyserInfo analyserInfoToFastJson(AnalyserInfo analyserInfo);
+
+    @InheritInverseConfiguration
+    AnalyserInfo analyserInfoFromFastJson(FastJsonAnalyserInfo fastJsonAnalyserInfo);
+
+    FastJsonAnalyserSupport analyserSupportToFastJson(AnalyserSupport analyserSupport);
+
+    @InheritInverseConfiguration
+    AnalyserSupport analyserSupportFromFastJson(FastJsonAnalyserSupport fastJsonAnalyserSupport);
+
+    FastJsonAnalyserVariable analyserVariableToFastJson(AnalyserVariable analyserVariable);
+
+    @InheritInverseConfiguration
+    AnalyserVariable analyserVariableFromFastJson(FastJsonAnalyserVariable fastJsonAnalyserVariable);
+
+    FastJsonAnalysis analysisToFastJson(Analysis analysis);
+
+    @InheritInverseConfiguration
+    Analysis analysisFromFastJson(FastJsonAnalysis fastJsonAnalysis);
+
     FastJsonDriverInfo driverInfoToFastJson(DriverInfo driverInfo);
 
     @InheritInverseConfiguration
@@ -64,6 +141,16 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     DriverSupport driverSupportFromFastJson(FastJsonDriverSupport fastJsonDriverSupport);
+
+    FastJsonJudgementHistory judgementHistoryToFastJson(JudgementHistory judgementHistory);
+
+    @InheritInverseConfiguration
+    JudgementHistory judgementHistoryFromFastJson(FastJsonJudgementHistory fastJsonJudgementHistory);
+
+    FastJsonJudgementModal judgementModalToFastJson(JudgementModal judgementModal);
+
+    @InheritInverseConfiguration
+    JudgementModal judgementModalFromFastJson(FastJsonJudgementModal fastJsonJudgementModal);
 
     FastJsonJudgerInfo judgerInfoToFastJson(JudgerInfo judgerInfo);
 
@@ -75,50 +162,119 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     JudgerSupport judgerSupportFromFastJson(FastJsonJudgerSupport fastJsonJudgerSupport);
 
+    FastJsonJudgerVariable judgerVariableToFastJson(JudgerVariable judgerVariable);
+
+    @InheritInverseConfiguration
+    JudgerVariable judgerVariableFromFastJson(FastJsonJudgerVariable fastJsonJudgerVariable);
+
     FastJsonSection sectionToFastJson(Section section);
 
     @InheritInverseConfiguration
     Section sectionFromFastJson(FastJsonSection fastJsonSection);
 
-    FastJsonVariable variableToFastJson(Variable variable);
+    FastJsonTask taskToFastJson(Task task);
 
     @InheritInverseConfiguration
-    Variable variableFromFastJson(FastJsonVariable fastJsonVariable);
+    Task taskFromFastJson(FastJsonTask fastJsonTask);
+
+    FastJsonTaskEvent taskEventToFastJson(TaskEvent taskEvent);
+
+    @InheritInverseConfiguration
+    TaskEvent taskEventFromFastJson(FastJsonTaskEvent fastJsonTaskEvent);
+
+    JSFixedFastJsonAlarmHistory alarmHistoryToJSFixedFastJson(AlarmHistory alarmHistory);
+
+    @InheritInverseConfiguration
+    AlarmHistory alarmHistoryFromJSFixedFastJson(JSFixedFastJsonAlarmHistory jSFixedFastJsonAlarmHistory);
+
+    JSFixedFastJsonAlarmModal alarmModalToJSFixedFastJson(AlarmModal alarmModal);
+
+    @InheritInverseConfiguration
+    AlarmModal alarmModalFromJSFixedFastJson(JSFixedFastJsonAlarmModal jSFixedFastJsonAlarmModal);
+
+    JSFixedFastJsonAlarmSetting alarmSettingToJSFixedFastJson(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromJSFixedFastJson(JSFixedFastJsonAlarmSetting jSFixedFastJsonAlarmSetting);
+
+    JSFixedFastJsonAnalyserInfo analyserInfoToJSFixedFastJson(AnalyserInfo analyserInfo);
+
+    @InheritInverseConfiguration
+    AnalyserInfo analyserInfoFromJSFixedFastJson(JSFixedFastJsonAnalyserInfo jSFixedFastJsonAnalyserInfo);
+
+    JSFixedFastJsonAnalyserVariable analyserVariableToJSFixedFastJson(AnalyserVariable analyserVariable);
+
+    @InheritInverseConfiguration
+    AnalyserVariable analyserVariableFromJSFixedFastJson(
+            JSFixedFastJsonAnalyserVariable jSFixedFastJsonAnalyserVariable
+    );
+
+    JSFixedFastJsonAnalysis analysisToJSFixedFastJson(Analysis analysis);
+
+    @InheritInverseConfiguration
+    Analysis analysisFromJSFixedFastJson(JSFixedFastJsonAnalysis jSFixedFastJsonAnalysis);
 
     JSFixedFastJsonDriverInfo driverInfoToJSFixedFastJson(DriverInfo driverInfo);
 
     @InheritInverseConfiguration
     DriverInfo driverInfoFromJSFixedFastJson(JSFixedFastJsonDriverInfo jSFixedFastJsonDriverInfo);
 
+    JSFixedFastJsonJudgementHistory judgementHistoryToJSFixedFastJson(JudgementHistory judgementHistory);
+
+    @InheritInverseConfiguration
+    JudgementHistory judgementHistoryFromJSFixedFastJson(
+            JSFixedFastJsonJudgementHistory jSFixedFastJsonJudgementHistory
+    );
+
+    JSFixedFastJsonJudgementModal judgementModalToJSFixedFastJson(JudgementModal judgementModal);
+
+    @InheritInverseConfiguration
+    JudgementModal judgementModalFromJSFixedFastJson(JSFixedFastJsonJudgementModal jSFixedFastJsonJudgementModal);
+
     JSFixedFastJsonJudgerInfo judgerInfoToJSFixedFastJson(JudgerInfo judgerInfo);
 
     @InheritInverseConfiguration
     JudgerInfo judgerInfoFromJSFixedFastJson(JSFixedFastJsonJudgerInfo jSFixedFastJsonJudgerInfo);
+
+    JSFixedFastJsonJudgerVariable judgerVariableToJSFixedFastJson(JudgerVariable judgerVariable);
+
+    @InheritInverseConfiguration
+    JudgerVariable judgerVariableFromJSFixedFastJson(JSFixedFastJsonJudgerVariable jSFixedFastJsonJudgerVariable);
 
     JSFixedFastJsonSection sectionToJSFixedFastJson(Section section);
 
     @InheritInverseConfiguration
     Section sectionFromJSFixedFastJson(JSFixedFastJsonSection jSFixedFastJsonSection);
 
+    JSFixedFastJsonTask taskToJSFixedFastJson(Task task);
+
+    @InheritInverseConfiguration
+    Task taskFromJSFixedFastJson(JSFixedFastJsonTask jSFixedFastJsonTask);
+
+    JSFixedFastJsonTaskEvent taskEventToJSFixedFastJson(TaskEvent taskEvent);
+
+    @InheritInverseConfiguration
+    TaskEvent taskEventFromJSFixedFastJson(JSFixedFastJsonTaskEvent jSFixedFastJsonTaskEvent);
+
+    WebInputAlarmSetting alarmSettingToWebInput(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromWebInput(WebInputAlarmSetting webInputAlarmSetting);
+
+    WebInputAnalyserInfo analyserInfoToWebInput(AnalyserInfo analyserInfo);
+
+    @InheritInverseConfiguration
+    AnalyserInfo analyserInfoFromWebInput(WebInputAnalyserInfo webInputAnalyserInfo);
+
     WebInputDriverInfo driverInfoToWebInput(DriverInfo driverInfo);
 
     @InheritInverseConfiguration
     DriverInfo driverInfoFromWebInput(WebInputDriverInfo webInputDriverInfo);
 
-    WebInputDriverSupport driverSupportToWebInput(DriverSupport driverSupport);
-
-    @InheritInverseConfiguration
-    DriverSupport driverSupportFromWebInput(WebInputDriverSupport webInputDriverSupport);
-
     WebInputJudgerInfo judgerInfoToWebInput(JudgerInfo judgerInfo);
 
     @InheritInverseConfiguration
     JudgerInfo judgerInfoFromWebInput(WebInputJudgerInfo webInputJudgerInfo);
-
-    WebInputJudgerSupport judgerSupportToWebInput(JudgerSupport judgerSupport);
-
-    @InheritInverseConfiguration
-    JudgerSupport judgerSupportFromWebInput(WebInputJudgerSupport webInputJudgerSupport);
 
     WebInputSection sectionToWebInput(Section section);
 

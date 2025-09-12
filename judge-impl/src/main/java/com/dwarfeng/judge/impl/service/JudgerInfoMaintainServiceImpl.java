@@ -11,12 +11,12 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Component
 public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService {
 
     private final CustomBatchCrudService<LongIdKey, JudgerInfo> crudService;
@@ -214,6 +214,38 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<JudgerInfo> lookupAsList() throws ServiceException {
+        return entireLookupService.lookupAsList();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<JudgerInfo> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
+        return entireLookupService.lookupAsList(pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public JudgerInfo lookupFirst() throws ServiceException {
+        return entireLookupService.lookupFirst();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public int lookupCount() throws ServiceException {
+        return entireLookupService.lookupCount();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<JudgerInfo> lookup(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookup(preset, objs);
     }
@@ -229,37 +261,7 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
     @Override
     @BehaviorAnalyse
     @SkipRecord
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<JudgerInfo> lookupAsList() throws ServiceException {
-        return entireLookupService.lookupAsList();
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @SkipRecord
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<JudgerInfo> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
-        return entireLookupService.lookupAsList(pagingInfo);
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public JudgerInfo lookupFirst() throws ServiceException {
-        return entireLookupService.lookupFirst();
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public int lookupCount() throws ServiceException {
-        return entireLookupService.lookupCount();
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @SkipRecord
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<JudgerInfo> lookupAsList(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookupAsList(preset, objs);
     }
@@ -267,21 +269,23 @@ public class JudgerInfoMaintainServiceImpl implements JudgerInfoMaintainService 
     @Override
     @BehaviorAnalyse
     @SkipRecord
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<JudgerInfo> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         return presetLookupService.lookupAsList(preset, objs, pagingInfo);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public JudgerInfo lookupFirst(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookupFirst(preset, objs);
     }
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public int lookupCount(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookupCount(preset, objs);
     }

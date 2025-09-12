@@ -1,13 +1,14 @@
 package com.dwarfeng.judge.node.configuration;
 
-import com.dwarfeng.judge.impl.service.operation.DriverInfoCrudOperation;
+import com.dwarfeng.judge.impl.service.operation.AnalyserInfoCrudOperation;
 import com.dwarfeng.judge.impl.service.operation.JudgerInfoCrudOperation;
 import com.dwarfeng.judge.impl.service.operation.SectionCrudOperation;
+import com.dwarfeng.judge.impl.service.operation.TaskCrudOperation;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.VariableKey;
-import com.dwarfeng.judge.stack.cache.DriverSupportCache;
-import com.dwarfeng.judge.stack.cache.JudgerSupportCache;
-import com.dwarfeng.judge.stack.cache.VariableCache;
+import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.cache.*;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
 import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
@@ -27,121 +28,361 @@ public class ServiceConfiguration {
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
     private final GenerateConfiguration generateConfiguration;
 
-    private final DriverInfoCrudOperation driverInfoCrudOperation;
+    private final AlarmHistoryDao alarmHistoryDao;
+    private final AlarmHistoryCache alarmHistoryCache;
+    private final AlarmModalDao alarmModalDao;
+    private final AlarmModalCache alarmModalCache;
+    private final AlarmSettingDao alarmSettingDao;
+    private final AlarmSettingCache alarmSettingCache;
+    private final AnalyserInfoCrudOperation analyserInfoCrudOperation;
+    private final AnalyserInfoDao analyserInfoDao;
+    private final AnalyserSupportDao analyserSupportDao;
+    private final AnalyserSupportCache analyserSupportCache;
+    private final AnalyserVariableDao analyserVariableDao;
+    private final AnalyserVariableCache analyserVariableCache;
+    private final AnalysisDao analysisDao;
+    private final AnalysisCache analysisCache;
     private final DriverInfoDao driverInfoDao;
-    private final SectionCrudOperation sectionCrudOperation;
-    private final SectionDao sectionDao;
+    private final DriverInfoCache driverInfoCache;
+    private final DriverSupportDao driverSupportDao;
+    private final DriverSupportCache driverSupportCache;
+    private final JudgementHistoryDao judgementHistoryDao;
+    private final JudgementHistoryCache judgementHistoryCache;
+    private final JudgementModalDao judgementModalDao;
+    private final JudgementModalCache judgementModalCache;
     private final JudgerInfoCrudOperation judgerInfoCrudOperation;
     private final JudgerInfoDao judgerInfoDao;
-    private final DriverSupportCache driverSupportCache;
-    private final DriverSupportDao driverSupportDao;
-    private final JudgerSupportCache judgerSupportCache;
     private final JudgerSupportDao judgerSupportDao;
-    private final VariableDao variableDao;
-    private final VariableCache variableCache;
+    private final JudgerSupportCache judgerSupportCache;
+    private final JudgerVariableDao judgerVariableDao;
+    private final JudgerVariableCache judgerVariableCache;
+    private final SectionCrudOperation sectionCrudOperation;
+    private final SectionDao sectionDao;
+    private final TaskCrudOperation taskCrudOperation;
+    private final TaskDao taskDao;
+    private final TaskEventDao taskEventDao;
+    private final TaskEventCache taskEventCache;
 
+    @Value("${cache.timeout.entity.alarm_history}")
+    private long alarmHistoryTimeout;
+    @Value("${cache.timeout.entity.alarm_modal}")
+    private long alarmModalTimeout;
+    @Value("${cache.timeout.entity.alarm_setting}")
+    private long alarmSettingTimeout;
+    @Value("${cache.timeout.entity.analyser_support}")
+    private long analyserSupportTimeout;
+    @Value("${cache.timeout.entity.analyser_variable}")
+    private long analyserVariableTimeout;
+    @Value("${cache.timeout.entity.analysis}")
+    private long analysisTimeout;
+    @Value("${cache.timeout.entity.driver_info}")
+    private long driverInfoTimeout;
     @Value("${cache.timeout.entity.driver_support}")
     private long driverSupportTimeout;
+    @Value("${cache.timeout.entity.judgement_history}")
+    private long judgementHistoryTimeout;
+    @Value("${cache.timeout.entity.judgement_modal}")
+    private long judgementModalTimeout;
     @Value("${cache.timeout.entity.judger_support}")
     private long judgerSupportTimeout;
-    @Value("${cache.timeout.entity.variable}")
-    private long variableTimeout;
+    @Value("${cache.timeout.entity.judger_variable}")
+    private long judgerVariableTimeout;
+    @Value("${cache.timeout.entity.task_event}")
+    private long taskEventTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
             GenerateConfiguration generateConfiguration,
-            DriverInfoCrudOperation driverInfoCrudOperation,
-            VariableCache variableCache,
+            AlarmHistoryDao alarmHistoryDao,
+            AlarmHistoryCache alarmHistoryCache,
+            AlarmModalDao alarmModalDao,
+            AlarmModalCache alarmModalCache,
+            AlarmSettingDao alarmSettingDao,
+            AlarmSettingCache alarmSettingCache,
+            AnalyserInfoCrudOperation analyserInfoCrudOperation,
+            AnalyserInfoDao analyserInfoDao,
+            AnalyserSupportDao analyserSupportDao,
+            AnalyserSupportCache analyserSupportCache,
+            AnalyserVariableDao analyserVariableDao,
+            AnalyserVariableCache analyserVariableCache,
+            AnalysisDao analysisDao,
+            AnalysisCache analysisCache,
             DriverInfoDao driverInfoDao,
-            SectionCrudOperation sectionCrudOperation,
-            SectionDao sectionDao,
+            DriverInfoCache driverInfoCache,
+            DriverSupportDao driverSupportDao,
+            DriverSupportCache driverSupportCache,
+            JudgementHistoryDao judgementHistoryDao,
+            JudgementHistoryCache judgementHistoryCache,
+            JudgementModalDao judgementModalDao,
+            JudgementModalCache judgementModalCache,
             JudgerInfoCrudOperation judgerInfoCrudOperation,
             JudgerInfoDao judgerInfoDao,
-            VariableDao variableDao,
-            DriverSupportCache driverSupportCache,
-            DriverSupportDao driverSupportDao,
+            JudgerSupportDao judgerSupportDao,
             JudgerSupportCache judgerSupportCache,
-            JudgerSupportDao judgerSupportDao
+            JudgerVariableDao judgerVariableDao,
+            JudgerVariableCache judgerVariableCache,
+            SectionCrudOperation sectionCrudOperation,
+            SectionDao sectionDao,
+            TaskCrudOperation taskCrudOperation,
+            TaskDao taskDao,
+            TaskEventDao taskEventDao,
+            TaskEventCache taskEventCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
-        this.driverInfoCrudOperation = driverInfoCrudOperation;
-        this.variableCache = variableCache;
+        this.alarmHistoryDao = alarmHistoryDao;
+        this.alarmHistoryCache = alarmHistoryCache;
+        this.alarmModalDao = alarmModalDao;
+        this.alarmModalCache = alarmModalCache;
+        this.alarmSettingDao = alarmSettingDao;
+        this.alarmSettingCache = alarmSettingCache;
+        this.analyserInfoCrudOperation = analyserInfoCrudOperation;
+        this.analyserInfoDao = analyserInfoDao;
+        this.analyserSupportDao = analyserSupportDao;
+        this.analyserSupportCache = analyserSupportCache;
+        this.analyserVariableDao = analyserVariableDao;
+        this.analyserVariableCache = analyserVariableCache;
+        this.analysisDao = analysisDao;
+        this.analysisCache = analysisCache;
         this.driverInfoDao = driverInfoDao;
-        this.sectionCrudOperation = sectionCrudOperation;
-        this.sectionDao = sectionDao;
+        this.driverInfoCache = driverInfoCache;
+        this.driverSupportDao = driverSupportDao;
+        this.driverSupportCache = driverSupportCache;
+        this.judgementHistoryDao = judgementHistoryDao;
+        this.judgementHistoryCache = judgementHistoryCache;
+        this.judgementModalDao = judgementModalDao;
+        this.judgementModalCache = judgementModalCache;
         this.judgerInfoCrudOperation = judgerInfoCrudOperation;
         this.judgerInfoDao = judgerInfoDao;
-        this.variableDao = variableDao;
-        this.driverSupportCache = driverSupportCache;
-        this.driverSupportDao = driverSupportDao;
-        this.judgerSupportCache = judgerSupportCache;
         this.judgerSupportDao = judgerSupportDao;
+        this.judgerSupportCache = judgerSupportCache;
+        this.judgerVariableDao = judgerVariableDao;
+        this.judgerVariableCache = judgerVariableCache;
+        this.sectionCrudOperation = sectionCrudOperation;
+        this.sectionDao = sectionDao;
+        this.taskCrudOperation = taskCrudOperation;
+        this.taskDao = taskDao;
+        this.taskEventDao = taskEventDao;
+        this.taskEventCache = taskEventCache;
     }
 
     @Bean
-    public CustomBatchCrudService<LongIdKey, DriverInfo> driverInfoCustomBatchCrudService() {
-        return new CustomBatchCrudService<>(
+    public GeneralBatchCrudService<LongIdKey, AlarmHistory> alarmHistoryGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                driverInfoCrudOperation,
-                generateConfiguration.snowflakeLongIdKeyGenerator()
+                alarmHistoryDao,
+                alarmHistoryCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                alarmHistoryTimeout
         );
     }
 
     @Bean
-    public DaoOnlyPresetLookupService<DriverInfo> driverInfoDaoOnlyPresetLookupService() {
-        return new DaoOnlyPresetLookupService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                driverInfoDao
-        );
-    }
-
-    @Bean
-    public CustomBatchCrudService<LongIdKey, Section> sectionCustomBatchCrudService() {
-        return new CustomBatchCrudService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                sectionCrudOperation,
-                generateConfiguration.snowflakeLongIdKeyGenerator()
-        );
-    }
-
-    @Bean
-    public DaoOnlyEntireLookupService<Section> sectionDaoOnlyEntireLookupService() {
+    public DaoOnlyEntireLookupService<AlarmHistory> alarmHistoryDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                sectionDao
+                alarmHistoryDao
         );
     }
 
     @Bean
-    public DaoOnlyPresetLookupService<Section> sectionDaoOnlyPresetLookupService() {
+    public DaoOnlyPresetLookupService<AlarmHistory> alarmHistoryDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                sectionDao
+                alarmHistoryDao
         );
     }
 
     @Bean
-    public CustomBatchCrudService<LongIdKey, JudgerInfo> judgerInfoCustomBatchCrudService() {
+    public GeneralBatchCrudService<LongIdKey, AlarmModal> alarmModalGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmModalDao,
+                alarmModalCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                alarmModalTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmModal> alarmModalDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmModalDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmModal> alarmModalDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmModalDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, AlarmSetting> alarmSettingGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmSettingDao,
+                alarmSettingCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                alarmSettingTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmSetting> alarmSettingDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmSettingDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmSetting> alarmSettingDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmSettingDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, AnalyserInfo> analyserInfoCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                judgerInfoCrudOperation,
+                analyserInfoCrudOperation,
                 generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
-    public DaoOnlyPresetLookupService<JudgerInfo> judgerInfoDaoOnlyPresetLookupService() {
+    public DaoOnlyEntireLookupService<AnalyserInfo> analyserInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analyserInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalyserInfo> analyserInfoDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                judgerInfoDao
+                analyserInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, AnalyserSupport> analyserSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analyserSupportDao,
+                analyserSupportCache,
+                new ExceptionKeyGenerator<>(),
+                analyserSupportTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalyserSupport> analyserSupportDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analyserSupportDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalyserSupport> analyserSupportDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analyserSupportDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<AnalyserVariableKey, AnalyserVariable> analyserVariableGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analyserVariableDao,
+                analyserVariableCache,
+                new ExceptionKeyGenerator<>(),
+                analyserVariableTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalyserVariable> analyserVariableDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analyserVariableDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalyserVariable> analyserVariableDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analyserVariableDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<AnalysisKey, Analysis> analysisGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisDao,
+                analysisCache,
+                new ExceptionKeyGenerator<>(),
+                analysisTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Analysis> analysisDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Analysis> analysisDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, DriverInfo> driverInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                driverInfoDao,
+                driverInfoCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                driverInfoTimeout
         );
     }
 
@@ -155,11 +396,11 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public DaoOnlyEntireLookupService<JudgerInfo> judgerInfoDaoOnlyEntireLookupService() {
-        return new DaoOnlyEntireLookupService<>(
+    public DaoOnlyPresetLookupService<DriverInfo> driverInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                judgerInfoDao
+                driverInfoDao
         );
     }
 
@@ -194,6 +435,94 @@ public class ServiceConfiguration {
     }
 
     @Bean
+    public GeneralBatchCrudService<LongIdKey, JudgementHistory> judgementHistoryGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementHistoryDao,
+                judgementHistoryCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                judgementHistoryTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<JudgementHistory> judgementHistoryDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementHistoryDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<JudgementHistory> judgementHistoryDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementHistoryDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, JudgementModal> judgementModalGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementModalDao,
+                judgementModalCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                judgementModalTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<JudgementModal> judgementModalDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementModalDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<JudgementModal> judgementModalDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementModalDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, JudgerInfo> judgerInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgerInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<JudgerInfo> judgerInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgerInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<JudgerInfo> judgerInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgerInfoDao
+        );
+    }
+
+    @Bean
     public GeneralBatchCrudService<StringIdKey, JudgerSupport> judgerSupportGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
@@ -224,32 +553,118 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralBatchCrudService<VariableKey, Variable> variableGeneralBatchCrudService() {
+    public GeneralBatchCrudService<JudgerVariableKey, JudgerVariable> judgerVariableGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                variableDao,
-                variableCache,
+                judgerVariableDao,
+                judgerVariableCache,
                 new ExceptionKeyGenerator<>(),
-                variableTimeout
+                judgerVariableTimeout
         );
     }
 
     @Bean
-    public DaoOnlyEntireLookupService<Variable> variableDaoOnlyEntireLookupService() {
+    public DaoOnlyEntireLookupService<JudgerVariable> judgerVariableDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                variableDao
+                judgerVariableDao
         );
     }
 
     @Bean
-    public DaoOnlyPresetLookupService<Variable> variableDaoOnlyPresetLookupService() {
+    public DaoOnlyPresetLookupService<JudgerVariable> judgerVariableDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                variableDao
+                judgerVariableDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, Task> taskCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                taskCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Task> taskDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                taskDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Task> taskDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                taskDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, TaskEvent> taskEventGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                taskEventDao,
+                taskEventCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                taskEventTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<TaskEvent> taskEventDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                taskEventDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<TaskEvent> taskEventDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                taskEventDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, Section> sectionCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sectionCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Section> sectionDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sectionDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Section> sectionDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sectionDao
         );
     }
 }

@@ -11,22 +11,23 @@ import java.util.Objects;
  * FastJson 判断器支持。
  *
  * @author DwArFeng
- * @since beta-1.1.0
+ * @since 2.0.0
  */
 public class FastJsonJudgerSupport implements Bean {
 
-    private static final long serialVersionUID = -2965347477288503740L;
+    private static final long serialVersionUID = -4287082092889501809L;
 
     public static FastJsonJudgerSupport of(JudgerSupport judgerSupport) {
         if (Objects.isNull(judgerSupport)) {
             return null;
+        } else {
+            return new FastJsonJudgerSupport(
+                    FastJsonStringIdKey.of(judgerSupport.getKey()),
+                    judgerSupport.getLabel(),
+                    judgerSupport.getDescription(),
+                    judgerSupport.getExampleParam()
+            );
         }
-        return new FastJsonJudgerSupport(
-                FastJsonStringIdKey.of(judgerSupport.getKey()),
-                judgerSupport.getLabel(),
-                judgerSupport.getDescription(),
-                judgerSupport.getExampleContent()
-        );
     }
 
     @JSONField(name = "key", ordinal = 1)
@@ -38,17 +39,17 @@ public class FastJsonJudgerSupport implements Bean {
     @JSONField(name = "description", ordinal = 3)
     private String description;
 
-    @JSONField(name = "example_content", ordinal = 4)
-    private String exampleContent;
+    @JSONField(name = "example_param", ordinal = 4)
+    private String exampleParam;
 
     public FastJsonJudgerSupport() {
     }
 
-    public FastJsonJudgerSupport(FastJsonStringIdKey key, String label, String description, String exampleContent) {
+    public FastJsonJudgerSupport(FastJsonStringIdKey key, String label, String description, String exampleParam) {
         this.key = key;
         this.label = label;
         this.description = description;
-        this.exampleContent = exampleContent;
+        this.exampleParam = exampleParam;
     }
 
     public FastJsonStringIdKey getKey() {
@@ -75,12 +76,12 @@ public class FastJsonJudgerSupport implements Bean {
         this.description = description;
     }
 
-    public String getExampleContent() {
-        return exampleContent;
+    public String getExampleParam() {
+        return exampleParam;
     }
 
-    public void setExampleContent(String exampleContent) {
-        this.exampleContent = exampleContent;
+    public void setExampleParam(String exampleParam) {
+        this.exampleParam = exampleParam;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class FastJsonJudgerSupport implements Bean {
                 "key=" + key +
                 ", label='" + label + '\'' +
                 ", description='" + description + '\'' +
-                ", exampleContent='" + exampleContent + '\'' +
+                ", exampleParam='" + exampleParam + '\'' +
                 '}';
     }
 }

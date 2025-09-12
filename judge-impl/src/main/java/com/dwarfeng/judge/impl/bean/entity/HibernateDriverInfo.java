@@ -9,13 +9,19 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import javax.persistence.*;
 import java.util.Optional;
 
+/**
+ * Hibernate 驱动器信息。
+ *
+ * @author DwArFeng
+ * @since 2.0.0
+ */
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_driver_info")
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateDriverInfo implements Bean {
 
-    private static final long serialVersionUID = -2577800422213528076L;
+    private static final long serialVersionUID = 8787894329794568906L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -24,17 +30,17 @@ public class HibernateDriverInfo implements Bean {
 
     // -----------------------------------------------------------外键-----------------------------------------------------------
     @Column(name = "section_id")
-    private Long sectionId;
+    private Long sectionLongId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @Column(name = "type", length = Constraints.LENGTH_TYPE)
+    @Column(name = "type", length = Constraints.LENGTH_TYPE, nullable = false)
     private String type;
 
-    @Column(name = "content", columnDefinition = "TEXT")
-    private String content;
+    @Column(name = "param", columnDefinition = "TEXT")
+    private String param;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -70,16 +76,16 @@ public class HibernateDriverInfo implements Bean {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setKey(HibernateLongIdKey idKey) {
-        this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    public void setKey(HibernateLongIdKey key) {
+        this.longId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     public HibernateLongIdKey getSectionKey() {
-        return Optional.ofNullable(sectionId).map(HibernateLongIdKey::new).orElse(null);
+        return Optional.ofNullable(sectionLongId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setSectionKey(HibernateLongIdKey parentKey) {
-        this.sectionId = Optional.ofNullable(parentKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    public void setSectionKey(HibernateLongIdKey key) {
+        this.sectionLongId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     // -----------------------------------------------------------常规属性区-----------------------------------------------------------
@@ -91,12 +97,12 @@ public class HibernateDriverInfo implements Bean {
         this.longId = longId;
     }
 
-    public Long getSectionId() {
-        return sectionId;
+    public Long getSectionLongId() {
+        return sectionLongId;
     }
 
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
+    public void setSectionLongId(Long sectionLongId) {
+        this.sectionLongId = sectionLongId;
     }
 
     public boolean isEnabled() {
@@ -115,12 +121,12 @@ public class HibernateDriverInfo implements Bean {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -159,10 +165,10 @@ public class HibernateDriverInfo implements Bean {
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
-                "sectionId = " + sectionId + ", " +
+                "sectionLongId = " + sectionLongId + ", " +
                 "enabled = " + enabled + ", " +
                 "type = " + type + ", " +
-                "content = " + content + ", " +
+                "param = " + param + ", " +
                 "remark = " + remark + ", " +
                 "section = " + section + ", " +
                 "createdDatamark = " + createdDatamark + ", " +

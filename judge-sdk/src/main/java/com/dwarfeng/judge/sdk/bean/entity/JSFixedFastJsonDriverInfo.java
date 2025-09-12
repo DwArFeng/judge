@@ -11,25 +11,25 @@ import java.util.Objects;
  * JSFixed FastJson 驱动器信息。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public class JSFixedFastJsonDriverInfo implements Bean {
 
-    private static final long serialVersionUID = 5401696580031449570L;
+    private static final long serialVersionUID = -5538044778781924760L;
 
     public static JSFixedFastJsonDriverInfo of(DriverInfo driverInfo) {
         if (Objects.isNull(driverInfo)) {
             return null;
+        } else {
+            return new JSFixedFastJsonDriverInfo(
+                    JSFixedFastJsonLongIdKey.of(driverInfo.getKey()),
+                    JSFixedFastJsonLongIdKey.of(driverInfo.getSectionKey()),
+                    driverInfo.isEnabled(),
+                    driverInfo.getType(),
+                    driverInfo.getParam(),
+                    driverInfo.getRemark()
+            );
         }
-
-        return new JSFixedFastJsonDriverInfo(
-                JSFixedFastJsonLongIdKey.of(driverInfo.getKey()),
-                JSFixedFastJsonLongIdKey.of(driverInfo.getSectionKey()),
-                driverInfo.isEnabled(),
-                driverInfo.getType(),
-                driverInfo.getContent(),
-                driverInfo.getRemark()
-        );
     }
 
     @JSONField(name = "key", ordinal = 1)
@@ -44,8 +44,8 @@ public class JSFixedFastJsonDriverInfo implements Bean {
     @JSONField(name = "type", ordinal = 4)
     private String type;
 
-    @JSONField(name = "content", ordinal = 5)
-    private String content;
+    @JSONField(name = "param", ordinal = 5)
+    private String param;
 
     @JSONField(name = "remark", ordinal = 6)
     private String remark;
@@ -54,13 +54,14 @@ public class JSFixedFastJsonDriverInfo implements Bean {
     }
 
     public JSFixedFastJsonDriverInfo(
-            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, boolean enabled, String type, String content,
-            String remark) {
+            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, boolean enabled, String type,
+            String param, String remark
+    ) {
         this.key = key;
         this.sectionKey = sectionKey;
         this.enabled = enabled;
         this.type = type;
-        this.content = content;
+        this.param = param;
         this.remark = remark;
     }
 
@@ -96,12 +97,12 @@ public class JSFixedFastJsonDriverInfo implements Bean {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -119,7 +120,7 @@ public class JSFixedFastJsonDriverInfo implements Bean {
                 ", sectionKey=" + sectionKey +
                 ", enabled=" + enabled +
                 ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
+                ", param='" + param + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

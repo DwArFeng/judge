@@ -5,11 +5,10 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 
 /**
- * 评价信息缓存。
+ * 判断器信息缓存。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public interface JudgerInfoCache extends BatchBaseCache<LongIdKey, JudgerInfo> {
-
 }

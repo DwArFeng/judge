@@ -6,10 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author DwArFeng
- * @since 0.0.1-alpha
- */
 @Configuration
 public class FastJsonConfiguration {
 
@@ -18,12 +14,23 @@ public class FastJsonConfiguration {
     public FastJsonConfiguration() {
         LOGGER.info("正在配置 FastJson autotype 白名单");
         //实体对象。
-        ParserConfig.getGlobalInstance().addAccept(FastJsonSection.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmHistory.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmModal.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmSetting.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAnalyserInfo.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAnalyserSupport.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAnalyserVariable.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonTask.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonTaskEvent.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAnalysis.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonDriverInfo.class.getCanonicalName());
-        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonDriverSupport.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgementHistory.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgementModal.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerSupport.class.getCanonicalName());
-        ParserConfig.getGlobalInstance().addAccept(FastJsonVariable.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerVariable.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonSection.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

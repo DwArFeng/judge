@@ -4,32 +4,35 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
 /**
- * 评价信息。
+ * 判断器信息。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public class JudgerInfo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -5908021822283324721L;
+    private static final long serialVersionUID = -998708340401478768L;
 
     private LongIdKey key;
     private LongIdKey sectionKey;
+    private int index;
     private boolean enabled;
     private String type;
-    private String content;
+    private String param;
     private String remark;
 
     public JudgerInfo() {
     }
 
     public JudgerInfo(
-            LongIdKey key, LongIdKey sectionKey, boolean enabled, String type, String content, String remark) {
+            LongIdKey key, LongIdKey sectionKey, int index, boolean enabled, String type, String param, String remark
+    ) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.index = index;
         this.enabled = enabled;
         this.type = type;
-        this.content = content;
+        this.param = param;
         this.remark = remark;
     }
 
@@ -51,6 +54,14 @@ public class JudgerInfo implements Entity<LongIdKey> {
         this.sectionKey = sectionKey;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -67,12 +78,12 @@ public class JudgerInfo implements Entity<LongIdKey> {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -88,9 +99,10 @@ public class JudgerInfo implements Entity<LongIdKey> {
         return "JudgerInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", index=" + index +
                 ", enabled=" + enabled +
                 ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
+                ", param='" + param + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

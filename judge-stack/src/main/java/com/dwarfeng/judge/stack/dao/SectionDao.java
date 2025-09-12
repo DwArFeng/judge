@@ -10,8 +10,8 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 部件数据访问层。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
-public interface SectionDao extends BatchBaseDao<LongIdKey, Section>, EntireLookupDao<Section>, PresetLookupDao<Section> {
-
+public interface SectionDao extends BatchBaseDao<LongIdKey, Section>, EntireLookupDao<Section>,
+        PresetLookupDao<Section> {
 }

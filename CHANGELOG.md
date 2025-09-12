@@ -4,7 +4,24 @@
 
 ### 功能构建
 
-- (无)
+- 重构实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.service.AlarmHistoryMaintainService。
+  - com.dwarfeng.judge.stack.service.AlarmModalMaintainService。
+  - com.dwarfeng.judge.stack.service.AlarmSettingMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalyserInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalyserSupportMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalyserVariableMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalysisMaintainService。
+  - com.dwarfeng.judge.stack.service.DriverInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.DriverSupportMaintainService。
+  - com.dwarfeng.judge.stack.service.JudgementHistoryMaintainService。
+  - com.dwarfeng.judge.stack.service.JudgementModalMaintainService。
+  - com.dwarfeng.judge.stack.service.JudgerInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.JudgerSupportMaintainService。
+  - com.dwarfeng.judge.stack.service.JudgerVariableMaintainService。
+  - com.dwarfeng.judge.stack.service.SectionMaintainService。
+  - com.dwarfeng.judge.stack.service.TaskEventMaintainService。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService。
 
 ### Bug 修复
 

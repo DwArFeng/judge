@@ -11,13 +11,19 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Hibernate 部件。
+ *
+ * @author DwArFeng
+ * @since 2.0.0
+ */
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_section")
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateSection implements Bean {
 
-    private static final long serialVersionUID = 8299763521765832279L;
+    private static final long serialVersionUID = 699450728974428552L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -31,20 +37,37 @@ public class HibernateSection implements Bean {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @Column(name = "expected", nullable = false)
-    private double expected;
-
-    @Column(name = "variance", nullable = false)
-    private double variance;
-
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------一对一-----------------------------------------------------------
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementModal.class, mappedBy = "section")
+    private HibernateJudgementModal judgementModal;
+
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmModal.class, mappedBy = "section")
+    private HibernateAlarmModal alarmModal;
 
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateDriverInfo.class, mappedBy = "section")
     private Set<HibernateDriverInfo> driverInfos = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAnalyserInfo.class, mappedBy = "section")
+    private Set<HibernateAnalyserInfo> analyserInfos = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgerInfo.class, mappedBy = "section")
     private Set<HibernateJudgerInfo> judgerInfos = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTask.class, mappedBy = "section")
+    private Set<HibernateTask> tasks = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementHistory.class, mappedBy = "section")
+    private Set<HibernateJudgementHistory> judgementHistories = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmSetting.class, mappedBy = "section")
+    private Set<HibernateAlarmSetting> alarmSettings = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmHistory.class, mappedBy = "section")
+    private Set<HibernateAlarmHistory> alarmHistories = new HashSet<>();
 
     // -----------------------------------------------------------审计-----------------------------------------------------------
     @DatamarkField(handlerName = "sectionDatamarkHandler")
@@ -70,8 +93,8 @@ public class HibernateSection implements Bean {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setKey(HibernateLongIdKey idKey) {
-        this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    public void setKey(HibernateLongIdKey key) {
+        this.longId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     // -----------------------------------------------------------常规属性区-----------------------------------------------------------
@@ -99,28 +122,28 @@ public class HibernateSection implements Bean {
         this.enabled = enabled;
     }
 
-    public double getExpected() {
-        return expected;
-    }
-
-    public void setExpected(double expected) {
-        this.expected = expected;
-    }
-
-    public double getVariance() {
-        return variance;
-    }
-
-    public void setVariance(double variance) {
-        this.variance = variance;
-    }
-
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public HibernateJudgementModal getJudgementModal() {
+        return judgementModal;
+    }
+
+    public void setJudgementModal(HibernateJudgementModal judgementModal) {
+        this.judgementModal = judgementModal;
+    }
+
+    public HibernateAlarmModal getAlarmModal() {
+        return alarmModal;
+    }
+
+    public void setAlarmModal(HibernateAlarmModal alarmModal) {
+        this.alarmModal = alarmModal;
     }
 
     public Set<HibernateDriverInfo> getDriverInfos() {
@@ -131,12 +154,52 @@ public class HibernateSection implements Bean {
         this.driverInfos = driverInfos;
     }
 
+    public Set<HibernateAnalyserInfo> getAnalyserInfos() {
+        return analyserInfos;
+    }
+
+    public void setAnalyserInfos(Set<HibernateAnalyserInfo> analyserInfos) {
+        this.analyserInfos = analyserInfos;
+    }
+
     public Set<HibernateJudgerInfo> getJudgerInfos() {
         return judgerInfos;
     }
 
     public void setJudgerInfos(Set<HibernateJudgerInfo> judgerInfos) {
         this.judgerInfos = judgerInfos;
+    }
+
+    public Set<HibernateTask> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<HibernateTask> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Set<HibernateJudgementHistory> getJudgementHistories() {
+        return judgementHistories;
+    }
+
+    public void setJudgementHistories(Set<HibernateJudgementHistory> judgementHistories) {
+        this.judgementHistories = judgementHistories;
+    }
+
+    public Set<HibernateAlarmSetting> getAlarmSettings() {
+        return alarmSettings;
+    }
+
+    public void setAlarmSettings(Set<HibernateAlarmSetting> alarmSettings) {
+        this.alarmSettings = alarmSettings;
+    }
+
+    public Set<HibernateAlarmHistory> getAlarmHistories() {
+        return alarmHistories;
+    }
+
+    public void setAlarmHistories(Set<HibernateAlarmHistory> alarmHistories) {
+        this.alarmHistories = alarmHistories;
     }
 
     public String getCreatedDatamark() {
@@ -161,9 +224,9 @@ public class HibernateSection implements Bean {
                 "longId = " + longId + ", " +
                 "name = " + name + ", " +
                 "enabled = " + enabled + ", " +
-                "expected = " + expected + ", " +
-                "variance = " + variance + ", " +
                 "remark = " + remark + ", " +
+                "judgementModal = " + judgementModal + ", " +
+                "alarmModal = " + alarmModal + ", " +
                 "createdDatamark = " + createdDatamark + ", " +
                 "modifiedDatamark = " + modifiedDatamark + ")";
     }

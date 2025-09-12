@@ -8,8 +8,7 @@ import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
  * 部件缓存。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public interface SectionCache extends BatchBaseCache<LongIdKey, Section> {
-
 }

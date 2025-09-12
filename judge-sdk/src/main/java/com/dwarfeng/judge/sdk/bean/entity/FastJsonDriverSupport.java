@@ -11,22 +11,23 @@ import java.util.Objects;
  * FastJson 驱动器支持。
  *
  * @author DwArFeng
- * @since beta-1.1.0
+ * @since 2.0.0
  */
 public class FastJsonDriverSupport implements Bean {
 
-    private static final long serialVersionUID = 3994762348593183269L;
+    private static final long serialVersionUID = 2144551340027058990L;
 
     public static FastJsonDriverSupport of(DriverSupport driverSupport) {
         if (Objects.isNull(driverSupport)) {
             return null;
+        } else {
+            return new FastJsonDriverSupport(
+                    FastJsonStringIdKey.of(driverSupport.getKey()),
+                    driverSupport.getLabel(),
+                    driverSupport.getDescription(),
+                    driverSupport.getExampleParam()
+            );
         }
-        return new FastJsonDriverSupport(
-                FastJsonStringIdKey.of(driverSupport.getKey()),
-                driverSupport.getLabel(),
-                driverSupport.getDescription(),
-                driverSupport.getExampleContent()
-        );
     }
 
     @JSONField(name = "key", ordinal = 1)
@@ -38,17 +39,17 @@ public class FastJsonDriverSupport implements Bean {
     @JSONField(name = "description", ordinal = 3)
     private String description;
 
-    @JSONField(name = "example_content", ordinal = 4)
-    private String exampleContent;
+    @JSONField(name = "example_param", ordinal = 4)
+    private String exampleParam;
 
     public FastJsonDriverSupport() {
     }
 
-    public FastJsonDriverSupport(FastJsonStringIdKey key, String label, String description, String exampleContent) {
+    public FastJsonDriverSupport(FastJsonStringIdKey key, String label, String description, String exampleParam) {
         this.key = key;
         this.label = label;
         this.description = description;
-        this.exampleContent = exampleContent;
+        this.exampleParam = exampleParam;
     }
 
     public FastJsonStringIdKey getKey() {
@@ -75,12 +76,12 @@ public class FastJsonDriverSupport implements Bean {
         this.description = description;
     }
 
-    public String getExampleContent() {
-        return exampleContent;
+    public String getExampleParam() {
+        return exampleParam;
     }
 
-    public void setExampleContent(String exampleContent) {
-        this.exampleContent = exampleContent;
+    public void setExampleParam(String exampleParam) {
+        this.exampleParam = exampleParam;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class FastJsonDriverSupport implements Bean {
                 "key=" + key +
                 ", label='" + label + '\'' +
                 ", description='" + description + '\'' +
-                ", exampleContent='" + exampleContent + '\'' +
+                ", exampleParam='" + exampleParam + '\'' +
                 '}';
     }
 }

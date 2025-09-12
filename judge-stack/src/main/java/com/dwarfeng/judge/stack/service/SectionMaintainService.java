@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 部件维护服务。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public interface SectionMaintainService extends BatchCrudService<LongIdKey, Section>, EntireLookupService<Section>,
         PresetLookupService<Section> {

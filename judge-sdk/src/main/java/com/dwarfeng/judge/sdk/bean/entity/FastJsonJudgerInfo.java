@@ -11,25 +11,26 @@ import java.util.Objects;
  * FastJson 判断器信息。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public class FastJsonJudgerInfo implements Bean {
 
-    private static final long serialVersionUID = -3448223964615132543L;
+    private static final long serialVersionUID = 1808426180988594873L;
 
     public static FastJsonJudgerInfo of(JudgerInfo judgerInfo) {
         if (Objects.isNull(judgerInfo)) {
             return null;
+        } else {
+            return new FastJsonJudgerInfo(
+                    FastJsonLongIdKey.of(judgerInfo.getKey()),
+                    FastJsonLongIdKey.of(judgerInfo.getSectionKey()),
+                    judgerInfo.getIndex(),
+                    judgerInfo.isEnabled(),
+                    judgerInfo.getType(),
+                    judgerInfo.getParam(),
+                    judgerInfo.getRemark()
+            );
         }
-
-        return new FastJsonJudgerInfo(
-                FastJsonLongIdKey.of(judgerInfo.getKey()),
-                FastJsonLongIdKey.of(judgerInfo.getSectionKey()),
-                judgerInfo.isEnabled(),
-                judgerInfo.getType(),
-                judgerInfo.getContent(),
-                judgerInfo.getRemark()
-        );
     }
 
     @JSONField(name = "key", ordinal = 1)
@@ -38,29 +39,34 @@ public class FastJsonJudgerInfo implements Bean {
     @JSONField(name = "section_key", ordinal = 2)
     private FastJsonLongIdKey sectionKey;
 
-    @JSONField(name = "enabled", ordinal = 3)
+    @JSONField(name = "index", ordinal = 3)
+    private int index;
+
+    @JSONField(name = "enabled", ordinal = 4)
     private boolean enabled;
 
-    @JSONField(name = "type", ordinal = 4)
+    @JSONField(name = "type", ordinal = 5)
     private String type;
 
-    @JSONField(name = "content", ordinal = 5)
-    private String content;
+    @JSONField(name = "param", ordinal = 6)
+    private String param;
 
-    @JSONField(name = "remark", ordinal = 6)
+    @JSONField(name = "remark", ordinal = 7)
     private String remark;
 
     public FastJsonJudgerInfo() {
     }
 
     public FastJsonJudgerInfo(
-            FastJsonLongIdKey key, FastJsonLongIdKey sectionKey, boolean enabled, String type, String content,
-            String remark) {
+            FastJsonLongIdKey key, FastJsonLongIdKey sectionKey, int index, boolean enabled, String type, String param,
+            String remark
+    ) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.index = index;
         this.enabled = enabled;
         this.type = type;
-        this.content = content;
+        this.param = param;
         this.remark = remark;
     }
 
@@ -80,6 +86,14 @@ public class FastJsonJudgerInfo implements Bean {
         this.sectionKey = sectionKey;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -96,12 +110,12 @@ public class FastJsonJudgerInfo implements Bean {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -117,9 +131,10 @@ public class FastJsonJudgerInfo implements Bean {
         return "FastJsonJudgerInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", index=" + index +
                 ", enabled=" + enabled +
                 ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
+                ", param='" + param + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

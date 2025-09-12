@@ -1,13 +1,21 @@
 package com.dwarfeng.judge.impl.service.operation;
 
+import com.dwarfeng.judge.stack.bean.entity.JudgementHistory;
+import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
-import com.dwarfeng.judge.stack.bean.entity.Variable;
-import com.dwarfeng.judge.stack.bean.key.VariableKey;
+import com.dwarfeng.judge.stack.bean.entity.JudgerVariable;
+import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.cache.JudgementHistoryCache;
+import com.dwarfeng.judge.stack.cache.JudgementModalCache;
 import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
-import com.dwarfeng.judge.stack.cache.VariableCache;
+import com.dwarfeng.judge.stack.cache.JudgerVariableCache;
+import com.dwarfeng.judge.stack.dao.JudgementHistoryDao;
+import com.dwarfeng.judge.stack.dao.JudgementModalDao;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
-import com.dwarfeng.judge.stack.dao.VariableDao;
-import com.dwarfeng.judge.stack.service.VariableMaintainService;
+import com.dwarfeng.judge.stack.dao.JudgerVariableDao;
+import com.dwarfeng.judge.stack.service.JudgementHistoryMaintainService;
+import com.dwarfeng.judge.stack.service.JudgementModalMaintainService;
+import com.dwarfeng.judge.stack.service.JudgerVariableMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -15,7 +23,6 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +32,14 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
     private final JudgerInfoDao judgerInfoDao;
     private final JudgerInfoCache judgerInfoCache;
 
-    private final VariableDao variableDao;
-    private final VariableCache variableCache;
+    private final JudgerVariableDao judgerVariableDao;
+    private final JudgerVariableCache judgerVariableCache;
+
+    private final JudgementModalDao judgementModalDao;
+    private final JudgementModalCache judgementModalCache;
+
+    private final JudgementHistoryDao judgementHistoryDao;
+    private final JudgementHistoryCache judgementHistoryCache;
 
     @Value("${cache.timeout.entity.judger_info}")
     private long judgerInfoTimeout;
@@ -34,13 +47,21 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
     public JudgerInfoCrudOperation(
             JudgerInfoDao judgerInfoDao,
             JudgerInfoCache judgerInfoCache,
-            VariableDao variableDao,
-            VariableCache variableCache
+            JudgerVariableDao judgerVariableDao,
+            JudgerVariableCache judgerVariableCache,
+            JudgementModalDao judgementModalDao,
+            JudgementModalCache judgementModalCache,
+            JudgementHistoryDao judgementHistoryDao,
+            JudgementHistoryCache judgementHistoryCache
     ) {
         this.judgerInfoDao = judgerInfoDao;
         this.judgerInfoCache = judgerInfoCache;
-        this.variableDao = variableDao;
-        this.variableCache = variableCache;
+        this.judgerVariableDao = judgerVariableDao;
+        this.judgerVariableCache = judgerVariableCache;
+        this.judgementModalDao = judgementModalDao;
+        this.judgementModalCache = judgementModalCache;
+        this.judgementHistoryDao = judgementHistoryDao;
+        this.judgementHistoryCache = judgementHistoryCache;
     }
 
     @Override
@@ -76,12 +97,34 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        // 删除变量。
-        List<VariableKey> variableKeys = variableDao.lookup(VariableMaintainService.LONG_ID_EQUALS, new Object[]{key})
-                .stream().map(Variable::getKey).collect(Collectors.toList());
-        variableCache.batchDelete(variableKeys);
-        variableDao.batchDelete(variableKeys);
+        // 删除与 判断器信息 相关的 判断器变量。
+        List<JudgerVariableKey> judgerVariableKeys = judgerVariableDao.lookup(
+                JudgerVariableMaintainService.CHILD_FOR_JUDGER_INFO, new Object[]{key}
+        ).stream().map(JudgerVariable::getKey).collect(Collectors.toList());
+        judgerVariableDao.batchDelete(judgerVariableKeys);
+        judgerVariableCache.batchDelete(judgerVariableKeys);
 
+        // 解除与 判断器信息 相关的 判断结果模态 的关联。
+        List<JudgementModal> judgementModals = judgementModalDao.lookup(
+                JudgementModalMaintainService.CHILD_FOR_JUDGER_INFO, new Object[]{key}
+        );
+        judgementModals.forEach(judgementModal -> judgementModal.setJudgerInfoKey(null));
+        judgementModalDao.batchUpdate(judgementModals);
+        judgementModalCache.batchDelete(
+                judgementModals.stream().map(JudgementModal::getKey).collect(Collectors.toList())
+        );
+
+        // 解除与 判断器信息 相关的 判断结果历史 的关联。
+        List<JudgementHistory> judgementHistories = judgementHistoryDao.lookup(
+                JudgementHistoryMaintainService.CHILD_FOR_JUDGER_INFO, new Object[]{key}
+        );
+        judgementHistories.forEach(judgementHistory -> judgementHistory.setJudgerInfoKey(null));
+        judgementHistoryDao.batchUpdate(judgementHistories);
+        judgementHistoryCache.batchDelete(
+                judgementHistories.stream().map(JudgementHistory::getKey).collect(Collectors.toList())
+        );
+
+        // 删除 判断器信息 自身。
         judgerInfoDao.delete(key);
         judgerInfoCache.delete(key);
     }
@@ -112,18 +155,14 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
 
     @Override
     public List<LongIdKey> batchInsert(List<JudgerInfo> judgerInfos) throws Exception {
-        List<LongIdKey> keys = new ArrayList<>();
-        for (JudgerInfo judgerInfo : judgerInfos) {
-            keys.add(insert(judgerInfo));
-        }
-        return keys;
+        judgerInfoCache.batchPush(judgerInfos, judgerInfoTimeout);
+        return judgerInfoDao.batchInsert(judgerInfos);
     }
 
     @Override
     public void batchUpdate(List<JudgerInfo> judgerInfos) throws Exception {
-        for (JudgerInfo judgerInfo : judgerInfos) {
-            update(judgerInfo);
-        }
+        judgerInfoCache.batchPush(judgerInfos, judgerInfoTimeout);
+        judgerInfoDao.batchUpdate(judgerInfos);
     }
 
     @Override

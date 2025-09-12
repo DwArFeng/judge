@@ -7,15 +7,18 @@ import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
 /**
- * 驱动器信息维护服务。
+ * 判断器信息维护服务。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
-public interface JudgerInfoMaintainService extends BatchCrudService<LongIdKey, JudgerInfo>, EntireLookupService<JudgerInfo>,
-        PresetLookupService<JudgerInfo> {
+public interface JudgerInfoMaintainService extends BatchCrudService<LongIdKey, JudgerInfo>,
+        EntireLookupService<JudgerInfo>, PresetLookupService<JudgerInfo> {
 
     String CHILD_FOR_SECTION = "child_for_section";
-    String CHILD_FOR_SECTION_SET = "child_for_section_set";
-    String ENABLED_CHILD_FOR_SECTION = "enabled_child_for_section";
+    String CHILD_FOR_SECTION_INDEX_ASC = "child_for_section_index_asc";
+    String CHILD_FOR_SECTION_INDEX_DESC = "child_for_section_index_desc";
+    String CHILD_FOR_SECTION_ENABLED = "child_for_section_enabled";
+    String CHILD_FOR_SECTION_ENABLED_INDEX_ASC = "child_for_section_enabled_index_asc";
+    String CHILD_FOR_SECTION_ENABLED_INDEX_DESC = "child_for_section_enabled_index_desc";
 }

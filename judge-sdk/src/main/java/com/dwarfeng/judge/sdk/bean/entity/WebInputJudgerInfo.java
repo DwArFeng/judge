@@ -1,49 +1,55 @@
 package com.dwarfeng.judge.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.judge.sdk.util.Constraints;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 /**
  * WebInput 判断器信息。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public class WebInputJudgerInfo implements Bean {
 
-    private static final long serialVersionUID = -7706153657541723646L;
+    private static final long serialVersionUID = 6935273564235363618L;
 
-    public static JudgerInfo toStackBean(WebInputJudgerInfo webInputJudgerInfo) {
-        if (Objects.isNull(webInputJudgerInfo)) {
+    public static JudgerInfo toStackBean(WebInputJudgerInfo webInput) {
+        if (Objects.isNull(webInput)) {
             return null;
+        } else {
+            return new JudgerInfo(
+                    WebInputLongIdKey.toStackBean(webInput.getKey()),
+                    WebInputLongIdKey.toStackBean(webInput.getSectionKey()),
+                    webInput.getIndex(),
+                    webInput.isEnabled(),
+                    webInput.getType(),
+                    webInput.getParam(),
+                    webInput.getRemark()
+            );
         }
-
-        return new JudgerInfo(
-                WebInputLongIdKey.toStackBean(webInputJudgerInfo.getKey()),
-                WebInputLongIdKey.toStackBean(webInputJudgerInfo.getSectionKey()),
-                webInputJudgerInfo.isEnabled(),
-                webInputJudgerInfo.getType(),
-                webInputJudgerInfo.getContent(),
-                webInputJudgerInfo.getRemark()
-        );
     }
 
     @JSONField(name = "key")
     @Valid
-    @NotNull(groups = Default.class)
     private WebInputLongIdKey key;
 
     @JSONField(name = "section_key")
     @Valid
     private WebInputLongIdKey sectionKey;
+
+    @JSONField(name = "index")
+    @PositiveOrZero
+    private int index;
 
     @JSONField(name = "enabled")
     private boolean enabled;
@@ -51,25 +57,29 @@ public class WebInputJudgerInfo implements Bean {
     @JSONField(name = "type")
     @NotNull
     @NotEmpty
+    @Length(max = Constraints.LENGTH_TYPE)
     private String type;
 
-    @JSONField(name = "content")
-    private String content;
+    @JSONField(name = "param")
+    private String param;
 
     @JSONField(name = "remark")
+    @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
 
     public WebInputJudgerInfo() {
     }
 
     public WebInputJudgerInfo(
-            WebInputLongIdKey key, WebInputLongIdKey sectionKey, boolean enabled, String type, String content,
-            String remark) {
+            WebInputLongIdKey key, WebInputLongIdKey sectionKey, int index, boolean enabled, String type, String param,
+            String remark
+    ) {
         this.key = key;
         this.sectionKey = sectionKey;
+        this.index = index;
         this.enabled = enabled;
         this.type = type;
-        this.content = content;
+        this.param = param;
         this.remark = remark;
     }
 
@@ -89,6 +99,14 @@ public class WebInputJudgerInfo implements Bean {
         this.sectionKey = sectionKey;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -105,12 +123,12 @@ public class WebInputJudgerInfo implements Bean {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -126,9 +144,10 @@ public class WebInputJudgerInfo implements Bean {
         return "WebInputJudgerInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
+                ", index=" + index +
                 ", enabled=" + enabled +
                 ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
+                ", param='" + param + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

@@ -4,31 +4,31 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
 /**
- * 驱动器。
+ * 驱动器信息。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public class DriverInfo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -5899558035182963610L;
+    private static final long serialVersionUID = -603213188941422061L;
 
     private LongIdKey key;
     private LongIdKey sectionKey;
     private boolean enabled;
     private String type;
-    private String content;
+    private String param;
     private String remark;
 
     public DriverInfo() {
     }
 
-    public DriverInfo(LongIdKey key, LongIdKey sectionKey, boolean enabled, String type, String content, String remark) {
+    public DriverInfo(LongIdKey key, LongIdKey sectionKey, boolean enabled, String type, String param, String remark) {
         this.key = key;
         this.sectionKey = sectionKey;
         this.enabled = enabled;
         this.type = type;
-        this.content = content;
+        this.param = param;
         this.remark = remark;
     }
 
@@ -66,12 +66,12 @@ public class DriverInfo implements Entity<LongIdKey> {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -89,7 +89,7 @@ public class DriverInfo implements Entity<LongIdKey> {
                 ", sectionKey=" + sectionKey +
                 ", enabled=" + enabled +
                 ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
+                ", param='" + param + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

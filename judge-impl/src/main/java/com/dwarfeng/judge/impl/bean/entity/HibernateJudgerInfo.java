@@ -7,15 +7,23 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
+/**
+ * Hibernate 判断器信息。
+ *
+ * @author DwArFeng
+ * @since 2.0.0
+ */
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_judger_info")
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateJudgerInfo implements Bean {
 
-    private static final long serialVersionUID = 4506719454381355971L;
+    private static final long serialVersionUID = 7431593077580260625L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -24,17 +32,20 @@ public class HibernateJudgerInfo implements Bean {
 
     // -----------------------------------------------------------外键-----------------------------------------------------------
     @Column(name = "section_id")
-    private Long sectionId;
+    private Long sectionLongId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    @Column(name = "column_index", nullable = false)
+    private int index;
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @Column(name = "type", length = Constraints.LENGTH_TYPE)
+    @Column(name = "type", length = Constraints.LENGTH_TYPE, nullable = false)
     private String type;
 
-    @Column(name = "content", columnDefinition = "TEXT")
-    private String content;
+    @Column(name = "param", columnDefinition = "TEXT")
+    private String param;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -45,6 +56,16 @@ public class HibernateJudgerInfo implements Bean {
             @JoinColumn(name = "section_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateSection section;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgerVariable.class, mappedBy = "judgerInfo")
+    private Set<HibernateJudgerVariable> judgerVariables = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementModal.class, mappedBy = "judgerInfo")
+    private Set<HibernateJudgementModal> judgementModals = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementHistory.class, mappedBy = "judgerInfo")
+    private Set<HibernateJudgementHistory> judgementHistories = new HashSet<>();
 
     // -----------------------------------------------------------审计-----------------------------------------------------------
     @DatamarkField(handlerName = "judgerDatamarkHandler")
@@ -70,19 +91,20 @@ public class HibernateJudgerInfo implements Bean {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setKey(HibernateLongIdKey idKey) {
-        this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    public void setKey(HibernateLongIdKey key) {
+        this.longId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     public HibernateLongIdKey getSectionKey() {
-        return Optional.ofNullable(sectionId).map(HibernateLongIdKey::new).orElse(null);
+        return Optional.ofNullable(sectionLongId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setSectionKey(HibernateLongIdKey parentKey) {
-        this.sectionId = Optional.ofNullable(parentKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    public void setSectionKey(HibernateLongIdKey key) {
+        this.sectionLongId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+
     public Long getLongId() {
         return longId;
     }
@@ -91,12 +113,20 @@ public class HibernateJudgerInfo implements Bean {
         this.longId = longId;
     }
 
-    public Long getSectionId() {
-        return sectionId;
+    public Long getSectionLongId() {
+        return sectionLongId;
     }
 
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
+    public void setSectionLongId(Long sectionLongId) {
+        this.sectionLongId = sectionLongId;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public boolean isEnabled() {
@@ -115,12 +145,12 @@ public class HibernateJudgerInfo implements Bean {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -137,6 +167,30 @@ public class HibernateJudgerInfo implements Bean {
 
     public void setSection(HibernateSection section) {
         this.section = section;
+    }
+
+    public Set<HibernateJudgerVariable> getJudgerVariables() {
+        return judgerVariables;
+    }
+
+    public void setJudgerVariables(Set<HibernateJudgerVariable> judgerVariables) {
+        this.judgerVariables = judgerVariables;
+    }
+
+    public Set<HibernateJudgementModal> getJudgementModals() {
+        return judgementModals;
+    }
+
+    public void setJudgementModals(Set<HibernateJudgementModal> judgementModals) {
+        this.judgementModals = judgementModals;
+    }
+
+    public Set<HibernateJudgementHistory> getJudgementHistories() {
+        return judgementHistories;
+    }
+
+    public void setJudgementHistories(Set<HibernateJudgementHistory> judgementHistories) {
+        this.judgementHistories = judgementHistories;
     }
 
     public String getCreatedDatamark() {
@@ -159,10 +213,11 @@ public class HibernateJudgerInfo implements Bean {
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
-                "sectionId = " + sectionId + ", " +
+                "sectionLongId = " + sectionLongId + ", " +
+                "index = " + index + ", " +
                 "enabled = " + enabled + ", " +
                 "type = " + type + ", " +
-                "content = " + content + ", " +
+                "param = " + param + ", " +
                 "remark = " + remark + ", " +
                 "section = " + section + ", " +
                 "createdDatamark = " + createdDatamark + ", " +

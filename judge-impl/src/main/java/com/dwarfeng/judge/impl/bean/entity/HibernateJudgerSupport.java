@@ -5,47 +5,49 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Optional;
 
+/**
+ * Hibernate 判断器支持。
+ *
+ * @author DwArFeng
+ * @since 2.0.0
+ */
 @Entity
 @IdClass(HibernateStringIdKey.class)
 @Table(name = "tbl_judger_support")
 public class HibernateJudgerSupport implements Bean {
 
-    private static final long serialVersionUID = -8833768341499733518L;
+    private static final long serialVersionUID = 580621250861099320L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
-    @Column(name = "id", length = Constraints.LENGTH_TYPE, nullable = false, unique = true)
+    @Column(name = "id", length = Constraints.LENGTH_STRING_ID, nullable = false, unique = true)
     private String stringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
-    @Column(name = "label", length = 50, nullable = false)
+    @Column(name = "label", length = Constraints.LENGTH_LABEL, nullable = false)
     private String label;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "example_content", columnDefinition = "TEXT")
-    private String exampleContent;
+    @Column(name = "example_param", columnDefinition = "TEXT")
+    private String exampleParam;
 
     public HibernateJudgerSupport() {
     }
 
+    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
     public HibernateStringIdKey getKey() {
-        if (Objects.isNull(stringId)) {
-            return null;
-        }
-        return new HibernateStringIdKey(stringId);
+        return Optional.ofNullable(stringId).map(HibernateStringIdKey::new).orElse(null);
     }
 
     public void setKey(HibernateStringIdKey key) {
-        if (Objects.isNull(key)) {
-            this.stringId = null;
-        }
-        this.stringId = key.getStringId();
+        this.stringId = Optional.ofNullable(key).map(HibernateStringIdKey::getStringId).orElse(null);
     }
 
+    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
     public String getStringId() {
         return stringId;
     }
@@ -70,21 +72,20 @@ public class HibernateJudgerSupport implements Bean {
         this.description = description;
     }
 
-    public String getExampleContent() {
-        return exampleContent;
+    public String getExampleParam() {
+        return exampleParam;
     }
 
-    public void setExampleContent(String exampleContent) {
-        this.exampleContent = exampleContent;
+    public void setExampleParam(String exampleParam) {
+        this.exampleParam = exampleParam;
     }
 
     @Override
     public String toString() {
-        return "HibernateJudgerSupport{" +
-                "stringId='" + stringId + '\'' +
-                ", label='" + label + '\'' +
-                ", description='" + description + '\'' +
-                ", exampleContent='" + exampleContent + '\'' +
-                '}';
+        return getClass().getSimpleName() + "(" +
+                "stringId = " + stringId + ", " +
+                "label = " + label + ", " +
+                "description = " + description + ", " +
+                "exampleParam = " + exampleParam + ")";
     }
 }

@@ -25,12 +25,28 @@
             update-allowed="${datamark.driver.update_allowed}"
     />
 
+    <!-- Analyser 数据标识 -->
+    <datamark:handler
+            handler-name="analyserDatamarkHandler"
+            resource-url="${datamark.analyser.resource_url}"
+            resource-charset="${datamark.analyser.resource_charset}"
+            update-allowed="${datamark.analyser.update_allowed}"
+    />
+
     <!-- Judger 数据标识 -->
     <datamark:handler
             handler-name="judgerDatamarkHandler"
             resource-url="${datamark.judger.resource_url}"
             resource-charset="${datamark.judger.resource_charset}"
             update-allowed="${datamark.judger.update_allowed}"
+    />
+
+    <!-- Alarm 数据标识 -->
+    <datamark:handler
+            handler-name="alarmDatamarkHandler"
+            resource-url="${datamark.alarm.resource_url}"
+            resource-charset="${datamark.alarm.resource_charset}"
+            update-allowed="${datamark.alarm.update_allowed}"
     />
 
     <!-- QoS 服务 -->

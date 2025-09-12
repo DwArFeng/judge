@@ -13,33 +13,33 @@ import java.util.Arrays;
 public class SectionPresetCriteriaMaker implements PresetCriteriaMaker {
 
     @Override
-    public void makeCriteria(DetachedCriteria detachedCriteria, String s, Object[] objects) {
-        switch (s) {
+    public void makeCriteria(DetachedCriteria criteria, String preset, Object[] objs) {
+        switch (preset) {
             case SectionMaintainService.NAME_LIKE:
-                nameLike(detachedCriteria, objects);
+                nameLike(criteria, objs);
                 break;
             case SectionMaintainService.ENABLED:
-                enabled(detachedCriteria, objects);
+                enabled(criteria, objs);
                 break;
             default:
-                throw new IllegalArgumentException("无法识别的预设: " + s);
+                throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
     }
 
-    private void nameLike(DetachedCriteria detachedCriteria, Object[] objects) {
+    private void nameLike(DetachedCriteria criteria, Object[] objs) {
         try {
-            String pattern = (String) objects[0];
-            detachedCriteria.add(Restrictions.like("name", pattern, MatchMode.ANYWHERE));
+            String pattern = (String) objs[0];
+            criteria.add(Restrictions.like("name", pattern, MatchMode.ANYWHERE));
         } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 
-    private void enabled(DetachedCriteria detachedCriteria, Object[] objects) {
+    private void enabled(DetachedCriteria criteria, Object[] objs) {
         try {
-            detachedCriteria.add(Restrictions.eq("enabled", true));
+            criteria.add(Restrictions.eq("enabled", true));
         } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 }

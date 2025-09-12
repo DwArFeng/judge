@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.service;
 
-import com.dwarfeng.judge.stack.bean.entity.JudgerSupport;
-import com.dwarfeng.judge.stack.service.JudgerSupportMaintainService;
+import com.dwarfeng.judge.stack.bean.entity.AnalyserSupport;
+import com.dwarfeng.judge.stack.service.AnalyserSupportMaintainService;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,40 +23,41 @@ import static org.junit.Assert.assertEquals;
 public class JudgerSupportMaintainServiceImplTest {
 
     @Autowired
-    private JudgerSupportMaintainService service;
+    private AnalyserSupportMaintainService service;
 
-    private final List<JudgerSupport> judgerSupports = new ArrayList<>();
+    private final List<AnalyserSupport> analyserSupports = new ArrayList<>();
 
     @Before
     public void setUp() {
         for (int i = 0; i < 5; i++) {
-            JudgerSupport judgerSupport = new JudgerSupport(
-                    new StringIdKey("judger-support-" + (i + 1)),
-                    "label-" + (i + 1),
-                    "这是测试用的JudgerSupport",
-                    "1233211234567"
+            AnalyserSupport analyserSupport = new AnalyserSupport(
+                    new StringIdKey("analyser-support-" + (i + 1)), "label", "description", "exampleParam"
             );
-            judgerSupports.add(judgerSupport);
+            analyserSupports.add(analyserSupport);
         }
     }
 
     @After
     public void tearDown() {
-        judgerSupports.clear();
+        analyserSupports.clear();
     }
 
     @Test
-    public void test() throws Exception {
+    public void testForCrud() throws Exception {
         try {
-            for (JudgerSupport judgerSupport : judgerSupports) {
-                judgerSupport.setKey(service.insert(judgerSupport));
-                service.update(judgerSupport);
-                JudgerSupport testJudgerSupport = service.get(judgerSupport.getKey());
-                assertEquals(BeanUtils.describe(judgerSupport), BeanUtils.describe(testJudgerSupport));
+            for (AnalyserSupport analyserSupport : analyserSupports) {
+                analyserSupport.setKey(service.insertOrUpdate(analyserSupport));
+                AnalyserSupport testAnalyserSupport = service.get(analyserSupport.getKey());
+                assertEquals(BeanUtils.describe(analyserSupport), BeanUtils.describe(testAnalyserSupport));
+                testAnalyserSupport = service.get(analyserSupport.getKey());
+                assertEquals(BeanUtils.describe(analyserSupport), BeanUtils.describe(testAnalyserSupport));
             }
         } finally {
-            for (JudgerSupport judgerSupport : judgerSupports) {
-                service.delete(judgerSupport.getKey());
+            for (AnalyserSupport analyserSupport : analyserSupports) {
+                if (Objects.isNull(analyserSupport.getKey())) {
+                    continue;
+                }
+                service.deleteIfExists(analyserSupport.getKey());
             }
         }
     }

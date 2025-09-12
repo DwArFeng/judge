@@ -22,9 +22,8 @@
     />
 
     <!-- 向注册中心注册暴露服务地址,注册服务 -->
-
     <dubbo:service
-            interface="com.dwarfeng.judge.stack.service. AlarmHistoryMaintainService"
+            interface="com.dwarfeng.judge.stack.service.AlarmHistoryMaintainService"
             ref="alarmHistoryMaintainServiceImpl"
             group="${dubbo.provider.group}"
     />
@@ -51,16 +50,6 @@
     <dubbo:service
             interface="com.dwarfeng.judge.stack.service.AnalyserVariableMaintainService"
             ref="analyserVariableMaintainServiceImpl"
-            group="${dubbo.provider.group}"
-    />
-    <dubbo:service
-            interface="com.dwarfeng.judge.stack.service.AnalyseTaskMaintainService"
-            ref="analyseTaskMaintainServiceImpl"
-            group="${dubbo.provider.group}"
-    />
-    <dubbo:service
-            interface="com.dwarfeng.judge.stack.service.AnalyseTaskEventMaintainService"
-            ref="analyseTaskEventMaintainServiceImpl"
             group="${dubbo.provider.group}"
     />
     <dubbo:service
@@ -104,18 +93,18 @@
             group="${dubbo.provider.group}"
     />
     <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.TaskMaintainService"
+            ref="taskMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.TaskEventMaintainService"
+            ref="taskEventMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
             interface="com.dwarfeng.judge.stack.service.SectionMaintainService"
             ref="sectionMaintainServiceImpl"
-            group="${dubbo.provider.group}"
-    />
-    <dubbo:service
-            interface="com.dwarfeng.judge.stack.service.VisualizerInfoMaintainService"
-            ref="visualizerInfoMaintainServiceImpl"
-            group="${dubbo.provider.group}"
-    />
-    <dubbo:service
-            interface="com.dwarfeng.judge.stack.service.VisualizerSupportMaintainService"
-            ref="visualizerSupportMaintainServiceImpl"
             group="${dubbo.provider.group}"
     />
 

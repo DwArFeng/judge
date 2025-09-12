@@ -9,83 +9,123 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Component
 public class JudgerInfoPresetCriteriaMaker implements PresetCriteriaMaker {
 
     @Override
-    public void makeCriteria(DetachedCriteria detachedCriteria, String s, Object[] objects) {
-        switch (s) {
+    public void makeCriteria(DetachedCriteria criteria, String preset, Object[] objs) {
+        switch (preset) {
             case JudgerInfoMaintainService.CHILD_FOR_SECTION:
-                childForPoint(detachedCriteria, objects);
+                childForSection(criteria, objs);
                 break;
-            case JudgerInfoMaintainService.CHILD_FOR_SECTION_SET:
-                childForPointSet(detachedCriteria, objects);
+            case JudgerInfoMaintainService.CHILD_FOR_SECTION_INDEX_ASC:
+                childForSectionIndexAsc(criteria, objs);
                 break;
-            case JudgerInfoMaintainService.ENABLED_CHILD_FOR_SECTION:
-                enabledChildForPointSet(detachedCriteria, objects);
+            case JudgerInfoMaintainService.CHILD_FOR_SECTION_INDEX_DESC:
+                childForSectionIndexDesc(criteria, objs);
+                break;
+            case JudgerInfoMaintainService.CHILD_FOR_SECTION_ENABLED:
+                childForSectionEnabled(criteria, objs);
+                break;
+            case JudgerInfoMaintainService.CHILD_FOR_SECTION_ENABLED_INDEX_ASC:
+                childForSectionEnabledIndexAsc(criteria, objs);
+                break;
+            case JudgerInfoMaintainService.CHILD_FOR_SECTION_ENABLED_INDEX_DESC:
+                childForSectionEnabledIndexDesc(criteria, objs);
                 break;
             default:
-                throw new IllegalArgumentException("无法识别的预设: " + s);
+                throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private void childForPoint(DetachedCriteria detachedCriteria, Object[] objects) {
+    private void childForSection(DetachedCriteria criteria, Object[] objs) {
         try {
-            if (Objects.isNull(objects[0])) {
-                detachedCriteria.add(Restrictions.isNull("sectionId"));
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sectionLongId"));
             } else {
-                LongIdKey longIdKey = (LongIdKey) objects[0];
-                detachedCriteria.add(Restrictions.eqOrIsNull("sectionId", longIdKey.getLongId()));
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
             }
-            detachedCriteria.addOrder(Order.asc("longId"));
         } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private void childForPointSet(DetachedCriteria detachedCriteria, Object[] objects) {
+    private void childForSectionIndexAsc(DetachedCriteria criteria, Object[] objs) {
         try {
-            if (Objects.isNull(objects[0])) {
-                detachedCriteria.add(Restrictions.isNull("sectionId"));
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sectionLongId"));
             } else {
-                @SuppressWarnings("unchecked")
-                List<LongIdKey> longIdKeys = (List<LongIdKey>) objects[0];
-                if (longIdKeys.isEmpty()) {
-                    detachedCriteria.add(Restrictions.isNull("sectionId"));
-                } else {
-                    detachedCriteria.add(Restrictions.in("sectionId", longList(longIdKeys)));
-                }
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
             }
-            detachedCriteria.addOrder(Order.asc("longId"));
+            criteria.addOrder(Order.asc("index"));
         } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void childForSectionIndexDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sectionLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
+            }
+            criteria.addOrder(Order.desc("index"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private void enabledChildForPointSet(DetachedCriteria detachedCriteria, Object[] objects) {
+    private void childForSectionEnabled(DetachedCriteria criteria, Object[] objs) {
         try {
-            if (Objects.isNull(objects[0])) {
-                detachedCriteria.add(Restrictions.eqOrIsNull("enabled", true));
-                detachedCriteria.add(Restrictions.isNull("sectionId"));
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sectionLongId"));
             } else {
-                LongIdKey longIdKey = (LongIdKey) objects[0];
-                detachedCriteria.add(Restrictions.eqOrIsNull("enabled", true));
-                detachedCriteria.add(Restrictions.eqOrIsNull("sectionId", longIdKey.getLongId()));
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
             }
-            detachedCriteria.addOrder(Order.asc("longId"));
+            criteria.add(Restrictions.eq("enabled", true));
         } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 
-    private List<Long> longList(List<LongIdKey> list) {
-        return list.stream().map(LongIdKey::getLongId).collect(Collectors.toList());
+    @SuppressWarnings("DuplicatedCode")
+    private void childForSectionEnabledIndexAsc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sectionLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
+            }
+            criteria.add(Restrictions.eq("enabled", true));
+            criteria.addOrder(Order.asc("index"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void childForSectionEnabledIndexDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sectionLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
+            }
+            criteria.add(Restrictions.eq("enabled", true));
+            criteria.addOrder(Order.desc("index"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
     }
 }

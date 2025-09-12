@@ -7,25 +7,25 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  * 判断器支持。
  *
  * @author DwArFeng
- * @since beta-1.1.0
+ * @since 2.0.0
  */
 public class JudgerSupport implements Entity<StringIdKey> {
 
-    private static final long serialVersionUID = -1493905598645077380L;
+    private static final long serialVersionUID = -7322500325404797251L;
 
     private StringIdKey key;
     private String label;
     private String description;
-    private String exampleContent;
+    private String exampleParam;
 
     public JudgerSupport() {
     }
 
-    public JudgerSupport(StringIdKey key, String label, String description, String exampleContent) {
+    public JudgerSupport(StringIdKey key, String label, String description, String exampleParam) {
         this.key = key;
         this.label = label;
         this.description = description;
-        this.exampleContent = exampleContent;
+        this.exampleParam = exampleParam;
     }
 
     @Override
@@ -54,12 +54,12 @@ public class JudgerSupport implements Entity<StringIdKey> {
         this.description = description;
     }
 
-    public String getExampleContent() {
-        return exampleContent;
+    public String getExampleParam() {
+        return exampleParam;
     }
 
-    public void setExampleContent(String exampleContent) {
-        this.exampleContent = exampleContent;
+    public void setExampleParam(String exampleParam) {
+        this.exampleParam = exampleParam;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class JudgerSupport implements Entity<StringIdKey> {
                 "key=" + key +
                 ", label='" + label + '\'' +
                 ", description='" + description + '\'' +
-                ", exampleContent='" + exampleContent + '\'' +
+                ", exampleParam='" + exampleParam + '\'' +
                 '}';
     }
 }

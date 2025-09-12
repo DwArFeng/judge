@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
  * 判断器支持缓存。
  *
  * @author DwArFeng
- * @since beta-1.1.0
+ * @since 2.0.0
  */
 public interface JudgerSupportCache extends BatchBaseCache<StringIdKey, JudgerSupport> {
 }

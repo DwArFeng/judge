@@ -14,36 +14,36 @@ import java.util.Arrays;
 public class JudgerSupportPresetCriteriaMaker implements PresetCriteriaMaker {
 
     @Override
-    public void makeCriteria(DetachedCriteria detachedCriteria, String s, Object[] objects) {
-        switch (s) {
+    public void makeCriteria(DetachedCriteria criteria, String preset, Object[] objs) {
+        switch (preset) {
             case JudgerSupportMaintainService.ID_LIKE:
-                idLike(detachedCriteria, objects);
+                idLike(criteria, objs);
                 break;
             case JudgerSupportMaintainService.LABEL_LIKE:
-                labelLike(detachedCriteria, objects);
+                labelLike(criteria, objs);
                 break;
             default:
-                throw new IllegalArgumentException("无法识别的预设: " + s);
+                throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
     }
 
-    private void idLike(DetachedCriteria detachedCriteria, Object[] objects) {
+    private void idLike(DetachedCriteria criteria, Object[] objs) {
         try {
-            String pattern = (String) objects[0];
-            detachedCriteria.add(Restrictions.like("stringId", pattern, MatchMode.ANYWHERE));
-            detachedCriteria.addOrder(Order.asc("stringId"));
+            String pattern = (String) objs[0];
+            criteria.add(Restrictions.like("stringId", pattern, MatchMode.ANYWHERE));
+            criteria.addOrder(Order.asc("stringId"));
         } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 
-    private void labelLike(DetachedCriteria detachedCriteria, Object[] objects) {
+    private void labelLike(DetachedCriteria criteria, Object[] objs) {
         try {
-            String pattern = (String) objects[0];
-            detachedCriteria.add(Restrictions.like("label", pattern, MatchMode.ANYWHERE));
-            detachedCriteria.addOrder(Order.asc("stringId"));
+            String pattern = (String) objs[0];
+            criteria.add(Restrictions.like("label", pattern, MatchMode.ANYWHERE));
+            criteria.addOrder(Order.asc("stringId"));
         } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 }

@@ -1,9 +1,13 @@
 package com.dwarfeng.judge.impl.bean;
 
 import com.dwarfeng.judge.impl.bean.entity.*;
-import com.dwarfeng.judge.impl.bean.key.HibernateVariableKey;
+import com.dwarfeng.judge.impl.bean.key.HibernateAnalyserVariableKey;
+import com.dwarfeng.judge.impl.bean.key.HibernateAnalysisKey;
+import com.dwarfeng.judge.impl.bean.key.HibernateJudgerVariableKey;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.VariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -19,7 +23,7 @@ import org.mapstruct.Mapping;
  * 该映射器中包含了 <code>impl</code> 模块中所有实体与 <code>stack</code> 模块中对应实体的映射方法。
  *
  * @author DwArFeng
- * @since 1.7.0
+ * @since 2.0.0
  */
 @Mapper
 public interface BeanMapper {
@@ -36,13 +40,99 @@ public interface BeanMapper {
     StringIdKey stringIdKeyFromHibernate(HibernateStringIdKey hibernateStringIdKey);
 
     // -----------------------------------------------------------Judge Key-----------------------------------------------------------
-    HibernateVariableKey variableKeyToHibernate(VariableKey variableKey);
+    HibernateAnalyserVariableKey analyserVariableKeyToHibernate(AnalyserVariableKey analyserVariableKey);
 
     @InheritInverseConfiguration
-    VariableKey variableKeyFromHibernate(HibernateVariableKey hibernateVariableKey);
+    AnalyserVariableKey analyserVariableKeyFromHibernate(HibernateAnalyserVariableKey hibernateAnalyserVariableKey);
+
+    HibernateAnalysisKey analysisKeyToHibernate(AnalysisKey analysisKey);
+
+    @InheritInverseConfiguration
+    AnalysisKey analysisKeyFromHibernate(HibernateAnalysisKey hibernateAnalysisKey);
+
+    HibernateJudgerVariableKey judgerVariableKeyToHibernate(JudgerVariableKey judgerVariableKey);
+
+    @InheritInverseConfiguration
+    JudgerVariableKey judgerVariableKeyFromHibernate(HibernateJudgerVariableKey hibernateJudgerVariableKey);
 
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
-    @Mapping(target = "sectionId", ignore = true)
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    HibernateAlarmHistory alarmHistoryToHibernate(AlarmHistory alarmHistory);
+
+    @InheritInverseConfiguration
+    AlarmHistory alarmHistoryFromHibernate(HibernateAlarmHistory hibernateAlarmHistory);
+
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    HibernateAlarmModal alarmModalToHibernate(AlarmModal alarmModal);
+
+    @InheritInverseConfiguration
+    AlarmModal alarmModalFromHibernate(HibernateAlarmModal hibernateAlarmModal);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateAlarmSetting alarmSettingToHibernate(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromHibernate(HibernateAlarmSetting hibernateAlarmSetting);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    @Mapping(target = "analyserVariables", ignore = true)
+    HibernateAnalyserInfo analyserInfoToHibernate(AnalyserInfo analyserInfo);
+
+    @InheritInverseConfiguration
+    AnalyserInfo analyserInfoFromHibernate(HibernateAnalyserInfo hibernateAnalyserInfo);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateAnalyserSupport analyserSupportToHibernate(AnalyserSupport analyserSupport);
+
+    @InheritInverseConfiguration
+    AnalyserSupport analyserSupportFromHibernate(HibernateAnalyserSupport hibernateAnalyserSupport);
+
+    @Mapping(target = "variableStringId", ignore = true)
+    @Mapping(target = "analyserInfoLongId", ignore = true)
+    @Mapping(target = "analyserInfo", ignore = true)
+    HibernateAnalyserVariable analyserVariableToHibernate(AnalyserVariable analyserVariable);
+
+    @InheritInverseConfiguration
+    AnalyserVariable analyserVariableFromHibernate(HibernateAnalyserVariable hibernateAnalyserVariable);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "analyses", ignore = true)
+    @Mapping(target = "taskEvents", ignore = true)
+    HibernateTask taskToHibernate(Task task);
+
+    @InheritInverseConfiguration
+    Task taskFromHibernate(HibernateTask hibernateTask);
+
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "taskLongId", ignore = true)
+    @Mapping(target = "task", ignore = true)
+    HibernateTaskEvent taskEventToHibernate(TaskEvent taskEvent);
+
+    @InheritInverseConfiguration
+    TaskEvent taskEventFromHibernate(HibernateTaskEvent hibernateTaskEvent);
+
+    @Mapping(target = "dataStringId", ignore = true)
+    @Mapping(target = "taskLongId", ignore = true)
+    @Mapping(target = "task", ignore = true)
+    HibernateAnalysis analysisToHibernate(Analysis analysis);
+
+    @InheritInverseConfiguration
+    Analysis analysisFromHibernate(HibernateAnalysis hibernateAnalysis);
+
+    @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
     @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
@@ -58,10 +148,32 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     DriverSupport driverSupportFromHibernate(HibernateDriverSupport hibernateDriverSupport);
 
-    @Mapping(target = "sectionId", ignore = true)
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "judgerInfoLongId", ignore = true)
+    @Mapping(target = "judgerInfo", ignore = true)
+    HibernateJudgementHistory judgementHistoryToHibernate(JudgementHistory judgementHistory);
+
+    @InheritInverseConfiguration
+    JudgementHistory judgementHistoryFromHibernate(HibernateJudgementHistory hibernateJudgementHistory);
+
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "judgerInfoLongId", ignore = true)
+    @Mapping(target = "judgerInfo", ignore = true)
+    HibernateJudgementModal judgementModalToHibernate(JudgementModal judgementModal);
+
+    @InheritInverseConfiguration
+    JudgementModal judgementModalFromHibernate(HibernateJudgementModal hibernateJudgementModal);
+
+    @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
     @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "judgerVariables", ignore = true)
+    @Mapping(target = "judgementModals", ignore = true)
+    @Mapping(target = "judgementHistories", ignore = true)
     @Mapping(target = "createdDatamark", ignore = true)
     HibernateJudgerInfo judgerInfoToHibernate(JudgerInfo judgerInfo);
 
@@ -74,20 +186,28 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     JudgerSupport judgerSupportFromHibernate(HibernateJudgerSupport hibernateJudgerSupport);
 
+    @Mapping(target = "variableStringId", ignore = true)
+    @Mapping(target = "judgerInfoLongId", ignore = true)
+    @Mapping(target = "judgerInfo", ignore = true)
+    HibernateJudgerVariable judgerVariableToHibernate(JudgerVariable judgerVariable);
+
+    @InheritInverseConfiguration
+    JudgerVariable judgerVariableFromHibernate(HibernateJudgerVariable hibernateJudgerVariable);
+
     @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "judgerInfos", ignore = true)
+    @Mapping(target = "judgementModal", ignore = true)
+    @Mapping(target = "judgementHistories", ignore = true)
     @Mapping(target = "driverInfos", ignore = true)
     @Mapping(target = "createdDatamark", ignore = true)
+    @Mapping(target = "analyserInfos", ignore = true)
+    @Mapping(target = "tasks", ignore = true)
+    @Mapping(target = "alarmSettings", ignore = true)
+    @Mapping(target = "alarmModal", ignore = true)
+    @Mapping(target = "alarmHistories", ignore = true)
     HibernateSection sectionToHibernate(Section section);
 
     @InheritInverseConfiguration
     Section sectionFromHibernate(HibernateSection hibernateSection);
-
-    @Mapping(target = "stringId", ignore = true)
-    @Mapping(target = "longId", ignore = true)
-    HibernateVariable variableToHibernate(Variable variable);
-
-    @InheritInverseConfiguration
-    Variable variableFromHibernate(HibernateVariable hibernateVariable);
 }

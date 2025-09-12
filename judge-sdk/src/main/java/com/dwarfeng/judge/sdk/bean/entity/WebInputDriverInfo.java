@@ -1,44 +1,44 @@
 package com.dwarfeng.judge.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.judge.sdk.util.Constraints;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
 import java.util.Objects;
 
 /**
  * WebInput 驱动器信息。
  *
  * @author DwArFeng
- * @since beta-1.0.0
+ * @since 2.0.0
  */
 public class WebInputDriverInfo implements Bean {
 
-    private static final long serialVersionUID = -3975993124807740934L;
+    private static final long serialVersionUID = -5884715160085440956L;
 
-    public static DriverInfo toStackBean(WebInputDriverInfo webInputDriverInfo) {
-        if (Objects.isNull(webInputDriverInfo)) {
+    public static DriverInfo toStackBean(WebInputDriverInfo webInput) {
+        if (Objects.isNull(webInput)) {
             return null;
+        } else {
+            return new DriverInfo(
+                    WebInputLongIdKey.toStackBean(webInput.getKey()),
+                    WebInputLongIdKey.toStackBean(webInput.getSectionKey()),
+                    webInput.isEnabled(),
+                    webInput.getType(),
+                    webInput.getParam(),
+                    webInput.getRemark()
+            );
         }
-
-        return new DriverInfo(
-                WebInputLongIdKey.toStackBean(webInputDriverInfo.getKey()),
-                WebInputLongIdKey.toStackBean(webInputDriverInfo.getSectionKey()),
-                webInputDriverInfo.isEnabled(),
-                webInputDriverInfo.getType(),
-                webInputDriverInfo.getContent(),
-                webInputDriverInfo.getRemark()
-        );
     }
 
     @JSONField(name = "key")
     @Valid
-    @NotNull(groups = Default.class)
     private WebInputLongIdKey key;
 
     @JSONField(name = "section_key")
@@ -51,25 +51,28 @@ public class WebInputDriverInfo implements Bean {
     @JSONField(name = "type")
     @NotNull
     @NotEmpty
+    @Length(max = Constraints.LENGTH_TYPE)
     private String type;
 
-    @JSONField(name = "content")
-    private String content;
+    @JSONField(name = "param")
+    private String param;
 
     @JSONField(name = "remark")
+    @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
 
     public WebInputDriverInfo() {
     }
 
     public WebInputDriverInfo(
-            WebInputLongIdKey key, WebInputLongIdKey sectionKey, boolean enabled, String type, String content,
-            String remark) {
+            WebInputLongIdKey key, WebInputLongIdKey sectionKey, boolean enabled, String type, String param,
+            String remark
+    ) {
         this.key = key;
         this.sectionKey = sectionKey;
         this.enabled = enabled;
         this.type = type;
-        this.content = content;
+        this.param = param;
         this.remark = remark;
     }
 
@@ -105,12 +108,12 @@ public class WebInputDriverInfo implements Bean {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getParam() {
+        return param;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setParam(String param) {
+        this.param = param;
     }
 
     public String getRemark() {
@@ -123,12 +126,12 @@ public class WebInputDriverInfo implements Bean {
 
     @Override
     public String toString() {
-        return "WebInputDrive{" +
+        return "WebInputDriverInfo{" +
                 "key=" + key +
                 ", sectionKey=" + sectionKey +
                 ", enabled=" + enabled +
                 ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
+                ", param='" + param + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

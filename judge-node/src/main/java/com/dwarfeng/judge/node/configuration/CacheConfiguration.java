@@ -2,12 +2,15 @@ package com.dwarfeng.judge.node.configuration;
 
 import com.dwarfeng.judge.sdk.bean.BeanMapper;
 import com.dwarfeng.judge.sdk.bean.entity.*;
-import com.dwarfeng.judge.sdk.bean.key.formatter.VariableStringKeyFormatter;
+import com.dwarfeng.judge.sdk.bean.key.formatter.AnalyserVariableStringKeyFormatter;
+import com.dwarfeng.judge.sdk.bean.key.formatter.AnalysisStringKeyFormatter;
+import com.dwarfeng.judge.sdk.bean.key.formatter.JudgerVariableStringKeyFormatter;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.VariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
-import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -22,25 +25,115 @@ public class CacheConfiguration {
 
     private final RedisTemplate<String, ?> template;
 
+    @Value("${cache.prefix.entity.alarm_history}")
+    private String alarmHistoryPrefix;
+    @Value("${cache.prefix.entity.alarm_modal}")
+    private String alarmModalPrefix;
+    @Value("${cache.prefix.entity.alarm_setting}")
+    private String alarmSettingPrefix;
+    @Value("${cache.prefix.entity.analyser_info}")
+    private String analyserInfoPrefix;
+    @Value("${cache.prefix.entity.analyser_support}")
+    private String analyserSupportPrefix;
+    @Value("${cache.prefix.entity.analyser_variable}")
+    private String analyserVariablePrefix;
+    @Value("${cache.prefix.entity.analysis}")
+    private String analysisPrefix;
     @Value("${cache.prefix.entity.driver_info}")
     private String driverInfoPrefix;
-    @Value("${cache.prefix.entity.section}")
-    private String sectionPrefix;
-    @Value("${cache.prefix.entity.judger_info}")
-    private String judgerInfoPrefix;
-    @Value("${cache.prefix.list.enabled_driver_info}")
-    private String enabledDriverInfoPrefix;
-    @Value("${cache.prefix.list.enabled_judger_info}")
-    private String enabledJudgerInfoPrefix;
     @Value("${cache.prefix.entity.driver_support}")
     private String driverSupportPrefix;
+    @Value("${cache.prefix.entity.judgement_history}")
+    private String judgementHistoryPrefix;
+    @Value("${cache.prefix.entity.judgement_modal}")
+    private String judgementModalPrefix;
+    @Value("${cache.prefix.entity.judger_info}")
+    private String judgerInfoPrefix;
     @Value("${cache.prefix.entity.judger_support}")
     private String judgerSupportPrefix;
-    @Value("${cache.prefix.entity.variable}")
-    private String variablePrefix;
+    @Value("${cache.prefix.entity.judger_variable}")
+    private String judgerVariablePrefix;
+    @Value("${cache.prefix.entity.section}")
+    private String sectionPrefix;
+    @Value("${cache.prefix.entity.task}")
+    private String taskPrefix;
+    @Value("${cache.prefix.entity.task_event}")
+    private String taskEventPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AlarmHistory, FastJsonAlarmHistory> alarmHistoryRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmHistory>) template,
+                new LongIdStringKeyFormatter(alarmHistoryPrefix),
+                new MapStructBeanTransformer<>(AlarmHistory.class, FastJsonAlarmHistory.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AlarmModal, FastJsonAlarmModal> alarmModalRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmModal>) template,
+                new LongIdStringKeyFormatter(alarmModalPrefix),
+                new MapStructBeanTransformer<>(AlarmModal.class, FastJsonAlarmModal.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> alarmSettingRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmSetting>) template,
+                new LongIdStringKeyFormatter(alarmSettingPrefix),
+                new MapStructBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AnalyserInfo, FastJsonAnalyserInfo> analyserInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalyserInfo>) template,
+                new LongIdStringKeyFormatter(analyserInfoPrefix),
+                new MapStructBeanTransformer<>(AnalyserInfo.class, FastJsonAnalyserInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, AnalyserSupport, FastJsonAnalyserSupport>
+    analyserSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalyserSupport>) template,
+                new StringIdStringKeyFormatter(analyserSupportPrefix),
+                new MapStructBeanTransformer<>(AnalyserSupport.class, FastJsonAnalyserSupport.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<AnalyserVariableKey, AnalyserVariable, FastJsonAnalyserVariable>
+    analyserVariableRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalyserVariable>) template,
+                new AnalyserVariableStringKeyFormatter(analyserVariablePrefix),
+                new MapStructBeanTransformer<>(AnalyserVariable.class, FastJsonAnalyserVariable.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<AnalysisKey, Analysis, FastJsonAnalysis> analysisRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalysis>) template,
+                new AnalysisStringKeyFormatter(analysisPrefix),
+                new MapStructBeanTransformer<>(Analysis.class, FastJsonAnalysis.class, BeanMapper.class)
+        );
     }
 
     @Bean
@@ -50,46 +143,6 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonDriverInfo>) template,
                 new LongIdStringKeyFormatter(driverInfoPrefix),
                 new MapStructBeanTransformer<>(DriverInfo.class, FastJsonDriverInfo.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, Section, FastJsonSection> sectionRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonSection>) template,
-                new LongIdStringKeyFormatter(sectionPrefix),
-                new MapStructBeanTransformer<>(Section.class, FastJsonSection.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, JudgerInfo, FastJsonJudgerInfo> judgerInfoRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonJudgerInfo>) template,
-                new LongIdStringKeyFormatter(judgerInfoPrefix),
-                new MapStructBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisKeyListCache<LongIdKey, DriverInfo, FastJsonDriverInfo> driverInfoEnabledRedisKeyListCache() {
-        return new RedisKeyListCache<>(
-                (RedisTemplate<String, FastJsonDriverInfo>) template,
-                new LongIdStringKeyFormatter(enabledDriverInfoPrefix),
-                new MapStructBeanTransformer<>(DriverInfo.class, FastJsonDriverInfo.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisKeyListCache<LongIdKey, JudgerInfo, FastJsonJudgerInfo> judgerInfoEnabledRedisKeyListCache() {
-        return new RedisKeyListCache<>(
-                (RedisTemplate<String, FastJsonJudgerInfo>) template,
-                new LongIdStringKeyFormatter(enabledJudgerInfoPrefix),
-                new MapStructBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, BeanMapper.class)
         );
     }
 
@@ -105,6 +158,37 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, JudgementHistory, FastJsonJudgementHistory>
+    judgementHistoryRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonJudgementHistory>) template,
+                new LongIdStringKeyFormatter(judgementHistoryPrefix),
+                new MapStructBeanTransformer<>(JudgementHistory.class, FastJsonJudgementHistory.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, JudgementModal, FastJsonJudgementModal> judgementModalRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonJudgementModal>) template,
+                new LongIdStringKeyFormatter(judgementModalPrefix),
+                new MapStructBeanTransformer<>(JudgementModal.class, FastJsonJudgementModal.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, JudgerInfo, FastJsonJudgerInfo> judgerInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonJudgerInfo>) template,
+                new LongIdStringKeyFormatter(judgerInfoPrefix),
+                new MapStructBeanTransformer<>(JudgerInfo.class, FastJsonJudgerInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
     public RedisBatchBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> judgerSupportRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonJudgerSupport>) template,
@@ -115,11 +199,43 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<VariableKey, Variable, FastJsonVariable> variableRedisBatchBaseCache() {
+    public RedisBatchBaseCache<JudgerVariableKey, JudgerVariable, FastJsonJudgerVariable>
+    judgerVariableRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonVariable>) template,
-                new VariableStringKeyFormatter(variablePrefix),
-                new MapStructBeanTransformer<>(Variable.class, FastJsonVariable.class, BeanMapper.class)
+                (RedisTemplate<String, FastJsonJudgerVariable>) template,
+                new JudgerVariableStringKeyFormatter(judgerVariablePrefix),
+                new MapStructBeanTransformer<>(JudgerVariable.class, FastJsonJudgerVariable.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, Section, FastJsonSection> sectionRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonSection>) template,
+                new LongIdStringKeyFormatter(sectionPrefix),
+                new MapStructBeanTransformer<>(Section.class, FastJsonSection.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, Task, FastJsonTask> taskRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonTask>) template,
+                new LongIdStringKeyFormatter(taskPrefix),
+                new MapStructBeanTransformer<>(Task.class, FastJsonTask.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, TaskEvent, FastJsonTaskEvent>
+    taskEventRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonTaskEvent>) template,
+                new LongIdStringKeyFormatter(taskEventPrefix),
+                new MapStructBeanTransformer<>(TaskEvent.class, FastJsonTaskEvent.class, BeanMapper.class)
         );
     }
 }

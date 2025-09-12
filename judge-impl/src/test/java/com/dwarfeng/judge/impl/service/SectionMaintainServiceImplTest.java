@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,14 +30,7 @@ public class SectionMaintainServiceImplTest {
     public void setUp() {
         sections = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Section section = new Section(
-                    null,
-                    "section-" + (i + 1),
-                    true,
-                    0,
-                    1,
-                    "test-section"
-            );
+            Section section = new Section(null, "name", true, "remark");
             sections.add(section);
         }
     }
@@ -47,16 +41,20 @@ public class SectionMaintainServiceImplTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void testForCrud() throws Exception {
         try {
             for (Section section : sections) {
                 section.setKey(sectionMaintainService.insertOrUpdate(section));
-                sectionMaintainService.update(section);
                 Section testSection = sectionMaintainService.get(section.getKey());
+                assertEquals(BeanUtils.describe(section), BeanUtils.describe(testSection));
+                testSection = sectionMaintainService.get(section.getKey());
                 assertEquals(BeanUtils.describe(section), BeanUtils.describe(testSection));
             }
         } finally {
             for (Section section : sections) {
+                if (Objects.isNull(section.getKey())) {
+                    continue;
+                }
                 sectionMaintainService.deleteIfExists(section.getKey());
             }
         }
