@@ -1,8 +1,12 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
+import com.dwarfeng.judge.sdk.bean.entity.FastJsonAlarmModal;
+import com.dwarfeng.judge.sdk.bean.entity.FastJsonJudgementModal;
 import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
+import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -42,6 +46,10 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String taskExpiredTopic;
     @Value("${pusher.kafka.native.topic.task_died}")
     private String taskDiedTopic;
+    @Value("${pusher.kafka.native.topic.judgement_updated}")
+    private String judgementUpdatedTopic;
+    @Value("${pusher.kafka.native.topic.alarm_updated}")
+    private String alarmUpdatedTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
@@ -71,6 +79,16 @@ public class NativeKafkaPusher extends AbstractPusher {
     }
 
     @Override
+    public void judgementModalUpdated(JudgementModal judgementModal) {
+        kafkaTemplate.send(judgementUpdatedTopic, JSON.toJSONString(FastJsonJudgementModal.of(judgementModal)));
+    }
+
+    @Override
+    public void alarmModalUpdated(AlarmModal alarmModal) {
+        kafkaTemplate.send(alarmUpdatedTopic, JSON.toJSONString(FastJsonAlarmModal.of(alarmModal)));
+    }
+
+    @Override
     public String toString() {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
@@ -78,6 +96,8 @@ public class NativeKafkaPusher extends AbstractPusher {
                 ", taskFailedTopic='" + taskFailedTopic + '\'' +
                 ", taskExpiredTopic='" + taskExpiredTopic + '\'' +
                 ", taskDiedTopic='" + taskDiedTopic + '\'' +
+                ", judgementUpdatedTopic='" + judgementUpdatedTopic + '\'' +
+                ", alarmUpdatedTopic='" + alarmUpdatedTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';
     }

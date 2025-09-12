@@ -45,6 +45,9 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(JudgerMakeException.class, ServiceExceptionCodes.JUDGER_MAKE_FAILED);
         destination.put(JudgerExecutionException.class, ServiceExceptionCodes.JUDGER_EXECUTION_FAILED);
         destination.put(UnsupportedJudgerTypeException.class, ServiceExceptionCodes.JUDGER_TYPE_UNSUPPORTED);
+        destination.put(InvalidJudgementModalUpdateHappenedDateException.class, ServiceExceptionCodes.INVALID_JUDGEMENT_MODAL_UPDATE_HAPPENED_DATE);
+        destination.put(InvalidJudgementModalUpdateValueException.class, ServiceExceptionCodes.INVALID_JUDGEMENT_MODAL_UPDATE_VALUE);
+        destination.put(InvalidAlarmModalUpdateHappenedDateException.class, ServiceExceptionCodes.INVALID_ALARM_MODAL_UPDATE_HAPPENED_DATE);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

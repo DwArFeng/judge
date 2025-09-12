@@ -1,5 +1,7 @@
 package com.dwarfeng.judge.sdk.handler.pusher;
 
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
+import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
@@ -47,6 +49,16 @@ public abstract class PusherAdapter extends AbstractPusher {
     @SuppressWarnings("RedundantThrows")
     @Override
     public void taskDied(Section section) throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void judgementModalUpdated(JudgementModal judgementModal) throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void alarmModalUpdated(AlarmModal alarmModal) throws HandlerException {
     }
 
     @Override

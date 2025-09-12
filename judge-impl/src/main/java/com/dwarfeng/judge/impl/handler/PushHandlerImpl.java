@@ -1,6 +1,8 @@
 package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.handler.Pusher;
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
+import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -51,6 +53,16 @@ public class PushHandlerImpl implements PushHandler {
     @Override
     public void taskDied(Section section) throws HandlerException {
         pusher.taskDied(section);
+    }
+
+    @Override
+    public void judgementModalUpdated(JudgementModal judgementModal) throws HandlerException {
+        pusher.judgementModalUpdated(judgementModal);
+    }
+
+    @Override
+    public void alarmModalUpdated(AlarmModal alarmModal) throws HandlerException {
+        pusher.alarmModalUpdated(alarmModal);
     }
 
     @Override

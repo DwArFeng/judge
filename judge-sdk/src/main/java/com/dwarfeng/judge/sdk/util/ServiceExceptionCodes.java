@@ -66,6 +66,12 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(202), "judger execution failed");
     public static final ServiceException.Code JUDGER_TYPE_UNSUPPORTED =
             new ServiceException.Code(offset(203), "judger type unsupported");
+    public static final ServiceException.Code INVALID_JUDGEMENT_MODAL_UPDATE_HAPPENED_DATE =
+            new ServiceException.Code(offset(210), "invalid judgement modal update happened date");
+    public static final ServiceException.Code INVALID_JUDGEMENT_MODAL_UPDATE_VALUE =
+            new ServiceException.Code(offset(220), "invalid judgement modal update value");
+    public static final ServiceException.Code INVALID_ALARM_MODAL_UPDATE_HAPPENED_DATE =
+            new ServiceException.Code(offset(230), "invalid alarm modal update happened date");
 
 
     private static int offset(int i) {
@@ -118,6 +124,9 @@ public final class ServiceExceptionCodes {
         JUDGER_MAKE_FAILED.setCode(offset(201));
         JUDGER_EXECUTION_FAILED.setCode(offset(202));
         JUDGER_TYPE_UNSUPPORTED.setCode(offset(203));
+        INVALID_JUDGEMENT_MODAL_UPDATE_HAPPENED_DATE.setCode(offset(210));
+        INVALID_JUDGEMENT_MODAL_UPDATE_VALUE.setCode(offset(220));
+        INVALID_ALARM_MODAL_UPDATE_HAPPENED_DATE.setCode(offset(230));
     }
 
     private ServiceExceptionCodes() {
