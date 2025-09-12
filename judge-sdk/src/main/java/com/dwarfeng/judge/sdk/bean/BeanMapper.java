@@ -280,4 +280,88 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     Section sectionFromWebInput(WebInputSection webInputSection);
+
+    FastJsonAnalysisFileInfo analysisFileInfoToFastJson(AnalysisFileInfo analysisFileInfo);
+
+    @InheritInverseConfiguration
+    AnalysisFileInfo analysisFileInfoFromFastJson(FastJsonAnalysisFileInfo fastJsonAnalysisFileInfo);
+
+    FastJsonAnalysisFilePack analysisFilePackToFastJson(AnalysisFilePack analysisFilePack);
+
+    @InheritInverseConfiguration
+    AnalysisFilePack analysisFilePackFromFastJson(FastJsonAnalysisFilePack fastJsonAnalysisFilePack);
+
+    FastJsonAnalysisFilePackItemInfo analysisFilePackItemInfoToFastJson(
+            AnalysisFilePackItemInfo analysisFilePackItemInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisFilePackItemInfo analysisFilePackItemInfoFromFastJson(
+            FastJsonAnalysisFilePackItemInfo fastJsonAnalysisFilePackItemInfo
+    );
+
+    FastJsonAnalysisPictureInfo analysisPictureInfoToFastJson(AnalysisPictureInfo analysisPictureInfo);
+
+    @InheritInverseConfiguration
+    AnalysisPictureInfo analysisPictureInfoFromFastJson(FastJsonAnalysisPictureInfo fastJsonAnalysisPictureInfo);
+
+    FastJsonAnalysisPicturePack analysisPicturePackToFastJson(AnalysisPicturePack analysisPicturePack);
+
+    @InheritInverseConfiguration
+    AnalysisPicturePack analysisPicturePackFromFastJson(FastJsonAnalysisPicturePack fastJsonAnalysisPicturePack);
+
+    FastJsonAnalysisPicturePackItemInfo analysisPicturePackItemInfoToFastJson(
+            AnalysisPicturePackItemInfo analysisPicturePackItemInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromFastJson(
+            FastJsonAnalysisPicturePackItemInfo fastJsonAnalysisPicturePackItemInfo
+    );
+
+    JSFixedFastJsonAnalysisFileInfo analysisFileInfoToJSFixedFastJson(AnalysisFileInfo analysisFileInfo);
+
+    @InheritInverseConfiguration
+    AnalysisFileInfo analysisFileInfoFromJSFixedFastJson(
+            JSFixedFastJsonAnalysisFileInfo jSFixedFastJsonAnalysisFileInfo
+    );
+
+    JSFixedFastJsonAnalysisFilePack analysisFilePackToJSFixedFastJson(AnalysisFilePack analysisFilePack);
+
+    @InheritInverseConfiguration
+    AnalysisFilePack analysisFilePackFromJSFixedFastJson(
+            JSFixedFastJsonAnalysisFilePack jSFixedFastJsonAnalysisFilePack
+    );
+
+    JSFixedFastJsonAnalysisFilePackItemInfo analysisFilePackItemInfoToJSFixedFastJson(
+            AnalysisFilePackItemInfo analysisFilePackItemInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisFilePackItemInfo analysisFilePackItemInfoFromJSFixedFastJson(
+            JSFixedFastJsonAnalysisFilePackItemInfo jSFixedFastJsonAnalysisFilePackItemInfo
+    );
+
+    JSFixedFastJsonAnalysisPictureInfo analysisPictureInfoToJSFixedFastJson(AnalysisPictureInfo analysisPictureInfo);
+
+    @InheritInverseConfiguration
+    AnalysisPictureInfo analysisPictureInfoFromJSFixedFastJson(
+            JSFixedFastJsonAnalysisPictureInfo jSFixedFastJsonAnalysisPictureInfo
+    );
+
+    JSFixedFastJsonAnalysisPicturePack analysisPicturePackToJSFixedFastJson(AnalysisPicturePack analysisPicturePack);
+
+    @InheritInverseConfiguration
+    AnalysisPicturePack analysisPicturePackFromJSFixedFastJson(
+            JSFixedFastJsonAnalysisPicturePack jSFixedFastJsonAnalysisPicturePack
+    );
+
+    JSFixedFastJsonAnalysisPicturePackItemInfo analysisPicturePackItemInfoToJSFixedFastJson(
+            AnalysisPicturePackItemInfo analysisPicturePackItemInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromJSFixedFastJson(
+            JSFixedFastJsonAnalysisPicturePackItemInfo jSFixedFastJsonAnalysisPicturePackItemInfo
+    );
 }

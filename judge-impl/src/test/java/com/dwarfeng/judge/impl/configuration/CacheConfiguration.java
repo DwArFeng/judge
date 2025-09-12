@@ -59,6 +59,18 @@ public class CacheConfiguration {
     private String taskPrefix;
     @Value("${cache.prefix.entity.task_event}")
     private String taskEventPrefix;
+    @Value("${cache.prefix.entity.analysis_file_info}")
+    private String analysisFileInfoPrefix;
+    @Value("${cache.prefix.entity.analysis_file_pack}")
+    private String analysisFilePackPrefix;
+    @Value("${cache.prefix.entity.analysis_file_pack_item_info}")
+    private String analysisFilePackItemInfoPrefix;
+    @Value("${cache.prefix.entity.analysis_picture_info}")
+    private String analysisPictureInfoPrefix;
+    @Value("${cache.prefix.entity.analysis_picture_pack}")
+    private String analysisPicturePackPrefix;
+    @Value("${cache.prefix.entity.analysis_picture_pack_item_info}")
+    private String analysisPicturePackItemInfoPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -236,6 +248,80 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonTaskEvent>) template,
                 new LongIdStringKeyFormatter(taskEventPrefix),
                 new MapStructBeanTransformer<>(TaskEvent.class, FastJsonTaskEvent.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AnalysisFileInfo, FastJsonAnalysisFileInfo>
+    analysisFileInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalysisFileInfo>) template,
+                new LongIdStringKeyFormatter(analysisFileInfoPrefix),
+                new MapStructBeanTransformer<>(AnalysisFileInfo.class, FastJsonAnalysisFileInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AnalysisFilePack, FastJsonAnalysisFilePack>
+    analysisFilePackRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalysisFilePack>) template,
+                new LongIdStringKeyFormatter(analysisFilePackPrefix),
+                new MapStructBeanTransformer<>(AnalysisFilePack.class, FastJsonAnalysisFilePack.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AnalysisFilePackItemInfo, FastJsonAnalysisFilePackItemInfo>
+    analysisFilePackItemInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalysisFilePackItemInfo>) template,
+                new LongIdStringKeyFormatter(analysisFilePackItemInfoPrefix),
+                new MapStructBeanTransformer<>(
+                        AnalysisFilePackItemInfo.class, FastJsonAnalysisFilePackItemInfo.class, BeanMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AnalysisPictureInfo, FastJsonAnalysisPictureInfo>
+    analysisPictureInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalysisPictureInfo>) template,
+                new LongIdStringKeyFormatter(analysisPictureInfoPrefix),
+                new MapStructBeanTransformer<>(
+                        AnalysisPictureInfo.class, FastJsonAnalysisPictureInfo.class, BeanMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AnalysisPicturePack, FastJsonAnalysisPicturePack>
+    analysisPicturePackRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalysisPicturePack>) template,
+                new LongIdStringKeyFormatter(analysisPicturePackPrefix),
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePack.class, FastJsonAnalysisPicturePack.class, BeanMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AnalysisPicturePackItemInfo, FastJsonAnalysisPicturePackItemInfo>
+    analysisPicturePackItemInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAnalysisPicturePackItemInfo>) template,
+                new LongIdStringKeyFormatter(analysisPicturePackItemInfoPrefix),
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePackItemInfo.class, FastJsonAnalysisPicturePackItemInfo.class, BeanMapper.class
+                )
         );
     }
 }

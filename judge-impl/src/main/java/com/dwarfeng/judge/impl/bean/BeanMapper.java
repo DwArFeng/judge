@@ -210,4 +210,54 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     Section sectionFromHibernate(HibernateSection hibernateSection);
+
+    @Mapping(target = "longId", ignore = true)
+    HibernateAnalysisFileInfo analysisFileInfoToHibernate(AnalysisFileInfo analysisFileInfo);
+
+    @InheritInverseConfiguration
+    AnalysisFileInfo analysisFileInfoFromHibernate(HibernateAnalysisFileInfo hibernateAnalysisFileInfo);
+
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "items", ignore = true)
+    HibernateAnalysisFilePack analysisFilePackToHibernate(AnalysisFilePack analysisFilePack);
+
+    @InheritInverseConfiguration
+    AnalysisFilePack analysisFilePackFromHibernate(HibernateAnalysisFilePack hibernateAnalysisFilePack);
+
+    @Mapping(target = "packLongId", ignore = true)
+    @Mapping(target = "pack", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    HibernateAnalysisFilePackItemInfo analysisFilePackItemInfoToHibernate(
+            AnalysisFilePackItemInfo analysisFilePackItemInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisFilePackItemInfo analysisFilePackItemInfoFromHibernate(
+            HibernateAnalysisFilePackItemInfo hibernateAnalysisFilePackItemInfo
+    );
+
+    @Mapping(target = "longId", ignore = true)
+    HibernateAnalysisPictureInfo analysisPictureInfoToHibernate(AnalysisPictureInfo analysisPictureInfo);
+
+    @InheritInverseConfiguration
+    AnalysisPictureInfo analysisPictureInfoFromHibernate(HibernateAnalysisPictureInfo hibernateAnalysisPictureInfo);
+
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "items", ignore = true)
+    HibernateAnalysisPicturePack analysisPicturePackToHibernate(AnalysisPicturePack analysisPicturePack);
+
+    @InheritInverseConfiguration
+    AnalysisPicturePack analysisPicturePackFromHibernate(HibernateAnalysisPicturePack hibernateAnalysisPicturePack);
+
+    @Mapping(target = "packLongId", ignore = true)
+    @Mapping(target = "pack", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    HibernateAnalysisPicturePackItemInfo analysisPicturePackItemInfoToHibernate(
+            AnalysisPicturePackItemInfo analysisPicturePackItemInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromHibernate(
+            HibernateAnalysisPicturePackItemInfo hibernateAnalysisPicturePackItemInfo
+    );
 }

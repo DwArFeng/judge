@@ -1,9 +1,6 @@
 package com.dwarfeng.judge.node.configuration;
 
-import com.dwarfeng.judge.impl.service.operation.AnalyserInfoCrudOperation;
-import com.dwarfeng.judge.impl.service.operation.JudgerInfoCrudOperation;
-import com.dwarfeng.judge.impl.service.operation.SectionCrudOperation;
-import com.dwarfeng.judge.impl.service.operation.TaskCrudOperation;
+import com.dwarfeng.judge.impl.service.operation.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
@@ -40,8 +37,8 @@ public class ServiceConfiguration {
     private final AnalyserSupportCache analyserSupportCache;
     private final AnalyserVariableDao analyserVariableDao;
     private final AnalyserVariableCache analyserVariableCache;
+    private final AnalysisCrudOperation analysisCrudOperation;
     private final AnalysisDao analysisDao;
-    private final AnalysisCache analysisCache;
     private final DriverInfoDao driverInfoDao;
     private final DriverInfoCache driverInfoCache;
     private final DriverSupportDao driverSupportDao;
@@ -62,6 +59,18 @@ public class ServiceConfiguration {
     private final TaskDao taskDao;
     private final TaskEventDao taskEventDao;
     private final TaskEventCache taskEventCache;
+    private final AnalysisFileInfoCrudOperation analysisFileInfoCrudOperation;
+    private final AnalysisFileInfoDao analysisFileInfoDao;
+    private final AnalysisFilePackCrudOperation analysisFilePackCrudOperation;
+    private final AnalysisFilePackDao analysisFilePackDao;
+    private final AnalysisFilePackItemInfoCrudOperation analysisFilePackItemInfoCrudOperation;
+    private final AnalysisFilePackItemInfoDao analysisFilePackItemInfoDao;
+    private final AnalysisPictureInfoCrudOperation analysisPictureInfoCrudOperation;
+    private final AnalysisPictureInfoDao analysisPictureInfoDao;
+    private final AnalysisPicturePackCrudOperation analysisPicturePackCrudOperation;
+    private final AnalysisPicturePackDao analysisPicturePackDao;
+    private final AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation;
+    private final AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao;
 
     @Value("${cache.timeout.entity.alarm_history}")
     private long alarmHistoryTimeout;
@@ -73,8 +82,6 @@ public class ServiceConfiguration {
     private long analyserSupportTimeout;
     @Value("${cache.timeout.entity.analyser_variable}")
     private long analyserVariableTimeout;
-    @Value("${cache.timeout.entity.analysis}")
-    private long analysisTimeout;
     @Value("${cache.timeout.entity.driver_info}")
     private long driverInfoTimeout;
     @Value("${cache.timeout.entity.driver_support}")
@@ -105,8 +112,8 @@ public class ServiceConfiguration {
             AnalyserSupportCache analyserSupportCache,
             AnalyserVariableDao analyserVariableDao,
             AnalyserVariableCache analyserVariableCache,
+            AnalysisCrudOperation analysisCrudOperation,
             AnalysisDao analysisDao,
-            AnalysisCache analysisCache,
             DriverInfoDao driverInfoDao,
             DriverInfoCache driverInfoCache,
             DriverSupportDao driverSupportDao,
@@ -126,7 +133,19 @@ public class ServiceConfiguration {
             TaskCrudOperation taskCrudOperation,
             TaskDao taskDao,
             TaskEventDao taskEventDao,
-            TaskEventCache taskEventCache
+            TaskEventCache taskEventCache,
+            AnalysisFileInfoCrudOperation analysisFileInfoCrudOperation,
+            AnalysisFileInfoDao analysisFileInfoDao,
+            AnalysisFilePackCrudOperation analysisFilePackCrudOperation,
+            AnalysisFilePackDao analysisFilePackDao,
+            AnalysisFilePackItemInfoCrudOperation analysisFilePackItemInfoCrudOperation,
+            AnalysisFilePackItemInfoDao analysisFilePackItemInfoDao,
+            AnalysisPictureInfoCrudOperation analysisPictureInfoCrudOperation,
+            AnalysisPictureInfoDao analysisPictureInfoDao,
+            AnalysisPicturePackCrudOperation analysisPicturePackCrudOperation,
+            AnalysisPicturePackDao analysisPicturePackDao,
+            AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation,
+            AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -142,8 +161,8 @@ public class ServiceConfiguration {
         this.analyserSupportCache = analyserSupportCache;
         this.analyserVariableDao = analyserVariableDao;
         this.analyserVariableCache = analyserVariableCache;
+        this.analysisCrudOperation = analysisCrudOperation;
         this.analysisDao = analysisDao;
-        this.analysisCache = analysisCache;
         this.driverInfoDao = driverInfoDao;
         this.driverInfoCache = driverInfoCache;
         this.driverSupportDao = driverSupportDao;
@@ -164,6 +183,18 @@ public class ServiceConfiguration {
         this.taskDao = taskDao;
         this.taskEventDao = taskEventDao;
         this.taskEventCache = taskEventCache;
+        this.analysisFileInfoCrudOperation = analysisFileInfoCrudOperation;
+        this.analysisFileInfoDao = analysisFileInfoDao;
+        this.analysisFilePackCrudOperation = analysisFilePackCrudOperation;
+        this.analysisFilePackDao = analysisFilePackDao;
+        this.analysisFilePackItemInfoCrudOperation = analysisFilePackItemInfoCrudOperation;
+        this.analysisFilePackItemInfoDao = analysisFilePackItemInfoDao;
+        this.analysisPictureInfoCrudOperation = analysisPictureInfoCrudOperation;
+        this.analysisPictureInfoDao = analysisPictureInfoDao;
+        this.analysisPicturePackCrudOperation = analysisPicturePackCrudOperation;
+        this.analysisPicturePackDao = analysisPicturePackDao;
+        this.analysisPicturePackItemInfoCrudOperation = analysisPicturePackItemInfoCrudOperation;
+        this.analysisPicturePackItemInfoDao = analysisPicturePackItemInfoDao;
     }
 
     @Bean
@@ -345,14 +376,12 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralBatchCrudService<AnalysisKey, Analysis> analysisGeneralBatchCrudService() {
-        return new GeneralBatchCrudService<>(
+    public CustomBatchCrudService<AnalysisKey, Analysis> analysisCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
-                analysisDao,
-                analysisCache,
-                new ExceptionKeyGenerator<>(),
-                analysisTimeout
+                analysisCrudOperation,
+                new ExceptionKeyGenerator<>()
         );
     }
 
@@ -665,6 +694,178 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 sectionDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, AnalysisFileInfo> analysisFileInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFileInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalysisFileInfo> analysisFileInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFileInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalysisFileInfo> analysisFileInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFileInfoDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, AnalysisFilePack> analysisFilePackCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFilePackCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalysisFilePack> analysisFilePackDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFilePackDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalysisFilePack> analysisFilePackDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFilePackDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, AnalysisFilePackItemInfo>
+    analysisFilePackItemInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFilePackItemInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalysisFilePackItemInfo> analysisFilePackItemInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFilePackItemInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalysisFilePackItemInfo> analysisFilePackItemInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisFilePackItemInfoDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, AnalysisPictureInfo> analysisPictureInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPictureInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalysisPictureInfo> analysisPictureInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPictureInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalysisPictureInfo> analysisPictureInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPictureInfoDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, AnalysisPicturePack> analysisPicturePackCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPicturePackCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalysisPicturePack> analysisPicturePackDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPicturePackDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalysisPicturePack> analysisPicturePackDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPicturePackDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, AnalysisPicturePackItemInfo>
+    analysisPicturePackItemInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPicturePackItemInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AnalysisPicturePackItemInfo>
+    analysisPicturePackItemInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPicturePackItemInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AnalysisPicturePackItemInfo>
+    analysisPicturePackItemInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                analysisPicturePackItemInfoDao
         );
     }
 }

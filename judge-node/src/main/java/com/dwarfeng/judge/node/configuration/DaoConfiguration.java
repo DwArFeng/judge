@@ -46,6 +46,12 @@ public class DaoConfiguration {
     private final SectionPresetCriteriaMaker sectionPresetCriteriaMaker;
     private final TaskPresetCriteriaMaker taskPresetCriteriaMaker;
     private final TaskEventPresetCriteriaMaker taskEventPresetCriteriaMaker;
+    private final AnalysisFileInfoPresetCriteriaMaker analysisFileInfoPresetCriteriaMaker;
+    private final AnalysisFilePackPresetCriteriaMaker analysisFilePackPresetCriteriaMaker;
+    private final AnalysisFilePackItemInfoPresetCriteriaMaker analysisFilePackItemInfoPresetCriteriaMaker;
+    private final AnalysisPictureInfoPresetCriteriaMaker analysisPictureInfoPresetCriteriaMaker;
+    private final AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker;
+    private final AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -68,7 +74,13 @@ public class DaoConfiguration {
             JudgerVariablePresetCriteriaMaker judgerVariablePresetCriteriaMaker,
             SectionPresetCriteriaMaker sectionPresetCriteriaMaker,
             TaskPresetCriteriaMaker taskPresetCriteriaMaker,
-            TaskEventPresetCriteriaMaker taskEventPresetCriteriaMaker
+            TaskEventPresetCriteriaMaker taskEventPresetCriteriaMaker,
+            AnalysisFileInfoPresetCriteriaMaker analysisFileInfoPresetCriteriaMaker,
+            AnalysisFilePackPresetCriteriaMaker analysisFilePackPresetCriteriaMaker,
+            AnalysisFilePackItemInfoPresetCriteriaMaker analysisFilePackItemInfoPresetCriteriaMaker,
+            AnalysisPictureInfoPresetCriteriaMaker analysisPictureInfoPresetCriteriaMaker,
+            AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker,
+            AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker
     ) {
         this.hibernateTemplate = hibernateTemplate;
         this.alarmHistoryPresetCriteriaMaker = alarmHistoryPresetCriteriaMaker;
@@ -88,6 +100,12 @@ public class DaoConfiguration {
         this.sectionPresetCriteriaMaker = sectionPresetCriteriaMaker;
         this.taskPresetCriteriaMaker = taskPresetCriteriaMaker;
         this.taskEventPresetCriteriaMaker = taskEventPresetCriteriaMaker;
+        this.analysisFileInfoPresetCriteriaMaker = analysisFileInfoPresetCriteriaMaker;
+        this.analysisFilePackPresetCriteriaMaker = analysisFilePackPresetCriteriaMaker;
+        this.analysisFilePackItemInfoPresetCriteriaMaker = analysisFilePackItemInfoPresetCriteriaMaker;
+        this.analysisPictureInfoPresetCriteriaMaker = analysisPictureInfoPresetCriteriaMaker;
+        this.analysisPicturePackPresetCriteriaMaker = analysisPicturePackPresetCriteriaMaker;
+        this.analysisPicturePackItemInfoPresetCriteriaMaker = analysisPicturePackItemInfoPresetCriteriaMaker;
     }
 
     @Bean
@@ -661,6 +679,246 @@ public class DaoConfiguration {
                 new MapStructBeanTransformer<>(Section.class, HibernateSection.class, BeanMapper.class),
                 HibernateSection.class,
                 sectionPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisFileInfo, HibernateAnalysisFileInfo>
+    analysisFileInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        AnalysisFileInfo.class, HibernateAnalysisFileInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisFileInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AnalysisFileInfo, HibernateAnalysisFileInfo>
+    analysisFileInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisFileInfo.class, HibernateAnalysisFileInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisFileInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AnalysisFileInfo, HibernateAnalysisFileInfo>
+    analysisFileInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisFileInfo.class, HibernateAnalysisFileInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisFileInfo.class,
+                analysisFileInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisFilePack, HibernateAnalysisFilePack>
+    analysisFilePackHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        AnalysisFilePack.class, HibernateAnalysisFilePack.class, BeanMapper.class
+                ),
+                HibernateAnalysisFilePack.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AnalysisFilePack, HibernateAnalysisFilePack>
+    analysisFilePackHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisFilePack.class, HibernateAnalysisFilePack.class, BeanMapper.class
+                ),
+                HibernateAnalysisFilePack.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AnalysisFilePack, HibernateAnalysisFilePack>
+    analysisFilePackHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisFilePack.class, HibernateAnalysisFilePack.class, BeanMapper.class
+                ),
+                HibernateAnalysisFilePack.class,
+                analysisFilePackPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisFilePackItemInfo,
+            HibernateAnalysisFilePackItemInfo> analysisFilePackItemInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        AnalysisFilePackItemInfo.class, HibernateAnalysisFilePackItemInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisFilePackItemInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AnalysisFilePackItemInfo, HibernateAnalysisFilePackItemInfo>
+    analysisFilePackItemInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisFilePackItemInfo.class, HibernateAnalysisFilePackItemInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisFilePackItemInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AnalysisFilePackItemInfo, HibernateAnalysisFilePackItemInfo>
+    analysisFilePackItemInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisFilePackItemInfo.class, HibernateAnalysisFilePackItemInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisFilePackItemInfo.class,
+                analysisFilePackItemInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisPictureInfo, HibernateAnalysisPictureInfo>
+    analysisPictureInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        AnalysisPictureInfo.class, HibernateAnalysisPictureInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisPictureInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AnalysisPictureInfo, HibernateAnalysisPictureInfo>
+    analysisPictureInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisPictureInfo.class, HibernateAnalysisPictureInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisPictureInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AnalysisPictureInfo, HibernateAnalysisPictureInfo>
+    analysisPictureInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisPictureInfo.class, HibernateAnalysisPictureInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisPictureInfo.class,
+                analysisPictureInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisPicturePack, HibernateAnalysisPicturePack>
+    analysisPicturePackHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePack.class, HibernateAnalysisPicturePack.class, BeanMapper.class
+                ),
+                HibernateAnalysisPicturePack.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AnalysisPicturePack, HibernateAnalysisPicturePack>
+    analysisPicturePackHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePack.class, HibernateAnalysisPicturePack.class, BeanMapper.class
+                ),
+                HibernateAnalysisPicturePack.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AnalysisPicturePack, HibernateAnalysisPicturePack>
+    analysisPicturePackHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePack.class, HibernateAnalysisPicturePack.class, BeanMapper.class
+                ),
+                HibernateAnalysisPicturePack.class,
+                analysisPicturePackPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisPicturePackItemInfo,
+            HibernateAnalysisPicturePackItemInfo> analysisPicturePackItemInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePackItemInfo.class, HibernateAnalysisPicturePackItemInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisPicturePackItemInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AnalysisPicturePackItemInfo, HibernateAnalysisPicturePackItemInfo>
+    analysisPicturePackItemInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePackItemInfo.class, HibernateAnalysisPicturePackItemInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisPicturePackItemInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AnalysisPicturePackItemInfo, HibernateAnalysisPicturePackItemInfo>
+    analysisPicturePackItemInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        AnalysisPicturePackItemInfo.class, HibernateAnalysisPicturePackItemInfo.class, BeanMapper.class
+                ),
+                HibernateAnalysisPicturePackItemInfo.class,
+                analysisPicturePackItemInfoPresetCriteriaMaker
         );
     }
 }

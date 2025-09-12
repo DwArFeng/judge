@@ -24,6 +24,40 @@ public class FtpPathResolver {
     public static final char ROOT_PATH_STRING_SEPARATOR = '/';
     public static final String ROOT_PATH_STRING_SEPARATOR_STRING = String.valueOf(ROOT_PATH_STRING_SEPARATOR);
 
+    /**
+     * 分析结果文件文件的相对路径。
+     */
+    public static final String[] RELATIVE_ANALYSIS_FILE_FILE = new String[]{"analysis-file-file"};
+
+    /**
+     * 分析结果文件包条目文件的相对路径。
+     */
+    public static final String[] RELATIVE_ANALYSIS_FILE_PACK_ITEM_FILE = new String[]{"analysis-file-pack-item-file"};
+
+    /**
+     * 分析结果图片文件的相对路径。
+     */
+    public static final String[] RELATIVE_ANALYSIS_PICTURE_FILE = new String[]{"analysis-picture-file"};
+
+    /**
+     * 分析结果图片包条目文件的相对路径。
+     */
+    public static final String[] RELATIVE_ANALYSIS_PICTURE_PACK_ITEM_FILE = new String[]{
+            "analysis-picture-pack-item-file"
+    };
+
+    /**
+     * 分析结果图片缩略图的相对路径。
+     */
+    public static final String[] RELATIVE_ANALYSIS_PICTURE_THUMBNAIL = new String[]{"analysis-picture-thumbnail"};
+
+    /**
+     * 分析结果图片包条目缩略图的相对路径。
+     */
+    public static final String[] RELATIVE_ANALYSIS_PICTURE_PACK_ITEM_THUMBNAIL = new String[]{
+            "analysis-picture-pack-item-thumbnail"
+    };
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FtpPathResolver.class);
 
     @Value("${ftp.root_path}")
@@ -42,7 +76,12 @@ public class FtpPathResolver {
      * <p>
      * 对于 <code>relativePath</code> 参数，调用人员应确保只使用如下合法值:
      * <ul>
-     *     <li>暂无，待后续补充</li>
+     *     <li>{@link #RELATIVE_ANALYSIS_FILE_FILE}</li>
+     *     <li>{@link #RELATIVE_ANALYSIS_FILE_PACK_ITEM_FILE}</li>
+     *     <li>{@link #RELATIVE_ANALYSIS_PICTURE_FILE}</li>
+     *     <li>{@link #RELATIVE_ANALYSIS_PICTURE_PACK_ITEM_FILE}</li>
+     *     <li>{@link #RELATIVE_ANALYSIS_PICTURE_THUMBNAIL}</li>
+     *     <li>{@link #RELATIVE_ANALYSIS_PICTURE_PACK_ITEM_THUMBNAIL}</li>
      * </ul>
      *
      * @param relativePath 相对路径。

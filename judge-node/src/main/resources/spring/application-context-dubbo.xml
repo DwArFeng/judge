@@ -107,6 +107,36 @@
             ref="sectionMaintainServiceImpl"
             group="${dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalysisFileInfoMaintainService"
+            ref="analysisFileInfoMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalysisFilePackMaintainService"
+            ref="analysisFilePackMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalysisFilePackItemInfoMaintainService"
+            ref="analysisFilePackItemInfoMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalysisPictureInfoMaintainService"
+            ref="analysisPictureInfoMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalysisPicturePackMaintainService"
+            ref="analysisPicturePackMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalysisPicturePackItemInfoMaintainService"
+            ref="analysisPicturePackItemInfoMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
 
     <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
     <dubbo:reference

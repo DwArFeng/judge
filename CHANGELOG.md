@@ -28,6 +28,12 @@
   - com.dwarfeng.judge.stack.service.SectionMaintainService。
   - com.dwarfeng.judge.stack.service.TaskEventMaintainService。
   - com.dwarfeng.judge.stack.service.TaskMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalysisFileInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalysisFilePackItemInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalysisFilePackMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalysisPictureInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalysisPicturePackItemInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.AnalysisPicturePackMaintainService。
 
 ### Bug 修复
 
