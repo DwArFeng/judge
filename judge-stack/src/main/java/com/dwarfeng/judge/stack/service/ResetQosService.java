@@ -43,4 +43,12 @@ public interface ResetQosService extends Service {
      * @throws ServiceException 服务异常。
      */
     void stop() throws ServiceException;
+
+    /**
+     * 重置作业功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.0.0
+     */
+    void resetJob() throws ServiceException;
 }

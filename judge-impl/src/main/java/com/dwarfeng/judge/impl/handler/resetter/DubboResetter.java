@@ -1,7 +1,11 @@
 package com.dwarfeng.judge.impl.handler.resetter;
 
 import com.dwarfeng.judge.sdk.handler.resetter.AbstractResetter;
+import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
+import com.dwarfeng.subgrade.stack.log.LogLevel;
 import com.dwarfeng.subgrade.stack.service.Service;
 import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.RegistryConfig;
@@ -122,13 +126,45 @@ public class DubboResetter extends AbstractResetter {
     }
 
     public interface DubboResetService extends Service {
+
+        /**
+         * 重置作业功能。
+         *
+         * <p>
+         * 因为 Dubbo 广播响应机制无法处理 void 返回类型，所以方法需要返回一个结果。
+         *
+         * @return 恒为 true。
+         * @throws ServiceException 服务异常。
+         */
+        @SuppressWarnings("SameReturnValue")
+        boolean resetJob() throws ServiceException;
     }
 
-    @SuppressWarnings("InnerClassMayBeStatic")
     @org.springframework.stereotype.Service
     public class DubboResetServiceImpl implements DubboResetService {
 
-        public DubboResetServiceImpl() {
+        private final ServiceExceptionMapper sem;
+
+        public DubboResetServiceImpl(ServiceExceptionMapper sem) {
+            this.sem = sem;
+        }
+
+        @Override
+        public boolean resetJob() throws ServiceException {
+            try {
+                LOGGER.info("接收到作业功能重置消息, 正在重置作业功能...");
+                context.resetJob();
+                return true;
+            } catch (Exception e) {
+                throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "DubboResetServiceImpl{" +
+                    "sem=" + sem +
+                    '}';
         }
     }
 }

@@ -42,5 +42,13 @@ public interface Resetter {
      * @since 1.8.0
      */
     interface Context {
+
+        /**
+         * 重置作业功能。
+         *
+         * @throws Exception 作业重置时抛出的任何异常。
+         * @since 2.0.0
+         */
+        void resetJob() throws Exception;
     }
 }

@@ -74,4 +74,12 @@ public interface Pusher {
      * @since 2.0.0
      */
     void alarmModalUpdated(AlarmModal alarmModal) throws HandlerException;
+
+    /**
+     * 作业功能重置时作业的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.0.0
+     */
+    void jobReset() throws HandlerException;
 }

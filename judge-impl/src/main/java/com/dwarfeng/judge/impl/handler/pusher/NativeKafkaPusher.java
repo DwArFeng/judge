@@ -8,6 +8,7 @@ import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
 import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -50,6 +51,8 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String judgementUpdatedTopic;
     @Value("${pusher.kafka.native.topic.alarm_updated}")
     private String alarmUpdatedTopic;
+    @Value("${pusher.kafka.native.topic.job_reset}")
+    private String jobResetTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
@@ -89,6 +92,11 @@ public class NativeKafkaPusher extends AbstractPusher {
     }
 
     @Override
+    public void jobReset() {
+        kafkaTemplate.send(jobResetTopic, StringUtils.EMPTY);
+    }
+
+    @Override
     public String toString() {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
@@ -98,6 +106,7 @@ public class NativeKafkaPusher extends AbstractPusher {
                 ", taskDiedTopic='" + taskDiedTopic + '\'' +
                 ", judgementUpdatedTopic='" + judgementUpdatedTopic + '\'' +
                 ", alarmUpdatedTopic='" + alarmUpdatedTopic + '\'' +
+                ", jobResetTopic='" + jobResetTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';
     }

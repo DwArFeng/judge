@@ -51,12 +51,19 @@ public class CronResetter extends AbstractResetter {
                 '}';
     }
 
-    @SuppressWarnings("InnerClassMayBeStatic")
     private class ResetTask implements Runnable {
 
         @Override
         public void run() {
-            LOGGER.info("计划时间已到, 重置相关功能...");
+            try {
+                LOGGER.info("计划时间已到, 重置相关功能...");
+                LOGGER.info("重置作业功能...");
+                context.resetJob();
+            } catch (Exception e) {
+                String message = "重置器 " + CronResetter.this +
+                        " 执行重置调度时发生异常, 相关工功能可能不会完全重置, 异常信息如下: ";
+                LOGGER.warn(message, e);
+            }
         }
     }
 }

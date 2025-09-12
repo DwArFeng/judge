@@ -20,7 +20,6 @@ public class ResetHandlerImpl implements ResetHandler {
 
     private final GeneralStartableHandler startableHandler;
 
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final ResetProcessor resetProcessor;
 
     private final Lock lock = new ReentrantLock();
@@ -59,6 +58,17 @@ public class ResetHandlerImpl implements ResetHandler {
         lock.lock();
         try {
             startableHandler.stop();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @BehaviorAnalyse
+    @Override
+    public void resetJob() throws HandlerException {
+        lock.lock();
+        try {
+            resetProcessor.resetJob();
         } finally {
             lock.unlock();
         }

@@ -61,6 +61,11 @@ public abstract class PusherAdapter extends AbstractPusher {
     public void alarmModalUpdated(AlarmModal alarmModal) throws HandlerException {
     }
 
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void jobReset() throws HandlerException {
+    }
+
     @Override
     public String toString() {
         return "PusherAdapter{" +

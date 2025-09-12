@@ -11,6 +11,7 @@
   - com.dwarfeng.judge.impl.handler.analyser.groovy.GroovyAnalyserRegistry。
 
 - 实现核心机制。
+  - 作业机制。
   - 判断机制。
   - 分析机制。
 

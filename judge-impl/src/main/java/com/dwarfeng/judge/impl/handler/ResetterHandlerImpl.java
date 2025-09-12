@@ -16,7 +16,6 @@ public class ResetterHandlerImpl implements ResetterHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResetterHandlerImpl.class);
 
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final ResetProcessor resetProcessor;
 
     private final List<Resetter> resetters;
@@ -39,7 +38,11 @@ public class ResetterHandlerImpl implements ResetterHandler {
         return resetters;
     }
 
-    @SuppressWarnings("InnerClassMayBeStatic")
     private class InternalResetterContext implements Resetter.Context {
+
+        @Override
+        public void resetJob() throws Exception {
+            resetProcessor.resetJob();
+        }
     }
 }
