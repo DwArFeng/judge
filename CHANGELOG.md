@@ -4,10 +4,14 @@
 
 ### 功能构建
 
+- 实现预设判断器。
+  - com.dwarfeng.judge.impl.handler.judger.groovy.GroovyJudgerRegistry。
+
 - 实现预设分析器。
   - com.dwarfeng.judge.impl.handler.analyser.groovy.GroovyAnalyserRegistry。
 
 - 实现核心机制。
+  - 判断机制。
   - 分析机制。
 
 - 增加操作服务。

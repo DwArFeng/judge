@@ -58,6 +58,15 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(192), "analyser execution failed");
     public static final ServiceException.Code ANALYSER_TYPE_UNSUPPORTED =
             new ServiceException.Code(offset(193), "analyser type unsupported");
+    public static final ServiceException.Code JUDGER_FAILED =
+            new ServiceException.Code(offset(200), "judger failed");
+    public static final ServiceException.Code JUDGER_MAKE_FAILED =
+            new ServiceException.Code(offset(201), "judger make failed");
+    public static final ServiceException.Code JUDGER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(202), "judger execution failed");
+    public static final ServiceException.Code JUDGER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(203), "judger type unsupported");
+
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -105,6 +114,10 @@ public final class ServiceExceptionCodes {
         ANALYSER_MAKE_FAILED.setCode(offset(191));
         ANALYSER_EXECUTION_FAILED.setCode(offset(192));
         ANALYSER_TYPE_UNSUPPORTED.setCode(offset(193));
+        JUDGER_FAILED.setCode(offset(200));
+        JUDGER_MAKE_FAILED.setCode(offset(201));
+        JUDGER_EXECUTION_FAILED.setCode(offset(202));
+        JUDGER_TYPE_UNSUPPORTED.setCode(offset(203));
     }
 
     private ServiceExceptionCodes() {
