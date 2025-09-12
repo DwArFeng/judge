@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.JobLocalCacheCommand。
+
 - 实现预设判断器。
   - com.dwarfeng.judge.impl.handler.judger.groovy.GroovyJudgerRegistry。
 
