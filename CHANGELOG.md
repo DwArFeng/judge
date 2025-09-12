@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 实现预设分析器。
+  - com.dwarfeng.judge.impl.handler.analyser.groovy.GroovyAnalyserRegistry。
+
+- 实现核心机制。
+  - 分析机制。
+
 - 增加操作服务。
   - com.dwarfeng.judge.stack.service.AnalysisFileFileOperateService。
   - com.dwarfeng.judge.stack.service.AnalysisFilePackItemFileOperateService。

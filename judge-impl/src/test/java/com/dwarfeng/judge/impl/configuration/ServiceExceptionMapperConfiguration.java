@@ -37,6 +37,10 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(InvalidAnalysisDataTypeException.class, ServiceExceptionCodes.INVALID_ANALYSIS_DATA_TYPE);
         destination.put(InvalidAnalysisFilePackUpsertTypeException.class, ServiceExceptionCodes.INVALID_ANALYSIS_FILE_PACK_UPSERT_TYPE);
         destination.put(InvalidAnalysisPicturePackUpsertTypeException.class, ServiceExceptionCodes.INVALID_ANALYSIS_PICTURE_PACK_UPSERT_TYPE);
+        destination.put(AnalyserException.class, ServiceExceptionCodes.ANALYSER_FAILED);
+        destination.put(AnalyserMakeException.class, ServiceExceptionCodes.ANALYSER_MAKE_FAILED);
+        destination.put(AnalyserExecutionException.class, ServiceExceptionCodes.ANALYSER_EXECUTION_FAILED);
+        destination.put(UnsupportedAnalyserTypeException.class, ServiceExceptionCodes.ANALYSER_TYPE_UNSUPPORTED);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

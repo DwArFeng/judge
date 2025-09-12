@@ -50,6 +50,14 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(170), "invalid analysis file pack upsert type");
     public static final ServiceException.Code INVALID_ANALYSIS_PICTURE_PACK_UPSERT_TYPE =
             new ServiceException.Code(offset(180), "invalid analysis picture pack upsert type");
+    public static final ServiceException.Code ANALYSER_FAILED =
+            new ServiceException.Code(offset(190), "analyser failed");
+    public static final ServiceException.Code ANALYSER_MAKE_FAILED =
+            new ServiceException.Code(offset(191), "analyser make failed");
+    public static final ServiceException.Code ANALYSER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(192), "analyser execution failed");
+    public static final ServiceException.Code ANALYSER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(193), "analyser type unsupported");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -93,6 +101,10 @@ public final class ServiceExceptionCodes {
         INVALID_ANALYSIS_DATA_TYPE.setCode(offset(160));
         INVALID_ANALYSIS_FILE_PACK_UPSERT_TYPE.setCode(offset(170));
         INVALID_ANALYSIS_PICTURE_PACK_UPSERT_TYPE.setCode(offset(180));
+        ANALYSER_FAILED.setCode(offset(190));
+        ANALYSER_MAKE_FAILED.setCode(offset(191));
+        ANALYSER_EXECUTION_FAILED.setCode(offset(192));
+        ANALYSER_TYPE_UNSUPPORTED.setCode(offset(193));
     }
 
     private ServiceExceptionCodes() {
