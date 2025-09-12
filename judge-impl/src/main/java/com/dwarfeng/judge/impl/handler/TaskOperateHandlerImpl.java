@@ -286,7 +286,7 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         // 获取任务。
         Task task = taskMaintainService.get(taskKey);
 
-        // 更新分析任务状态。
+        // 更新任务状态。
         Date currentDate = new Date();
         task.setStatus(Constants.TASK_STATUS_EXPIRED);
         task.setEndedDate(currentDate);

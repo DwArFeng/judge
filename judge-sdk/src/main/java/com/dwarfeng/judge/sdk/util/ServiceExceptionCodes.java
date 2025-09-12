@@ -40,6 +40,16 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(120), "analysis picture pack item not exists");
     public static final ServiceException.Code ANALYSIS_PICTURE_PACK_NOT_EXISTS =
             new ServiceException.Code(offset(130), "analysis picture pack not exists");
+    public static final ServiceException.Code ANALYSE_DATA_TYPE_ANALYSIS_VALUE_MISMATCH =
+            new ServiceException.Code(offset(140), "analyse data type analysis value mismatch");
+    public static final ServiceException.Code ANALYSIS_NOT_EXISTS =
+            new ServiceException.Code(offset(150), "analysis not exists");
+    public static final ServiceException.Code INVALID_ANALYSIS_DATA_TYPE =
+            new ServiceException.Code(offset(160), "invalid analysis data type");
+    public static final ServiceException.Code INVALID_ANALYSIS_FILE_PACK_UPSERT_TYPE =
+            new ServiceException.Code(offset(170), "invalid analysis file pack upsert type");
+    public static final ServiceException.Code INVALID_ANALYSIS_PICTURE_PACK_UPSERT_TYPE =
+            new ServiceException.Code(offset(180), "invalid analysis picture pack upsert type");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -78,6 +88,11 @@ public final class ServiceExceptionCodes {
         ANALYSIS_PICTURE_NOT_EXISTS.setCode(offset(110));
         ANALYSIS_PICTURE_PACK_ITEM_NOT_EXISTS.setCode(offset(120));
         ANALYSIS_PICTURE_PACK_NOT_EXISTS.setCode(offset(130));
+        ANALYSE_DATA_TYPE_ANALYSIS_VALUE_MISMATCH.setCode(offset(140));
+        ANALYSIS_NOT_EXISTS.setCode(offset(150));
+        INVALID_ANALYSIS_DATA_TYPE.setCode(offset(160));
+        INVALID_ANALYSIS_FILE_PACK_UPSERT_TYPE.setCode(offset(170));
+        INVALID_ANALYSIS_PICTURE_PACK_UPSERT_TYPE.setCode(offset(180));
     }
 
     private ServiceExceptionCodes() {

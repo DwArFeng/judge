@@ -1,8 +1,13 @@
 package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.util.Constants;
+import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackUpsertInfo;
+import com.dwarfeng.judge.stack.bean.dto.AnalysisFileUpsertInfo;
+import com.dwarfeng.judge.stack.bean.dto.AnalysisPicturePackUpsertInfo;
+import com.dwarfeng.judge.stack.bean.dto.AnalysisPictureUpsertInfo;
 import com.dwarfeng.judge.stack.bean.entity.Task;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
+import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.judge.stack.exception.*;
 import com.dwarfeng.judge.stack.service.*;
@@ -38,6 +43,7 @@ public class HandlerValidator {
     private final AnalysisPictureInfoMaintainService analysisPictureInfoMaintainService;
     private final AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService;
     private final AnalysisPicturePackMaintainService analysisPicturePackMaintainService;
+    private final AnalysisMaintainService analysisMaintainService;
 
     public HandlerValidator(
             AnalyserInfoMaintainService analyserInfoMaintainService,
@@ -51,7 +57,8 @@ public class HandlerValidator {
             AnalysisFilePackMaintainService analysisFilePackMaintainService,
             AnalysisPictureInfoMaintainService analysisPictureInfoMaintainService,
             AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService,
-            AnalysisPicturePackMaintainService analysisPicturePackMaintainService
+            AnalysisPicturePackMaintainService analysisPicturePackMaintainService,
+            AnalysisMaintainService analysisMaintainService
     ) {
         this.analyserInfoMaintainService = analyserInfoMaintainService;
         this.judgerInfoMaintainService = judgerInfoMaintainService;
@@ -65,6 +72,7 @@ public class HandlerValidator {
         this.analysisPictureInfoMaintainService = analysisPictureInfoMaintainService;
         this.analysisPicturePackItemInfoMaintainService = analysisPicturePackItemInfoMaintainService;
         this.analysisPicturePackMaintainService = analysisPicturePackMaintainService;
+        this.analysisMaintainService = analysisMaintainService;
     }
 
     public void makeSureAnalyserInfoExists(LongIdKey analyserInfoKey) throws HandlerException {
@@ -200,6 +208,90 @@ public class HandlerValidator {
         try {
             if (!analysisPicturePackMaintainService.exists(analysisPicturePackKey)) {
                 throw new AnalysisPicturePackNotExistsException(analysisPicturePackKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureAnalysisDataTypeAnalysisValueMatch(int dataType, Object value) throws HandlerException {
+        // 确认 dataType 在值空间中。
+        if (!Constants.analysisTypeSpace().contains(dataType)) {
+            throw new InvalidAnalysisDataTypeException(dataType);
+        }
+        /*
+         * 按照以下规则对 dataType 和 value 进行判断。
+         *   dataType - value
+         *   Constants.ANALYSIS_TYPE_STRING - java.lang.String
+         *   Constants.ANALYSIS_TYPE_LONG - java.lang.Long
+         *   Constants.ANALYSIS_TYPE_DOUBLE - java.lang.Double
+         *   Constants.ANALYSIS_TYPE_BOOLEAN - java.lang.Boolean
+         *   Constants.ANALYSIS_TYPE_DATE - java.util.Date
+         *   Constants.ANALYSIS_TYPE_PICTURE - AnalysisPictureUpsertInfo
+         *   Constants.ANALYSIS_TYPE_PICTURE_PACK - AnalysisPicturePackUpsertInfo
+         */
+        Class<?> expectedValueClazz;
+        // 之前的代码已经保证了 dataType 是合法的，因此不需要做 fallback case。
+        switch (dataType) {
+            case Constants.ANALYSIS_TYPE_STRING:
+                expectedValueClazz = String.class;
+                break;
+            case Constants.ANALYSIS_TYPE_LONG:
+                expectedValueClazz = Long.class;
+                break;
+            case Constants.ANALYSIS_TYPE_DOUBLE:
+                expectedValueClazz = Double.class;
+                break;
+            case Constants.ANALYSIS_TYPE_BOOLEAN:
+                expectedValueClazz = Boolean.class;
+                break;
+            case Constants.ANALYSIS_TYPE_DATE:
+                expectedValueClazz = java.util.Date.class;
+                break;
+            case Constants.ANALYSIS_TYPE_PICTURE:
+                expectedValueClazz = AnalysisPictureUpsertInfo.class;
+                break;
+            case Constants.ANALYSIS_TYPE_PICTURE_PACK:
+                expectedValueClazz = AnalysisPicturePackUpsertInfo.class;
+                break;
+            case Constants.ANALYSIS_TYPE_FILE:
+                expectedValueClazz = AnalysisFileUpsertInfo.class;
+                break;
+            case Constants.ANALYSIS_TYPE_FILE_PACK:
+                expectedValueClazz = AnalysisFilePackUpsertInfo.class;
+                break;
+            default:
+                throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+        }
+        Class<?> actualValueClazz;
+        if (Objects.isNull(value)) {
+            actualValueClazz = Void.class;
+        } else {
+            actualValueClazz = value.getClass();
+        }
+        if (!expectedValueClazz.isAssignableFrom(actualValueClazz)) {
+            throw new AnalysisDataTypeAnalysisValueMismatchException(
+                    dataType, expectedValueClazz, actualValueClazz
+            );
+        }
+    }
+
+    public void makeSureAnalysisFilePackUpsertTypeValid(int upsertType) throws HandlerException {
+        if (!Constants.analysisFilePackUpsertTypeSpace().contains(upsertType)) {
+            throw new InvalidAnalysisFilePackUpsertTypeException(upsertType);
+        }
+    }
+
+    public void makeSureAnalysisPicturePackUpsertTypeValid(int upsertType) throws HandlerException {
+        if (!Constants.analysisPicturePackUpsertTypeSpace().contains(upsertType)) {
+            throw new InvalidAnalysisPicturePackUpsertTypeException(upsertType);
+        }
+    }
+
+    public void makeSureAnalysisExists(AnalysisKey analysisKey) throws HandlerException {
+        try {
+            if (!analysisMaintainService.exists(analysisKey)) {
+                throw new AnalysisNotExistsException(analysisKey);
             }
         } catch (ServiceException e) {
             throw new HandlerException(e);

@@ -53,10 +53,22 @@ public final class Constants {
     @AnalysisTypeItem
     public static final int ANALYSIS_TYPE_FILE_PACK = 8;
 
+    @AnalysisFilePackUpsertTypeItem
+    public static final int ANALYSE_FILE_PACK_UPSERT_TYPE_APPEND = 0;
+    @AnalysisFilePackUpsertTypeItem
+    public static final int ANALYSE_FILE_PACK_UPSERT_TYPE_REPLACE = 1;
+
+    @AnalysisPicturePackUpsertTypeItem
+    public static final int ANALYSE_PICTURE_PACK_UPSERT_TYPE_APPEND = 0;
+    @AnalysisPicturePackUpsertTypeItem
+    public static final int ANALYSE_PICTURE_PACK_UPSERT_TYPE_REPLACE = 1;
+
     private static final Lock LOCK = new ReentrantLock();
 
     private static List<Integer> taskStatusSpace = null;
     private static List<Integer> analysisTypeSpace = null;
+    private static List<Integer> analysisFilePackUpsertTypeSpace = null;
+    private static List<Integer> analysisPicturePackUpsertTypeSpace = null;
 
     /**
      * 任务状态空间。
@@ -140,6 +152,90 @@ public final class Constants {
         }
 
         analysisTypeSpace = Collections.unmodifiableList(result);
+    }
+
+    /**
+     * 分析结果文件包插入或更新类型空间。
+     *
+     * @return 分析结果文件包插入或更新类型空间。
+     */
+    public static List<Integer> analysisFilePackUpsertTypeSpace() {
+        if (Objects.nonNull(analysisFilePackUpsertTypeSpace)) {
+            return analysisFilePackUpsertTypeSpace;
+        }
+        // 基于线程安全的懒加载初始化结果列表。
+        LOCK.lock();
+        try {
+            if (Objects.nonNull(analysisFilePackUpsertTypeSpace)) {
+                return analysisFilePackUpsertTypeSpace;
+            }
+            initAnalysisFilePackUpsertTypeSpace();
+            return analysisFilePackUpsertTypeSpace;
+        } finally {
+            LOCK.unlock();
+        }
+    }
+
+    private static void initAnalysisFilePackUpsertTypeSpace() {
+        List<Integer> result = new ArrayList<>();
+
+        Field[] declaredFields = Constants.class.getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+            if (!declaredField.isAnnotationPresent(AnalysisFilePackUpsertTypeItem.class)) {
+                continue;
+            }
+            Integer value;
+            try {
+                value = (Integer) declaredField.get(null);
+                result.add(value);
+            } catch (Exception e) {
+                LOGGER.error("初始化异常, 请检查代码, 信息如下: ", e);
+            }
+        }
+
+        analysisFilePackUpsertTypeSpace = Collections.unmodifiableList(result);
+    }
+
+    /**
+     * 分析结果图片包插入或更新类型空间。
+     *
+     * @return 分析结果图片包插入或更新类型空间。
+     */
+    public static List<Integer> analysisPicturePackUpsertTypeSpace() {
+        if (Objects.nonNull(analysisPicturePackUpsertTypeSpace)) {
+            return analysisPicturePackUpsertTypeSpace;
+        }
+        // 基于线程安全的懒加载初始化结果列表。
+        LOCK.lock();
+        try {
+            if (Objects.nonNull(analysisPicturePackUpsertTypeSpace)) {
+                return analysisPicturePackUpsertTypeSpace;
+            }
+            initAnalysisPicturePackUpsertTypeSpace();
+            return analysisPicturePackUpsertTypeSpace;
+        } finally {
+            LOCK.unlock();
+        }
+    }
+
+    private static void initAnalysisPicturePackUpsertTypeSpace() {
+        List<Integer> result = new ArrayList<>();
+
+        Field[] declaredFields = Constants.class.getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+            if (!declaredField.isAnnotationPresent(AnalysisPicturePackUpsertTypeItem.class)) {
+                continue;
+            }
+            Integer value;
+            try {
+                value = (Integer) declaredField.get(null);
+                result.add(value);
+            } catch (Exception e) {
+                LOGGER.error("初始化异常, 请检查代码, 信息如下: ", e);
+            }
+        }
+
+        analysisPicturePackUpsertTypeSpace = Collections.unmodifiableList(result);
     }
 
     private Constants() {

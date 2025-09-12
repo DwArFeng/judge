@@ -32,6 +32,11 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(AnalysisPictureNotExistsException.class, ServiceExceptionCodes.ANALYSIS_PICTURE_NOT_EXISTS);
         destination.put(AnalysisPicturePackItemNotExistsException.class, ServiceExceptionCodes.ANALYSIS_PICTURE_PACK_ITEM_NOT_EXISTS);
         destination.put(AnalysisPicturePackNotExistsException.class, ServiceExceptionCodes.ANALYSIS_PICTURE_PACK_NOT_EXISTS);
+        destination.put(AnalysisDataTypeAnalysisValueMismatchException.class, ServiceExceptionCodes.ANALYSE_DATA_TYPE_ANALYSIS_VALUE_MISMATCH);
+        destination.put(AnalysisNotExistsException.class, ServiceExceptionCodes.ANALYSIS_NOT_EXISTS);
+        destination.put(InvalidAnalysisDataTypeException.class, ServiceExceptionCodes.INVALID_ANALYSIS_DATA_TYPE);
+        destination.put(InvalidAnalysisFilePackUpsertTypeException.class, ServiceExceptionCodes.INVALID_ANALYSIS_FILE_PACK_UPSERT_TYPE);
+        destination.put(InvalidAnalysisPicturePackUpsertTypeException.class, ServiceExceptionCodes.INVALID_ANALYSIS_PICTURE_PACK_UPSERT_TYPE);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }
