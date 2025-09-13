@@ -10,6 +10,12 @@
   - com.dwarfeng.judge.impl.service.telqos.TaskCheckCommand。
   - com.dwarfeng.judge.impl.service.telqos.JobLocalCacheCommand。
 
+- 实现预设调度器。
+  - com.dwarfeng.judge.impl.handler.dispatcher.DrainDispatcher。
+  - com.dwarfeng.judge.impl.handler.dispatcher.DubboDispatcher。
+  - com.dwarfeng.judge.impl.handler.dispatcher.InjvmDispatcher。
+  - com.dwarfeng.judge.impl.handler.dispatcher.KafkaDispatcher。
+
 - 实现预设接收器。
   - com.dwarfeng.judge.impl.handler.receiver.DoNothingReceiver。
   - com.dwarfeng.judge.impl.handler.receiver.DubboReceiver。
@@ -23,6 +29,7 @@
   - com.dwarfeng.judge.impl.handler.analyser.groovy.GroovyAnalyserRegistry。
 
 - 实现核心机制。
+  - 调度机制。
   - 接收机制。
   - 任务检查机制。
   - 作业机制。

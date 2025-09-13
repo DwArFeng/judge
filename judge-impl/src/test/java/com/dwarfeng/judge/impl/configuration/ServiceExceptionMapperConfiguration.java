@@ -51,6 +51,9 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(ReceiverException.class, ServiceExceptionCodes.RECEIVER_FAILED);
         destination.put(ReceiverNotStartException.class, ServiceExceptionCodes.RECEIVER_NOT_START);
         destination.put(ReceiverExecutionException.class, ServiceExceptionCodes.RECEIVER_EXECUTION_FAILED);
+        destination.put(DispatcherException.class, ServiceExceptionCodes.DISPATCHER_FAILED);
+        destination.put(DispatcherNotStartException.class, ServiceExceptionCodes.DISPATCHER_NOT_START);
+        destination.put(DispatcherExecutionException.class, ServiceExceptionCodes.DISPATCHER_EXECUTION_FAILED);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }
