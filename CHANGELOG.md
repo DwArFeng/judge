@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.SuperviseCommand。
   - com.dwarfeng.judge.impl.service.telqos.DriveCommand。
   - com.dwarfeng.judge.impl.service.telqos.DriveLocalCacheCommand。
   - com.dwarfeng.judge.impl.service.telqos.DispatchCommand。
