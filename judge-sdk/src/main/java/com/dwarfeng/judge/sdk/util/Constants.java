@@ -63,6 +63,11 @@ public final class Constants {
     @AnalysisPicturePackUpsertTypeItem
     public static final int ANALYSE_PICTURE_PACK_UPSERT_TYPE_REPLACE = 1;
 
+    /**
+     * 消费者处理器的检查间隔。
+     */
+    public static final long CONSUMER_HANDLER_CHECK_INTERVAL = 5000L;
+
     private static final Lock LOCK = new ReentrantLock();
 
     private static List<Integer> taskStatusSpace = null;

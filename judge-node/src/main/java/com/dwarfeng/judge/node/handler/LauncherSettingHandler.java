@@ -24,6 +24,9 @@ public class LauncherSettingHandler implements Handler {
     @Value("${launcher.enable_task_check_delay}")
     private long enableTaskCheckDelay;
 
+    @Value("${launcher.start_receive_delay}")
+    private long startReceiveDelay;
+
     public boolean isResetAnalyserSupport() {
         return resetAnalyserSupport;
     }
@@ -48,6 +51,10 @@ public class LauncherSettingHandler implements Handler {
         return enableTaskCheckDelay;
     }
 
+    public long getStartReceiveDelay() {
+        return startReceiveDelay;
+    }
+
     @Override
     public String toString() {
         return "LauncherSettingHandler{" +
@@ -57,6 +64,7 @@ public class LauncherSettingHandler implements Handler {
                 ", startResetDelay=" + startResetDelay +
                 ", onlineTaskCheckDelay=" + onlineTaskCheckDelay +
                 ", enableTaskCheckDelay=" + enableTaskCheckDelay +
+                ", startReceiveDelay=" + startReceiveDelay +
                 '}';
     }
 }

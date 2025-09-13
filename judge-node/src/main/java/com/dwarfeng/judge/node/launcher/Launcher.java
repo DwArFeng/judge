@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.node.launcher;
 
 import com.dwarfeng.judge.node.handler.LauncherSettingHandler;
+import com.dwarfeng.judge.stack.service.ReceiveQosService;
 import com.dwarfeng.judge.stack.service.ResetQosService;
 import com.dwarfeng.judge.stack.service.SupportQosService;
 import com.dwarfeng.judge.stack.service.TaskCheckQosService;
@@ -45,6 +46,9 @@ public class Launcher {
             mayOnlineTaskCheck(ctx);
             // 根据启动器设置处理器的设置，选择性启动任务检查服务。
             mayEnableTaskCheck(ctx);
+
+            // 根据启动器设置处理器的设置，选择性启动接收服务。
+            mayStartReceive(ctx);
         });
     }
 
@@ -206,6 +210,41 @@ public class Launcher {
                         }
                     },
                     new Date(System.currentTimeMillis() + enableTaskCheckDelay)
+            );
+        }
+    }
+
+    private static void mayStartReceive(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 获取程序中的 ThreadPoolTaskScheduler，用于处理计划任务。
+        ThreadPoolTaskScheduler scheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
+
+        // 获取接收 QOS 服务。
+        ReceiveQosService receiveQosService = ctx.getBean(ReceiveQosService.class);
+
+        // 判断接收处理器是否启动接收服务，并按条件执行不同的操作。
+        long startReceiveDelay = launcherSettingHandler.getStartReceiveDelay();
+        if (startReceiveDelay == 0) {
+            LOGGER.info("立即启动接收服务...");
+            try {
+                receiveQosService.start();
+            } catch (ServiceException e) {
+                LOGGER.error("无法启动接收服务，异常原因如下", e);
+            }
+        } else if (startReceiveDelay > 0) {
+            LOGGER.info("{} 毫秒后启动接收服务...", startReceiveDelay);
+            scheduler.schedule(
+                    () -> {
+                        LOGGER.info("启动接收服务...");
+                        try {
+                            receiveQosService.start();
+                        } catch (ServiceException e) {
+                            LOGGER.error("无法启动接收服务，异常原因如下", e);
+                        }
+                    },
+                    new Date(System.currentTimeMillis() + startReceiveDelay)
             );
         }
     }
