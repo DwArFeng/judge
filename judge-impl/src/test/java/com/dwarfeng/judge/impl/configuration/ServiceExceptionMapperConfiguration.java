@@ -54,6 +54,8 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(DispatcherException.class, ServiceExceptionCodes.DISPATCHER_FAILED);
         destination.put(DispatcherNotStartException.class, ServiceExceptionCodes.DISPATCHER_NOT_START);
         destination.put(DispatcherExecutionException.class, ServiceExceptionCodes.DISPATCHER_EXECUTION_FAILED);
+        destination.put(DriverException.class, ServiceExceptionCodes.DRIVER_FAILED);
+        destination.put(UnsupportedDriverTypeException.class, ServiceExceptionCodes.DRIVER_TYPE_UNSUPPORTED);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

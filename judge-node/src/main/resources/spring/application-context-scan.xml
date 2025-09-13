@@ -19,6 +19,7 @@
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.judger\..*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.receiver\..*$"/>
         <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.dispatcher\..*$"/>
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.judge\.impl\.handler\.driver\..*$"/>
     </context:component-scan>
     <!--扫描 dao 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.dao"/>

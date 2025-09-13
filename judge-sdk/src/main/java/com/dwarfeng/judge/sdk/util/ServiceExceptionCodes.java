@@ -84,6 +84,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(251), "dispatcher not start");
     public static final ServiceException.Code DISPATCHER_EXECUTION_FAILED =
             new ServiceException.Code(offset(252), "dispatcher execution failed");
+    public static final ServiceException.Code DRIVER_FAILED =
+            new ServiceException.Code(offset(260), "driver failed");
+    public static final ServiceException.Code DRIVER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(261), "driver type unsupported");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -144,6 +148,8 @@ public final class ServiceExceptionCodes {
         DISPATCHER_FAILED.setCode(offset(250));
         DISPATCHER_NOT_START.setCode(offset(251));
         DISPATCHER_EXECUTION_FAILED.setCode(offset(252));
+        DRIVER_FAILED.setCode(offset(260));
+        DRIVER_TYPE_UNSUPPORTED.setCode(offset(261));
     }
 
     private ServiceExceptionCodes() {

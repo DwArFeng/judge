@@ -12,6 +12,16 @@
   - com.dwarfeng.judge.impl.service.telqos.TaskCheckCommand。
   - com.dwarfeng.judge.impl.service.telqos.JobLocalCacheCommand。
 
+- 实现预设驱动器。
+  - com.dwarfeng.judge.impl.handler.driver.CronDriverProvider。
+  - com.dwarfeng.judge.impl.handler.driver.CronDriverSupporter。
+  - com.dwarfeng.judge.impl.handler.driver.DctiKafkaDriverProvider。
+  - com.dwarfeng.judge.impl.handler.driver.DctiKafkaDriverSupporter。
+  - com.dwarfeng.judge.impl.handler.driver.FixedDelayDriverProvider。
+  - com.dwarfeng.judge.impl.handler.driver.FixedDelayDriverSupporter。
+  - com.dwarfeng.judge.impl.handler.driver.FixedRateDriverProvider。
+  - com.dwarfeng.judge.impl.handler.driver.FixedRateDriverSupporter。
+
 - 实现预设调度器。
   - com.dwarfeng.judge.impl.handler.dispatcher.DrainDispatcher。
   - com.dwarfeng.judge.impl.handler.dispatcher.DubboDispatcher。
@@ -31,6 +41,7 @@
   - com.dwarfeng.judge.impl.handler.analyser.groovy.GroovyAnalyserRegistry。
 
 - 实现核心机制。
+  - 驱动机制。
   - 调度机制。
   - 接收机制。
   - 任务检查机制。
