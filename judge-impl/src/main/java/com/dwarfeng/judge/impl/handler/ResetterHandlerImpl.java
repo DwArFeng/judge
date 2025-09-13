@@ -44,5 +44,10 @@ public class ResetterHandlerImpl implements ResetterHandler {
         public void resetJob() throws Exception {
             resetProcessor.resetJob();
         }
+
+        @Override
+        public void resetSupervise() throws Exception {
+            resetProcessor.resetSupervise();
+        }
     }
 }

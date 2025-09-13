@@ -50,6 +50,10 @@ public class DrainPusher extends AbstractPusher {
     }
 
     @Override
+    public void superviseReset() {
+    }
+
+    @Override
     public String toString() {
         return "DrainPusher{" +
                 "pusherType='" + pusherType + '\'' +

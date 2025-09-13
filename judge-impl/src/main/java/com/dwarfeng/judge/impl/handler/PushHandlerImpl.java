@@ -71,6 +71,11 @@ public class PushHandlerImpl implements PushHandler {
     }
 
     @Override
+    public void superviseReset() throws HandlerException {
+        pusher.superviseReset();
+    }
+
+    @Override
     public String toString() {
         return "PushHandlerImpl{" +
                 "pushers=" + pushers +

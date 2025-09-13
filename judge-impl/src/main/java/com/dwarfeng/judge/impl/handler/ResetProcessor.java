@@ -1,8 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.handler.JobLocalCacheHandler;
-import com.dwarfeng.judge.stack.handler.PushHandler;
-import com.dwarfeng.judge.stack.handler.ReceiveHandler;
+import com.dwarfeng.judge.stack.handler.*;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
@@ -26,6 +24,9 @@ public class ResetProcessor {
     private final ReceiveHandler receiveHandler;
     private final JobLocalCacheHandler jobLocalCacheHandler;
 
+    private final SuperviseHandler superviseHandler;
+    private final DriveLocalCacheHandler driveLocalCacheHandler;
+
     private final PushHandler pushHandler;
 
     private final Lock lock = new ReentrantLock();
@@ -33,10 +34,14 @@ public class ResetProcessor {
     public ResetProcessor(
             ReceiveHandler receiveHandler,
             JobLocalCacheHandler jobLocalCacheHandler,
+            SuperviseHandler superviseHandler,
+            DriveLocalCacheHandler driveLocalCacheHandler,
             PushHandler pushHandler
     ) {
         this.receiveHandler = receiveHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
+        this.superviseHandler = superviseHandler;
+        this.driveLocalCacheHandler = driveLocalCacheHandler;
         this.pushHandler = pushHandler;
     }
 
@@ -69,6 +74,38 @@ public class ResetProcessor {
             pushHandler.jobReset();
         } catch (Exception e) {
             LOGGER.warn("推送作业功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
+    }
+
+    public void resetSupervise() throws HandlerException {
+        lock.lock();
+        try {
+            doResetSupervise();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetSupervise() throws Exception {
+        // 获取当前的主管处理器的状态。
+        boolean superviseHandlerStarted = superviseHandler.isStarted();
+
+        // 主管处理器停止，且清空本地缓存。
+        superviseHandler.stop();
+        driveLocalCacheHandler.clear();
+
+        // 如果主管处理器之前是启动的，则重新启动。
+        if (superviseHandlerStarted) {
+            superviseHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.superviseReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送主管功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
     }
 }

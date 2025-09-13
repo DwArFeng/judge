@@ -43,6 +43,7 @@
   - com.dwarfeng.judge.impl.handler.analyser.groovy.GroovyAnalyserRegistry。
 
 - 实现核心机制。
+  - 主管机制。
   - 驱动机制。
   - 调度机制。
   - 接收机制。

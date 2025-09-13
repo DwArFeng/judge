@@ -18,4 +18,12 @@ public interface ResetHandler extends StartableHandler {
      * @since 2.0.0
      */
     void resetJob() throws HandlerException;
+
+    /**
+     * 重置主管功能。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.0.0
+     */
+    void resetSupervise() throws HandlerException;
 }

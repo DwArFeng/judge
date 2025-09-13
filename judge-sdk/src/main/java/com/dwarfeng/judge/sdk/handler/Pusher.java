@@ -82,4 +82,12 @@ public interface Pusher {
      * @since 2.0.0
      */
     void jobReset() throws HandlerException;
+
+    /**
+     * 主管功能重置时执行的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.0.0
+     */
+    void superviseReset() throws HandlerException;
 }

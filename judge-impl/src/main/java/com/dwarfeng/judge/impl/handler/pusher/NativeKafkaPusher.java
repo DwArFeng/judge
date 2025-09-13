@@ -22,6 +22,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,8 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String alarmUpdatedTopic;
     @Value("${pusher.kafka.native.topic.job_reset}")
     private String jobResetTopic;
+    @Value("${pusher.kafka.native.topic.supervise_reset}")
+    private String superviseResetTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
@@ -96,6 +99,12 @@ public class NativeKafkaPusher extends AbstractPusher {
         kafkaTemplate.send(jobResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void superviseReset() {
+        kafkaTemplate.send(superviseResetTopic, StringUtils.EMPTY);
+    }
+
     @Override
     public String toString() {
         return "NativeKafkaPusher{" +
@@ -107,6 +116,7 @@ public class NativeKafkaPusher extends AbstractPusher {
                 ", judgementUpdatedTopic='" + judgementUpdatedTopic + '\'' +
                 ", alarmUpdatedTopic='" + alarmUpdatedTopic + '\'' +
                 ", jobResetTopic='" + jobResetTopic + '\'' +
+                ", superviseResetTopic='" + superviseResetTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';
     }

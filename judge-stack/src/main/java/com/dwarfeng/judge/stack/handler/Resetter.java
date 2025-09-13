@@ -50,5 +50,13 @@ public interface Resetter {
          * @since 2.0.0
          */
         void resetJob() throws Exception;
+
+        /**
+         * 重置主管功能。
+         *
+         * @throws Exception 执行重置时抛出的任何异常。
+         * @since 2.0.0
+         */
+        void resetSupervise() throws Exception;
     }
 }

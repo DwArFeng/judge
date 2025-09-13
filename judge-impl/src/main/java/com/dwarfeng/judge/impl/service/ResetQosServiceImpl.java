@@ -80,4 +80,13 @@ public class ResetQosServiceImpl implements ResetQosService {
             throw ServiceExceptionHelper.logParse("重置作业功能时发生异常", LogLevel.WARN, e, sem);
         }
     }
+
+    @Override
+    public void resetSupervise() throws ServiceException {
+        try {
+            resetHandler.resetSupervise();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("重置主管功能时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
 }

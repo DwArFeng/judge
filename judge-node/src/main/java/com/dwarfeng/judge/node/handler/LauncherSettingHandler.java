@@ -27,6 +27,11 @@ public class LauncherSettingHandler implements Handler {
     @Value("${launcher.start_receive_delay}")
     private long startReceiveDelay;
 
+    @Value("${launcher.online_supervise_delay}")
+    private long onlineSuperviseDelay;
+    @Value("${launcher.enable_supervise_delay}")
+    private long enableSuperviseDelay;
+
     public boolean isResetAnalyserSupport() {
         return resetAnalyserSupport;
     }
@@ -55,6 +60,14 @@ public class LauncherSettingHandler implements Handler {
         return startReceiveDelay;
     }
 
+    public long getOnlineSuperviseDelay() {
+        return onlineSuperviseDelay;
+    }
+
+    public long getEnableSuperviseDelay() {
+        return enableSuperviseDelay;
+    }
+
     @Override
     public String toString() {
         return "LauncherSettingHandler{" +
@@ -65,6 +78,8 @@ public class LauncherSettingHandler implements Handler {
                 ", onlineTaskCheckDelay=" + onlineTaskCheckDelay +
                 ", enableTaskCheckDelay=" + enableTaskCheckDelay +
                 ", startReceiveDelay=" + startReceiveDelay +
+                ", onlineSuperviseDelay=" + onlineSuperviseDelay +
+                ", enableSuperviseDelay=" + enableSuperviseDelay +
                 '}';
     }
 }
