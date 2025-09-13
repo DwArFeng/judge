@@ -5,6 +5,8 @@
 ### 功能构建
 
 - 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.DispatchCommand。
+  - com.dwarfeng.judge.impl.service.telqos.DispatcherCommand。
   - com.dwarfeng.judge.impl.service.telqos.ReceiveCommand。
   - com.dwarfeng.judge.impl.service.telqos.ReceiverCommand。
   - com.dwarfeng.judge.impl.service.telqos.TaskCheckCommand。
