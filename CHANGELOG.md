@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/UsingTelqos.md。
+
 - 实现运维指令。
   - com.dwarfeng.judge.impl.service.telqos.SuperviseCommand。
   - com.dwarfeng.judge.impl.service.telqos.DriveCommand。
