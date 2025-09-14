@@ -132,7 +132,7 @@ public class DubboReceiver extends AbstractReceiver {
          * @return 恒为 true。
          * @throws ServiceException 服务异常。
          */
-        @SuppressWarnings("SameReturnValue")
+        @SuppressWarnings({"SameReturnValue", "UnusedReturnValue"})
         boolean execute(LongIdKey sectionKey) throws ServiceException;
     }
 
