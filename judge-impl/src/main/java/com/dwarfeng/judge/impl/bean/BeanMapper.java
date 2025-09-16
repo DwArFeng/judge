@@ -298,4 +298,16 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     SinkerVariable sinkerVariableFromHibernate(HibernateSinkerVariable hibernateSinkerVariable);
+
+    @Mapping(target = "longId", ignore = true)
+    HibernateProviderInfo providerInfoToHibernate(ProviderInfo providerInfo);
+
+    @InheritInverseConfiguration
+    ProviderInfo providerInfoFromHibernate(HibernateProviderInfo hibernateProviderInfo);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateProviderSupport providerSupportToHibernate(ProviderSupport providerSupport);
+
+    @InheritInverseConfiguration
+    ProviderSupport providerSupportFromHibernate(HibernateProviderSupport hibernateProviderSupport);
 }

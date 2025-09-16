@@ -73,6 +73,10 @@ public class ServiceConfiguration {
     private final SinkerSupportDao sinkerSupportDao;
     private final SinkerVariableDao sinkerVariableDao;
     private final SinkerVariableCache sinkerVariableCache;
+    private final ProviderInfoCache providerInfoCache;
+    private final ProviderInfoDao providerInfoDao;
+    private final ProviderSupportCache providerSupportCache;
+    private final ProviderSupportDao providerSupportDao;
 
     @Value("${cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
@@ -98,6 +102,10 @@ public class ServiceConfiguration {
     private long sinkerSupportTimeout;
     @Value("${cache.timeout.entity.sinker_variable}")
     private long sinkerVariableTimeout;
+    @Value("${cache.timeout.entity.provider_info}")
+    private long providerInfoTimeout;
+    @Value("${cache.timeout.entity.provider_support}")
+    private long providerSupportTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -151,7 +159,11 @@ public class ServiceConfiguration {
             SinkerSupportCache sinkerSupportCache,
             SinkerSupportDao sinkerSupportDao,
             SinkerVariableDao sinkerVariableDao,
-            SinkerVariableCache sinkerVariableCache
+            SinkerVariableCache sinkerVariableCache,
+            ProviderInfoCache providerInfoCache,
+            ProviderInfoDao providerInfoDao,
+            ProviderSupportCache providerSupportCache,
+            ProviderSupportDao providerSupportDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -205,6 +217,10 @@ public class ServiceConfiguration {
         this.sinkerSupportDao = sinkerSupportDao;
         this.sinkerVariableDao = sinkerVariableDao;
         this.sinkerVariableCache = sinkerVariableCache;
+        this.providerInfoCache = providerInfoCache;
+        this.providerInfoDao = providerInfoDao;
+        this.providerSupportCache = providerSupportCache;
+        this.providerSupportDao = providerSupportDao;
     }
 
     @Bean
@@ -933,6 +949,66 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 sinkerVariableDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, ProviderInfo> providerInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                providerInfoDao,
+                providerInfoCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                providerInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<ProviderInfo> providerInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                providerInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<ProviderInfo> providerInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                providerInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, ProviderSupport> providerSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                providerSupportDao,
+                providerSupportCache,
+                new ExceptionKeyGenerator<>(),
+                providerSupportTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<ProviderSupport> providerSupportDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                providerSupportDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<ProviderSupport> providerSupportDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                providerSupportDao
         );
     }
 }

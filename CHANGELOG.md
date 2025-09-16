@@ -20,6 +20,8 @@
   - com.dwarfeng.judge.stack.service.SinkerMetaOperateService。
 
 - 建立实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.bean.entity.ProviderInfo。
+  - com.dwarfeng.judge.stack.bean.entity.ProviderSupport。
   - com.dwarfeng.judge.stack.bean.entity.SinkerInfo。
   - com.dwarfeng.judge.stack.bean.entity.SinkerMeta。
   - com.dwarfeng.judge.stack.bean.entity.SinkerMetaIndicator。

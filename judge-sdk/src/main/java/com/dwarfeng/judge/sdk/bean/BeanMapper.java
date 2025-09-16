@@ -443,6 +443,26 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     SinkerRelation sinkerRelationFromWebInput(WebInputSinkerRelation webInputSinkerRelation);
 
+    FastJsonProviderInfo providerInfoToFastJson(ProviderInfo providerInfo);
+
+    @InheritInverseConfiguration
+    ProviderInfo providerInfoFromFastJson(FastJsonProviderInfo fastJsonProviderInfo);
+
+    FastJsonProviderSupport providerSupportToFastJson(ProviderSupport providerSupport);
+
+    @InheritInverseConfiguration
+    ProviderSupport providerSupportFromFastJson(FastJsonProviderSupport fastJsonProviderSupport);
+
+    JSFixedFastJsonProviderInfo providerInfoToJSFixedFastJson(ProviderInfo providerInfo);
+
+    @InheritInverseConfiguration
+    ProviderInfo providerInfoFromJSFixedFastJson(JSFixedFastJsonProviderInfo jSFixedFastJsonProviderInfo);
+
+    WebInputProviderInfo providerInfoToWebInput(ProviderInfo providerInfo);
+
+    @InheritInverseConfiguration
+    ProviderInfo providerInfoFromWebInput(WebInputProviderInfo webInputProviderInfo);
+
     // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(
             AnalysisFileFileDownloadInfo analysisFileFileDownloadInfo

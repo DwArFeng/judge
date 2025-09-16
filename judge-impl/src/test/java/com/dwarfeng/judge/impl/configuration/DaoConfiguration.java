@@ -50,6 +50,8 @@ public class DaoConfiguration {
     private final SinkerRelationPresetCriteriaMaker sinkerRelationPresetCriteriaMaker;
     private final SinkerSupportPresetCriteriaMaker sinkerSupportPresetCriteriaMaker;
     private final SinkerVariablePresetCriteriaMaker sinkerVariablePresetCriteriaMaker;
+    private final ProviderInfoPresetCriteriaMaker providerInfoPresetCriteriaMaker;
+    private final ProviderSupportPresetCriteriaMaker providerSupportPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -80,7 +82,9 @@ public class DaoConfiguration {
             SinkerMetaPresetCriteriaMaker sinkerMetaPresetCriteriaMaker,
             SinkerRelationPresetCriteriaMaker sinkerRelationPresetCriteriaMaker,
             SinkerSupportPresetCriteriaMaker sinkerSupportPresetCriteriaMaker,
-            SinkerVariablePresetCriteriaMaker sinkerVariablePresetCriteriaMaker
+            SinkerVariablePresetCriteriaMaker sinkerVariablePresetCriteriaMaker,
+            ProviderInfoPresetCriteriaMaker providerInfoPresetCriteriaMaker,
+            ProviderSupportPresetCriteriaMaker providerSupportPresetCriteriaMaker
     ) {
         this.hibernateTemplate = hibernateTemplate;
         this.analyserInfoPresetCriteriaMaker = analyserInfoPresetCriteriaMaker;
@@ -108,6 +112,8 @@ public class DaoConfiguration {
         this.sinkerRelationPresetCriteriaMaker = sinkerRelationPresetCriteriaMaker;
         this.sinkerSupportPresetCriteriaMaker = sinkerSupportPresetCriteriaMaker;
         this.sinkerVariablePresetCriteriaMaker = sinkerVariablePresetCriteriaMaker;
+        this.providerInfoPresetCriteriaMaker = providerInfoPresetCriteriaMaker;
+        this.providerSupportPresetCriteriaMaker = providerSupportPresetCriteriaMaker;
     }
 
     @Bean
@@ -1010,6 +1016,68 @@ public class DaoConfiguration {
                 ),
                 HibernateSinkerVariable.class,
                 sinkerVariablePresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, ProviderInfo, HibernateProviderInfo> providerInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(ProviderInfo.class, HibernateProviderInfo.class, BeanMapper.class),
+                HibernateProviderInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<ProviderInfo, HibernateProviderInfo> providerInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(ProviderInfo.class, HibernateProviderInfo.class, BeanMapper.class),
+                HibernateProviderInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<ProviderInfo, HibernateProviderInfo> providerInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(ProviderInfo.class, HibernateProviderInfo.class, BeanMapper.class),
+                HibernateProviderInfo.class,
+                providerInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, ProviderSupport, HibernateProviderSupport> providerSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(ProviderSupport.class, HibernateProviderSupport.class, BeanMapper.class),
+                HibernateProviderSupport.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<ProviderSupport, HibernateProviderSupport> providerSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(ProviderSupport.class, HibernateProviderSupport.class, BeanMapper.class),
+                HibernateProviderSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<ProviderSupport, HibernateProviderSupport> providerSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(ProviderSupport.class, HibernateProviderSupport.class, BeanMapper.class),
+                HibernateProviderSupport.class,
+                providerSupportPresetCriteriaMaker
         );
     }
 }

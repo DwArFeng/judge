@@ -71,6 +71,10 @@ public class CacheConfiguration {
     private String sinkerSupportPrefix;
     @Value("${cache.prefix.entity.sinker_variable}")
     private String sinkerVariablePrefix;
+    @Value("${cache.prefix.entity.provider_info}")
+    private String providerInfoPrefix;
+    @Value("${cache.prefix.entity.provider_support}")
+    private String providerSupportPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -350,6 +354,26 @@ public class CacheConfiguration {
                 new MapStructBeanTransformer<>(
                         SinkerVariable.class, FastJsonSinkerVariable.class, BeanMapper.class
                 )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, ProviderInfo, FastJsonProviderInfo> providerInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonProviderInfo>) template,
+                new LongIdStringKeyFormatter(providerInfoPrefix),
+                new MapStructBeanTransformer<>(ProviderInfo.class, FastJsonProviderInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, ProviderSupport, FastJsonProviderSupport> providerSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonProviderSupport>) template,
+                new StringIdStringKeyFormatter(providerSupportPrefix),
+                new MapStructBeanTransformer<>(ProviderSupport.class, FastJsonProviderSupport.class, BeanMapper.class)
         );
     }
 }
