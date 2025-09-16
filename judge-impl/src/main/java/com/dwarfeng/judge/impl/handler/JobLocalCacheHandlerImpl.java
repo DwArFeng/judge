@@ -1,11 +1,9 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.*;
-import com.dwarfeng.judge.stack.service.AlarmSettingMaintainService;
 import com.dwarfeng.judge.stack.service.AnalyserInfoMaintainService;
 import com.dwarfeng.judge.stack.service.JudgerInfoMaintainService;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
@@ -59,7 +57,6 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
         private final SectionMaintainService sectionMaintainService;
         private final AnalyserInfoMaintainService analyserInfoMaintainService;
         private final JudgerInfoMaintainService judgerInfoMaintainService;
-        private final AlarmSettingMaintainService alarmSettingMaintainService;
 
         private final AnalyserHandler analyserHandler;
         private final JudgerHandler judgerHandler;
@@ -68,14 +65,12 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
                 SectionMaintainService sectionMaintainService,
                 AnalyserInfoMaintainService analyserInfoMaintainService,
                 JudgerInfoMaintainService judgerInfoMaintainService,
-                AlarmSettingMaintainService alarmSettingMaintainService,
                 AnalyserHandler analyserHandler,
                 JudgerHandler judgerHandler
         ) {
             this.sectionMaintainService = sectionMaintainService;
             this.analyserInfoMaintainService = analyserInfoMaintainService;
             this.judgerInfoMaintainService = judgerInfoMaintainService;
-            this.alarmSettingMaintainService = alarmSettingMaintainService;
             this.analyserHandler = analyserHandler;
             this.judgerHandler = judgerHandler;
         }
@@ -118,12 +113,8 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
                 judgerKey = judgerInfo.getKey();
                 judger = judgerHandler.make(judgerInfo.getType(), judgerInfo.getParam());
             }
-            List<AlarmSetting> alarmSettings = alarmSettingMaintainService.lookupAsList(
-                    AlarmSettingMaintainService.CHILD_FOR_SECTION_ENABLED_THRESHOLD_DESC, new Object[]{key}
-            );
             return new JobLocalCache(
-                    section, analyserInfoKeys, analyserInfoMap, analyserMap, judgerKey, judgerInfo, judger,
-                    alarmSettings
+                    section, analyserInfoKeys, analyserInfoMap, analyserMap, judgerKey, judgerInfo, judger
             );
         }
     }

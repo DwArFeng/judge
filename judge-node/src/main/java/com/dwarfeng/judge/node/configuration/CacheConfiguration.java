@@ -25,12 +25,6 @@ public class CacheConfiguration {
 
     private final RedisTemplate<String, ?> template;
 
-    @Value("${cache.prefix.entity.alarm_history}")
-    private String alarmHistoryPrefix;
-    @Value("${cache.prefix.entity.alarm_modal}")
-    private String alarmModalPrefix;
-    @Value("${cache.prefix.entity.alarm_setting}")
-    private String alarmSettingPrefix;
     @Value("${cache.prefix.entity.analyser_info}")
     private String analyserInfoPrefix;
     @Value("${cache.prefix.entity.analyser_support}")
@@ -71,41 +65,9 @@ public class CacheConfiguration {
     private String analysisPicturePackPrefix;
     @Value("${cache.prefix.entity.analysis_picture_pack_item_info}")
     private String analysisPicturePackItemInfoPrefix;
-    @Value("${cache.prefix.entity.alarm_level_indicator}")
-    private String alarmLevelIndicatorPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, AlarmHistory, FastJsonAlarmHistory> alarmHistoryRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonAlarmHistory>) template,
-                new LongIdStringKeyFormatter(alarmHistoryPrefix),
-                new MapStructBeanTransformer<>(AlarmHistory.class, FastJsonAlarmHistory.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, AlarmModal, FastJsonAlarmModal> alarmModalRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonAlarmModal>) template,
-                new LongIdStringKeyFormatter(alarmModalPrefix),
-                new MapStructBeanTransformer<>(AlarmModal.class, FastJsonAlarmModal.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> alarmSettingRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonAlarmSetting>) template,
-                new LongIdStringKeyFormatter(alarmSettingPrefix),
-                new MapStructBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, BeanMapper.class)
-        );
     }
 
     @Bean
@@ -323,19 +285,6 @@ public class CacheConfiguration {
                 new LongIdStringKeyFormatter(analysisPicturePackItemInfoPrefix),
                 new MapStructBeanTransformer<>(
                         AnalysisPicturePackItemInfo.class, FastJsonAnalysisPicturePackItemInfo.class, BeanMapper.class
-                )
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<StringIdKey, AlarmLevelIndicator, FastJsonAlarmLevelIndicator>
-    alarmLevelIndicatorRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonAlarmLevelIndicator>) template,
-                new StringIdStringKeyFormatter(alarmLevelIndicatorPrefix),
-                new MapStructBeanTransformer<>(
-                        AlarmLevelIndicator.class, FastJsonAlarmLevelIndicator.class, BeanMapper.class
                 )
         );
     }

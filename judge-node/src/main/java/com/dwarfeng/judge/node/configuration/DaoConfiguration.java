@@ -29,9 +29,6 @@ public class DaoConfiguration {
 
     private final HibernateTemplate hibernateTemplate;
 
-    private final AlarmHistoryPresetCriteriaMaker alarmHistoryPresetCriteriaMaker;
-    private final AlarmModalPresetCriteriaMaker alarmModalPresetCriteriaMaker;
-    private final AlarmSettingPresetCriteriaMaker alarmSettingPresetCriteriaMaker;
     private final AnalyserInfoPresetCriteriaMaker analyserInfoPresetCriteriaMaker;
     private final AnalyserSupportPresetCriteriaMaker analyserSupportPresetCriteriaMaker;
     private final AnalyserVariablePresetCriteriaMaker analyserVariablePresetCriteriaMaker;
@@ -52,16 +49,12 @@ public class DaoConfiguration {
     private final AnalysisPictureInfoPresetCriteriaMaker analysisPictureInfoPresetCriteriaMaker;
     private final AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker;
     private final AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker;
-    private final AlarmLevelIndicatorPresetCriteriaMaker alarmLevelIndicatorPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
 
     public DaoConfiguration(
             HibernateTemplate hibernateTemplate,
-            AlarmHistoryPresetCriteriaMaker alarmHistoryPresetCriteriaMaker,
-            AlarmModalPresetCriteriaMaker alarmModalPresetCriteriaMaker,
-            AlarmSettingPresetCriteriaMaker alarmSettingPresetCriteriaMaker,
             AnalyserInfoPresetCriteriaMaker analyserInfoPresetCriteriaMaker,
             AnalyserSupportPresetCriteriaMaker analyserSupportPresetCriteriaMaker,
             AnalyserVariablePresetCriteriaMaker analyserVariablePresetCriteriaMaker,
@@ -81,13 +74,9 @@ public class DaoConfiguration {
             AnalysisFilePackItemInfoPresetCriteriaMaker analysisFilePackItemInfoPresetCriteriaMaker,
             AnalysisPictureInfoPresetCriteriaMaker analysisPictureInfoPresetCriteriaMaker,
             AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker,
-            AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker,
-            AlarmLevelIndicatorPresetCriteriaMaker alarmLevelIndicatorPresetCriteriaMaker
+            AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker
     ) {
         this.hibernateTemplate = hibernateTemplate;
-        this.alarmHistoryPresetCriteriaMaker = alarmHistoryPresetCriteriaMaker;
-        this.alarmModalPresetCriteriaMaker = alarmModalPresetCriteriaMaker;
-        this.alarmSettingPresetCriteriaMaker = alarmSettingPresetCriteriaMaker;
         this.analyserInfoPresetCriteriaMaker = analyserInfoPresetCriteriaMaker;
         this.analyserSupportPresetCriteriaMaker = analyserSupportPresetCriteriaMaker;
         this.analyserVariablePresetCriteriaMaker = analyserVariablePresetCriteriaMaker;
@@ -108,103 +97,6 @@ public class DaoConfiguration {
         this.analysisPictureInfoPresetCriteriaMaker = analysisPictureInfoPresetCriteriaMaker;
         this.analysisPicturePackPresetCriteriaMaker = analysisPicturePackPresetCriteriaMaker;
         this.analysisPicturePackItemInfoPresetCriteriaMaker = analysisPicturePackItemInfoPresetCriteriaMaker;
-        this.alarmLevelIndicatorPresetCriteriaMaker = alarmLevelIndicatorPresetCriteriaMaker;
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmHistory, HibernateAlarmHistory>
-    alarmHistoryHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
-                new MapStructBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, BeanMapper.class),
-                HibernateAlarmHistory.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<AlarmHistory, HibernateAlarmHistory> alarmHistoryHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, BeanMapper.class),
-                HibernateAlarmHistory.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<AlarmHistory, HibernateAlarmHistory> alarmHistoryHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, BeanMapper.class),
-                HibernateAlarmHistory.class,
-                alarmHistoryPresetCriteriaMaker
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmModal, HibernateAlarmModal>
-    alarmModalHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
-                new MapStructBeanTransformer<>(AlarmModal.class, HibernateAlarmModal.class, BeanMapper.class),
-                HibernateAlarmModal.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<AlarmModal, HibernateAlarmModal> alarmModalHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(AlarmModal.class, HibernateAlarmModal.class, BeanMapper.class),
-                HibernateAlarmModal.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<AlarmModal, HibernateAlarmModal> alarmModalHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(AlarmModal.class, HibernateAlarmModal.class, BeanMapper.class),
-                HibernateAlarmModal.class,
-                alarmModalPresetCriteriaMaker
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting>
-    alarmSettingHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
-                new MapStructBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, BeanMapper.class),
-                HibernateAlarmSetting.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<AlarmSetting, HibernateAlarmSetting> alarmSettingHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, BeanMapper.class),
-                HibernateAlarmSetting.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<AlarmSetting, HibernateAlarmSetting> alarmSettingHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, BeanMapper.class),
-                HibernateAlarmSetting.class,
-                alarmSettingPresetCriteriaMaker
-        );
     }
 
     @Bean
@@ -922,46 +814,6 @@ public class DaoConfiguration {
                 ),
                 HibernateAnalysisPicturePackItemInfo.class,
                 analysisPicturePackItemInfoPresetCriteriaMaker
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AlarmLevelIndicator, HibernateAlarmLevelIndicator>
-    alarmLevelIndicatorHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
-                new MapStructBeanTransformer<>(
-                        AlarmLevelIndicator.class, HibernateAlarmLevelIndicator.class, BeanMapper.class
-                ),
-                HibernateAlarmLevelIndicator.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<AlarmLevelIndicator, HibernateAlarmLevelIndicator>
-    alarmLevelIndicatorHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(
-                        AlarmLevelIndicator.class, HibernateAlarmLevelIndicator.class, BeanMapper.class
-                ),
-                HibernateAlarmLevelIndicator.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<AlarmLevelIndicator, HibernateAlarmLevelIndicator>
-    alarmLevelIndicatorHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(
-                        AlarmLevelIndicator.class, HibernateAlarmLevelIndicator.class, BeanMapper.class
-                ),
-                HibernateAlarmLevelIndicator.class,
-                alarmLevelIndicatorPresetCriteriaMaker
         );
     }
 }

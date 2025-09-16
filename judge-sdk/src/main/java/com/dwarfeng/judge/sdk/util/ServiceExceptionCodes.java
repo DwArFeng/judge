@@ -70,8 +70,6 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(210), "invalid judgement modal update happened date");
     public static final ServiceException.Code INVALID_JUDGEMENT_MODAL_UPDATE_VALUE =
             new ServiceException.Code(offset(220), "invalid judgement modal update value");
-    public static final ServiceException.Code INVALID_ALARM_MODAL_UPDATE_HAPPENED_DATE =
-            new ServiceException.Code(offset(230), "invalid alarm modal update happened date");
     public static final ServiceException.Code RECEIVER_FAILED =
             new ServiceException.Code(offset(240), "receiver failed");
     public static final ServiceException.Code RECEIVER_NOT_START =
@@ -141,7 +139,6 @@ public final class ServiceExceptionCodes {
         JUDGER_TYPE_UNSUPPORTED.setCode(offset(203));
         INVALID_JUDGEMENT_MODAL_UPDATE_HAPPENED_DATE.setCode(offset(210));
         INVALID_JUDGEMENT_MODAL_UPDATE_VALUE.setCode(offset(220));
-        INVALID_ALARM_MODAL_UPDATE_HAPPENED_DATE.setCode(offset(230));
         RECEIVER_FAILED.setCode(offset(240));
         RECEIVER_NOT_START.setCode(offset(241));
         RECEIVER_EXECUTION_FAILED.setCode(offset(242));

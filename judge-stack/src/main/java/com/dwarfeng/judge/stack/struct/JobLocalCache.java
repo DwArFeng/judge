@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.stack.struct;
 
-import com.dwarfeng.judge.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.Section;
@@ -79,27 +78,10 @@ public final class JobLocalCache {
     @Nullable
     private final Judger judger;
 
-    /**
-     * 报警设置列表。
-     *
-     * <p>
-     * 保证报警设置使能。
-     *
-     * <p>
-     * 按照报警设置的阈值字段降序排序。
-     *
-     * <p>
-     * 如果阈值字段相等，则按照主键升序排序。
-     *
-     * <p>
-     * 如果没有符合条件的报警设置，则返回空列表。
-     */
-    private final List<AlarmSetting> alarmSettings;
-
     public JobLocalCache(
             Section section, List<LongIdKey> analyserInfoKeys, Map<LongIdKey, AnalyserInfo> analyserInfoMap,
             Map<LongIdKey, Analyser> analyserMap, @Nullable LongIdKey judgerInfoKey, JudgerInfo judgerInfo,
-            @Nullable Judger judger, List<AlarmSetting> alarmSettings
+            @Nullable Judger judger
     ) {
         this.section = section;
         this.analyserInfoKeys = analyserInfoKeys;
@@ -108,7 +90,6 @@ public final class JobLocalCache {
         this.judgerInfoKey = judgerInfoKey;
         this.judgerInfo = judgerInfo;
         this.judger = judger;
-        this.alarmSettings = alarmSettings;
     }
 
     public Section getSection() {
@@ -141,10 +122,6 @@ public final class JobLocalCache {
         return judger;
     }
 
-    public List<AlarmSetting> getAlarmSettings() {
-        return alarmSettings;
-    }
-
     @Override
     public String toString() {
         return "JobLocalCache{" +
@@ -155,7 +132,6 @@ public final class JobLocalCache {
                 ", judgerInfoKey=" + judgerInfoKey +
                 ", judgerInfo=" + judgerInfo +
                 ", judger=" + judger +
-                ", alarmSettings=" + alarmSettings +
                 '}';
     }
 }

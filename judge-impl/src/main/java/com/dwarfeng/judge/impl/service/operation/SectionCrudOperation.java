@@ -1,7 +1,10 @@
 package com.dwarfeng.judge.impl.service.operation;
 
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.cache.*;
+import com.dwarfeng.judge.stack.cache.DriverInfoCache;
+import com.dwarfeng.judge.stack.cache.JudgementHistoryCache;
+import com.dwarfeng.judge.stack.cache.JudgementModalCache;
+import com.dwarfeng.judge.stack.cache.SectionCache;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
@@ -23,9 +26,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
     private final JudgementModalDao judgementModalDao;
     private final JudgementModalCache judgementModalCache;
 
-    private final AlarmModalDao alarmModalDao;
-    private final AlarmModalCache alarmModalCache;
-
     private final DriverInfoDao driverInfoDao;
     private final DriverInfoCache driverInfoCache;
 
@@ -41,12 +41,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
     private final JudgementHistoryDao judgementHistoryDao;
     private final JudgementHistoryCache judgementHistoryCache;
 
-    private final AlarmSettingDao alarmSettingDao;
-    private final AlarmSettingCache alarmSettingCache;
-
-    private final AlarmHistoryDao alarmHistoryDao;
-    private final AlarmHistoryCache alarmHistoryCache;
-
     @Value("${cache.timeout.entity.section}")
     private long sectionTimeout;
 
@@ -55,8 +49,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             SectionCache sectionCache,
             JudgementModalDao judgementModalDao,
             JudgementModalCache judgementModalCache,
-            AlarmModalDao alarmModalDao,
-            AlarmModalCache alarmModalCache,
             DriverInfoDao driverInfoDao,
             DriverInfoCache driverInfoCache,
             AnalyserInfoCrudOperation analyserInfoCrudOperation,
@@ -66,18 +58,12 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             TaskCrudOperation taskCrudOperation,
             TaskDao taskDao,
             JudgementHistoryDao judgementHistoryDao,
-            JudgementHistoryCache judgementHistoryCache,
-            AlarmSettingDao alarmSettingDao,
-            AlarmSettingCache alarmSettingCache,
-            AlarmHistoryDao alarmHistoryDao,
-            AlarmHistoryCache alarmHistoryCache
+            JudgementHistoryCache judgementHistoryCache
     ) {
         this.sectionDao = sectionDao;
         this.sectionCache = sectionCache;
         this.judgementModalDao = judgementModalDao;
         this.judgementModalCache = judgementModalCache;
-        this.alarmModalDao = alarmModalDao;
-        this.alarmModalCache = alarmModalCache;
         this.driverInfoDao = driverInfoDao;
         this.driverInfoCache = driverInfoCache;
         this.analyserInfoCrudOperation = analyserInfoCrudOperation;
@@ -88,10 +74,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         this.taskDao = taskDao;
         this.judgementHistoryDao = judgementHistoryDao;
         this.judgementHistoryCache = judgementHistoryCache;
-        this.alarmSettingDao = alarmSettingDao;
-        this.alarmSettingCache = alarmSettingCache;
-        this.alarmHistoryDao = alarmHistoryDao;
-        this.alarmHistoryCache = alarmHistoryCache;
     }
 
     @Override
@@ -133,12 +115,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             judgementModalCache.delete(key);
         }
 
-        // 删除与 部件 相关的 报警模态。
-        if (alarmModalDao.exists(key)) {
-            alarmModalDao.delete(key);
-            alarmModalCache.delete(key);
-        }
-
         // 删除与 统计设置 相关的 驱动器信息。
         List<LongIdKey> driverInfoKeys = driverInfoDao.lookup(
                 DriverInfoMaintainService.CHILD_FOR_SECTION, new Object[]{key}
@@ -170,20 +146,6 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         ).stream().map(JudgementHistory::getKey).collect(Collectors.toList());
         judgementHistoryDao.batchDelete(judgementHistoryKeys);
         judgementHistoryCache.batchDelete(judgementHistoryKeys);
-
-        // 删除与 部件 相关的 报警设置。
-        List<LongIdKey> alarmSettingKeys = alarmSettingDao.lookup(
-                AlarmSettingMaintainService.CHILD_FOR_SECTION, new Object[]{key}
-        ).stream().map(AlarmSetting::getKey).collect(Collectors.toList());
-        alarmSettingDao.batchDelete(alarmSettingKeys);
-        alarmSettingCache.batchDelete(alarmSettingKeys);
-
-        // 删除与 部件 相关的 报警历史。
-        List<LongIdKey> alarmHistoryKeys = alarmHistoryDao.lookup(
-                AlarmHistoryMaintainService.CHILD_FOR_SECTION, new Object[]{key}
-        ).stream().map(AlarmHistory::getKey).collect(Collectors.toList());
-        alarmHistoryDao.batchDelete(alarmHistoryKeys);
-        alarmHistoryCache.batchDelete(alarmHistoryKeys);
 
         // 删除 部件 自身。
         sectionDao.delete(key);

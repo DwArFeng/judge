@@ -2,7 +2,6 @@ package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.dwarfeng.judge.sdk.handler.Pusher;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
-import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -98,17 +97,6 @@ public class MultiPusher extends AbstractPusher {
         for (Pusher delegate : delegates) {
             try {
                 delegate.judgementModalUpdated(judgementModal);
-            } catch (Exception e) {
-                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
-            }
-        }
-    }
-
-    @Override
-    public void alarmModalUpdated(AlarmModal alarmModal) {
-        for (Pusher delegate : delegates) {
-            try {
-                delegate.alarmModalUpdated(alarmModal);
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
             }

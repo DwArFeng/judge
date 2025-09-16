@@ -41,14 +41,6 @@
             update-allowed="${datamark.judger.update_allowed}"
     />
 
-    <!-- Alarm 数据标识 -->
-    <datamark:handler
-            handler-name="alarmDatamarkHandler"
-            resource-url="${datamark.alarm.resource_url}"
-            resource-charset="${datamark.alarm.resource_charset}"
-            update-allowed="${datamark.alarm.update_allowed}"
-    />
-
     <!-- QoS 服务 -->
     <datamark:qos/>
 </beans>

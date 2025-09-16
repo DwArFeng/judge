@@ -58,31 +58,6 @@ public interface BeanMapper {
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
-    @Mapping(target = "longId", ignore = true)
-    HibernateAlarmHistory alarmHistoryToHibernate(AlarmHistory alarmHistory);
-
-    @InheritInverseConfiguration
-    AlarmHistory alarmHistoryFromHibernate(HibernateAlarmHistory hibernateAlarmHistory);
-
-    @Mapping(target = "section", ignore = true)
-    @Mapping(target = "longId", ignore = true)
-    HibernateAlarmModal alarmModalToHibernate(AlarmModal alarmModal);
-
-    @InheritInverseConfiguration
-    AlarmModal alarmModalFromHibernate(HibernateAlarmModal hibernateAlarmModal);
-
-    @Mapping(target = "sectionLongId", ignore = true)
-    @Mapping(target = "section", ignore = true)
-    @Mapping(target = "modifiedDatamark", ignore = true)
-    @Mapping(target = "longId", ignore = true)
-    @Mapping(target = "createdDatamark", ignore = true)
-    HibernateAlarmSetting alarmSettingToHibernate(AlarmSetting alarmSetting);
-
-    @InheritInverseConfiguration
-    AlarmSetting alarmSettingFromHibernate(HibernateAlarmSetting hibernateAlarmSetting);
-
-    @Mapping(target = "sectionLongId", ignore = true)
-    @Mapping(target = "section", ignore = true)
     @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "createdDatamark", ignore = true)
@@ -203,9 +178,6 @@ public interface BeanMapper {
     @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "analyserInfos", ignore = true)
     @Mapping(target = "tasks", ignore = true)
-    @Mapping(target = "alarmSettings", ignore = true)
-    @Mapping(target = "alarmModal", ignore = true)
-    @Mapping(target = "alarmHistories", ignore = true)
     HibernateSection sectionToHibernate(Section section);
 
     @InheritInverseConfiguration
@@ -260,12 +232,4 @@ public interface BeanMapper {
     AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromHibernate(
             HibernateAnalysisPicturePackItemInfo hibernateAnalysisPicturePackItemInfo
     );
-
-    @Mapping(target = "stringId", ignore = true)
-    @Mapping(target = "modifiedDatamark", ignore = true)
-    @Mapping(target = "createdDatamark", ignore = true)
-    HibernateAlarmLevelIndicator alarmLevelIndicatorToHibernate(AlarmLevelIndicator alarmLevelIndicator);
-
-    @InheritInverseConfiguration
-    AlarmLevelIndicator alarmLevelIndicatorFromHibernate(HibernateAlarmLevelIndicator hibernateAlarmLevelIndicator);
 }

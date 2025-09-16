@@ -12,7 +12,14 @@
 
 ### 功能移除
 
-- (无)
+- 移除实体及其维护服务。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmHistory。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmLevelIndicator。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmModal。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmSetting。
+
+- 移除功能。
+  - 报警功能的耦合会使该服务的泛用性大幅减少，故移除相关功能。
 
 ---
 

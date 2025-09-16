@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -58,15 +57,6 @@ public interface PushHandler extends Handler {
      * @since 2.0.0
      */
     void judgementModalUpdated(JudgementModal judgementModal) throws HandlerException;
-
-    /**
-     * 报警模态更新时执行的推送操作。
-     *
-     * @param alarmModal 相关的报警模态。
-     * @throws HandlerException 处理器异常。
-     * @since 2.0.0
-     */
-    void alarmModalUpdated(AlarmModal alarmModal) throws HandlerException;
 
     /**
      * 作业功能重置时作业的广播操作。

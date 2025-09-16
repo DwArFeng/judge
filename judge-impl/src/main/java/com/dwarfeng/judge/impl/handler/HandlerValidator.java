@@ -5,7 +5,6 @@ import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisFileUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisPicturePackUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisPictureUpsertInfo;
-import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Task;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
@@ -48,7 +47,6 @@ public class HandlerValidator {
     private final AnalysisPicturePackMaintainService analysisPicturePackMaintainService;
     private final AnalysisMaintainService analysisMaintainService;
     private final JudgementModalMaintainService judgementModalMaintainService;
-    private final AlarmModalMaintainService alarmModalMaintainService;
 
     public HandlerValidator(
             AnalyserInfoMaintainService analyserInfoMaintainService,
@@ -64,8 +62,7 @@ public class HandlerValidator {
             AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService,
             AnalysisPicturePackMaintainService analysisPicturePackMaintainService,
             AnalysisMaintainService analysisMaintainService,
-            JudgementModalMaintainService judgementModalMaintainService,
-            AlarmModalMaintainService alarmModalMaintainService
+            JudgementModalMaintainService judgementModalMaintainService
     ) {
         this.analyserInfoMaintainService = analyserInfoMaintainService;
         this.judgerInfoMaintainService = judgerInfoMaintainService;
@@ -81,7 +78,6 @@ public class HandlerValidator {
         this.analysisPicturePackMaintainService = analysisPicturePackMaintainService;
         this.analysisMaintainService = analysisMaintainService;
         this.judgementModalMaintainService = judgementModalMaintainService;
-        this.alarmModalMaintainService = alarmModalMaintainService;
     }
 
     public void makeSureAnalyserInfoExists(LongIdKey analyserInfoKey) throws HandlerException {
@@ -328,23 +324,6 @@ public class HandlerValidator {
         // value 取值范围是 [0.0, 1.0]。
         if (value < 0.0 || value > 1.0) {
             throw new InvalidJudgementModalUpdateValueException(value);
-        }
-    }
-
-    public void makeSureAlarmModalUpdateHappenedDateValid(LongIdKey sectionKey, Date happenedDate)
-            throws HandlerException {
-        try {
-            AlarmModal alarmModal = alarmModalMaintainService.getIfExists(sectionKey);
-            if (Objects.isNull(alarmModal)) {
-                return;
-            }
-            // happenedDate 不得小于 alarmModal.getHappenedDate()。
-            Date oldHappenedDate = alarmModal.getHappenedDate();
-            if (happenedDate.before(oldHappenedDate)) {
-                throw new InvalidAlarmModalUpdateHappenedDateException(sectionKey, oldHappenedDate, happenedDate);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
         }
     }
 }

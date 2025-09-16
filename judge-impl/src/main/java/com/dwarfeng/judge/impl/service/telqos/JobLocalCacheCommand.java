@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.impl.service.telqos;
 
-import com.dwarfeng.judge.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
 import com.dwarfeng.judge.stack.handler.Analyser;
 import com.dwarfeng.judge.stack.service.JobQosService;
@@ -121,14 +120,5 @@ public class JobLocalCacheCommand extends CliCommand {
         context.sendMessage("judger:");
         context.sendMessage(String.format("  %-3d %s", 0, jobLocalCache.getJudgerInfo()));
         context.sendMessage(String.format("  %-3d %s", 0, jobLocalCache.getJudger()));
-        context.sendMessage("alarmSettings:");
-        index = 0;
-        for (AlarmSetting alarmSetting : jobLocalCache.getAlarmSettings()) {
-            if (index != 0) {
-                context.sendMessage("");
-            }
-            index++;
-            context.sendMessage(String.format("  %-3d %s", index, alarmSetting));
-        }
     }
 }

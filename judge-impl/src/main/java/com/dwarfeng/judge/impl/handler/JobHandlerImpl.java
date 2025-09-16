@@ -2,10 +2,9 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.*;
-import com.dwarfeng.judge.stack.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.entity.JudgementHistory;
+import com.dwarfeng.judge.stack.bean.entity.Task;
 import com.dwarfeng.judge.stack.handler.*;
-import com.dwarfeng.judge.stack.service.AlarmHistoryMaintainService;
-import com.dwarfeng.judge.stack.service.AlarmModalMaintainService;
 import com.dwarfeng.judge.stack.service.JudgementHistoryMaintainService;
 import com.dwarfeng.judge.stack.service.TaskMaintainService;
 import com.dwarfeng.judge.stack.struct.JobLocalCache;
@@ -48,8 +47,6 @@ public class JobHandlerImpl implements JobHandler {
 
     private final TaskMaintainService taskMaintainService;
     private final JudgementHistoryMaintainService judgementHistoryMaintainService;
-    private final AlarmModalMaintainService alarmModalMaintainService;
-    private final AlarmHistoryMaintainService alarmHistoryMaintainService;
 
     private final TaskOperateHandler taskOperateHandler;
     private final TaskEventOperateHandler taskEventOperateHandler;
@@ -62,7 +59,6 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
     private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
     private final JudgementModalOperateHandler judgementModalOperateHandler;
-    private final AlarmModalOperateHandler alarmModalOperateHandler;
 
     private final ThreadPoolTaskExecutor executor;
     private final ThreadPoolTaskScheduler scheduler;
@@ -76,8 +72,6 @@ public class JobHandlerImpl implements JobHandler {
             ApplicationContext ctx,
             TaskMaintainService taskMaintainService,
             JudgementHistoryMaintainService judgementHistoryMaintainService,
-            AlarmModalMaintainService alarmModalMaintainService,
-            AlarmHistoryMaintainService alarmHistoryMaintainService,
             TaskOperateHandler taskOperateHandler,
             TaskEventOperateHandler taskEventOperateHandler,
             JobLocalCacheHandler jobLocalCacheHandler,
@@ -89,7 +83,6 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
             AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
             JudgementModalOperateHandler judgementModalOperateHandler,
-            AlarmModalOperateHandler alarmModalOperateHandler,
             ThreadPoolTaskExecutor executor,
             ThreadPoolTaskScheduler scheduler,
             HandlerValidator handlerValidator
@@ -97,8 +90,6 @@ public class JobHandlerImpl implements JobHandler {
         this.ctx = ctx;
         this.taskMaintainService = taskMaintainService;
         this.judgementHistoryMaintainService = judgementHistoryMaintainService;
-        this.alarmModalMaintainService = alarmModalMaintainService;
-        this.alarmHistoryMaintainService = alarmHistoryMaintainService;
         this.taskOperateHandler = taskOperateHandler;
         this.taskEventOperateHandler = taskEventOperateHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
@@ -110,7 +101,6 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
         this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
         this.judgementModalOperateHandler = judgementModalOperateHandler;
-        this.alarmModalOperateHandler = alarmModalOperateHandler;
         this.executor = executor;
         this.scheduler = scheduler;
         this.handlerValidator = handlerValidator;
@@ -200,11 +190,10 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
-        // 日期判断，当前时间必须晚于 JudgementModal 和 AlarmModal 的 happenedData。
+        // 日期判断，当前时间必须晚于 JudgementModal 的 happenedData。
         try {
             Date currentDate = new Date();
             handlerValidator.makeSureJudgementModalUpdateHappenedDateValid(sectionKey, currentDate);
-            handlerValidator.makeSureAlarmModalUpdateHappenedDateValid(sectionKey, currentDate);
         } catch (Exception e) {
             // 取消心跳任务。
             beatTaskFuture.cancel(true);
@@ -222,7 +211,6 @@ public class JobHandlerImpl implements JobHandler {
         List<LongIdKey> analyserInfoKeys;
         Map<LongIdKey, Analyser> analyserMap;
         Judger judger;
-        List<AlarmSetting> alarmSettings;
         LongIdKey judgerInfoKey;
         try {
             JobLocalCache jobLocalCache = jobLocalCacheHandler.get(sectionKey);
@@ -230,7 +218,6 @@ public class JobHandlerImpl implements JobHandler {
             analyserMap = jobLocalCache.getAnalyserMap();
             judgerInfoKey = jobLocalCache.getJudgerInfoKey();
             judger = jobLocalCache.getJudger();
-            alarmSettings = jobLocalCache.getAlarmSettings();
         } catch (Exception e) {
             // 取消心跳任务。
             beatTaskFuture.cancel(true);
@@ -313,32 +300,6 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
-        // 进行报警。
-        AlarmModal alarmResultOldAlarmModal;
-        String alarmResultAlarmLevel;
-        boolean alarmResultAlarming;
-        String alarmResultAlarmMessage;
-        boolean alarmResultLevelChanged;
-        try {
-            AlarmResult alarmResult = alarm(sectionKey, alarmSettings, judgeResultValue);
-            alarmResultOldAlarmModal = alarmResult.getOldAlarmModal();
-            alarmResultAlarmLevel = alarmResult.getAlarmLevel();
-            alarmResultAlarming = alarmResult.isAlarming();
-            alarmResultAlarmMessage = alarmResult.getAlarmMessage();
-            alarmResultLevelChanged = alarmResult.isLevelChanged();
-        } catch (Exception e) {
-            // 取消心跳任务。
-            beatTaskFuture.cancel(true);
-            // 记录日志。
-            LOGGER.warn("作业执行失败, 任务主键: {}, 部件主键: {}, 异常信息如下: ", taskKey, sectionKey, e);
-            // 插入任务事件。
-            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
-            // 将任务状态置为失败。
-            taskOperateHandler.fail(new TaskFailInfo(taskKey));
-            // 结束方法。
-            return;
-        }
-
         // 生成系统日期，该日期可以保证是合法的。
         Date currentDate = new Date();
 
@@ -346,25 +307,6 @@ public class JobHandlerImpl implements JobHandler {
         try {
             processJudgement(sectionKey, judgerInfoKey, currentDate, judgeResultValue, judgeResultMessage);
         } catch (ServiceException e) {
-            // 取消心跳任务。
-            beatTaskFuture.cancel(true);
-            // 记录日志。
-            LOGGER.warn("作业执行失败, 任务主键: {}, 部件主键: {}, 异常信息如下: ", taskKey, sectionKey, e);
-            // 插入任务事件。
-            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
-            // 将任务状态置为失败。
-            taskOperateHandler.fail(new TaskFailInfo(taskKey));
-            // 结束方法。
-            return;
-        }
-
-        // 处理报警。
-        try {
-            processAlarm(
-                    alarmResultLevelChanged, sectionKey, alarmResultAlarmLevel, currentDate, alarmResultAlarming,
-                    alarmResultAlarmMessage, alarmResultOldAlarmModal
-            );
-        } catch (Exception e) {
             // 取消心跳任务。
             beatTaskFuture.cancel(true);
             // 记录日志。
@@ -440,42 +382,6 @@ public class JobHandlerImpl implements JobHandler {
         return judgerExecutor.judge();
     }
 
-    private AlarmResult alarm(LongIdKey sectionKey, List<AlarmSetting> alarmSettings, double judgeResultValue)
-            throws Exception {
-        // 查询旧的报警模态。
-        AlarmModal oldAlarmModal = alarmModalMaintainService.getIfExists(sectionKey);
-        String oldAlarmLevel = Optional.ofNullable(oldAlarmModal).map(AlarmModal::getAlarmLevel).orElse(null);
-
-        // 报警解析。
-        String alarmLevel = null;
-        boolean alarming = false;
-        String alarmMessage = null;
-        // 阈值自高到低判断报警，如果命中阈值，更新临时变量。
-        for (AlarmSetting alarmSetting : alarmSettings) {
-            if (judgeResultValue >= alarmSetting.getThreshold()) {
-                alarmLevel = alarmSetting.getAlarmLevel();
-                alarming = true;
-                alarmMessage = alarmSetting.getAlarmMessage();
-                break;
-            }
-        }
-
-        // 等级变更标记解析。
-        boolean levelChanged = false;
-        if (Objects.isNull(oldAlarmModal)) {
-            if (alarming) {
-                levelChanged = true;
-            }
-        } else {
-            if (!Objects.equals(oldAlarmLevel, alarmLevel)) {
-                levelChanged = true;
-            }
-        }
-
-        // 返回结果。
-        return new AlarmResult(oldAlarmModal, alarmLevel, alarming, alarmMessage, levelChanged);
-    }
-
     private void processJudgement(
             LongIdKey sectionKey, LongIdKey judgerInfoKey, Date currentDate, double value, String message
     ) throws Exception {
@@ -490,45 +396,6 @@ public class JobHandlerImpl implements JobHandler {
                 null, sectionKey, judgerInfoKey, currentDate, value, message
         );
         judgementHistoryMaintainService.insert(judgementHistory);
-    }
-
-    private void processAlarm(
-            boolean levelChanged, LongIdKey sectionKey, String alarmLevel, Date currentDate, boolean alarming,
-            String alarmMessage, AlarmModal oldAlarmModal
-    ) throws Exception {
-        // 如果报警等级不发生变化，则不对报警数据进行操作。
-        if (!levelChanged) {
-            return;
-        }
-
-        // 调用操作服务更新报警模态。
-        AlarmModalUpdateInfo alarmModalUpdateInfo = new AlarmModalUpdateInfo(
-                sectionKey, alarmLevel, currentDate, alarming, alarmMessage
-        );
-        alarmModalOperateHandler.update(alarmModalUpdateInfo);
-
-        /*
-         * 如果旧报警模态处于报警状态，那么记录报警历史。
-         * 因为报警历史只记录报警情况，不记录正常情况。
-         * 旧报警模态处于报警状态：
-         *   1. 报警持续，但是报警级别改变，需要记录报警历史。
-         *   2. 报警消除，需要记录报警历史。
-         * 旧报警模态不处于报警状态：
-         *   1. 报警产生，不需要记录报警历史。
-         */
-        if (Objects.nonNull(oldAlarmModal) && oldAlarmModal.isAlarming()) {
-            // 生成报警历史，调用维护服务插入或更新。
-            AlarmHistory alarmHistory = new AlarmHistory(
-                    null,
-                    sectionKey,
-                    alarmLevel,
-                    oldAlarmModal.getHappenedDate(),
-                    currentDate,
-                    currentDate.getTime() - oldAlarmModal.getHappenedDate().getTime(),
-                    alarmMessage
-            );
-            alarmHistoryMaintainService.insert(alarmHistory);
-        }
     }
 
     /**
@@ -923,70 +790,6 @@ public class JobHandlerImpl implements JobHandler {
                     ", analysisPicturePackItemFileOperateHandler=" + analysisPicturePackItemFileOperateHandler +
                     ", analysisFileFileOperateHandler=" + analysisFileFileOperateHandler +
                     ", analysisFilePackItemFileOperateHandler=" + analysisFilePackItemFileOperateHandler +
-                    '}';
-        }
-    }
-
-    private static final class AlarmResult {
-
-        @Nullable
-        private final AlarmModal oldAlarmModal;
-        private final String alarmLevel;
-        private final boolean alarming;
-        private final String alarmMessage;
-
-        /**
-         * 等级改变标记。
-         *
-         * <p>
-         * 在以下场景中，该值为 <code>true</code>:
-         * <ul>
-         *     <li>旧 AlarmModal 不存在，新 alarming 标志位为 <code>true</code>。</li>
-         *     <li>旧 AlarmModal 存在，新 alarmLevel 字段与旧值不一致。</li>
-         * </ul>
-         */
-        private final boolean levelChanged;
-
-        public AlarmResult(
-                @Nullable AlarmModal oldAlarmModal, String alarmLevel, boolean alarming, String alarmMessage,
-                boolean levelChanged
-        ) {
-            this.oldAlarmModal = oldAlarmModal;
-            this.alarmLevel = alarmLevel;
-            this.alarming = alarming;
-            this.alarmMessage = alarmMessage;
-            this.levelChanged = levelChanged;
-        }
-
-        @Nullable
-        public AlarmModal getOldAlarmModal() {
-            return oldAlarmModal;
-        }
-
-        public String getAlarmLevel() {
-            return alarmLevel;
-        }
-
-        public boolean isAlarming() {
-            return alarming;
-        }
-
-        public String getAlarmMessage() {
-            return alarmMessage;
-        }
-
-        public boolean isLevelChanged() {
-            return levelChanged;
-        }
-
-        @Override
-        public String toString() {
-            return "AlarmResult{" +
-                    "oldAlarmModal=" + oldAlarmModal +
-                    ", alarmLevel='" + alarmLevel + '\'' +
-                    ", alarming=" + alarming +
-                    ", alarmMessage='" + alarmMessage + '\'' +
-                    ", levelChanged=" + levelChanged +
                     '}';
         }
     }

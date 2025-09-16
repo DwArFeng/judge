@@ -99,21 +99,6 @@ public interface BeanMapper {
     JudgerVariableKey judgerVariableKeyFromWebInput(WebInputJudgerVariableKey webInputJudgerVariableKey);
 
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
-    FastJsonAlarmHistory alarmHistoryToFastJson(AlarmHistory alarmHistory);
-
-    @InheritInverseConfiguration
-    AlarmHistory alarmHistoryFromFastJson(FastJsonAlarmHistory fastJsonAlarmHistory);
-
-    FastJsonAlarmModal alarmModalToFastJson(AlarmModal alarmModal);
-
-    @InheritInverseConfiguration
-    AlarmModal alarmModalFromFastJson(FastJsonAlarmModal fastJsonAlarmModal);
-
-    FastJsonAlarmSetting alarmSettingToFastJson(AlarmSetting alarmSetting);
-
-    @InheritInverseConfiguration
-    AlarmSetting alarmSettingFromFastJson(FastJsonAlarmSetting fastJsonAlarmSetting);
-
     FastJsonAnalyserInfo analyserInfoToFastJson(AnalyserInfo analyserInfo);
 
     @InheritInverseConfiguration
@@ -184,21 +169,6 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     TaskEvent taskEventFromFastJson(FastJsonTaskEvent fastJsonTaskEvent);
 
-    JSFixedFastJsonAlarmHistory alarmHistoryToJSFixedFastJson(AlarmHistory alarmHistory);
-
-    @InheritInverseConfiguration
-    AlarmHistory alarmHistoryFromJSFixedFastJson(JSFixedFastJsonAlarmHistory jSFixedFastJsonAlarmHistory);
-
-    JSFixedFastJsonAlarmModal alarmModalToJSFixedFastJson(AlarmModal alarmModal);
-
-    @InheritInverseConfiguration
-    AlarmModal alarmModalFromJSFixedFastJson(JSFixedFastJsonAlarmModal jSFixedFastJsonAlarmModal);
-
-    JSFixedFastJsonAlarmSetting alarmSettingToJSFixedFastJson(AlarmSetting alarmSetting);
-
-    @InheritInverseConfiguration
-    AlarmSetting alarmSettingFromJSFixedFastJson(JSFixedFastJsonAlarmSetting jSFixedFastJsonAlarmSetting);
-
     JSFixedFastJsonAnalyserInfo analyserInfoToJSFixedFastJson(AnalyserInfo analyserInfo);
 
     @InheritInverseConfiguration
@@ -257,11 +227,6 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     TaskEvent taskEventFromJSFixedFastJson(JSFixedFastJsonTaskEvent jSFixedFastJsonTaskEvent);
-
-    WebInputAlarmSetting alarmSettingToWebInput(AlarmSetting alarmSetting);
-
-    @InheritInverseConfiguration
-    AlarmSetting alarmSettingFromWebInput(WebInputAlarmSetting webInputAlarmSetting);
 
     WebInputAnalyserInfo analyserInfoToWebInput(AnalyserInfo analyserInfo);
 
@@ -366,16 +331,6 @@ public interface BeanMapper {
     AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromJSFixedFastJson(
             JSFixedFastJsonAnalysisPicturePackItemInfo jSFixedFastJsonAnalysisPicturePackItemInfo
     );
-
-    FastJsonAlarmLevelIndicator alarmLevelIndicatorToFastJson(AlarmLevelIndicator alarmLevelIndicator);
-
-    @InheritInverseConfiguration
-    AlarmLevelIndicator alarmLevelIndicatorFromFastJson(FastJsonAlarmLevelIndicator fastJsonAlarmLevelIndicator);
-
-    WebInputAlarmLevelIndicator alarmLevelIndicatorToWebInput(AlarmLevelIndicator alarmLevelIndicator);
-
-    @InheritInverseConfiguration
-    AlarmLevelIndicator alarmLevelIndicatorFromWebInput(WebInputAlarmLevelIndicator webInputAlarmLevelIndicator);
 
     // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(

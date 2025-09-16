@@ -23,7 +23,7 @@ import java.util.Set;
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateSection implements Bean {
 
-    private static final long serialVersionUID = 699450728974428552L;
+    private static final long serialVersionUID = -1011909320768065769L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -44,9 +44,6 @@ public class HibernateSection implements Bean {
     @OneToOne(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementModal.class, mappedBy = "section")
     private HibernateJudgementModal judgementModal;
 
-    @OneToOne(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmModal.class, mappedBy = "section")
-    private HibernateAlarmModal alarmModal;
-
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateDriverInfo.class, mappedBy = "section")
     private Set<HibernateDriverInfo> driverInfos = new HashSet<>();
@@ -62,12 +59,6 @@ public class HibernateSection implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementHistory.class, mappedBy = "section")
     private Set<HibernateJudgementHistory> judgementHistories = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmSetting.class, mappedBy = "section")
-    private Set<HibernateAlarmSetting> alarmSettings = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmHistory.class, mappedBy = "section")
-    private Set<HibernateAlarmHistory> alarmHistories = new HashSet<>();
 
     // -----------------------------------------------------------审计-----------------------------------------------------------
     @DatamarkField(handlerName = "sectionDatamarkHandler")
@@ -138,14 +129,6 @@ public class HibernateSection implements Bean {
         this.judgementModal = judgementModal;
     }
 
-    public HibernateAlarmModal getAlarmModal() {
-        return alarmModal;
-    }
-
-    public void setAlarmModal(HibernateAlarmModal alarmModal) {
-        this.alarmModal = alarmModal;
-    }
-
     public Set<HibernateDriverInfo> getDriverInfos() {
         return driverInfos;
     }
@@ -186,22 +169,6 @@ public class HibernateSection implements Bean {
         this.judgementHistories = judgementHistories;
     }
 
-    public Set<HibernateAlarmSetting> getAlarmSettings() {
-        return alarmSettings;
-    }
-
-    public void setAlarmSettings(Set<HibernateAlarmSetting> alarmSettings) {
-        this.alarmSettings = alarmSettings;
-    }
-
-    public Set<HibernateAlarmHistory> getAlarmHistories() {
-        return alarmHistories;
-    }
-
-    public void setAlarmHistories(Set<HibernateAlarmHistory> alarmHistories) {
-        this.alarmHistories = alarmHistories;
-    }
-
     public String getCreatedDatamark() {
         return createdDatamark;
     }
@@ -226,7 +193,6 @@ public class HibernateSection implements Bean {
                 "enabled = " + enabled + ", " +
                 "remark = " + remark + ", " +
                 "judgementModal = " + judgementModal + ", " +
-                "alarmModal = " + alarmModal + ", " +
                 "createdDatamark = " + createdDatamark + ", " +
                 "modifiedDatamark = " + modifiedDatamark + ")";
     }
