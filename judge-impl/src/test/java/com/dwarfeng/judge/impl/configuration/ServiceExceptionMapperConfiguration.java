@@ -55,6 +55,8 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(UnsupportedDriverTypeException.class, ServiceExceptionCodes.DRIVER_TYPE_UNSUPPORTED);
         destination.put(JudgementNotExistsException.class, ServiceExceptionCodes.JUDGEMENT_NOT_EXISTS);
         destination.put(InvalidJudgementValueException.class, ServiceExceptionCodes.INVALID_JUDGEMENT_VALUE);
+        destination.put(SinkerInfoNotExistsException.class, ServiceExceptionCodes.SINKER_INFO_NOT_EXISTS);
+        destination.put(SinkerVariableNotExistsException.class, ServiceExceptionCodes.SINKER_VARIABLE_NOT_EXISTS);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

@@ -6,10 +6,7 @@ import com.dwarfeng.judge.stack.bean.dto.AnalysisFileUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisPicturePackUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisPictureUpsertInfo;
 import com.dwarfeng.judge.stack.bean.entity.Task;
-import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
-import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
-import com.dwarfeng.judge.stack.bean.key.JudgementKey;
-import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.bean.key.*;
 import com.dwarfeng.judge.stack.exception.*;
 import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -46,6 +43,8 @@ public class HandlerValidator {
     private final AnalysisPicturePackMaintainService analysisPicturePackMaintainService;
     private final AnalysisMaintainService analysisMaintainService;
     private final JudgementMaintainService judgementMaintainService;
+    private final SinkerInfoMaintainService sinkerInfoMaintainService;
+    private final SinkerVariableMaintainService sinkerVariableMaintainService;
 
     public HandlerValidator(
             AnalyserInfoMaintainService analyserInfoMaintainService,
@@ -61,7 +60,9 @@ public class HandlerValidator {
             AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService,
             AnalysisPicturePackMaintainService analysisPicturePackMaintainService,
             AnalysisMaintainService analysisMaintainService,
-            JudgementMaintainService judgementMaintainService
+            JudgementMaintainService judgementMaintainService,
+            SinkerInfoMaintainService sinkerInfoMaintainService,
+            SinkerVariableMaintainService sinkerVariableMaintainService
     ) {
         this.analyserInfoMaintainService = analyserInfoMaintainService;
         this.judgerInfoMaintainService = judgerInfoMaintainService;
@@ -77,6 +78,8 @@ public class HandlerValidator {
         this.analysisPicturePackMaintainService = analysisPicturePackMaintainService;
         this.analysisMaintainService = analysisMaintainService;
         this.judgementMaintainService = judgementMaintainService;
+        this.sinkerInfoMaintainService = sinkerInfoMaintainService;
+        this.sinkerVariableMaintainService = sinkerVariableMaintainService;
     }
 
     public void makeSureAnalyserInfoExists(LongIdKey analyserInfoKey) throws HandlerException {
@@ -316,6 +319,26 @@ public class HandlerValidator {
         // value 取值范围是 [0.0, 1.0]。
         if (value < 0.0 || value > 1.0) {
             throw new InvalidJudgementValueException(value);
+        }
+    }
+
+    public void makeSureSinkerInfoExists(LongIdKey sinkerInfoKey) throws HandlerException {
+        try {
+            if (!sinkerInfoMaintainService.exists(sinkerInfoKey)) {
+                throw new SinkerInfoNotExistsException(sinkerInfoKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureSinkerVariableExists(SinkerVariableKey sinkerVariableKey) throws HandlerException {
+        try {
+            if (!sinkerVariableMaintainService.exists(sinkerVariableKey)) {
+                throw new SinkerVariableNotExistsException(sinkerVariableKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
         }
     }
 }

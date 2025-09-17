@@ -86,6 +86,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(270), "judgement not exists");
     public static final ServiceException.Code INVALID_JUDGEMENT_VALUE =
             new ServiceException.Code(offset(280), "invalid judgement value");
+    public static final ServiceException.Code SINKER_INFO_NOT_EXISTS =
+            new ServiceException.Code(offset(290), "sinker info not exists");
+    public static final ServiceException.Code SINKER_VARIABLE_NOT_EXISTS =
+            new ServiceException.Code(offset(300), "sinker variable not exists");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -147,6 +151,8 @@ public final class ServiceExceptionCodes {
         DRIVER_TYPE_UNSUPPORTED.setCode(offset(261));
         JUDGEMENT_NOT_EXISTS.setCode(offset(270));
         INVALID_JUDGEMENT_VALUE.setCode(offset(280));
+        SINKER_INFO_NOT_EXISTS.setCode(offset(290));
+        SINKER_VARIABLE_NOT_EXISTS.setCode(offset(300));
     }
 
     private ServiceExceptionCodes() {
