@@ -23,6 +23,7 @@
   - com.dwarfeng.judge.stack.bean.entity.SinkerVariable。
 
 - 优化作业逻辑。
+  - 分析判断完毕后，使用下沉器下沉当前任务对应的下沉信息。
   - 调整作业过程中判断器的使用方式，由单独使用变为联合使用。
 
 - 调整判断机制。

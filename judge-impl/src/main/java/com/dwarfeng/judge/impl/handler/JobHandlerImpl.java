@@ -2,9 +2,9 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.*;
-import com.dwarfeng.judge.stack.bean.entity.Task;
+import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.handler.*;
-import com.dwarfeng.judge.stack.service.TaskMaintainService;
+import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.judge.stack.struct.JobLocalCache;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -43,6 +43,16 @@ public class JobHandlerImpl implements JobHandler {
     private final ApplicationContext ctx;
 
     private final TaskMaintainService taskMaintainService;
+    private final SectionMaintainService sectionMaintainService;
+    private final TaskEventMaintainService taskEventMaintainService;
+    private final AnalysisMaintainService analysisMaintainService;
+    private final JudgementMaintainService judgementMaintainService;
+    private final AnalysisPictureInfoMaintainService analysisPictureInfoMaintainService;
+    private final AnalysisPicturePackMaintainService analysisPicturePackMaintainService;
+    private final AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService;
+    private final AnalysisFileInfoMaintainService analysisFileInfoMaintainService;
+    private final AnalysisFilePackMaintainService analysisFilePackMaintainService;
+    private final AnalysisFilePackItemInfoMaintainService analysisFilePackItemInfoMaintainService;
 
     private final TaskOperateHandler taskOperateHandler;
     private final TaskEventOperateHandler taskEventOperateHandler;
@@ -55,6 +65,7 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
     private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
     private final JudgementOperateHandler judgementOperateHandler;
+    private final SinkHandler sinkHandler;
 
     private final ThreadPoolTaskExecutor executor;
     private final ThreadPoolTaskScheduler scheduler;
@@ -67,6 +78,16 @@ public class JobHandlerImpl implements JobHandler {
     public JobHandlerImpl(
             ApplicationContext ctx,
             TaskMaintainService taskMaintainService,
+            SectionMaintainService sectionMaintainService,
+            TaskEventMaintainService taskEventMaintainService,
+            AnalysisMaintainService analysisMaintainService,
+            JudgementMaintainService judgementMaintainService,
+            AnalysisPictureInfoMaintainService analysisPictureInfoMaintainService,
+            AnalysisPicturePackMaintainService analysisPicturePackMaintainService,
+            AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService,
+            AnalysisFileInfoMaintainService analysisFileInfoMaintainService,
+            AnalysisFilePackMaintainService analysisFilePackMaintainService,
+            AnalysisFilePackItemInfoMaintainService analysisFilePackItemInfoMaintainService,
             TaskOperateHandler taskOperateHandler,
             TaskEventOperateHandler taskEventOperateHandler,
             JobLocalCacheHandler jobLocalCacheHandler,
@@ -78,12 +99,23 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
             AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
             JudgementOperateHandler judgementOperateHandler,
+            SinkHandler sinkHandler,
             ThreadPoolTaskExecutor executor,
             ThreadPoolTaskScheduler scheduler,
             HandlerValidator handlerValidator
     ) {
         this.ctx = ctx;
         this.taskMaintainService = taskMaintainService;
+        this.sectionMaintainService = sectionMaintainService;
+        this.taskEventMaintainService = taskEventMaintainService;
+        this.analysisMaintainService = analysisMaintainService;
+        this.judgementMaintainService = judgementMaintainService;
+        this.analysisPictureInfoMaintainService = analysisPictureInfoMaintainService;
+        this.analysisPicturePackMaintainService = analysisPicturePackMaintainService;
+        this.analysisPicturePackItemInfoMaintainService = analysisPicturePackItemInfoMaintainService;
+        this.analysisFileInfoMaintainService = analysisFileInfoMaintainService;
+        this.analysisFilePackMaintainService = analysisFilePackMaintainService;
+        this.analysisFilePackItemInfoMaintainService = analysisFilePackItemInfoMaintainService;
         this.taskOperateHandler = taskOperateHandler;
         this.taskEventOperateHandler = taskEventOperateHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
@@ -95,6 +127,7 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
         this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
         this.judgementOperateHandler = judgementOperateHandler;
+        this.sinkHandler = sinkHandler;
         this.executor = executor;
         this.scheduler = scheduler;
         this.handlerValidator = handlerValidator;
@@ -240,6 +273,22 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
+        // 进行下沉。
+        try {
+            sink(sectionKey, taskKey);
+        } catch (Exception e) {
+            // 取消心跳任务。
+            beatTaskFuture.cancel(true);
+            // 记录日志。
+            LOGGER.warn("作业执行失败, 任务主键: {}, 部件主键: {}, 异常信息如下: ", taskKey, sectionKey, e);
+            // 插入任务事件。
+            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
+            // 将任务状态置为失败。
+            taskOperateHandler.fail(new TaskFailInfo(taskKey));
+            // 结束方法。
+            return;
+        }
+
         // 将任务状态置为完成。
         taskOperateHandler.finish(new TaskFinishInfo(taskKey));
     }
@@ -308,6 +357,152 @@ public class JobHandlerImpl implements JobHandler {
             // 调用判断器执行器的判断方法。
             judgerExecutor.judge();
         }
+    }
+
+    private void sink(LongIdKey sectionKey, LongIdKey taskKey) throws Exception {
+        Section section = sectionMaintainService.get(sectionKey);
+        Task task = taskMaintainService.get(taskKey);
+        List<SinkInfo.TaskEvent> taskEvents = lookupTaskEvents(taskKey);
+        List<SinkInfo.Analysis> analysises = lookupAnalysises(taskKey);
+        List<SinkInfo.Judgement> judgements = lookupJudgements(taskKey);
+        SinkInfo sinkInfo = new SinkInfo(
+                sectionKey, taskKey,
+                section.getName(), section.getRemark(),
+                task.getStatus(), task.getCreatedDate(), task.getStartedDate(), task.getEndedDate(), task.getDuration(),
+                task.getShouldExpireDate(), task.getShouldDieDate(), task.getExpiredDate(), task.getDiedDate(),
+                task.getAnchorMessage(),
+                taskEvents, analysises, judgements
+        );
+        sinkHandler.sink(sinkInfo);
+    }
+
+    private List<SinkInfo.TaskEvent> lookupTaskEvents(LongIdKey taskKey) throws Exception {
+        List<TaskEvent> taskEvents = taskEventMaintainService.lookupAsList(
+                TaskEventMaintainService.CHILD_FOR_TASK, new Object[]{taskKey}
+        );
+        List<SinkInfo.TaskEvent> sinkInfoTaskEvent = new ArrayList<>();
+        for (TaskEvent taskEvent : taskEvents) {
+            sinkInfoTaskEvent.add(new SinkInfo.TaskEvent(taskEvent.getHappenedDate(), taskEvent.getMessage()));
+        }
+        return sinkInfoTaskEvent;
+    }
+
+    private List<SinkInfo.Analysis> lookupAnalysises(LongIdKey taskKey) throws Exception {
+        List<Analysis> analysises = analysisMaintainService.lookupAsList(
+                AnalysisMaintainService.CHILD_FOR_TASK, new Object[]{taskKey}
+        );
+        List<SinkInfo.Analysis> sinkInfoAnalysises = new ArrayList<>();
+        for (Analysis analysis : analysises) {
+            String dataId = analysis.getKey().getDataStringId();
+            int dataType = analysis.getDataType();
+            Object value;
+            switch (dataType) {
+                case Constants.ANALYSIS_TYPE_STRING:
+                    value = analysis.getStringValue();
+                    break;
+                case Constants.ANALYSIS_TYPE_LONG:
+                    value = analysis.getLongValue();
+                    break;
+                case Constants.ANALYSIS_TYPE_DOUBLE:
+                    value = analysis.getDoubleValue();
+                    break;
+                case Constants.ANALYSIS_TYPE_BOOLEAN:
+                    value = analysis.getBooleanValue();
+                    break;
+                case Constants.ANALYSIS_TYPE_DATE:
+                    value = analysis.getDateValue();
+                    break;
+                case Constants.ANALYSIS_TYPE_PICTURE:
+                    value = lookupAnalysisPicture(analysis.getPictureValue());
+                    break;
+                case Constants.ANALYSIS_TYPE_PICTURE_PACK:
+                    value = lookupAnalysisPicturePack(analysis.getPicturePackValue());
+                    break;
+                case Constants.ANALYSIS_TYPE_FILE:
+                    value = lookupAnalysisFile(analysis.getFileValue());
+                    break;
+                case Constants.ANALYSIS_TYPE_FILE_PACK:
+                    value = lookupAnalysisFilePack(analysis.getFilePackValue());
+                    break;
+                default:
+                    throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+            }
+            sinkInfoAnalysises.add(new SinkInfo.Analysis(dataId, dataType, value));
+        }
+        return sinkInfoAnalysises;
+    }
+
+    private SinkInfo.AnalysisPicture lookupAnalysisPicture(Long pictureValue) throws Exception {
+        LongIdKey analysisPictureInfoKey = new LongIdKey(pictureValue);
+        AnalysisPictureInfo analysisPictureInfo = analysisPictureInfoMaintainService.get(analysisPictureInfoKey);
+        return new SinkInfo.AnalysisPicture(
+                analysisPictureInfoKey,
+                analysisPictureInfo.getOriginName(), analysisPictureInfo.getLength(), analysisPictureInfo.getRemark()
+        );
+    }
+
+    private SinkInfo.AnalysisPicturePack lookupAnalysisPicturePack(Long picturePackValue) throws Exception {
+        LongIdKey analysisPicturePackKey = new LongIdKey(picturePackValue);
+        AnalysisPicturePack analysisPicturePack = analysisPicturePackMaintainService.get(analysisPicturePackKey);
+        List<AnalysisPicturePackItemInfo> analysisPicturePackItemInfos =
+                analysisPicturePackItemInfoMaintainService.lookupAsList(
+                        AnalysisPicturePackItemInfoMaintainService.CHILD_FOR_PACK, new Object[]{analysisPicturePackKey}
+                );
+        List<SinkInfo.AnalysisPicturePackItem> sinkInfoAnalysisPicturePackItems = new ArrayList<>();
+        for (AnalysisPicturePackItemInfo analysisPicturePackItemInfo : analysisPicturePackItemInfos) {
+            sinkInfoAnalysisPicturePackItems.add(new SinkInfo.AnalysisPicturePackItem(
+                    analysisPicturePackItemInfo.getKey(), analysisPicturePackItemInfo.getIndex(),
+                    analysisPicturePackItemInfo.getOriginName(), analysisPicturePackItemInfo.getLength(),
+                    analysisPicturePackItemInfo.getRemark()
+            ));
+        }
+        return new SinkInfo.AnalysisPicturePack(
+                analysisPicturePackKey, analysisPicturePack.getItemAnchorIndex(), analysisPicturePack.getRemark(),
+                sinkInfoAnalysisPicturePackItems
+        );
+    }
+
+    private SinkInfo.AnalysisFile lookupAnalysisFile(Long fileValue) throws Exception {
+        LongIdKey analysisFileInfoKey = new LongIdKey(fileValue);
+        AnalysisFileInfo analysisFileInfo = analysisFileInfoMaintainService.get(analysisFileInfoKey);
+        return new SinkInfo.AnalysisFile(
+                analysisFileInfoKey,
+                analysisFileInfo.getOriginName(), analysisFileInfo.getLength(), analysisFileInfo.getRemark()
+        );
+    }
+
+    private SinkInfo.AnalysisFilePack lookupAnalysisFilePack(Long filePackValue) throws Exception {
+        LongIdKey analysisFilePackKey = new LongIdKey(filePackValue);
+        AnalysisFilePack analysisFilePack = analysisFilePackMaintainService.get(analysisFilePackKey);
+        List<AnalysisFilePackItemInfo> analysisFilePackItemInfos =
+                analysisFilePackItemInfoMaintainService.lookupAsList(
+                        AnalysisFilePackItemInfoMaintainService.CHILD_FOR_PACK, new Object[]{analysisFilePackKey}
+                );
+        List<SinkInfo.AnalysisFilePackItem> sinkInfoAnalysisFilePackItems = new ArrayList<>();
+        for (AnalysisFilePackItemInfo analysisFilePackItemInfo : analysisFilePackItemInfos) {
+            sinkInfoAnalysisFilePackItems.add(new SinkInfo.AnalysisFilePackItem(
+                    analysisFilePackItemInfo.getKey(), analysisFilePackItemInfo.getIndex(),
+                    analysisFilePackItemInfo.getOriginName(), analysisFilePackItemInfo.getLength(),
+                    analysisFilePackItemInfo.getRemark()
+            ));
+        }
+        return new SinkInfo.AnalysisFilePack(
+                analysisFilePackKey, analysisFilePack.getItemAnchorIndex(), analysisFilePack.getRemark(),
+                sinkInfoAnalysisFilePackItems
+        );
+    }
+
+    private List<SinkInfo.Judgement> lookupJudgements(LongIdKey taskKey) throws Exception {
+        List<Judgement> judgements = judgementMaintainService.lookupAsList(
+                JudgementMaintainService.CHILD_FOR_TASK, new Object[]{taskKey}
+        );
+        List<SinkInfo.Judgement> sinkInfoJudgements = new ArrayList<>();
+        for (Judgement judgement : judgements) {
+            sinkInfoJudgements.add(new SinkInfo.Judgement(
+                    judgement.getKey().getDataStringId(), judgement.getValue(), judgement.getMessage()
+            ));
+        }
+        return sinkInfoJudgements;
     }
 
     /**
