@@ -1,7 +1,6 @@
 package com.dwarfeng.judge.impl.handler.judger.groovy;
 
 import com.dwarfeng.judge.sdk.handler.judger.AbstractExecutor;
-import com.dwarfeng.judge.stack.handler.Judger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,8 +22,8 @@ public class GroovyExecutor extends AbstractExecutor {
     }
 
     @Override
-    public Judger.JudgeResult judge() throws Exception {
-        return processor.judge(context);
+    public void judge() throws Exception {
+        processor.judge(context);
     }
 
     @Override

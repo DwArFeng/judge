@@ -5,10 +5,10 @@ import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisFileUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisPicturePackUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisPictureUpsertInfo;
-import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Task;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.judge.stack.exception.*;
 import com.dwarfeng.judge.stack.service.*;
@@ -17,7 +17,6 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,7 +45,7 @@ public class HandlerValidator {
     private final AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService;
     private final AnalysisPicturePackMaintainService analysisPicturePackMaintainService;
     private final AnalysisMaintainService analysisMaintainService;
-    private final JudgementModalMaintainService judgementModalMaintainService;
+    private final JudgementMaintainService judgementMaintainService;
 
     public HandlerValidator(
             AnalyserInfoMaintainService analyserInfoMaintainService,
@@ -62,7 +61,7 @@ public class HandlerValidator {
             AnalysisPicturePackItemInfoMaintainService analysisPicturePackItemInfoMaintainService,
             AnalysisPicturePackMaintainService analysisPicturePackMaintainService,
             AnalysisMaintainService analysisMaintainService,
-            JudgementModalMaintainService judgementModalMaintainService
+            JudgementMaintainService judgementMaintainService
     ) {
         this.analyserInfoMaintainService = analyserInfoMaintainService;
         this.judgerInfoMaintainService = judgerInfoMaintainService;
@@ -77,7 +76,7 @@ public class HandlerValidator {
         this.analysisPicturePackItemInfoMaintainService = analysisPicturePackItemInfoMaintainService;
         this.analysisPicturePackMaintainService = analysisPicturePackMaintainService;
         this.analysisMaintainService = analysisMaintainService;
-        this.judgementModalMaintainService = judgementModalMaintainService;
+        this.judgementMaintainService = judgementMaintainService;
     }
 
     public void makeSureAnalyserInfoExists(LongIdKey analyserInfoKey) throws HandlerException {
@@ -303,27 +302,20 @@ public class HandlerValidator {
         }
     }
 
-    public void makeSureJudgementModalUpdateHappenedDateValid(LongIdKey sectionKey, Date happenedDate)
-            throws HandlerException {
+    public void makeSureJudgementExists(JudgementKey judgementKey) throws HandlerException {
         try {
-            JudgementModal judgementModal = judgementModalMaintainService.getIfExists(sectionKey);
-            if (Objects.isNull(judgementModal)) {
-                return;
-            }
-            // happenedDate 不得小于 judgementModal.getHappenedDate()。
-            Date oldHappenedDate = judgementModal.getHappenedDate();
-            if (happenedDate.before(oldHappenedDate)) {
-                throw new InvalidJudgementModalUpdateHappenedDateException(sectionKey, oldHappenedDate, happenedDate);
+            if (!judgementMaintainService.exists(judgementKey)) {
+                throw new JudgementNotExistsException(judgementKey);
             }
         } catch (ServiceException e) {
             throw new HandlerException(e);
         }
     }
 
-    public void makeSureJudgementModalUpdateValueValid(double value) throws HandlerException {
+    public void makeSureJudgementValueValid(double value) throws HandlerException {
         // value 取值范围是 [0.0, 1.0]。
         if (value < 0.0 || value > 1.0) {
-            throw new InvalidJudgementModalUpdateValueException(value);
+            throw new InvalidJudgementValueException(value);
         }
     }
 }

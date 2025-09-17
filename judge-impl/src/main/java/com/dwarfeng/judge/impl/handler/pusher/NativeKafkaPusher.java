@@ -1,10 +1,8 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonJudgementModal;
 import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
-import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -46,8 +44,6 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String taskExpiredTopic;
     @Value("${pusher.kafka.native.topic.task_died}")
     private String taskDiedTopic;
-    @Value("${pusher.kafka.native.topic.judgement_updated}")
-    private String judgementUpdatedTopic;
     @Value("${pusher.kafka.native.topic.job_reset}")
     private String jobResetTopic;
     @Value("${pusher.kafka.native.topic.supervise_reset}")
@@ -81,11 +77,6 @@ public class NativeKafkaPusher extends AbstractPusher {
     }
 
     @Override
-    public void judgementModalUpdated(JudgementModal judgementModal) {
-        kafkaTemplate.send(judgementUpdatedTopic, JSON.toJSONString(FastJsonJudgementModal.of(judgementModal)));
-    }
-
-    @Override
     public void jobReset() {
         kafkaTemplate.send(jobResetTopic, StringUtils.EMPTY);
     }
@@ -104,7 +95,6 @@ public class NativeKafkaPusher extends AbstractPusher {
                 ", taskFailedTopic='" + taskFailedTopic + '\'' +
                 ", taskExpiredTopic='" + taskExpiredTopic + '\'' +
                 ", taskDiedTopic='" + taskDiedTopic + '\'' +
-                ", judgementUpdatedTopic='" + judgementUpdatedTopic + '\'' +
                 ", jobResetTopic='" + jobResetTopic + '\'' +
                 ", superviseResetTopic='" + superviseResetTopic + '\'' +
                 '}';

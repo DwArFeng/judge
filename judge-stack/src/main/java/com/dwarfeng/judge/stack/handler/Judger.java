@@ -41,10 +41,13 @@ public interface Judger {
         /**
          * 判断数据。
          *
-         * @return 判断结果。
+         * <p>
+         * 该方法被调用时，需要按照预定的逻辑对数据进行判断，并把判断的结果或中间值以判断结果的形式，
+         * 通过 {@link Context} 进行持久化。
+         *
          * @throws Exception 方法执行过程中发生的任何异常。
          */
-        JudgeResult judge() throws Exception;
+        void judge() throws Exception;
     }
 
     /**
@@ -256,51 +259,36 @@ public interface Judger {
          */
         AnalysisFilePackItemFileStream downloadFilePackItemFileStream(AnalysisFilePackItemFileStreamDownloadInfo info)
                 throws HandlerException;
-    }
-
-    /**
-     * 判断结果。
-     *
-     * @author DwArFeng
-     * @since 2.0.0-beta
-     */
-    final class JudgeResult {
 
         /**
-         * 判断值。
+         * 查看判断结果。
          *
          * <p>
-         * 该值是一个归一化的双精度浮点值，取值范围是 [0.0, 1.0]。
+         * 当 {@link JudgementInspectInfo#getTaskKey()} 不存在时，该方法抛出异常。<br>
+         * 当 {@link JudgementInspectInfo#getTaskKey()} 存在，
+         * 但 {@link JudgementInspectInfo#getDataStringId()} 不存在时，该方法返回 <code>null</code>。
+         *
+         * @param info 判断结果查看信息。
+         * @return 查看结果。
+         * @throws HandlerException 处理器异常。
          */
-        private final double value;
+        @Nullable
+        JudgementInspectResult inspectJudgement(JudgementInspectInfo info) throws HandlerException;
 
         /**
-         * 判断消息。
+         * 插入或更新判断结果。
          *
-         * <p>
-         * 一段描述性的文本，用于说明判断值的含义或解释判断值如何得出。
+         * @param info 判断结果插入或更新信息。
+         * @throws Exception 方法执行过程中发生的任何异常。
          */
-        private final String message;
+        void upsertJudgement(JudgementUpsertInfo info) throws Exception;
 
-        public JudgeResult(double value, String message) {
-            this.value = value;
-            this.message = message;
-        }
-
-        public double getValue() {
-            return value;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        @Override
-        public String toString() {
-            return "JudgeResult{" +
-                    "value=" + value +
-                    ", message='" + message + '\'' +
-                    '}';
-        }
+        /**
+         * 删除判断结果。
+         *
+         * @param info 判断结果删除信息。
+         * @throws Exception 方法执行过程中发生的任何异常。
+         */
+        void removeJudgement(JudgementRemoveInfo info) throws Exception;
     }
 }

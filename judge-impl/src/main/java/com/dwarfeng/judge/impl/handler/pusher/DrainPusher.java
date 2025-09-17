@@ -1,7 +1,6 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
-import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import org.springframework.stereotype.Component;
 
@@ -34,10 +33,6 @@ public class DrainPusher extends AbstractPusher {
 
     @Override
     public void taskDied(Section section) {
-    }
-
-    @Override
-    public void judgementModalUpdated(JudgementModal judgementModal) {
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.sdk.handler;
 
-import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
@@ -55,15 +54,6 @@ public interface Pusher {
      * @since 2.0.0-beta
      */
     void taskDied(Section section) throws HandlerException;
-
-    /**
-     * 判断结果模态更新时执行的推送操作。
-     *
-     * @param judgementModal 相关的判断结果模态。
-     * @throws HandlerException 处理器异常。
-     * @since 2.0.0-beta
-     */
-    void judgementModalUpdated(JudgementModal judgementModal) throws HandlerException;
 
     /**
      * 作业功能重置时作业的广播操作。

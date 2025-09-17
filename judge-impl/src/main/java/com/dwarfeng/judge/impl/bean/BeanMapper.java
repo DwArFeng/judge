@@ -3,10 +3,12 @@ package com.dwarfeng.judge.impl.bean;
 import com.dwarfeng.judge.impl.bean.entity.*;
 import com.dwarfeng.judge.impl.bean.key.HibernateAnalyserVariableKey;
 import com.dwarfeng.judge.impl.bean.key.HibernateAnalysisKey;
+import com.dwarfeng.judge.impl.bean.key.HibernateJudgementKey;
 import com.dwarfeng.judge.impl.bean.key.HibernateJudgerVariableKey;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
@@ -55,6 +57,11 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     JudgerVariableKey judgerVariableKeyFromHibernate(HibernateJudgerVariableKey hibernateJudgerVariableKey);
 
+    HibernateJudgementKey judgementKeyToHibernate(JudgementKey judgementKey);
+
+    @InheritInverseConfiguration
+    JudgementKey judgementKeyFromHibernate(HibernateJudgementKey hibernateJudgementKey);
+
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
@@ -81,11 +88,12 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     AnalyserVariable analyserVariableFromHibernate(HibernateAnalyserVariable hibernateAnalyserVariable);
 
+    @Mapping(target = "taskEvents", ignore = true)
     @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
     @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "judgements", ignore = true)
     @Mapping(target = "analyses", ignore = true)
-    @Mapping(target = "taskEvents", ignore = true)
     HibernateTask taskToHibernate(Task task);
 
     @InheritInverseConfiguration
@@ -125,30 +133,9 @@ public interface BeanMapper {
 
     @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
-    @Mapping(target = "longId", ignore = true)
-    @Mapping(target = "judgerInfoLongId", ignore = true)
-    @Mapping(target = "judgerInfo", ignore = true)
-    HibernateJudgementHistory judgementHistoryToHibernate(JudgementHistory judgementHistory);
-
-    @InheritInverseConfiguration
-    JudgementHistory judgementHistoryFromHibernate(HibernateJudgementHistory hibernateJudgementHistory);
-
-    @Mapping(target = "section", ignore = true)
-    @Mapping(target = "longId", ignore = true)
-    @Mapping(target = "judgerInfoLongId", ignore = true)
-    @Mapping(target = "judgerInfo", ignore = true)
-    HibernateJudgementModal judgementModalToHibernate(JudgementModal judgementModal);
-
-    @InheritInverseConfiguration
-    JudgementModal judgementModalFromHibernate(HibernateJudgementModal hibernateJudgementModal);
-
-    @Mapping(target = "sectionLongId", ignore = true)
-    @Mapping(target = "section", ignore = true)
     @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "judgerVariables", ignore = true)
-    @Mapping(target = "judgementModals", ignore = true)
-    @Mapping(target = "judgementHistories", ignore = true)
     @Mapping(target = "createdDatamark", ignore = true)
     HibernateJudgerInfo judgerInfoToHibernate(JudgerInfo judgerInfo);
 
@@ -172,8 +159,6 @@ public interface BeanMapper {
     @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "judgerInfos", ignore = true)
-    @Mapping(target = "judgementModal", ignore = true)
-    @Mapping(target = "judgementHistories", ignore = true)
     @Mapping(target = "driverInfos", ignore = true)
     @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "analyserInfos", ignore = true)
@@ -232,4 +217,12 @@ public interface BeanMapper {
     AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromHibernate(
             HibernateAnalysisPicturePackItemInfo hibernateAnalysisPicturePackItemInfo
     );
+
+    @Mapping(target = "dataStringId", ignore = true)
+    @Mapping(target = "taskLongId", ignore = true)
+    @Mapping(target = "task", ignore = true)
+    HibernateJudgement judgementToHibernate(Judgement judgement);
+
+    @InheritInverseConfiguration
+    Judgement judgementFromHibernate(HibernateJudgement hibernateJudgement);
 }

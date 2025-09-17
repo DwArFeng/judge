@@ -22,8 +22,6 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonAnalysis.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonDriverInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonDriverSupport.class.getCanonicalName());
-        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgementHistory.class.getCanonicalName());
-        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgementModal.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerSupport.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonJudgerVariable.class.getCanonicalName());
@@ -34,6 +32,7 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonAnalysisPictureInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonAnalysisPicturePack.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonAnalysisPicturePackItemInfo.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonJudgement.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

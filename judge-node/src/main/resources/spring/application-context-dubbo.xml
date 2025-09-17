@@ -58,16 +58,6 @@
             group="${dubbo.provider.group}"
     />
     <dubbo:service
-            interface="com.dwarfeng.judge.stack.service.JudgementHistoryMaintainService"
-            ref="judgementHistoryMaintainServiceImpl"
-            group="${dubbo.provider.group}"
-    />
-    <dubbo:service
-            interface="com.dwarfeng.judge.stack.service.JudgementModalMaintainService"
-            ref="judgementModalMaintainServiceImpl"
-            group="${dubbo.provider.group}"
-    />
-    <dubbo:service
             interface="com.dwarfeng.judge.stack.service.JudgerInfoMaintainService"
             ref="judgerInfoMaintainServiceImpl"
             group="${dubbo.provider.group}"

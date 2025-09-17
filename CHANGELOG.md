@@ -4,7 +4,15 @@
 
 ### 功能构建
 
-- (无)
+- 优化作业逻辑。
+  - 调整作业过程中判断器的使用方式，由单独使用变为联合使用。
+
+- 调整判断机制。
+  - 优化判断器接口方法，使判断器支持多维度判断。
+  - 调整对应的预设判断器实现。
+
+- 新建实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.service.JudgementMaintainService。
 
 ### Bug 修复
 
@@ -14,6 +22,8 @@
 ### 功能移除
 
 - 移除实体及其维护服务。
+  - com.dwarfeng.judge.stack.bean.entity.JudgementHistory。
+  - com.dwarfeng.judge.stack.bean.entity.JudgementModal。
   - com.dwarfeng.judge.stack.bean.entity.AlarmHistory。
   - com.dwarfeng.judge.stack.bean.entity.AlarmLevelIndicator。
   - com.dwarfeng.judge.stack.bean.entity.AlarmModal。

@@ -1,16 +1,21 @@
 package com.dwarfeng.judge.impl.service.operation;
 
 import com.dwarfeng.judge.stack.bean.entity.Analysis;
+import com.dwarfeng.judge.stack.bean.entity.Judgement;
 import com.dwarfeng.judge.stack.bean.entity.Task;
 import com.dwarfeng.judge.stack.bean.entity.TaskEvent;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.cache.AnalysisCache;
+import com.dwarfeng.judge.stack.cache.JudgementCache;
 import com.dwarfeng.judge.stack.cache.TaskCache;
 import com.dwarfeng.judge.stack.cache.TaskEventCache;
 import com.dwarfeng.judge.stack.dao.AnalysisDao;
+import com.dwarfeng.judge.stack.dao.JudgementDao;
 import com.dwarfeng.judge.stack.dao.TaskDao;
 import com.dwarfeng.judge.stack.dao.TaskEventDao;
 import com.dwarfeng.judge.stack.service.AnalysisMaintainService;
+import com.dwarfeng.judge.stack.service.JudgementMaintainService;
 import com.dwarfeng.judge.stack.service.TaskEventMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
@@ -34,6 +39,9 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
     private final AnalysisDao analysisDao;
     private final AnalysisCache analysisCache;
 
+    private final JudgementDao judgementDao;
+    private final JudgementCache judgementCache;
+
     @Value("${cache.timeout.entity.task}")
     private long taskTimeout;
 
@@ -43,7 +51,9 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
             TaskEventDao taskEventDao,
             TaskEventCache taskEventCache,
             AnalysisDao analysisDao,
-            AnalysisCache analysisCache
+            AnalysisCache analysisCache,
+            JudgementDao judgementDao,
+            JudgementCache judgementCache
     ) {
         this.taskDao = taskDao;
         this.taskCache = taskCache;
@@ -51,6 +61,8 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
         this.taskEventCache = taskEventCache;
         this.analysisDao = analysisDao;
         this.analysisCache = analysisCache;
+        this.judgementDao = judgementDao;
+        this.judgementCache = judgementCache;
     }
 
     @Override
@@ -99,6 +111,13 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
         ).stream().map(Analysis::getKey).collect(Collectors.toList());
         analysisDao.batchDelete(analysisKeys);
         analysisCache.batchDelete(analysisKeys);
+
+        // 删除 与 任务 相关的 判断结果。
+        List<JudgementKey> judgementKeys = judgementDao.lookup(
+                JudgementMaintainService.CHILD_FOR_TASK, new Object[]{key}
+        ).stream().map(Judgement::getKey).collect(Collectors.toList());
+        judgementDao.batchDelete(judgementKeys);
+        judgementCache.batchDelete(judgementKeys);
 
         // 删除 任务 自身。
         taskDao.delete(key);

@@ -1,7 +1,9 @@
 package com.dwarfeng.judge.impl.service.telqos;
 
 import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
+import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.handler.Analyser;
+import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.service.JobQosService;
 import com.dwarfeng.judge.stack.struct.JobLocalCache;
 import com.dwarfeng.springtelqos.node.config.TelqosCommand;
@@ -117,8 +119,17 @@ public class JobLocalCacheCommand extends CliCommand {
             context.sendMessage(String.format("  %-3d %s", index, analyserInfo));
             context.sendMessage(String.format("  %-3d %s", index, analyser));
         }
-        context.sendMessage("judger:");
-        context.sendMessage(String.format("  %-3d %s", 0, jobLocalCache.getJudgerInfo()));
-        context.sendMessage(String.format("  %-3d %s", 0, jobLocalCache.getJudger()));
+        context.sendMessage("judgers:");
+        index = 0;
+        for (LongIdKey judgerInfoKey : jobLocalCache.getJudgerInfoKeys()) {
+            if (index != 0) {
+                context.sendMessage("");
+            }
+            index++;
+            JudgerInfo judgerInfo = jobLocalCache.getJudgerInfoMap().get(judgerInfoKey);
+            Judger judger = jobLocalCache.getJudgerMap().get(judgerInfoKey);
+            context.sendMessage(String.format("  %-3d %s", index, judgerInfo));
+            context.sendMessage(String.format("  %-3d %s", index, judger));
+        }
     }
 }

@@ -4,11 +4,13 @@ import com.dwarfeng.judge.impl.bean.BeanMapper;
 import com.dwarfeng.judge.impl.bean.entity.*;
 import com.dwarfeng.judge.impl.bean.key.HibernateAnalyserVariableKey;
 import com.dwarfeng.judge.impl.bean.key.HibernateAnalysisKey;
+import com.dwarfeng.judge.impl.bean.key.HibernateJudgementKey;
 import com.dwarfeng.judge.impl.bean.key.HibernateJudgerVariableKey;
 import com.dwarfeng.judge.impl.dao.preset.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
@@ -35,8 +37,6 @@ public class DaoConfiguration {
     private final AnalysisPresetCriteriaMaker analysisPresetCriteriaMaker;
     private final DriverInfoPresetCriteriaMaker driverInfoPresetCriteriaMaker;
     private final DriverSupportPresetCriteriaMaker driverSupportPresetCriteriaMaker;
-    private final JudgementHistoryPresetCriteriaMaker judgementHistoryPresetCriteriaMaker;
-    private final JudgementModalPresetCriteriaMaker judgementModalPresetCriteriaMaker;
     private final JudgerInfoPresetCriteriaMaker judgerInfoPresetCriteriaMaker;
     private final JudgerSupportPresetCriteriaMaker judgerSupportPresetCriteriaMaker;
     private final JudgerVariablePresetCriteriaMaker judgerVariablePresetCriteriaMaker;
@@ -49,6 +49,7 @@ public class DaoConfiguration {
     private final AnalysisPictureInfoPresetCriteriaMaker analysisPictureInfoPresetCriteriaMaker;
     private final AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker;
     private final AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker;
+    private final JudgementPresetCriteriaMaker judgementPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -61,8 +62,6 @@ public class DaoConfiguration {
             AnalysisPresetCriteriaMaker analysisPresetCriteriaMaker,
             DriverInfoPresetCriteriaMaker driverInfoPresetCriteriaMaker,
             DriverSupportPresetCriteriaMaker driverSupportPresetCriteriaMaker,
-            JudgementHistoryPresetCriteriaMaker judgementHistoryPresetCriteriaMaker,
-            JudgementModalPresetCriteriaMaker judgementModalPresetCriteriaMaker,
             JudgerInfoPresetCriteriaMaker judgerInfoPresetCriteriaMaker,
             JudgerSupportPresetCriteriaMaker judgerSupportPresetCriteriaMaker,
             JudgerVariablePresetCriteriaMaker judgerVariablePresetCriteriaMaker,
@@ -74,7 +73,8 @@ public class DaoConfiguration {
             AnalysisFilePackItemInfoPresetCriteriaMaker analysisFilePackItemInfoPresetCriteriaMaker,
             AnalysisPictureInfoPresetCriteriaMaker analysisPictureInfoPresetCriteriaMaker,
             AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker,
-            AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker
+            AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker,
+            JudgementPresetCriteriaMaker judgementPresetCriteriaMaker
     ) {
         this.hibernateTemplate = hibernateTemplate;
         this.analyserInfoPresetCriteriaMaker = analyserInfoPresetCriteriaMaker;
@@ -83,8 +83,6 @@ public class DaoConfiguration {
         this.analysisPresetCriteriaMaker = analysisPresetCriteriaMaker;
         this.driverInfoPresetCriteriaMaker = driverInfoPresetCriteriaMaker;
         this.driverSupportPresetCriteriaMaker = driverSupportPresetCriteriaMaker;
-        this.judgementHistoryPresetCriteriaMaker = judgementHistoryPresetCriteriaMaker;
-        this.judgementModalPresetCriteriaMaker = judgementModalPresetCriteriaMaker;
         this.judgerInfoPresetCriteriaMaker = judgerInfoPresetCriteriaMaker;
         this.judgerSupportPresetCriteriaMaker = judgerSupportPresetCriteriaMaker;
         this.judgerVariablePresetCriteriaMaker = judgerVariablePresetCriteriaMaker;
@@ -97,6 +95,7 @@ public class DaoConfiguration {
         this.analysisPictureInfoPresetCriteriaMaker = analysisPictureInfoPresetCriteriaMaker;
         this.analysisPicturePackPresetCriteriaMaker = analysisPicturePackPresetCriteriaMaker;
         this.analysisPicturePackItemInfoPresetCriteriaMaker = analysisPicturePackItemInfoPresetCriteriaMaker;
+        this.judgementPresetCriteriaMaker = judgementPresetCriteriaMaker;
     }
 
     @Bean
@@ -300,78 +299,6 @@ public class DaoConfiguration {
                 new MapStructBeanTransformer<>(DriverSupport.class, HibernateDriverSupport.class, BeanMapper.class),
                 HibernateDriverSupport.class,
                 driverSupportPresetCriteriaMaker
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgementHistory, HibernateJudgementHistory>
-    judgementHistoryHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
-                new MapStructBeanTransformer<>(
-                        JudgementHistory.class, HibernateJudgementHistory.class, BeanMapper.class
-                ),
-                HibernateJudgementHistory.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<JudgementHistory, HibernateJudgementHistory>
-    judgementHistoryHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(
-                        JudgementHistory.class, HibernateJudgementHistory.class, BeanMapper.class
-                ),
-                HibernateJudgementHistory.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<JudgementHistory, HibernateJudgementHistory>
-    judgementHistoryHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(
-                        JudgementHistory.class, HibernateJudgementHistory.class, BeanMapper.class
-                ),
-                HibernateJudgementHistory.class,
-                judgementHistoryPresetCriteriaMaker
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgementModal, HibernateJudgementModal>
-    judgementModalHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
-                new MapStructBeanTransformer<>(JudgementModal.class, HibernateJudgementModal.class, BeanMapper.class),
-                HibernateJudgementModal.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<JudgementModal, HibernateJudgementModal> judgementModalHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(JudgementModal.class, HibernateJudgementModal.class, BeanMapper.class),
-                HibernateJudgementModal.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<JudgementModal, HibernateJudgementModal> judgementModalHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                hibernateTemplate,
-                new MapStructBeanTransformer<>(JudgementModal.class, HibernateJudgementModal.class, BeanMapper.class),
-                HibernateJudgementModal.class,
-                judgementModalPresetCriteriaMaker
         );
     }
 
@@ -814,6 +741,38 @@ public class DaoConfiguration {
                 ),
                 HibernateAnalysisPicturePackItemInfo.class,
                 analysisPicturePackItemInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<JudgementKey, HibernateJudgementKey, Judgement, HibernateJudgement>
+    judgementHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(JudgementKey.class, HibernateJudgementKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(Judgement.class, HibernateJudgement.class, BeanMapper.class),
+                HibernateJudgement.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Judgement, HibernateJudgement> judgementHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(Judgement.class, HibernateJudgement.class, BeanMapper.class),
+                HibernateJudgement.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Judgement, HibernateJudgement> judgementHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(Judgement.class, HibernateJudgement.class, BeanMapper.class),
+                HibernateJudgement.class,
+                judgementPresetCriteriaMaker
         );
     }
 }

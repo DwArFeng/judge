@@ -7,7 +7,6 @@ import com.dwarfeng.judge.stack.handler.Analyser;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
@@ -38,58 +37,33 @@ public final class JobLocalCache {
     private final Map<LongIdKey, Analyser> analyserMap;
 
     /**
-     * 判断器信息主键。
+     * 判断器信息主键列表。
      *
      * <p>
      * 保证主键对应的判断器使能。
      *
      * <p>
-     * 按照判断器信息索引字段降序排序，取第一个判断器信息。
+     * 按照主键对应的判断器索引升序排序。
      *
      * <p>
-     * 如果判断器信息索引字段相等，则按照主键升序排序，取第一个判断器信息。
-     *
-     * <p>
-     * 如果没有符合条件的判断器信息，则该字段为 <code>null</code>。
+     * 如果没有符合条件的判断器信息，则返回空列表。
      */
-    @Nullable
-    private final LongIdKey judgerInfoKey;
-
-    /**
-     * 判断器信息。
-     *
-     * <p>
-     * 判断器主键对应的信息，获取逻辑可参照 {@link #judgerInfoKey} 字段。
-     *
-     * <p>
-     * 如果没有符合条件的判断器信息，则该字段为 <code>null</code>。
-     */
-    private final JudgerInfo judgerInfo;
-
-    /**
-     * 判断器。
-     *
-     * <p>
-     * 判断器信息对应的判断器。
-     *
-     * <p>
-     * 如果没有符合条件的判断器信息，则该字段为 <code>null</code>。
-     */
-    @Nullable
-    private final Judger judger;
+    private final List<LongIdKey> judgerInfoKeys;
+    private final Map<LongIdKey, JudgerInfo> judgerInfoMap;
+    private final Map<LongIdKey, Judger> judgerMap;
 
     public JobLocalCache(
             Section section, List<LongIdKey> analyserInfoKeys, Map<LongIdKey, AnalyserInfo> analyserInfoMap,
-            Map<LongIdKey, Analyser> analyserMap, @Nullable LongIdKey judgerInfoKey, JudgerInfo judgerInfo,
-            @Nullable Judger judger
+            Map<LongIdKey, Analyser> analyserMap, List<LongIdKey> judgerInfoKeys,
+            Map<LongIdKey, JudgerInfo> judgerInfoMap, Map<LongIdKey, Judger> judgerMap
     ) {
         this.section = section;
         this.analyserInfoKeys = analyserInfoKeys;
         this.analyserInfoMap = analyserInfoMap;
         this.analyserMap = analyserMap;
-        this.judgerInfoKey = judgerInfoKey;
-        this.judgerInfo = judgerInfo;
-        this.judger = judger;
+        this.judgerInfoKeys = judgerInfoKeys;
+        this.judgerInfoMap = judgerInfoMap;
+        this.judgerMap = judgerMap;
     }
 
     public Section getSection() {
@@ -108,18 +82,16 @@ public final class JobLocalCache {
         return analyserMap;
     }
 
-    @Nullable
-    public LongIdKey getJudgerInfoKey() {
-        return judgerInfoKey;
+    public List<LongIdKey> getJudgerInfoKeys() {
+        return judgerInfoKeys;
     }
 
-    public JudgerInfo getJudgerInfo() {
-        return judgerInfo;
+    public Map<LongIdKey, JudgerInfo> getJudgerInfoMap() {
+        return judgerInfoMap;
     }
 
-    @Nullable
-    public Judger getJudger() {
-        return judger;
+    public Map<LongIdKey, Judger> getJudgerMap() {
+        return judgerMap;
     }
 
     @Override
@@ -129,9 +101,9 @@ public final class JobLocalCache {
                 ", analyserInfoKeys=" + analyserInfoKeys +
                 ", analyserInfoMap=" + analyserInfoMap +
                 ", analyserMap=" + analyserMap +
-                ", judgerInfoKey=" + judgerInfoKey +
-                ", judgerInfo=" + judgerInfo +
-                ", judger=" + judger +
+                ", judgerInfoKeys=" + judgerInfoKeys +
+                ", judgerInfoMap=" + judgerInfoMap +
+                ", judgerMap=" + judgerMap +
                 '}';
     }
 }

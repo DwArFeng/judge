@@ -23,7 +23,7 @@ import java.util.Set;
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateJudgerInfo implements Bean {
 
-    private static final long serialVersionUID = 7431593077580260625L;
+    private static final long serialVersionUID = 7937994053919038008L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -35,9 +35,6 @@ public class HibernateJudgerInfo implements Bean {
     private Long sectionLongId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
-    @Column(name = "column_index", nullable = false)
-    private int index;
-
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
@@ -60,12 +57,6 @@ public class HibernateJudgerInfo implements Bean {
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgerVariable.class, mappedBy = "judgerInfo")
     private Set<HibernateJudgerVariable> judgerVariables = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementModal.class, mappedBy = "judgerInfo")
-    private Set<HibernateJudgementModal> judgementModals = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementHistory.class, mappedBy = "judgerInfo")
-    private Set<HibernateJudgementHistory> judgementHistories = new HashSet<>();
 
     // -----------------------------------------------------------审计-----------------------------------------------------------
     @DatamarkField(handlerName = "judgerDatamarkHandler")
@@ -121,14 +112,6 @@ public class HibernateJudgerInfo implements Bean {
         this.sectionLongId = sectionLongId;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
@@ -177,22 +160,6 @@ public class HibernateJudgerInfo implements Bean {
         this.judgerVariables = judgerVariables;
     }
 
-    public Set<HibernateJudgementModal> getJudgementModals() {
-        return judgementModals;
-    }
-
-    public void setJudgementModals(Set<HibernateJudgementModal> judgementModals) {
-        this.judgementModals = judgementModals;
-    }
-
-    public Set<HibernateJudgementHistory> getJudgementHistories() {
-        return judgementHistories;
-    }
-
-    public void setJudgementHistories(Set<HibernateJudgementHistory> judgementHistories) {
-        this.judgementHistories = judgementHistories;
-    }
-
     public String getCreatedDatamark() {
         return createdDatamark;
     }
@@ -214,7 +181,6 @@ public class HibernateJudgerInfo implements Bean {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
                 "sectionLongId = " + sectionLongId + ", " +
-                "index = " + index + ", " +
                 "enabled = " + enabled + ", " +
                 "type = " + type + ", " +
                 "param = " + param + ", " +

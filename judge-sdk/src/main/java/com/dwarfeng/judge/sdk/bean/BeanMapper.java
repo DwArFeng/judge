@@ -7,6 +7,7 @@ import com.dwarfeng.judge.stack.bean.dto.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.subgrade.sdk.bean.key.*;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -98,6 +99,21 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     JudgerVariableKey judgerVariableKeyFromWebInput(WebInputJudgerVariableKey webInputJudgerVariableKey);
 
+    FastJsonJudgementKey judgementKeyToFastJson(JudgementKey judgementKey);
+
+    @InheritInverseConfiguration
+    JudgementKey judgementKeyFromFastJson(FastJsonJudgementKey fastJsonJudgementKey);
+
+    JSFixedFastJsonJudgementKey judgementKeyToJSFixedFastJson(JudgementKey judgementKey);
+
+    @InheritInverseConfiguration
+    JudgementKey judgementKeyFromJSFixedFastJson(JSFixedFastJsonJudgementKey jSFixedFastJsonJudgementKey);
+
+    WebInputJudgementKey judgementKeyToWebInput(JudgementKey judgementKey);
+
+    @InheritInverseConfiguration
+    JudgementKey judgementKeyFromWebInput(WebInputJudgementKey webInputJudgementKey);
+
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     FastJsonAnalyserInfo analyserInfoToFastJson(AnalyserInfo analyserInfo);
 
@@ -128,16 +144,6 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     DriverSupport driverSupportFromFastJson(FastJsonDriverSupport fastJsonDriverSupport);
-
-    FastJsonJudgementHistory judgementHistoryToFastJson(JudgementHistory judgementHistory);
-
-    @InheritInverseConfiguration
-    JudgementHistory judgementHistoryFromFastJson(FastJsonJudgementHistory fastJsonJudgementHistory);
-
-    FastJsonJudgementModal judgementModalToFastJson(JudgementModal judgementModal);
-
-    @InheritInverseConfiguration
-    JudgementModal judgementModalFromFastJson(FastJsonJudgementModal fastJsonJudgementModal);
 
     FastJsonJudgerInfo judgerInfoToFastJson(JudgerInfo judgerInfo);
 
@@ -190,18 +196,6 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     DriverInfo driverInfoFromJSFixedFastJson(JSFixedFastJsonDriverInfo jSFixedFastJsonDriverInfo);
-
-    JSFixedFastJsonJudgementHistory judgementHistoryToJSFixedFastJson(JudgementHistory judgementHistory);
-
-    @InheritInverseConfiguration
-    JudgementHistory judgementHistoryFromJSFixedFastJson(
-            JSFixedFastJsonJudgementHistory jSFixedFastJsonJudgementHistory
-    );
-
-    JSFixedFastJsonJudgementModal judgementModalToJSFixedFastJson(JudgementModal judgementModal);
-
-    @InheritInverseConfiguration
-    JudgementModal judgementModalFromJSFixedFastJson(JSFixedFastJsonJudgementModal jSFixedFastJsonJudgementModal);
 
     JSFixedFastJsonJudgerInfo judgerInfoToJSFixedFastJson(JudgerInfo judgerInfo);
 
@@ -331,6 +325,16 @@ public interface BeanMapper {
     AnalysisPicturePackItemInfo analysisPicturePackItemInfoFromJSFixedFastJson(
             JSFixedFastJsonAnalysisPicturePackItemInfo jSFixedFastJsonAnalysisPicturePackItemInfo
     );
+
+    FastJsonJudgement judgementToFastJson(Judgement judgement);
+
+    @InheritInverseConfiguration
+    Judgement judgementFromFastJson(FastJsonJudgement fastJsonJudgement);
+
+    JSFixedFastJsonJudgement judgementToJSFixedFastJson(Judgement judgement);
+
+    @InheritInverseConfiguration
+    Judgement judgementFromJSFixedFastJson(JSFixedFastJsonJudgement jSFixedFastJsonJudgement);
 
     // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(

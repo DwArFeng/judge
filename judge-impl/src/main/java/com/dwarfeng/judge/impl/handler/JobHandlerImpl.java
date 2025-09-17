@@ -2,16 +2,13 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.*;
-import com.dwarfeng.judge.stack.bean.entity.JudgementHistory;
 import com.dwarfeng.judge.stack.bean.entity.Task;
 import com.dwarfeng.judge.stack.handler.*;
-import com.dwarfeng.judge.stack.service.JudgementHistoryMaintainService;
 import com.dwarfeng.judge.stack.service.TaskMaintainService;
 import com.dwarfeng.judge.stack.struct.JobLocalCache;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +43,6 @@ public class JobHandlerImpl implements JobHandler {
     private final ApplicationContext ctx;
 
     private final TaskMaintainService taskMaintainService;
-    private final JudgementHistoryMaintainService judgementHistoryMaintainService;
 
     private final TaskOperateHandler taskOperateHandler;
     private final TaskEventOperateHandler taskEventOperateHandler;
@@ -58,7 +54,7 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler;
     private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
     private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
-    private final JudgementModalOperateHandler judgementModalOperateHandler;
+    private final JudgementOperateHandler judgementOperateHandler;
 
     private final ThreadPoolTaskExecutor executor;
     private final ThreadPoolTaskScheduler scheduler;
@@ -71,7 +67,6 @@ public class JobHandlerImpl implements JobHandler {
     public JobHandlerImpl(
             ApplicationContext ctx,
             TaskMaintainService taskMaintainService,
-            JudgementHistoryMaintainService judgementHistoryMaintainService,
             TaskOperateHandler taskOperateHandler,
             TaskEventOperateHandler taskEventOperateHandler,
             JobLocalCacheHandler jobLocalCacheHandler,
@@ -82,14 +77,13 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler,
             AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
             AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
-            JudgementModalOperateHandler judgementModalOperateHandler,
+            JudgementOperateHandler judgementOperateHandler,
             ThreadPoolTaskExecutor executor,
             ThreadPoolTaskScheduler scheduler,
             HandlerValidator handlerValidator
     ) {
         this.ctx = ctx;
         this.taskMaintainService = taskMaintainService;
-        this.judgementHistoryMaintainService = judgementHistoryMaintainService;
         this.taskOperateHandler = taskOperateHandler;
         this.taskEventOperateHandler = taskEventOperateHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
@@ -100,7 +94,7 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisPicturePackItemFileOperateHandler = analysisPicturePackItemFileOperateHandler;
         this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
         this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
-        this.judgementModalOperateHandler = judgementModalOperateHandler;
+        this.judgementOperateHandler = judgementOperateHandler;
         this.executor = executor;
         this.scheduler = scheduler;
         this.handlerValidator = handlerValidator;
@@ -190,34 +184,17 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
-        // 日期判断，当前时间必须晚于 JudgementModal 的 happenedData。
-        try {
-            Date currentDate = new Date();
-            handlerValidator.makeSureJudgementModalUpdateHappenedDateValid(sectionKey, currentDate);
-        } catch (Exception e) {
-            // 取消心跳任务。
-            beatTaskFuture.cancel(true);
-            // 记录日志。
-            LOGGER.warn("作业执行失败, 任务主键: {}, 异常信息如下: ", taskKey, e);
-            // 插入任务事件。
-            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
-            // 将任务状态置为失败。
-            taskOperateHandler.fail(new TaskFailInfo(taskKey));
-            // 结束方法。
-            return;
-        }
-
         // 根据部件主键获取作业本地缓存，并展开参数。
         List<LongIdKey> analyserInfoKeys;
         Map<LongIdKey, Analyser> analyserMap;
-        Judger judger;
-        LongIdKey judgerInfoKey;
+        List<LongIdKey> judgerInfoKeys;
+        Map<LongIdKey, Judger> judgerMap;
         try {
             JobLocalCache jobLocalCache = jobLocalCacheHandler.get(sectionKey);
             analyserInfoKeys = jobLocalCache.getAnalyserInfoKeys();
             analyserMap = jobLocalCache.getAnalyserMap();
-            judgerInfoKey = jobLocalCache.getJudgerInfoKey();
-            judger = jobLocalCache.getJudger();
+            judgerInfoKeys = jobLocalCache.getJudgerInfoKeys();
+            judgerMap = jobLocalCache.getJudgerMap();
         } catch (Exception e) {
             // 取消心跳任务。
             beatTaskFuture.cancel(true);
@@ -225,23 +202,6 @@ public class JobHandlerImpl implements JobHandler {
             LOGGER.warn("作业执行失败, 任务主键: {}, 部件主键: {}, 异常信息如下: ", taskKey, sectionKey, e);
             // 插入任务事件。
             taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
-            // 将任务状态置为失败。
-            taskOperateHandler.fail(new TaskFailInfo(taskKey));
-            // 结束方法。
-            return;
-        }
-
-        // 如果 judger 为 null，则结束任务。
-        if (Objects.isNull(judger)) {
-            // 取消心跳任务。
-            beatTaskFuture.cancel(true);
-            // 生成消息。
-            String message = "作业部件缺少可用的判断器, 无法执行作业, 任务主键: " + taskKey +
-                    ", 部件主键: " + sectionKey;
-            // 记录日志。
-            LOGGER.warn(message);
-            // 插入任务事件。
-            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, message));
             // 将任务状态置为失败。
             taskOperateHandler.fail(new TaskFailInfo(taskKey));
             // 结束方法。
@@ -264,49 +224,10 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
-        // 进行判断，并展开判断结果参数。
-        double judgeResultValue;
-        String judgeResultMessage;
+        // 进行判断。
         try {
-            Judger.JudgeResult judgeResult = judge(sectionKey, judgerInfoKey, taskKey, judger);
-            judgeResultValue = judgeResult.getValue();
-            judgeResultMessage = judgeResult.getMessage();
+            judge(sectionKey, judgerInfoKeys, taskKey, judgerMap);
         } catch (Exception e) {
-            // 取消心跳任务。
-            beatTaskFuture.cancel(true);
-            // 记录日志。
-            LOGGER.warn("作业执行失败, 任务主键: {}, 部件主键: {}, 异常信息如下: ", taskKey, sectionKey, e);
-            // 插入任务事件。
-            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
-            // 将任务状态置为失败。
-            taskOperateHandler.fail(new TaskFailInfo(taskKey));
-            // 结束方法。
-            return;
-        }
-
-        // 确保 judgeResultValue 在 [0.0, 1.0] 之间。
-        try {
-            handlerValidator.makeSureJudgementModalUpdateValueValid(judgeResultValue);
-        } catch (Exception e) {
-            // 取消心跳任务。
-            beatTaskFuture.cancel(true);
-            // 记录日志。
-            LOGGER.warn("作业执行失败, 任务主键: {}, 异常信息如下: ", taskKey, e);
-            // 插入任务事件。
-            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
-            // 将任务状态置为失败。
-            taskOperateHandler.fail(new TaskFailInfo(taskKey));
-            // 结束方法。
-            return;
-        }
-
-        // 生成系统日期，该日期可以保证是合法的。
-        Date currentDate = new Date();
-
-        // 处理判断结果.
-        try {
-            processJudgement(sectionKey, judgerInfoKey, currentDate, judgeResultValue, judgeResultMessage);
-        } catch (ServiceException e) {
             // 取消心跳任务。
             beatTaskFuture.cancel(true);
             // 记录日志。
@@ -361,41 +282,32 @@ public class JobHandlerImpl implements JobHandler {
         }
     }
 
-    private Judger.JudgeResult judge(
-            LongIdKey sectionKey, LongIdKey judgerInfoKey, LongIdKey taskKey, Judger judger
+    private void judge(
+            LongIdKey sectionKey, List<LongIdKey> judgerInfoKeys, LongIdKey taskKey,
+            Map<LongIdKey, Judger> judgerMap
     ) throws Exception {
-        // 构造判断器上下文。
-        Judger.Context judgerContext = ctx.getBean(
-                InternalJudgerContext.class,
-                sectionKey, judgerInfoKey, taskKey,
-                taskOperateHandler, taskEventOperateHandler,
-                judgerVariableOperateHandler, analysisOperateHandler,
-                analysisPictureFileOperateHandler, analysisPicturePackItemFileOperateHandler,
-                analysisFileFileOperateHandler, analysisFilePackItemFileOperateHandler
-        );
+        // 遍历 judgerInfoKeys，按照先后顺序执行判断。
+        for (LongIdKey judgerInfoKey : judgerInfoKeys) {
+            // 构造判断器上下文。
+            Judger.Context judgerContext = ctx.getBean(
+                    InternalJudgerContext.class,
+                    sectionKey, judgerInfoKey, taskKey,
+                    taskOperateHandler, taskEventOperateHandler,
+                    judgerVariableOperateHandler, analysisOperateHandler,
+                    analysisPictureFileOperateHandler, analysisPicturePackItemFileOperateHandler,
+                    analysisFileFileOperateHandler, analysisFilePackItemFileOperateHandler, judgementOperateHandler
+            );
 
-        // 创建判断器执行器，并初始化。
-        Judger.Executor judgerExecutor = judger.newExecutor();
-        judgerExecutor.init(judgerContext);
+            // 获取判断器。
+            Judger judger = judgerMap.get(judgerInfoKey);
 
-        // 调用判断器执行器的判断方法，获取判断结果并返回。
-        return judgerExecutor.judge();
-    }
+            // 创建判断器执行器，并初始化。
+            Judger.Executor judgerExecutor = judger.newExecutor();
+            judgerExecutor.init(judgerContext);
 
-    private void processJudgement(
-            LongIdKey sectionKey, LongIdKey judgerInfoKey, Date currentDate, double value, String message
-    ) throws Exception {
-        // 调用操作服务更新判断结果模态。
-        JudgementModalUpdateInfo judgementModalUpdateInfo = new JudgementModalUpdateInfo(
-                sectionKey, judgerInfoKey, currentDate, value, message
-        );
-        judgementModalOperateHandler.update(judgementModalUpdateInfo);
-
-        // 生成判断结果历史，调用维护服务插入。
-        JudgementHistory judgementHistory = new JudgementHistory(
-                null, sectionKey, judgerInfoKey, currentDate, value, message
-        );
-        judgementHistoryMaintainService.insert(judgementHistory);
+            // 调用判断器执行器的判断方法。
+            judgerExecutor.judge();
+        }
     }
 
     /**
@@ -645,6 +557,7 @@ public class JobHandlerImpl implements JobHandler {
         private final AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler;
         private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
         private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
+        private final JudgementOperateHandler judgementOperateHandler;
 
         public InternalJudgerContext(
                 LongIdKey sectionKey,
@@ -657,7 +570,8 @@ public class JobHandlerImpl implements JobHandler {
                 AnalysisPictureFileOperateHandler analysisPictureFileOperateHandler,
                 AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler,
                 AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
-                AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler
+                AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
+                JudgementOperateHandler judgementOperateHandler
         ) {
             this.sectionKey = sectionKey;
             this.judgerInfoKey = judgerInfoKey;
@@ -670,6 +584,7 @@ public class JobHandlerImpl implements JobHandler {
             this.analysisPicturePackItemFileOperateHandler = analysisPicturePackItemFileOperateHandler;
             this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
             this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
+            this.judgementOperateHandler = judgementOperateHandler;
         }
 
         @Override
@@ -779,17 +694,37 @@ public class JobHandlerImpl implements JobHandler {
             return analysisFilePackItemFileOperateHandler.downloadFileStream(info);
         }
 
+        @Nullable
+        @Override
+        public JudgementInspectResult inspectJudgement(JudgementInspectInfo info) throws HandlerException {
+            return judgementOperateHandler.inspect(info);
+        }
+
+        @Override
+        public void upsertJudgement(JudgementUpsertInfo info) throws Exception {
+            judgementOperateHandler.upsert(info);
+        }
+
+        @Override
+        public void removeJudgement(JudgementRemoveInfo info) throws Exception {
+            judgementOperateHandler.remove(info);
+        }
+
         @Override
         public String toString() {
             return "InternalJudgerContext{" +
                     "sectionKey=" + sectionKey +
                     ", judgerInfoKey=" + judgerInfoKey +
+                    ", taskKey=" + taskKey +
+                    ", taskOperateHandler=" + taskOperateHandler +
+                    ", taskEventOperateHandler=" + taskEventOperateHandler +
                     ", judgerVariableOperateHandler=" + judgerVariableOperateHandler +
                     ", analysisOperateHandler=" + analysisOperateHandler +
                     ", analysisPictureFileOperateHandler=" + analysisPictureFileOperateHandler +
                     ", analysisPicturePackItemFileOperateHandler=" + analysisPicturePackItemFileOperateHandler +
                     ", analysisFileFileOperateHandler=" + analysisFileFileOperateHandler +
                     ", analysisFilePackItemFileOperateHandler=" + analysisFilePackItemFileOperateHandler +
+                    ", judgementOperateHandler=" + judgementOperateHandler +
                     '}';
         }
     }

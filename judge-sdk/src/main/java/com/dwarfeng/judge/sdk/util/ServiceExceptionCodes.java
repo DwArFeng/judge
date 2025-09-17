@@ -66,10 +66,6 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(202), "judger execution failed");
     public static final ServiceException.Code JUDGER_TYPE_UNSUPPORTED =
             new ServiceException.Code(offset(203), "judger type unsupported");
-    public static final ServiceException.Code INVALID_JUDGEMENT_MODAL_UPDATE_HAPPENED_DATE =
-            new ServiceException.Code(offset(210), "invalid judgement modal update happened date");
-    public static final ServiceException.Code INVALID_JUDGEMENT_MODAL_UPDATE_VALUE =
-            new ServiceException.Code(offset(220), "invalid judgement modal update value");
     public static final ServiceException.Code RECEIVER_FAILED =
             new ServiceException.Code(offset(240), "receiver failed");
     public static final ServiceException.Code RECEIVER_NOT_START =
@@ -86,6 +82,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(260), "driver failed");
     public static final ServiceException.Code DRIVER_TYPE_UNSUPPORTED =
             new ServiceException.Code(offset(261), "driver type unsupported");
+    public static final ServiceException.Code JUDGEMENT_NOT_EXISTS =
+            new ServiceException.Code(offset(270), "judgement not exists");
+    public static final ServiceException.Code INVALID_JUDGEMENT_VALUE =
+            new ServiceException.Code(offset(280), "invalid judgement value");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -137,8 +137,6 @@ public final class ServiceExceptionCodes {
         JUDGER_MAKE_FAILED.setCode(offset(201));
         JUDGER_EXECUTION_FAILED.setCode(offset(202));
         JUDGER_TYPE_UNSUPPORTED.setCode(offset(203));
-        INVALID_JUDGEMENT_MODAL_UPDATE_HAPPENED_DATE.setCode(offset(210));
-        INVALID_JUDGEMENT_MODAL_UPDATE_VALUE.setCode(offset(220));
         RECEIVER_FAILED.setCode(offset(240));
         RECEIVER_NOT_START.setCode(offset(241));
         RECEIVER_EXECUTION_FAILED.setCode(offset(242));
@@ -147,6 +145,8 @@ public final class ServiceExceptionCodes {
         DISPATCHER_EXECUTION_FAILED.setCode(offset(252));
         DRIVER_FAILED.setCode(offset(260));
         DRIVER_TYPE_UNSUPPORTED.setCode(offset(261));
+        JUDGEMENT_NOT_EXISTS.setCode(offset(270));
+        INVALID_JUDGEMENT_VALUE.setCode(offset(280));
     }
 
     private ServiceExceptionCodes() {

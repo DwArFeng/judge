@@ -4,10 +4,12 @@ import com.dwarfeng.judge.sdk.bean.BeanMapper;
 import com.dwarfeng.judge.sdk.bean.entity.*;
 import com.dwarfeng.judge.sdk.bean.key.formatter.AnalyserVariableStringKeyFormatter;
 import com.dwarfeng.judge.sdk.bean.key.formatter.AnalysisStringKeyFormatter;
+import com.dwarfeng.judge.sdk.bean.key.formatter.JudgementStringKeyFormatter;
 import com.dwarfeng.judge.sdk.bean.key.formatter.JudgerVariableStringKeyFormatter;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
@@ -37,10 +39,6 @@ public class CacheConfiguration {
     private String driverInfoPrefix;
     @Value("${cache.prefix.entity.driver_support}")
     private String driverSupportPrefix;
-    @Value("${cache.prefix.entity.judgement_history}")
-    private String judgementHistoryPrefix;
-    @Value("${cache.prefix.entity.judgement_modal}")
-    private String judgementModalPrefix;
     @Value("${cache.prefix.entity.judger_info}")
     private String judgerInfoPrefix;
     @Value("${cache.prefix.entity.judger_support}")
@@ -65,6 +63,8 @@ public class CacheConfiguration {
     private String analysisPicturePackPrefix;
     @Value("${cache.prefix.entity.analysis_picture_pack_item_info}")
     private String analysisPicturePackItemInfoPrefix;
+    @Value("${cache.prefix.entity.judgement}")
+    private String judgementPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -129,27 +129,6 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonDriverSupport>) template,
                 new StringIdStringKeyFormatter(driverSupportPrefix),
                 new MapStructBeanTransformer<>(DriverSupport.class, FastJsonDriverSupport.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, JudgementHistory, FastJsonJudgementHistory>
-    judgementHistoryRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonJudgementHistory>) template,
-                new LongIdStringKeyFormatter(judgementHistoryPrefix),
-                new MapStructBeanTransformer<>(JudgementHistory.class, FastJsonJudgementHistory.class, BeanMapper.class)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, JudgementModal, FastJsonJudgementModal> judgementModalRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonJudgementModal>) template,
-                new LongIdStringKeyFormatter(judgementModalPrefix),
-                new MapStructBeanTransformer<>(JudgementModal.class, FastJsonJudgementModal.class, BeanMapper.class)
         );
     }
 
@@ -286,6 +265,16 @@ public class CacheConfiguration {
                 new MapStructBeanTransformer<>(
                         AnalysisPicturePackItemInfo.class, FastJsonAnalysisPicturePackItemInfo.class, BeanMapper.class
                 )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<JudgementKey, Judgement, FastJsonJudgement> judgementRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonJudgement>) template,
+                new JudgementStringKeyFormatter(judgementPrefix),
+                new MapStructBeanTransformer<>(Judgement.class, FastJsonJudgement.class, BeanMapper.class)
         );
     }
 }

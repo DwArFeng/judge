@@ -16,7 +16,10 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
@@ -104,17 +107,22 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
                 Analyser analyser = analyserHandler.make(analyserInfo.getType(), analyserInfo.getParam());
                 analyserMap.put(analyserInfo.getKey(), analyser);
             }
-            JudgerInfo judgerInfo = judgerInfoMaintainService.lookupFirst(
-                    JudgerInfoMaintainService.CHILD_FOR_SECTION_ENABLED_INDEX_DESC, new Object[]{key}
+
+            List<LongIdKey> judgerInfoKeys = new ArrayList<>();
+            Map<LongIdKey, JudgerInfo> judgerInfoMap = new HashMap<>();
+            Map<LongIdKey, Judger> judgerMap = new HashMap<>();
+            List<JudgerInfo> judgerInfos = judgerInfoMaintainService.lookupAsList(
+                    JudgerInfoMaintainService.CHILD_FOR_SECTION_ENABLED_INDEX_ASC, new Object[]{key}
             );
-            LongIdKey judgerKey = null;
-            Judger judger = null;
-            if (Objects.nonNull(judgerInfo)) {
-                judgerKey = judgerInfo.getKey();
-                judger = judgerHandler.make(judgerInfo.getType(), judgerInfo.getParam());
+            for (JudgerInfo judgerInfo : judgerInfos) {
+                judgerInfoKeys.add(judgerInfo.getKey());
+                judgerInfoMap.put(judgerInfo.getKey(), judgerInfo);
+                Judger judger = judgerHandler.make(judgerInfo.getType(), judgerInfo.getParam());
+                judgerMap.put(judgerInfo.getKey(), judger);
             }
+
             return new JobLocalCache(
-                    section, analyserInfoKeys, analyserInfoMap, analyserMap, judgerKey, judgerInfo, judger
+                    section, analyserInfoKeys, analyserInfoMap, analyserMap, judgerInfoKeys, judgerInfoMap, judgerMap
             );
         }
     }

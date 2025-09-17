@@ -1,7 +1,10 @@
 package groovy
 
 import com.dwarfeng.judge.impl.handler.judger.groovy.Processor
+import com.dwarfeng.judge.stack.bean.dto.JudgementUpsertInfo
 import com.dwarfeng.judge.stack.bean.dto.JudgerVariableUpsertInfo
+import com.dwarfeng.judge.stack.bean.dto.TaskEventCreateInfo
+import com.dwarfeng.judge.stack.bean.dto.TaskUpdateModalInfo
 import com.dwarfeng.judge.stack.handler.Judger
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
 
@@ -12,7 +15,9 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
  * 判断方法的行为如下：
  * <ol>
  *     <li>向判断器变量中写入值，键：groovy，值：UUID。</li>
- *     <li>返回判断结果，值使用符合标准高斯分布的随机数。</li>
+ *     <li>更新任务模态，anchorMessage：groovy。</li>
+ *     <li>插入任务事件，message：groovy。</li>
+ *     <li>插入判断结果，键：groovy，判断值：符合标准高斯分布的随机数，判断消息: 符合标准高斯分布的随机数。</li>
  * </ol>
  *
  * @author Dwarfeng
@@ -22,7 +27,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
 class ExampleJudgerProcessor implements Processor {
 
     @Override
-    Judger.JudgeResult judge(Judger.Context context) throws Exception {
+    void judge(Judger.Context context) throws Exception {
         // 获取判断器信息键。
         LongIdKey judgerInfoKey = context.getJudgerInfoKey()
 
@@ -31,7 +36,18 @@ class ExampleJudgerProcessor implements Processor {
                 new JudgerVariableUpsertInfo(judgerInfoKey, "groovy", UUID.randomUUID().toString())
         )
 
-        // 返回判断结果，值使用符合标准高斯分布的随机数。
-        return new Judger.JudgeResult(new Random().nextGaussian(), "合标准高斯分布的随机数")
+        // 获取任务键。
+        LongIdKey taskKey = context.getTaskKey()
+
+        // 更新任务模态，anchorMessage：groovy。
+        context.updateTaskModal(new TaskUpdateModalInfo(taskKey, "groovy"))
+
+        // 插入任务事件，message：groovy。
+        context.createTaskEvent(new TaskEventCreateInfo(taskKey, "groovy"))
+
+        // 插入判断结果，键：groovy，判断值：符合标准高斯分布的随机数，判断消息: 符合标准高斯分布的随机数。
+        context.upsertJudgement(new JudgementUpsertInfo(
+                taskKey, "groovy", new Random().nextGaussian(), "符合标准高斯分布的随机数"
+        ))
     }
 }

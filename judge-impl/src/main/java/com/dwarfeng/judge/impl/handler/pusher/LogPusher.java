@@ -1,10 +1,8 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonJudgementModal;
 import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
-import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.apache.commons.lang3.StringUtils;
@@ -75,16 +73,6 @@ public class LogPusher extends AbstractPusher {
         String message = String.format(
                 "部件:\n%s",
                 JSON.toJSONString(FastJsonSection.of(section), true)
-        );
-        logData(title, message);
-    }
-
-    @Override
-    public void judgementModalUpdated(JudgementModal judgementModal) throws HandlerException {
-        String title = "推送判断结果模态更新消息:";
-        String message = String.format(
-                "判断结果模态:\n%s",
-                JSON.toJSONString(FastJsonJudgementModal.of(judgementModal), true)
         );
         logData(title, message);
     }

@@ -4,6 +4,7 @@ import com.dwarfeng.judge.impl.service.operation.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.judge.stack.cache.*;
 import com.dwarfeng.judge.stack.dao.*;
@@ -37,10 +38,6 @@ public class ServiceConfiguration {
     private final DriverInfoCache driverInfoCache;
     private final DriverSupportDao driverSupportDao;
     private final DriverSupportCache driverSupportCache;
-    private final JudgementHistoryDao judgementHistoryDao;
-    private final JudgementHistoryCache judgementHistoryCache;
-    private final JudgementModalDao judgementModalDao;
-    private final JudgementModalCache judgementModalCache;
     private final JudgerInfoCrudOperation judgerInfoCrudOperation;
     private final JudgerInfoDao judgerInfoDao;
     private final JudgerSupportDao judgerSupportDao;
@@ -65,6 +62,8 @@ public class ServiceConfiguration {
     private final AnalysisPicturePackDao analysisPicturePackDao;
     private final AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation;
     private final AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao;
+    private final JudgementCrudOperation judgementCrudOperation;
+    private final JudgementDao judgementDao;
 
     @Value("${cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
@@ -74,10 +73,6 @@ public class ServiceConfiguration {
     private long driverInfoTimeout;
     @Value("${cache.timeout.entity.driver_support}")
     private long driverSupportTimeout;
-    @Value("${cache.timeout.entity.judgement_history}")
-    private long judgementHistoryTimeout;
-    @Value("${cache.timeout.entity.judgement_modal}")
-    private long judgementModalTimeout;
     @Value("${cache.timeout.entity.judger_support}")
     private long judgerSupportTimeout;
     @Value("${cache.timeout.entity.judger_variable}")
@@ -100,10 +95,6 @@ public class ServiceConfiguration {
             DriverInfoCache driverInfoCache,
             DriverSupportDao driverSupportDao,
             DriverSupportCache driverSupportCache,
-            JudgementHistoryDao judgementHistoryDao,
-            JudgementHistoryCache judgementHistoryCache,
-            JudgementModalDao judgementModalDao,
-            JudgementModalCache judgementModalCache,
             JudgerInfoCrudOperation judgerInfoCrudOperation,
             JudgerInfoDao judgerInfoDao,
             JudgerSupportDao judgerSupportDao,
@@ -127,7 +118,9 @@ public class ServiceConfiguration {
             AnalysisPicturePackCrudOperation analysisPicturePackCrudOperation,
             AnalysisPicturePackDao analysisPicturePackDao,
             AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation,
-            AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao
+            AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao,
+            JudgementCrudOperation judgementCrudOperation,
+            JudgementDao judgementDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -143,10 +136,6 @@ public class ServiceConfiguration {
         this.driverInfoCache = driverInfoCache;
         this.driverSupportDao = driverSupportDao;
         this.driverSupportCache = driverSupportCache;
-        this.judgementHistoryDao = judgementHistoryDao;
-        this.judgementHistoryCache = judgementHistoryCache;
-        this.judgementModalDao = judgementModalDao;
-        this.judgementModalCache = judgementModalCache;
         this.judgerInfoCrudOperation = judgerInfoCrudOperation;
         this.judgerInfoDao = judgerInfoDao;
         this.judgerSupportDao = judgerSupportDao;
@@ -171,6 +160,8 @@ public class ServiceConfiguration {
         this.analysisPicturePackDao = analysisPicturePackDao;
         this.analysisPicturePackItemInfoCrudOperation = analysisPicturePackItemInfoCrudOperation;
         this.analysisPicturePackItemInfoDao = analysisPicturePackItemInfoDao;
+        this.judgementCrudOperation = judgementCrudOperation;
+        this.judgementDao = judgementDao;
     }
 
     @Bean
@@ -346,66 +337,6 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 driverSupportDao
-        );
-    }
-
-    @Bean
-    public GeneralBatchCrudService<LongIdKey, JudgementHistory> judgementHistoryGeneralBatchCrudService() {
-        return new GeneralBatchCrudService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                judgementHistoryDao,
-                judgementHistoryCache,
-                generateConfiguration.snowflakeLongIdKeyGenerator(),
-                judgementHistoryTimeout
-        );
-    }
-
-    @Bean
-    public DaoOnlyEntireLookupService<JudgementHistory> judgementHistoryDaoOnlyEntireLookupService() {
-        return new DaoOnlyEntireLookupService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                judgementHistoryDao
-        );
-    }
-
-    @Bean
-    public DaoOnlyPresetLookupService<JudgementHistory> judgementHistoryDaoOnlyPresetLookupService() {
-        return new DaoOnlyPresetLookupService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                judgementHistoryDao
-        );
-    }
-
-    @Bean
-    public GeneralBatchCrudService<LongIdKey, JudgementModal> judgementModalGeneralBatchCrudService() {
-        return new GeneralBatchCrudService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                judgementModalDao,
-                judgementModalCache,
-                generateConfiguration.snowflakeLongIdKeyGenerator(),
-                judgementModalTimeout
-        );
-    }
-
-    @Bean
-    public DaoOnlyEntireLookupService<JudgementModal> judgementModalDaoOnlyEntireLookupService() {
-        return new DaoOnlyEntireLookupService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                judgementModalDao
-        );
-    }
-
-    @Bean
-    public DaoOnlyPresetLookupService<JudgementModal> judgementModalDaoOnlyPresetLookupService() {
-        return new DaoOnlyPresetLookupService<>(
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                judgementModalDao
         );
     }
 
@@ -752,6 +683,34 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 analysisPicturePackItemInfoDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<JudgementKey, Judgement> judgementCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementCrudOperation,
+                new ExceptionKeyGenerator<>()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Judgement> judgementDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Judgement> judgementDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                judgementDao
         );
     }
 }

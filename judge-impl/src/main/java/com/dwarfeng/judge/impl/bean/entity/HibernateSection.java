@@ -23,7 +23,7 @@ import java.util.Set;
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateSection implements Bean {
 
-    private static final long serialVersionUID = -1011909320768065769L;
+    private static final long serialVersionUID = -8720281044650981037L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -40,10 +40,6 @@ public class HibernateSection implements Bean {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------一对一-----------------------------------------------------------
-    @OneToOne(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementModal.class, mappedBy = "section")
-    private HibernateJudgementModal judgementModal;
-
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateDriverInfo.class, mappedBy = "section")
     private Set<HibernateDriverInfo> driverInfos = new HashSet<>();
@@ -56,9 +52,6 @@ public class HibernateSection implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTask.class, mappedBy = "section")
     private Set<HibernateTask> tasks = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgementHistory.class, mappedBy = "section")
-    private Set<HibernateJudgementHistory> judgementHistories = new HashSet<>();
 
     // -----------------------------------------------------------审计-----------------------------------------------------------
     @DatamarkField(handlerName = "sectionDatamarkHandler")
@@ -121,14 +114,6 @@ public class HibernateSection implements Bean {
         this.remark = remark;
     }
 
-    public HibernateJudgementModal getJudgementModal() {
-        return judgementModal;
-    }
-
-    public void setJudgementModal(HibernateJudgementModal judgementModal) {
-        this.judgementModal = judgementModal;
-    }
-
     public Set<HibernateDriverInfo> getDriverInfos() {
         return driverInfos;
     }
@@ -161,14 +146,6 @@ public class HibernateSection implements Bean {
         this.tasks = tasks;
     }
 
-    public Set<HibernateJudgementHistory> getJudgementHistories() {
-        return judgementHistories;
-    }
-
-    public void setJudgementHistories(Set<HibernateJudgementHistory> judgementHistories) {
-        this.judgementHistories = judgementHistories;
-    }
-
     public String getCreatedDatamark() {
         return createdDatamark;
     }
@@ -192,7 +169,6 @@ public class HibernateSection implements Bean {
                 "name = " + name + ", " +
                 "enabled = " + enabled + ", " +
                 "remark = " + remark + ", " +
-                "judgementModal = " + judgementModal + ", " +
                 "createdDatamark = " + createdDatamark + ", " +
                 "modifiedDatamark = " + modifiedDatamark + ")";
     }

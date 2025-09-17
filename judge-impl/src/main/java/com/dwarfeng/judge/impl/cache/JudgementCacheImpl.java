@@ -1,12 +1,12 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonJudgementHistory;
-import com.dwarfeng.judge.stack.bean.entity.JudgementHistory;
-import com.dwarfeng.judge.stack.cache.JudgementHistoryCache;
+import com.dwarfeng.judge.sdk.bean.entity.FastJsonJudgement;
+import com.dwarfeng.judge.stack.bean.entity.Judgement;
+import com.dwarfeng.judge.stack.bean.key.JudgementKey;
+import com.dwarfeng.judge.stack.cache.JudgementCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,41 +14,39 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public class JudgementHistoryCacheImpl implements JudgementHistoryCache {
+public class JudgementCacheImpl implements JudgementCache {
 
-    private final RedisBatchBaseCache<LongIdKey, JudgementHistory, FastJsonJudgementHistory> batchBaseCache;
+    private final RedisBatchBaseCache<JudgementKey, Judgement, FastJsonJudgement> batchBaseCache;
 
-    public JudgementHistoryCacheImpl(
-            RedisBatchBaseCache<LongIdKey, JudgementHistory, FastJsonJudgementHistory> batchBaseCache
-    ) {
+    public JudgementCacheImpl(RedisBatchBaseCache<JudgementKey, Judgement, FastJsonJudgement> batchBaseCache) {
         this.batchBaseCache = batchBaseCache;
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(LongIdKey key) throws CacheException {
+    public boolean exists(JudgementKey key) throws CacheException {
         return batchBaseCache.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public JudgementHistory get(LongIdKey key) throws CacheException {
+    public Judgement get(JudgementKey key) throws CacheException {
         return batchBaseCache.get(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void push(JudgementHistory value, long timeout) throws CacheException {
+    public void push(Judgement value, long timeout) throws CacheException {
         batchBaseCache.push(value, timeout);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(LongIdKey key) throws CacheException {
+    public void delete(JudgementKey key) throws CacheException {
         batchBaseCache.delete(key);
     }
 
@@ -62,14 +60,14 @@ public class JudgementHistoryCacheImpl implements JudgementHistoryCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(@SkipRecord List<LongIdKey> keys) throws CacheException {
+    public boolean allExists(@SkipRecord List<JudgementKey> keys) throws CacheException {
         return batchBaseCache.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(@SkipRecord List<LongIdKey> keys) throws CacheException {
+    public boolean nonExists(@SkipRecord List<JudgementKey> keys) throws CacheException {
         return batchBaseCache.nonExists(keys);
     }
 
@@ -77,21 +75,21 @@ public class JudgementHistoryCacheImpl implements JudgementHistoryCache {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<JudgementHistory> batchGet(@SkipRecord List<LongIdKey> keys) throws CacheException {
+    public List<Judgement> batchGet(@SkipRecord List<JudgementKey> keys) throws CacheException {
         return batchBaseCache.batchGet(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchPush(@SkipRecord List<JudgementHistory> entities, long timeout) throws CacheException {
+    public void batchPush(@SkipRecord List<Judgement> entities, long timeout) throws CacheException {
         batchBaseCache.batchPush(entities, timeout);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(@SkipRecord List<LongIdKey> keys) throws CacheException {
+    public void batchDelete(@SkipRecord List<JudgementKey> keys) throws CacheException {
         batchBaseCache.batchDelete(keys);
     }
 }

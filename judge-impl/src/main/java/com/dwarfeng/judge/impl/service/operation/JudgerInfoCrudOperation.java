@@ -1,20 +1,12 @@
 package com.dwarfeng.judge.impl.service.operation;
 
-import com.dwarfeng.judge.stack.bean.entity.JudgementHistory;
-import com.dwarfeng.judge.stack.bean.entity.JudgementModal;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerVariable;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
-import com.dwarfeng.judge.stack.cache.JudgementHistoryCache;
-import com.dwarfeng.judge.stack.cache.JudgementModalCache;
 import com.dwarfeng.judge.stack.cache.JudgerInfoCache;
 import com.dwarfeng.judge.stack.cache.JudgerVariableCache;
-import com.dwarfeng.judge.stack.dao.JudgementHistoryDao;
-import com.dwarfeng.judge.stack.dao.JudgementModalDao;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
 import com.dwarfeng.judge.stack.dao.JudgerVariableDao;
-import com.dwarfeng.judge.stack.service.JudgementHistoryMaintainService;
-import com.dwarfeng.judge.stack.service.JudgementModalMaintainService;
 import com.dwarfeng.judge.stack.service.JudgerVariableMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
@@ -35,12 +27,6 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
     private final JudgerVariableDao judgerVariableDao;
     private final JudgerVariableCache judgerVariableCache;
 
-    private final JudgementModalDao judgementModalDao;
-    private final JudgementModalCache judgementModalCache;
-
-    private final JudgementHistoryDao judgementHistoryDao;
-    private final JudgementHistoryCache judgementHistoryCache;
-
     @Value("${cache.timeout.entity.judger_info}")
     private long judgerInfoTimeout;
 
@@ -48,20 +34,12 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
             JudgerInfoDao judgerInfoDao,
             JudgerInfoCache judgerInfoCache,
             JudgerVariableDao judgerVariableDao,
-            JudgerVariableCache judgerVariableCache,
-            JudgementModalDao judgementModalDao,
-            JudgementModalCache judgementModalCache,
-            JudgementHistoryDao judgementHistoryDao,
-            JudgementHistoryCache judgementHistoryCache
+            JudgerVariableCache judgerVariableCache
     ) {
         this.judgerInfoDao = judgerInfoDao;
         this.judgerInfoCache = judgerInfoCache;
         this.judgerVariableDao = judgerVariableDao;
         this.judgerVariableCache = judgerVariableCache;
-        this.judgementModalDao = judgementModalDao;
-        this.judgementModalCache = judgementModalCache;
-        this.judgementHistoryDao = judgementHistoryDao;
-        this.judgementHistoryCache = judgementHistoryCache;
     }
 
     @Override
@@ -103,26 +81,6 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
         ).stream().map(JudgerVariable::getKey).collect(Collectors.toList());
         judgerVariableDao.batchDelete(judgerVariableKeys);
         judgerVariableCache.batchDelete(judgerVariableKeys);
-
-        // 解除与 判断器信息 相关的 判断结果模态 的关联。
-        List<JudgementModal> judgementModals = judgementModalDao.lookup(
-                JudgementModalMaintainService.CHILD_FOR_JUDGER_INFO, new Object[]{key}
-        );
-        judgementModals.forEach(judgementModal -> judgementModal.setJudgerInfoKey(null));
-        judgementModalDao.batchUpdate(judgementModals);
-        judgementModalCache.batchDelete(
-                judgementModals.stream().map(JudgementModal::getKey).collect(Collectors.toList())
-        );
-
-        // 解除与 判断器信息 相关的 判断结果历史 的关联。
-        List<JudgementHistory> judgementHistories = judgementHistoryDao.lookup(
-                JudgementHistoryMaintainService.CHILD_FOR_JUDGER_INFO, new Object[]{key}
-        );
-        judgementHistories.forEach(judgementHistory -> judgementHistory.setJudgerInfoKey(null));
-        judgementHistoryDao.batchUpdate(judgementHistories);
-        judgementHistoryCache.batchDelete(
-                judgementHistories.stream().map(JudgementHistory::getKey).collect(Collectors.toList())
-        );
 
         // 删除 判断器信息 自身。
         judgerInfoDao.delete(key);

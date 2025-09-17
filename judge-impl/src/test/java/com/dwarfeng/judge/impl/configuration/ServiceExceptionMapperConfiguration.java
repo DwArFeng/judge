@@ -45,8 +45,6 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(JudgerMakeException.class, ServiceExceptionCodes.JUDGER_MAKE_FAILED);
         destination.put(JudgerExecutionException.class, ServiceExceptionCodes.JUDGER_EXECUTION_FAILED);
         destination.put(UnsupportedJudgerTypeException.class, ServiceExceptionCodes.JUDGER_TYPE_UNSUPPORTED);
-        destination.put(InvalidJudgementModalUpdateHappenedDateException.class, ServiceExceptionCodes.INVALID_JUDGEMENT_MODAL_UPDATE_HAPPENED_DATE);
-        destination.put(InvalidJudgementModalUpdateValueException.class, ServiceExceptionCodes.INVALID_JUDGEMENT_MODAL_UPDATE_VALUE);
         destination.put(ReceiverException.class, ServiceExceptionCodes.RECEIVER_FAILED);
         destination.put(ReceiverNotStartException.class, ServiceExceptionCodes.RECEIVER_NOT_START);
         destination.put(ReceiverExecutionException.class, ServiceExceptionCodes.RECEIVER_EXECUTION_FAILED);
@@ -55,6 +53,8 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(DispatcherExecutionException.class, ServiceExceptionCodes.DISPATCHER_EXECUTION_FAILED);
         destination.put(DriverException.class, ServiceExceptionCodes.DRIVER_FAILED);
         destination.put(UnsupportedDriverTypeException.class, ServiceExceptionCodes.DRIVER_TYPE_UNSUPPORTED);
+        destination.put(JudgementNotExistsException.class, ServiceExceptionCodes.JUDGEMENT_NOT_EXISTS);
+        destination.put(InvalidJudgementValueException.class, ServiceExceptionCodes.INVALID_JUDGEMENT_VALUE);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }
