@@ -24,6 +24,9 @@
 
 ### Bug 修复
 
+- 优化部分处理器实现的构造器方法，以规避潜在的空指针异常。
+  - com.dwarfeng.judge.impl.handler.SupportHandlerImpl。
+
 - 修正代码文档注释中错误的版本标记。
   - `@since 2.0.0` -> `@since 2.0.0-beta`。
 

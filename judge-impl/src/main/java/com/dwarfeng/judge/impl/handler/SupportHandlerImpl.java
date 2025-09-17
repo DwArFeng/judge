@@ -16,7 +16,9 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,9 +43,9 @@ public class SupportHandlerImpl implements SupportHandler {
         this.analyserSupportMaintainService = analyserSupportMaintainService;
         this.driverSupportMaintainService = driverSupportMaintainService;
         this.judgerSupportMaintainService = judgerSupportMaintainService;
-        this.analyserSupporters = analyserSupporters;
-        this.driverSupporters = driverSupporters;
-        this.judgerSupporters = judgerSupporters;
+        this.analyserSupporters = Optional.ofNullable(analyserSupporters).orElse(Collections.emptyList());
+        this.driverSupporters = Optional.ofNullable(driverSupporters).orElse(Collections.emptyList());
+        this.judgerSupporters = Optional.ofNullable(judgerSupporters).orElse(Collections.emptyList());
     }
 
     @Override
