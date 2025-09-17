@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增实体操作服务。
+  - com.dwarfeng.judge.stack.service.SinkerMetaOperateService。
+
 - 建立实体以及维护服务，并通过单元测试。
   - com.dwarfeng.judge.stack.bean.entity.SinkerInfo。
   - com.dwarfeng.judge.stack.bean.entity.SinkerMeta。

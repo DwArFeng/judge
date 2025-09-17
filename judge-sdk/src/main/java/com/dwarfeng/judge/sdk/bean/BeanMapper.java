@@ -497,4 +497,20 @@ public interface BeanMapper {
     AnalysisPictureThumbnailDownloadInfo analysisPictureThumbnailDownloadInfoFromWebInput(
             WebInputAnalysisPictureThumbnailDownloadInfo webInputAnalysisPictureThumbnailDownloadInfo
     );
+
+    WebInputSinkerMetaCompleteInfo sinkerMetaCompleteInfoToWebInput(
+            WebInputSinkerMetaCompleteInfo webInputSinkerMetaCompleteInfo
+    );
+
+    WebInputSinkerMetaCompleteInfo sinkerMetaCompleteInfoToWebInput(SinkerMetaCompleteInfo sinkerMetaCompleteInfo);
+
+    @InheritInverseConfiguration
+    SinkerMetaCompleteInfo sinkerMetaCompleteInfoFromWebInput(
+            WebInputSinkerMetaCompleteInfo webInputSinkerMetaCompleteInfo
+    );
+
+    WebInputSinkerMetaResetInfo sinkerMetaResetInfoToWebInput(SinkerMetaResetInfo sinkerMetaResetInfo);
+
+    @InheritInverseConfiguration
+    SinkerMetaResetInfo sinkerMetaResetInfoFromWebInput(WebInputSinkerMetaResetInfo webInputSinkerMetaResetInfo);
 }
