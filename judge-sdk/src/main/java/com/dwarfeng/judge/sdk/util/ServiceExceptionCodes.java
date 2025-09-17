@@ -90,6 +90,18 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(290), "sinker info not exists");
     public static final ServiceException.Code SINKER_VARIABLE_NOT_EXISTS =
             new ServiceException.Code(offset(300), "sinker variable not exists");
+    public static final ServiceException.Code SINKER_NOT_EXISTS =
+            new ServiceException.Code(offset(310), "sinker not exists");
+    public static final ServiceException.Code SINKER_FAILED =
+            new ServiceException.Code(offset(320), "sinker failed");
+    public static final ServiceException.Code SINKER_MAKE_FAILED =
+            new ServiceException.Code(offset(321), "sinker make failed");
+    public static final ServiceException.Code SINKER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(322), "sinker type unsupported");
+    public static final ServiceException.Code SINKER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(323), "sinker execution failed");
+    public static final ServiceException.Code SINKER_SESSION_FAILED =
+            new ServiceException.Code(offset(330), "sinker session failed");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -153,6 +165,12 @@ public final class ServiceExceptionCodes {
         INVALID_JUDGEMENT_VALUE.setCode(offset(280));
         SINKER_INFO_NOT_EXISTS.setCode(offset(290));
         SINKER_VARIABLE_NOT_EXISTS.setCode(offset(300));
+        SINKER_NOT_EXISTS.setCode(offset(310));
+        SINKER_FAILED.setCode(offset(320));
+        SINKER_MAKE_FAILED.setCode(offset(321));
+        SINKER_TYPE_UNSUPPORTED.setCode(offset(322));
+        SINKER_EXECUTION_FAILED.setCode(offset(323));
+        SINKER_SESSION_FAILED.setCode(offset(330));
     }
 
     private ServiceExceptionCodes() {

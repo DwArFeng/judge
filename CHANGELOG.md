@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- 实现预设下沉器。
+  - com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerRegistry。
+  - com.dwarfeng.judge.impl.handler.sinker.mock.MockSinkerRegistry。
+
+- 实现核心机制。
+  - 下沉机制。
+
 - 新增实体操作服务。
   - com.dwarfeng.judge.stack.service.SinkerMetaOperateService。
 
@@ -25,7 +32,7 @@
 - 新建实体以及维护服务，并通过单元测试。
   - com.dwarfeng.judge.stack.service.JudgementMaintainService。
 
-### Bug 修复
+### Bug 修复****
 
 - 修复部分重置器中缺失的主管功能重置逻辑。
   - com.dwarfeng.judge.impl.handler.resetter.CronResetter。

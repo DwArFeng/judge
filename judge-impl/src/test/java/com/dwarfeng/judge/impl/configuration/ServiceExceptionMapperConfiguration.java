@@ -57,6 +57,12 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(InvalidJudgementValueException.class, ServiceExceptionCodes.INVALID_JUDGEMENT_VALUE);
         destination.put(SinkerInfoNotExistsException.class, ServiceExceptionCodes.SINKER_INFO_NOT_EXISTS);
         destination.put(SinkerVariableNotExistsException.class, ServiceExceptionCodes.SINKER_VARIABLE_NOT_EXISTS);
+        destination.put(SinkerNotExistsException.class, ServiceExceptionCodes.SINKER_NOT_EXISTS);
+        destination.put(SinkerException.class, ServiceExceptionCodes.SINKER_FAILED);
+        destination.put(SinkerMakeException.class, ServiceExceptionCodes.SINKER_MAKE_FAILED);
+        destination.put(UnsupportedSinkerTypeException.class, ServiceExceptionCodes.SINKER_TYPE_UNSUPPORTED);
+        destination.put(SinkerExecutionException.class, ServiceExceptionCodes.SINKER_EXECUTION_FAILED);
+        destination.put(SinkerSessionException.class, ServiceExceptionCodes.SINKER_SESSION_FAILED);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

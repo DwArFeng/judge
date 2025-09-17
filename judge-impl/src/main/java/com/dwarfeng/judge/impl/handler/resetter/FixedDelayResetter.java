@@ -60,6 +60,8 @@ public class FixedDelayResetter extends AbstractResetter {
                 context.resetJob();
                 LOGGER.info("重置主管功能...");
                 context.resetSupervise();
+                LOGGER.info("重置下沉功能...");
+                context.resetSink();
             } catch (Exception e) {
                 String message = "重置器 " + FixedDelayResetter.this +
                         " 执行重置调度时发生异常, 相关工功能可能不会完全重置, 异常信息如下: ";

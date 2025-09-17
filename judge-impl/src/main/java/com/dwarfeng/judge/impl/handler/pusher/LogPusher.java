@@ -91,6 +91,13 @@ public class LogPusher extends AbstractPusher {
         logData(title, message);
     }
 
+    @Override
+    public void sinkReset() throws HandlerException {
+        String title = "下沉功能重置:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
+    }
+
     private void logData(String title, String message) throws HandlerException {
         String logLevel = this.logLevel.toUpperCase();
         logString(title, logLevel);

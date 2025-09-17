@@ -26,4 +26,12 @@ public interface ResetHandler extends StartableHandler {
      * @since 2.0.0-beta
      */
     void resetSupervise() throws HandlerException;
+
+    /**
+     * 重置下沉功能。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.1.0-beta
+     */
+    void resetSink() throws HandlerException;
 }

@@ -58,5 +58,13 @@ public interface Resetter {
          * @since 2.0.0-beta
          */
         void resetSupervise() throws Exception;
+
+        /**
+         * 重置下沉功能。
+         *
+         * @throws Exception 执行重置时抛出的任何异常。
+         * @since 2.1.0-beta
+         */
+        void resetSink() throws Exception;
     }
 }

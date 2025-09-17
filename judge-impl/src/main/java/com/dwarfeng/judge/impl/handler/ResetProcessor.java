@@ -23,10 +23,12 @@ public class ResetProcessor {
 
     private final ReceiveHandler receiveHandler;
     private final JobLocalCacheHandler jobLocalCacheHandler;
-
     private final SuperviseHandler superviseHandler;
     private final DriveLocalCacheHandler driveLocalCacheHandler;
-
+    private final SinkerSessionHoldHandler sinkerSessionHoldHandler;
+    private final SinkerLocalCacheHandler sinkerLocalCacheHandler;
+    private final SectionBindingLocalCacheHandler sectionBindingLocalCacheHandler;
+    private final SinkerBindingLocalCacheHandler sinkerBindingLocalCacheHandler;
     private final PushHandler pushHandler;
 
     private final Lock lock = new ReentrantLock();
@@ -36,12 +38,20 @@ public class ResetProcessor {
             JobLocalCacheHandler jobLocalCacheHandler,
             SuperviseHandler superviseHandler,
             DriveLocalCacheHandler driveLocalCacheHandler,
+            SinkerSessionHoldHandler sinkerSessionHoldHandler,
+            SinkerLocalCacheHandler sinkerLocalCacheHandler,
+            SectionBindingLocalCacheHandler sectionBindingLocalCacheHandler,
+            SinkerBindingLocalCacheHandler sinkerBindingLocalCacheHandler,
             PushHandler pushHandler
     ) {
         this.receiveHandler = receiveHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
         this.superviseHandler = superviseHandler;
         this.driveLocalCacheHandler = driveLocalCacheHandler;
+        this.sinkerSessionHoldHandler = sinkerSessionHoldHandler;
+        this.sinkerLocalCacheHandler = sinkerLocalCacheHandler;
+        this.sectionBindingLocalCacheHandler = sectionBindingLocalCacheHandler;
+        this.sinkerBindingLocalCacheHandler = sinkerBindingLocalCacheHandler;
         this.pushHandler = pushHandler;
     }
 
@@ -106,6 +116,46 @@ public class ResetProcessor {
             pushHandler.superviseReset();
         } catch (Exception e) {
             LOGGER.warn("推送主管功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
+    }
+
+    public void resetSink() throws HandlerException {
+        lock.lock();
+        try {
+            doResetSink();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetSink() throws Exception {
+        // 获取当前的接收处理器的状态。
+        boolean receiveHandlerStarted = receiveHandler.isStarted();
+
+        // 接收处理器停止。
+        receiveHandler.stop();
+
+        // 关闭并清空下沉会话持有器。
+        sinkerSessionHoldHandler.closeAndClear();
+        // 清空下沉本地缓存。
+        sinkerLocalCacheHandler.clear();
+        // 清空部件绑定本地缓存。
+        sectionBindingLocalCacheHandler.clear();
+        // 清空下沉器绑定本地缓存。
+        sinkerBindingLocalCacheHandler.clear();
+
+        // 如果接收处理器之前是启动的，则重新启动。
+        if (receiveHandlerStarted) {
+            receiveHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.sinkReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送下沉功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
     }
 }

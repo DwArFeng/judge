@@ -85,6 +85,17 @@ public class ResetHandlerImpl implements ResetHandler {
         }
     }
 
+    @BehaviorAnalyse
+    @Override
+    public void resetSink() throws HandlerException {
+        lock.lock();
+        try {
+            resetProcessor.resetSink();
+        } finally {
+            lock.unlock();
+        }
+    }
+
     @Component
     public static class ResetWorker implements Worker {
 

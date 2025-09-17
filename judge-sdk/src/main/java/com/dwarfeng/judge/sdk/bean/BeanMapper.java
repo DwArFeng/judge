@@ -513,4 +513,14 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     SinkerMetaResetInfo sinkerMetaResetInfoFromWebInput(WebInputSinkerMetaResetInfo webInputSinkerMetaResetInfo);
+
+    FastJsonSinkInfo sinkInfoToFastJson(SinkInfo sinkInfo);
+
+    @InheritInverseConfiguration
+    SinkInfo sinkInfoFromFastJson(FastJsonSinkInfo fastJsonSinkInfo);
+
+    JSFixedFastJsonSinkInfo sinkInfoToJSFixedFastJson(SinkInfo sinkInfo);
+
+    @InheritInverseConfiguration
+    SinkInfo sinkInfoFromJSFixedFastJson(JSFixedFastJsonSinkInfo jSFixedFastJsonSinkInfo);
 }

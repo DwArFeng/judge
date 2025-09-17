@@ -63,4 +63,12 @@ public interface PushHandler extends Handler {
      * @since 2.0.0-beta
      */
     void superviseReset() throws HandlerException;
+
+    /**
+     * 下沉功能重置时执行的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.1.0-beta
+     */
+    void sinkReset() throws HandlerException;
 }

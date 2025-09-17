@@ -59,4 +59,12 @@ public interface ResetQosService extends Service {
      * @since 2.0.0-beta
      */
     void resetSupervise() throws ServiceException;
+
+    /**
+     * 重置下沉功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.1.0-beta
+     */
+    void resetSink() throws ServiceException;
 }

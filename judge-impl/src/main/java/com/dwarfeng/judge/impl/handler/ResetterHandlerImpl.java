@@ -49,5 +49,10 @@ public class ResetterHandlerImpl implements ResetterHandler {
         public void resetSupervise() throws Exception {
             resetProcessor.resetSupervise();
         }
+
+        @Override
+        public void resetSink() throws Exception {
+            resetProcessor.resetSink();
+        }
     }
 }

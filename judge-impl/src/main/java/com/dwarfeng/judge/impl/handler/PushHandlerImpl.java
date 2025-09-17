@@ -64,6 +64,11 @@ public class PushHandlerImpl implements PushHandler {
     }
 
     @Override
+    public void sinkReset() throws HandlerException {
+        pusher.sinkReset();
+    }
+
+    @Override
     public String toString() {
         return "PushHandlerImpl{" +
                 "pushers=" + pushers +
