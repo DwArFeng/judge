@@ -11,7 +11,7 @@ import java.util.List;
  * 接收 QOS 服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface ReceiveQosService extends Service {
 

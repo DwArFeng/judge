@@ -9,7 +9,7 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
  * 任务事件操作处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface TaskEventOperateHandler extends Handler {
 

@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
  * 判断器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface Judger {
 
@@ -27,7 +27,7 @@ public interface Judger {
      * 判断器执行器。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     interface Executor {
 
@@ -51,7 +51,7 @@ public interface Judger {
      * 判断器上下文。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     interface Context {
 
@@ -262,7 +262,7 @@ public interface Judger {
      * 判断结果。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     final class JudgeResult {
 

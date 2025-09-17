@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  * 调度器负责将统计执行任务分发给集群中的接收器，并保证负载均衡。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface Dispatcher {
 

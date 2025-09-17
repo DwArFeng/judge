@@ -8,7 +8,7 @@ import java.io.InputStream;
  * 分析结果文件包条目文件流。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisFilePackItemFileStream implements Dto {
 

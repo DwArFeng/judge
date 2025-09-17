@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 分析结果文件信息维护服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalysisFileInfoMaintainService extends BatchCrudService<LongIdKey, AnalysisFileInfo>,
         EntireLookupService<AnalysisFileInfo>, PresetLookupService<AnalysisFileInfo> {

@@ -11,7 +11,7 @@ import java.util.Optional;
  * Hibernate 分析器支持。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Entity
 @IdClass(HibernateStringIdKey.class)

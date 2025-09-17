@@ -9,7 +9,7 @@ import java.util.List;
  * 分析结果文件包查看结果。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisFilePackInspectResult implements Dto {
 

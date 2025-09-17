@@ -8,7 +8,7 @@ import java.util.Objects;
  * 分析结果键。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisKey implements Key {
 

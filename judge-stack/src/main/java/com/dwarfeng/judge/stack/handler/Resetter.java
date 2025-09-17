@@ -47,7 +47,7 @@ public interface Resetter {
          * 重置作业功能。
          *
          * @throws Exception 作业重置时抛出的任何异常。
-         * @since 2.0.0
+         * @since 2.0.0-beta
          */
         void resetJob() throws Exception;
 
@@ -55,7 +55,7 @@ public interface Resetter {
          * 重置主管功能。
          *
          * @throws Exception 执行重置时抛出的任何异常。
-         * @since 2.0.0
+         * @since 2.0.0-beta
          */
         void resetSupervise() throws Exception;
     }

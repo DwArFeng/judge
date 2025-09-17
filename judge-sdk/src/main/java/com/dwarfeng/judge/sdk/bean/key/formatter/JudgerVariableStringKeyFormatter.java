@@ -10,7 +10,7 @@ import java.util.Objects;
  * JudgerVariableKey 的文本格式化转换器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JudgerVariableStringKeyFormatter implements StringKeyFormatter<JudgerVariableKey> {
 

@@ -15,7 +15,7 @@ public interface SupportHandler extends Handler {
      * 重置分析器。
      *
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetAnalyser() throws HandlerException;
 
@@ -23,7 +23,7 @@ public interface SupportHandler extends Handler {
      * 重置驱动器。
      *
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetDriver() throws HandlerException;
 
@@ -31,7 +31,7 @@ public interface SupportHandler extends Handler {
      * 重置判断器。
      *
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetJudger() throws HandlerException;
 }

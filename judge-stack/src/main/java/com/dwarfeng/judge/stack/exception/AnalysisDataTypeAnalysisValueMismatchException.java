@@ -6,7 +6,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * 分析结果数据类型与分析结果值不匹配异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisDataTypeAnalysisValueMismatchException extends HandlerException {
 

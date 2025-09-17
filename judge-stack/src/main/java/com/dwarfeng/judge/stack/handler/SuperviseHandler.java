@@ -13,7 +13,7 @@ import com.dwarfeng.subgrade.stack.handler.DistributedLockHandler;
  * 当运行的主管处理器发生故障时，集群会自动选举新的主管处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface SuperviseHandler extends DistributedLockHandler {
 }

@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
  * 判断结果历史缓存。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgementHistoryCache extends BatchBaseCache<LongIdKey, JudgementHistory> {
 }

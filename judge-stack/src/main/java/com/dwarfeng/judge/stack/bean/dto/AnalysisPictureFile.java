@@ -8,7 +8,7 @@ import java.util.Arrays;
  * 分析结果图片文件。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisPictureFile implements Dto {
 

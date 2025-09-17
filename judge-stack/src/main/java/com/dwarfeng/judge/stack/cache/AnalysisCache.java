@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
  * 分析结果缓存。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalysisCache extends BatchBaseCache<AnalysisKey, Analysis> {
 }

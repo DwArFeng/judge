@@ -9,7 +9,7 @@ import java.io.InputStream;
  * 分析结果文件文件流上传信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisFileFileStreamUploadInfo implements Dto {
 

@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 判断结果历史数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgementHistoryDao extends BatchBaseDao<LongIdKey, JudgementHistory>,
         EntireLookupDao<JudgementHistory>, PresetLookupDao<JudgementHistory> {

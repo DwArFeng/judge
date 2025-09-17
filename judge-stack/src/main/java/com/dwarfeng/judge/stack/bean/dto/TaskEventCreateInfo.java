@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  * 任务事件创建信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class TaskEventCreateInfo implements Dto {
 

@@ -11,7 +11,7 @@ import java.util.Objects;
  * JSFixed FastJson 分析结果图片信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JSFixedFastJsonAnalysisPictureInfo implements Bean {
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * Dcti 标准数据采集接口 Kafka 驱动支持器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class DctiKafkaDriverSupporter implements DriverSupporter {

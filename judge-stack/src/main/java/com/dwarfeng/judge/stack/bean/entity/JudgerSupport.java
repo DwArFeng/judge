@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  * 判断器支持。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JudgerSupport implements Entity<StringIdKey> {
 

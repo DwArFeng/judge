@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
  * 分析器信息缓存。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalyserInfoCache extends BatchBaseCache<LongIdKey, AnalyserInfo> {
 }

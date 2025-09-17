@@ -48,7 +48,7 @@ public interface ResetQosService extends Service {
      * 重置作业功能。
      *
      * @throws ServiceException 服务异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetJob() throws ServiceException;
 
@@ -56,7 +56,7 @@ public interface ResetQosService extends Service {
      * 重置主管功能。
      *
      * @throws ServiceException 服务异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetSupervise() throws ServiceException;
 }

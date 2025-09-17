@@ -7,7 +7,7 @@ import com.dwarfeng.judge.stack.handler.Analyser;
  * 分析器的抽象实现。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public abstract class AbstractAnalyser implements Analyser {
 

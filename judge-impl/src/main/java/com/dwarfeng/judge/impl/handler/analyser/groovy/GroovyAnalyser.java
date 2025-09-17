@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Groovy 分析器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component("groovyAnalyserRegistry.groovyAnalyser")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)

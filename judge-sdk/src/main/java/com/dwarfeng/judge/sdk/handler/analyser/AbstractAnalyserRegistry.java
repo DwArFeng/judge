@@ -9,7 +9,7 @@ import java.util.Objects;
  * 抽象分析器注册。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public abstract class AbstractAnalyserRegistry implements AnalyserMaker, AnalyserSupporter {
 

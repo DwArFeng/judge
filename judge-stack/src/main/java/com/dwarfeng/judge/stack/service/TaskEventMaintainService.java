@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 任务事件维护服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface TaskEventMaintainService extends BatchCrudService<LongIdKey, TaskEvent>,
         EntireLookupService<TaskEvent>, PresetLookupService<TaskEvent> {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * Cron 驱动器支持器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class CronDriverSupporter implements DriverSupporter {

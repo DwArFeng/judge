@@ -10,7 +10,7 @@ import java.util.List;
  * 调度 QOS 服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface DispatchQosService extends Service {
 

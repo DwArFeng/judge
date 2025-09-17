@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Groovy 判断器执行器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component("groovyJudgerRegistry.groovyExecutor")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)

@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
  * 判断器变量。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JudgerVariable implements Entity<JudgerVariableKey> {
 

@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 任务事件数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface TaskEventDao extends BatchBaseDao<LongIdKey, TaskEvent>,
         EntireLookupDao<TaskEvent>, PresetLookupDao<TaskEvent> {

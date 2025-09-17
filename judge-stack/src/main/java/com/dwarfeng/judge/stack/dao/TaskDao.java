@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 任务数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface TaskDao extends BatchBaseDao<LongIdKey, Task>, EntireLookupDao<Task>,
         PresetLookupDao<Task> {

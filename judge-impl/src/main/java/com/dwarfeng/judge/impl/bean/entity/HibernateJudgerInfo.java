@@ -15,7 +15,7 @@ import java.util.Set;
  * Hibernate 判断器信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Entity
 @IdClass(HibernateLongIdKey.class)

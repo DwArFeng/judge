@@ -11,7 +11,7 @@ import com.dwarfeng.subgrade.stack.service.Service;
  * 分析结果文件文件操作服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalysisFileFileOperateService extends Service {
 

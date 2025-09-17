@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.service.Service;
  * 主管 QOS 服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface SuperviseQosService extends Service {
 

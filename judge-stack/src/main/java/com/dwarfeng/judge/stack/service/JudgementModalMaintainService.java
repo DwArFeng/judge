@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 判断结果模态维护服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgementModalMaintainService extends BatchCrudService<LongIdKey, JudgementModal>,
         EntireLookupService<JudgementModal>, PresetLookupService<JudgementModal> {

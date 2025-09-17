@@ -14,7 +14,7 @@ import java.util.Objects;
  * WebInput 分析结果键。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class WebInputAnalysisKey implements Key {
 

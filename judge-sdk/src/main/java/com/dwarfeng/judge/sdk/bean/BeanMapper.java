@@ -21,7 +21,7 @@ import org.mapstruct.Mapper;
  * 该映射器中包含了 <code>sdk</code> 模块中所有实体与 <code>stack</code> 模块中对应实体的映射方法。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Mapper
 public interface BeanMapper {

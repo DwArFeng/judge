@@ -9,7 +9,7 @@ import com.dwarfeng.subgrade.stack.service.Service;
  * 驱动 QOS 服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface DriveQosService extends Service {
 

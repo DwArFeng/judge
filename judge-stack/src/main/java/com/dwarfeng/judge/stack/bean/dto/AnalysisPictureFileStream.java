@@ -8,7 +8,7 @@ import java.io.InputStream;
  * 分析图片文件流。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisPictureFileStream implements Dto {
 

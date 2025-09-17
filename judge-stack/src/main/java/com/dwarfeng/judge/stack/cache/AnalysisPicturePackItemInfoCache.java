@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
  * 分析结果图片包条目信息缓存。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalysisPicturePackItemInfoCache extends BatchBaseCache<LongIdKey, AnalysisPicturePackItemInfo> {
 }

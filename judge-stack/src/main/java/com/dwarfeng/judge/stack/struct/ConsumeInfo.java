@@ -6,7 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  * 消费信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public final class ConsumeInfo {
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 什么也不做的接收器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class DoNothingReceiver extends AbstractReceiver {

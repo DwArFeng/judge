@@ -11,7 +11,7 @@ import java.util.Objects;
  * JSFixed FastJson 驱动器信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JSFixedFastJsonDriverInfo implements Bean {
 

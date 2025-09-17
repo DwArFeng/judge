@@ -4,7 +4,7 @@ package com.dwarfeng.judge.stack.struct;
  * 消费者状态。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public final class ConsumerStatus {
 

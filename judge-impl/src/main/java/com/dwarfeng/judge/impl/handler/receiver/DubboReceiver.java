@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 基于 Dubbo 实现的接收器，利用 Dubbo 的服务提供者机制实现多个接收节点的负载均衡。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class DubboReceiver extends AbstractReceiver {

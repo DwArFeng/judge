@@ -12,7 +12,7 @@ import java.util.Objects;
  * FastJson 任务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class FastJsonTask implements Bean {
 

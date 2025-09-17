@@ -26,7 +26,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
  * </ol>
  *
  * @author Dwarfeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @SuppressWarnings(['GrPackage', 'unused'])
 class ExampleAnalyserProcessor implements Processor {

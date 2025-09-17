@@ -23,7 +23,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Cron 驱动提供器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class CronDriverProvider implements DriverProvider {

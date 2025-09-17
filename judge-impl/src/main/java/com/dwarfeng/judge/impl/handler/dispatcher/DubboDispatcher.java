@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 基于 Dubbo 实现的调度器，利用 Dubbo 的服务提供者机制实现多个调度节点的负载均衡。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class DubboDispatcher extends AbstractDispatcher {

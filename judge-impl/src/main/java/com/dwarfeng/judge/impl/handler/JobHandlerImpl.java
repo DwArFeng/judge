@@ -402,7 +402,7 @@ public class JobHandlerImpl implements JobHandler {
      * 心跳定时器任务。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -441,7 +441,7 @@ public class JobHandlerImpl implements JobHandler {
      * 分析器上下文的内部实现。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -627,7 +627,7 @@ public class JobHandlerImpl implements JobHandler {
      * 判断器上下文的内部实现。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)

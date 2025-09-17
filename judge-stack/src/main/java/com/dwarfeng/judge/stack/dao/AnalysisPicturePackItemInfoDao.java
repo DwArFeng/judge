@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 分析结果图片包条目信息数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalysisPicturePackItemInfoDao extends BatchBaseDao<LongIdKey, AnalysisPicturePackItemInfo>,
         EntireLookupDao<AnalysisPicturePackItemInfo>, PresetLookupDao<AnalysisPicturePackItemInfo> {

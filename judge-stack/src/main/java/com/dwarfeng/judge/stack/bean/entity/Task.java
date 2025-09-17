@@ -9,7 +9,7 @@ import java.util.Date;
  * 任务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class Task implements Entity<LongIdKey> {
 

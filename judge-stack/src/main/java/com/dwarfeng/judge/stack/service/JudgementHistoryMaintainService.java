@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 判断结果历史维护服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgementHistoryMaintainService extends BatchCrudService<LongIdKey, JudgementHistory>,
         EntireLookupService<JudgementHistory>, PresetLookupService<JudgementHistory> {

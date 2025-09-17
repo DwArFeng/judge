@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.handler.LocalCacheHandler;
  * 驱动用本地缓存处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface DriveLocalCacheHandler extends LocalCacheHandler<LongIdKey, DriveLocalCache> {
 }

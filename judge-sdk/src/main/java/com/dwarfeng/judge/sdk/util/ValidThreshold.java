@@ -11,7 +11,7 @@ import java.util.Objects;
  * 阈值字段有效性验证注解，校验取值是否位于 [0, 1] 区间。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Documented
 @Constraint(

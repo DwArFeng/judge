@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 判断器信息维护服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgerInfoMaintainService extends BatchCrudService<LongIdKey, JudgerInfo>,
         EntireLookupService<JudgerInfo>, PresetLookupService<JudgerInfo> {

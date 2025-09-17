@@ -12,7 +12,7 @@ import java.util.Objects;
  * Hibernate 分析结果。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Entity
 @IdClass(HibernateAnalysisKey.class)

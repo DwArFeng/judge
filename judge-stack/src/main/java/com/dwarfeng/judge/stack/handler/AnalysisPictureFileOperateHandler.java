@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
  * 分析结果图片文件操作处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalysisPictureFileOperateHandler extends Handler {
 

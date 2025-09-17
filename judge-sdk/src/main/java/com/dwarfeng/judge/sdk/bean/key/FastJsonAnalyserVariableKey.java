@@ -10,7 +10,7 @@ import java.util.Objects;
  * FastJson 分析器变量键。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class FastJsonAnalyserVariableKey implements Key {
 

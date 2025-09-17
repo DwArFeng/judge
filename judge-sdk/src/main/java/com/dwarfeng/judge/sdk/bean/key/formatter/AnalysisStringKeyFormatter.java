@@ -10,7 +10,7 @@ import java.util.Objects;
  * AnalysisKey 的文本格式化转换器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisStringKeyFormatter implements StringKeyFormatter<AnalysisKey> {
 

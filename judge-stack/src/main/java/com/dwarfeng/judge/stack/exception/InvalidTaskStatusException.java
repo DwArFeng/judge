@@ -6,7 +6,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * 无效的任务状态异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class InvalidTaskStatusException extends HandlerException {
 

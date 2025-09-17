@@ -15,7 +15,7 @@ public interface SupportQosService extends Service {
      * 重置分析器。
      *
      * @throws ServiceException 服务异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetAnalyser() throws ServiceException;
 
@@ -23,7 +23,7 @@ public interface SupportQosService extends Service {
      * 重置驱动器。
      *
      * @throws ServiceException 服务异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetDriver() throws ServiceException;
 
@@ -31,7 +31,7 @@ public interface SupportQosService extends Service {
      * 重置判断器。
      *
      * @throws ServiceException 服务异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void resetJudger() throws ServiceException;
 }

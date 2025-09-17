@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * 该接收器适用于单节点服务，提供了虚拟机内部的直接调用方式。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class InjvmReceiver extends AbstractReceiver {
@@ -58,7 +58,7 @@ public class InjvmReceiver extends AbstractReceiver {
      * 供 Injvm 调度器调用的调用器。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     public class InjvmDispatcherCaller {
 

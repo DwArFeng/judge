@@ -8,7 +8,7 @@ import java.util.Set;
  * 任务状态不匹配异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class TaskStatusMismatchException extends HandlerException {
 

@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  * 驱动器支持。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class DriverSupport implements Entity<StringIdKey> {
 

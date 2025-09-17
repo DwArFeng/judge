@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * FTP 路径解析器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class FtpPathResolver {

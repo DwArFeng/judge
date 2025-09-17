@@ -9,7 +9,7 @@ import java.util.Date;
  * 判断结果模态更新发生日期无效异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class InvalidJudgementModalUpdateHappenedDateException extends HandlerException {
 

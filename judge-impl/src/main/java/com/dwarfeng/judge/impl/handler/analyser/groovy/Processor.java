@@ -6,7 +6,7 @@ import com.dwarfeng.judge.stack.handler.Analyser;
  * Groovy 处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface Processor {
 

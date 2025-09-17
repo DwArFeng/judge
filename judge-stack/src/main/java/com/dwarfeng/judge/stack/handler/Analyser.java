@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
  * 分析器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface Analyser {
 
@@ -27,7 +27,7 @@ public interface Analyser {
      * 分析器执行器。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     interface Executor {
 
@@ -54,7 +54,7 @@ public interface Analyser {
      * 分析器上下文。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     interface Context {
 

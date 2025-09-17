@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 判断器信息数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgerInfoDao extends BatchBaseDao<LongIdKey, JudgerInfo>, EntireLookupDao<JudgerInfo>,
         PresetLookupDao<JudgerInfo> {

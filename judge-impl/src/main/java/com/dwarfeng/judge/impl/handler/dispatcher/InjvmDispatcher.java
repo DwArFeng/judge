@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * 该调度器适用于单节点服务，直接调用虚拟机内部的调度器调用器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class InjvmDispatcher extends AbstractDispatcher {

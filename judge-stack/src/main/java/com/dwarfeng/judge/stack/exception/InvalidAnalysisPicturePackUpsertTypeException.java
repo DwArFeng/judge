@@ -6,7 +6,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * 无效的分析结果图片包插入或更新类型异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class InvalidAnalysisPicturePackUpsertTypeException extends HandlerException {
 

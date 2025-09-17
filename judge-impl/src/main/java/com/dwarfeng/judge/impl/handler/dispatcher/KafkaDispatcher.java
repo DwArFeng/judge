@@ -42,7 +42,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 基于 Kafka 实现的调度器，利用 Kafka 的消费者机制实现多个接收节点的负载均衡。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class KafkaDispatcher extends AbstractDispatcher {

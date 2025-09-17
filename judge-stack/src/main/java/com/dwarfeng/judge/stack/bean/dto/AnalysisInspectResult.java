@@ -6,7 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
  * 分析结果查看结果。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisInspectResult implements Dto {
 

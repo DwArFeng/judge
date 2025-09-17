@@ -18,7 +18,7 @@ public interface PushHandler extends Handler {
      *
      * @param section 相关的部件。
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void taskFinished(Section section) throws HandlerException;
 
@@ -27,7 +27,7 @@ public interface PushHandler extends Handler {
      *
      * @param section 相关的部件。
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void taskFailed(Section section) throws HandlerException;
 
@@ -36,7 +36,7 @@ public interface PushHandler extends Handler {
      *
      * @param section 相关的部件。
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void taskExpired(Section section) throws HandlerException;
 
@@ -45,7 +45,7 @@ public interface PushHandler extends Handler {
      *
      * @param section 相关的部件。
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void taskDied(Section section) throws HandlerException;
 
@@ -54,7 +54,7 @@ public interface PushHandler extends Handler {
      *
      * @param judgementModal 相关的判断结果模态。
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void judgementModalUpdated(JudgementModal judgementModal) throws HandlerException;
 
@@ -62,7 +62,7 @@ public interface PushHandler extends Handler {
      * 作业功能重置时作业的广播操作。
      *
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void jobReset() throws HandlerException;
 
@@ -70,7 +70,7 @@ public interface PushHandler extends Handler {
      * 主管功能重置时执行的广播操作。
      *
      * @throws HandlerException 处理器异常。
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     void superviseReset() throws HandlerException;
 }

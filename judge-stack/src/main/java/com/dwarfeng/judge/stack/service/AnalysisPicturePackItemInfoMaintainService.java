@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 分析结果图片包条目信息维护服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalysisPicturePackItemInfoMaintainService extends
         BatchCrudService<LongIdKey, AnalysisPicturePackItemInfo>, EntireLookupService<AnalysisPicturePackItemInfo>,

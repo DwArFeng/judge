@@ -12,7 +12,7 @@ import java.util.Optional;
  * Hibernate 判断结果历史。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Entity
 @IdClass(HibernateLongIdKey.class)

@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  * 驱动器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface Driver {
 
@@ -43,7 +43,7 @@ public interface Driver {
      * 驱动器上下文。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     interface Context {
 

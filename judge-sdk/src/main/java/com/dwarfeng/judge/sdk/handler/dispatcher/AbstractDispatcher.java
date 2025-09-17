@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 调度器的抽象实现。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public abstract class AbstractDispatcher implements Dispatcher {
 

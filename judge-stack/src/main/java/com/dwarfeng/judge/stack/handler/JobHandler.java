@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
  * 作业处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JobHandler extends Handler {
 

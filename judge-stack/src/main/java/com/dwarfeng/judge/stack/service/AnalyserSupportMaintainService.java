@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 分析器支持维护服务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalyserSupportMaintainService extends BatchCrudService<StringIdKey, AnalyserSupport>,
         EntireLookupService<AnalyserSupport>, PresetLookupService<AnalyserSupport> {

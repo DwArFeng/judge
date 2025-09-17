@@ -4,7 +4,7 @@ package com.dwarfeng.judge.stack.exception;
  * 接收器执行异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class ReceiverExecutionException extends ReceiverException {
 

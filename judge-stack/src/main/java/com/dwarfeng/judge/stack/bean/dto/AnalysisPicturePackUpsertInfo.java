@@ -9,7 +9,7 @@ import java.util.List;
  * 分析结果图片包插入或更新信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisPicturePackUpsertInfo implements Dto {
 

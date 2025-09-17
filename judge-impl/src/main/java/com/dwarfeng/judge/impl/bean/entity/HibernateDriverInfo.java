@@ -13,7 +13,7 @@ import java.util.Optional;
  * Hibernate 驱动器信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Entity
 @IdClass(HibernateLongIdKey.class)

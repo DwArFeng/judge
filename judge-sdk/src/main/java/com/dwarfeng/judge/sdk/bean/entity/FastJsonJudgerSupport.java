@@ -11,7 +11,7 @@ import java.util.Objects;
  * FastJson 判断器支持。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class FastJsonJudgerSupport implements Bean {
 

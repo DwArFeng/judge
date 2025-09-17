@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 固定间隔驱动提供器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class FixedRateDriverProvider implements DriverProvider {

@@ -9,7 +9,7 @@ import java.util.Date;
  * 分析结果。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class Analysis implements Entity<AnalysisKey> {
 

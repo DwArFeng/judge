@@ -9,7 +9,7 @@ import java.util.Date;
  * 判断结果历史。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JudgementHistory implements Entity<LongIdKey> {
 

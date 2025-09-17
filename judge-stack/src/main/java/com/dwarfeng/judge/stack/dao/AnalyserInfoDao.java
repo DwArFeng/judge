@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 分析器信息数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalyserInfoDao extends BatchBaseDao<LongIdKey, AnalyserInfo>, EntireLookupDao<AnalyserInfo>,
         PresetLookupDao<AnalyserInfo> {

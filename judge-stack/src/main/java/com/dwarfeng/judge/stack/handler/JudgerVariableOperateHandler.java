@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
  * 判断器变量操作处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgerVariableOperateHandler extends Handler {
 

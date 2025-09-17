@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * 判断器变量不存在异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JudgerVariableNotExistsException extends HandlerException {
 

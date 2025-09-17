@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 分析器变量数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface AnalyserVariableDao extends BatchBaseDao<AnalyserVariableKey, AnalyserVariable>,
         EntireLookupDao<AnalyserVariable>, PresetLookupDao<AnalyserVariable> {

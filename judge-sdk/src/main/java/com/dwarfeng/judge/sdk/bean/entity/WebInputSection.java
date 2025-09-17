@@ -16,7 +16,7 @@ import java.util.Objects;
  * WebInput 部件。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class WebInputSection implements Bean {
 

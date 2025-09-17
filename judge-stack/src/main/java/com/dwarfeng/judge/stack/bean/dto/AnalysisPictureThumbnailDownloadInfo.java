@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  * 分析结果缩略图文件下载信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisPictureThumbnailDownloadInfo implements Dto {
 

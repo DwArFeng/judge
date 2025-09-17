@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 判断结果模态数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgementModalDao extends BatchBaseDao<LongIdKey, JudgementModal>, EntireLookupDao<JudgementModal>,
         PresetLookupDao<JudgementModal> {

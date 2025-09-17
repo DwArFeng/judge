@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * 固定间隔驱动支持器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class FixedDelayDriverSupporter implements DriverSupporter {

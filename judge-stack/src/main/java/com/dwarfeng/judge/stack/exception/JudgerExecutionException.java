@@ -4,7 +4,7 @@ package com.dwarfeng.judge.stack.exception;
  * 判断器器判断异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class JudgerExecutionException extends JudgerException {
 

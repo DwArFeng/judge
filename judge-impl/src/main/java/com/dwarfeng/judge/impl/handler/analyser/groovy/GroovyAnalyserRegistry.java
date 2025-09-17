@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
  * Groovy 分析器注册。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class GroovyAnalyserRegistry extends AbstractAnalyserRegistry {

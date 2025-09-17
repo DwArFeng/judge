@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 丢弃掉所有调度请求（并记录日志）的调度器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class DrainDispatcher extends AbstractDispatcher {

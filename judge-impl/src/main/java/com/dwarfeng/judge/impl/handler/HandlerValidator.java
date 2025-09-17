@@ -28,7 +28,7 @@ import java.util.Set;
  * 为处理器提供公共的验证方法。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 @Component
 public class HandlerValidator {

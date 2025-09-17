@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
  * 分析结果图片包条目不存在异常。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class AnalysisPicturePackItemNotExistsException extends HandlerException {
 

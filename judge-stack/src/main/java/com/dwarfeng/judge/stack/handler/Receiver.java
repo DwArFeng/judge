@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  * 接收器负责接收对应调度器的调度，并调用上下文的相关方法，实际地执行统计业务。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface Receiver {
 
@@ -58,7 +58,7 @@ public interface Receiver {
      * 接收器上下文。
      *
      * @author DwArFeng
-     * @since 2.0.0
+     * @since 2.0.0-beta
      */
     interface Context {
 

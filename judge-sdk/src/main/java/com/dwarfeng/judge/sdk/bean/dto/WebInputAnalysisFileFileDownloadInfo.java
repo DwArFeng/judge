@@ -13,7 +13,7 @@ import java.util.Objects;
  * WebInput 分析结果文件文件下载信息。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class WebInputAnalysisFileFileDownloadInfo implements Bean {
 

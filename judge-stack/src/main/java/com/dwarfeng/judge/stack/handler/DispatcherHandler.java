@@ -9,7 +9,7 @@ import java.util.List;
  * 调度器处理器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface DispatcherHandler extends Handler {
 

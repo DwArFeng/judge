@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 判断器变量数据访问层。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgerVariableDao extends BatchBaseDao<JudgerVariableKey, JudgerVariable>,
         EntireLookupDao<JudgerVariable>, PresetLookupDao<JudgerVariable> {

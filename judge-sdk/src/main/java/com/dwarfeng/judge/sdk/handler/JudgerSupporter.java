@@ -4,7 +4,7 @@ package com.dwarfeng.judge.sdk.handler;
  * 分析器支持器。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public interface JudgerSupporter {
 

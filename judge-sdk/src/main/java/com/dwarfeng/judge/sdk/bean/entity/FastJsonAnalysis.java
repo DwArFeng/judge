@@ -12,7 +12,7 @@ import java.util.Objects;
  * FastJson 分析结果。
  *
  * @author DwArFeng
- * @since 2.0.0
+ * @since 2.0.0-beta
  */
 public class FastJsonAnalysis implements Bean {
 
