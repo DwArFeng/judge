@@ -16,6 +16,9 @@ public class LauncherSettingHandler implements Handler {
     @Value("${launcher.reset_judger_support}")
     private boolean resetJudgerSupport;
 
+    @Value("${launcher.reset_sinker_support}")
+    private boolean resetSinkerSupport;
+
     @Value("${launcher.start_reset_delay}")
     private long startResetDelay;
 
@@ -42,6 +45,10 @@ public class LauncherSettingHandler implements Handler {
 
     public boolean isResetJudgerSupport() {
         return resetJudgerSupport;
+    }
+
+    public boolean isResetSinkerSupport() {
+        return resetSinkerSupport;
     }
 
     public long getStartResetDelay() {
@@ -74,6 +81,7 @@ public class LauncherSettingHandler implements Handler {
                 "resetAnalyserSupport=" + resetAnalyserSupport +
                 ", resetDriverSupport=" + resetDriverSupport +
                 ", resetJudgerSupport=" + resetJudgerSupport +
+                ", resetSinkerSupport=" + resetSinkerSupport +
                 ", startResetDelay=" + startResetDelay +
                 ", onlineTaskCheckDelay=" + onlineTaskCheckDelay +
                 ", enableTaskCheckDelay=" + enableTaskCheckDelay +

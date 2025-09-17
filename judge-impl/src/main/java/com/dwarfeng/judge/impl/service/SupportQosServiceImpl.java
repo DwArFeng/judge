@@ -47,4 +47,13 @@ public class SupportQosServiceImpl implements SupportQosService {
             throw ServiceExceptionHelper.logParse("重置判断器时发生异常", LogLevel.WARN, e, sem);
         }
     }
+
+    @Override
+    public void resetSinker() throws ServiceException {
+        try {
+            supportHandler.resetSinker();
+        } catch (HandlerException e) {
+            throw ServiceExceptionHelper.logParse("重置下沉器时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
 }

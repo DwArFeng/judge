@@ -34,4 +34,12 @@ public interface SupportQosService extends Service {
      * @since 2.0.0-beta
      */
     void resetJudger() throws ServiceException;
+
+    /**
+     * 重置下沉器。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.1.0-beta
+     */
+    void resetSinker() throws ServiceException;
 }

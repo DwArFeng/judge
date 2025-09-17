@@ -36,6 +36,9 @@ public class Launcher {
             // 根据启动器设置处理器的设置，选择性重置判断器。
             mayResetJudger(ctx);
 
+            // 根据启动器设置处理器的设置，选择性重置下沉器。
+            mayResetSinker(ctx);
+
             // 根据启动器设置处理器的设置，选择性开启重置服务。
             mayStartReset(ctx);
 
@@ -108,6 +111,25 @@ public class Launcher {
             supportQosService.resetJudger();
         } catch (ServiceException e) {
             LOGGER.warn("判断器支持重置失败，异常信息如下", e);
+        }
+    }
+
+    private static void mayResetSinker(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 如果不重置下沉器，则返回。
+        if (!launcherSettingHandler.isResetSinkerSupport()) {
+            return;
+        }
+
+        // 重置下沉器支持。
+        LOGGER.info("重置下沉器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetSinker();
+        } catch (ServiceException e) {
+            LOGGER.warn("下沉器支持重置失败，异常信息如下", e);
         }
     }
 

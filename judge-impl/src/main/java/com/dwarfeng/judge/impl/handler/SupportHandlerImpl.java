@@ -3,13 +3,11 @@ package com.dwarfeng.judge.impl.handler;
 import com.dwarfeng.judge.sdk.handler.AnalyserSupporter;
 import com.dwarfeng.judge.sdk.handler.DriverSupporter;
 import com.dwarfeng.judge.sdk.handler.JudgerSupporter;
-import com.dwarfeng.judge.stack.bean.entity.AnalyserSupport;
-import com.dwarfeng.judge.stack.bean.entity.DriverSupport;
-import com.dwarfeng.judge.stack.bean.entity.JudgerSupport;
+import com.dwarfeng.judge.sdk.handler.SinkerSupporter;
+import com.dwarfeng.judge.stack.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.key.SinkerMetaIndicatorKey;
 import com.dwarfeng.judge.stack.handler.SupportHandler;
-import com.dwarfeng.judge.stack.service.AnalyserSupportMaintainService;
-import com.dwarfeng.judge.stack.service.DriverSupportMaintainService;
-import com.dwarfeng.judge.stack.service.JudgerSupportMaintainService;
+import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -20,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class SupportHandlerImpl implements SupportHandler {
@@ -27,25 +26,34 @@ public class SupportHandlerImpl implements SupportHandler {
     private final AnalyserSupportMaintainService analyserSupportMaintainService;
     private final DriverSupportMaintainService driverSupportMaintainService;
     private final JudgerSupportMaintainService judgerSupportMaintainService;
+    private final SinkerSupportMaintainService sinkerSupportMaintainService;
+    private final SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService;
 
     private final List<AnalyserSupporter> analyserSupporters;
     private final List<DriverSupporter> driverSupporters;
     private final List<JudgerSupporter> judgerSupporters;
+    private final List<SinkerSupporter> sinkerSupporters;
 
     public SupportHandlerImpl(
             AnalyserSupportMaintainService analyserSupportMaintainService,
             DriverSupportMaintainService driverSupportMaintainService,
             JudgerSupportMaintainService judgerSupportMaintainService,
+            SinkerSupportMaintainService sinkerSupportMaintainService,
+            SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService,
             List<AnalyserSupporter> analyserSupporters,
             List<DriverSupporter> driverSupporters,
-            List<JudgerSupporter> judgerSupporters
+            List<JudgerSupporter> judgerSupporters,
+            List<SinkerSupporter> sinkerSupporters
     ) {
         this.analyserSupportMaintainService = analyserSupportMaintainService;
         this.driverSupportMaintainService = driverSupportMaintainService;
         this.judgerSupportMaintainService = judgerSupportMaintainService;
+        this.sinkerSupportMaintainService = sinkerSupportMaintainService;
+        this.sinkerMetaIndicatorMaintainService = sinkerMetaIndicatorMaintainService;
         this.analyserSupporters = Optional.ofNullable(analyserSupporters).orElse(Collections.emptyList());
         this.driverSupporters = Optional.ofNullable(driverSupporters).orElse(Collections.emptyList());
         this.judgerSupporters = Optional.ofNullable(judgerSupporters).orElse(Collections.emptyList());
+        this.sinkerSupporters = Optional.ofNullable(sinkerSupporters).orElse(Collections.emptyList());
     }
 
     @Override
@@ -121,5 +129,46 @@ public class SupportHandlerImpl implements SupportHandler {
                 )
         ).collect(Collectors.toList());
         judgerSupportMaintainService.batchInsert(judgerSupports);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    public void resetSinker() throws HandlerException {
+        try {
+            doResetSinker();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        }
+    }
+
+    private void doResetSinker() throws Exception {
+        List<SinkerMetaIndicatorKey> sinkerMetaIndicatorKeys = sinkerMetaIndicatorMaintainService.lookupAsList()
+                .stream().map(SinkerMetaIndicator::getKey).collect(Collectors.toList());
+        sinkerMetaIndicatorMaintainService.batchDelete(sinkerMetaIndicatorKeys);
+        List<StringIdKey> sinkerKeys = sinkerSupportMaintainService.lookupAsList().stream()
+                .map(SinkerSupport::getKey).collect(Collectors.toList());
+        sinkerSupportMaintainService.batchDelete(sinkerKeys);
+        List<SinkerSupport> sinkerSupports = sinkerSupporters.stream().map(supporter -> new SinkerSupport(
+                new StringIdKey(supporter.provideType()),
+                supporter.provideExampleParam(),
+                supporter.provideLabel(),
+                supporter.provideDescription()
+        )).collect(Collectors.toList());
+        sinkerSupportMaintainService.batchInsert(sinkerSupports);
+        List<SinkerMetaIndicator> sinkerMetaIndicators = sinkerSupporters.stream()
+                .flatMap(this::parseSinkerMetaIndicatorStream)
+                .collect(Collectors.toList());
+        sinkerMetaIndicatorMaintainService.batchInsert(sinkerMetaIndicators);
+    }
+
+    private Stream<SinkerMetaIndicator> parseSinkerMetaIndicatorStream(SinkerSupporter sinkerSupporter) {
+        return sinkerSupporter.provideIndicatorMap().entrySet().stream().map(
+                entry -> new SinkerMetaIndicator(
+                        new SinkerMetaIndicatorKey(sinkerSupporter.provideType(), entry.getKey()),
+                        entry.getValue().getLabel(),
+                        entry.getValue().getInitialValue(),
+                        entry.getValue().getDescription()
+                )
+        );
     }
 }

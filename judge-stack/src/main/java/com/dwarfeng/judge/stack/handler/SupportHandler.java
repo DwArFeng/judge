@@ -34,4 +34,12 @@ public interface SupportHandler extends Handler {
      * @since 2.0.0-beta
      */
     void resetJudger() throws HandlerException;
+
+    /**
+     * 重置下沉器。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.1.0-beta
+     */
+    void resetSinker() throws HandlerException;
 }

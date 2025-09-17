@@ -18,11 +18,13 @@ public class SupportCommand extends CliCommand {
     private static final String COMMAND_OPTION_RESET_ANALYSER = "reset-analyser";
     private static final String COMMAND_OPTION_RESET_DRIVER = "reset-driver";
     private static final String COMMAND_OPTION_RESET_JUDGER = "reset-judger";
+    private static final String COMMAND_OPTION_RESET_SINKER = "reset-sinker";
 
     private static final String[] COMMAND_OPTION_ARRAY = new String[]{
             COMMAND_OPTION_RESET_ANALYSER,
             COMMAND_OPTION_RESET_DRIVER,
-            COMMAND_OPTION_RESET_JUDGER
+            COMMAND_OPTION_RESET_JUDGER,
+            COMMAND_OPTION_RESET_SINKER
     };
 
     private static final String IDENTITY = "support";
@@ -34,11 +36,14 @@ public class SupportCommand extends CliCommand {
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_DRIVER);
     private static final String CMD_LINE_SYNTAX_RESET_JUDGER = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_JUDGER);
+    private static final String CMD_LINE_SYNTAX_RESET_SINKER = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SINKER);
 
     private static final String[] CMD_LINE_ARRAY = new String[]{
             CMD_LINE_SYNTAX_RESET_ANALYSER,
             CMD_LINE_SYNTAX_RESET_DRIVER,
-            CMD_LINE_SYNTAX_RESET_JUDGER
+            CMD_LINE_SYNTAX_RESET_JUDGER,
+            CMD_LINE_SYNTAX_RESET_SINKER
     };
 
     private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
@@ -56,6 +61,7 @@ public class SupportCommand extends CliCommand {
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_ANALYSER).desc("重置分析器支持").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_DRIVER).desc("重置驱动器支持").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_JUDGER).desc("重置判断器支持").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_SINKER).desc("重置下沉器").build());
         return list;
     }
 
@@ -80,6 +86,10 @@ public class SupportCommand extends CliCommand {
                 case COMMAND_OPTION_RESET_JUDGER:
                     supportQosService.resetJudger();
                     context.sendMessage("重置判断器支持成功。");
+                    break;
+                case COMMAND_OPTION_RESET_SINKER:
+                    supportQosService.resetSinker();
+                    context.sendMessage("重置下沉器成功。");
                     break;
             }
         } catch (Exception e) {
