@@ -42,4 +42,12 @@ public interface SupportQosService extends Service {
      * @since 2.1.0-beta
      */
     void resetSinker() throws ServiceException;
+
+    /**
+     * 重置提供器。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.1.0-beta
+     */
+    void resetProvider() throws ServiceException;
 }

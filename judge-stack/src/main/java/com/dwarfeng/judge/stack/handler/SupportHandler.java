@@ -42,4 +42,12 @@ public interface SupportHandler extends Handler {
      * @since 2.1.0-beta
      */
     void resetSinker() throws HandlerException;
+
+    /**
+     * 重置提供器。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.1.0-beta
+     */
+    void resetProvider() throws HandlerException;
 }

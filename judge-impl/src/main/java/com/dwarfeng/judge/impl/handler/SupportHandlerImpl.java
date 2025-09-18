@@ -1,9 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.sdk.handler.AnalyserSupporter;
-import com.dwarfeng.judge.sdk.handler.DriverSupporter;
-import com.dwarfeng.judge.sdk.handler.JudgerSupporter;
-import com.dwarfeng.judge.sdk.handler.SinkerSupporter;
+import com.dwarfeng.judge.sdk.handler.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.SinkerMetaIndicatorKey;
 import com.dwarfeng.judge.stack.handler.SupportHandler;
@@ -28,11 +25,13 @@ public class SupportHandlerImpl implements SupportHandler {
     private final JudgerSupportMaintainService judgerSupportMaintainService;
     private final SinkerSupportMaintainService sinkerSupportMaintainService;
     private final SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService;
+    private final ProviderSupportMaintainService providerSupportMaintainService;
 
     private final List<AnalyserSupporter> analyserSupporters;
     private final List<DriverSupporter> driverSupporters;
     private final List<JudgerSupporter> judgerSupporters;
     private final List<SinkerSupporter> sinkerSupporters;
+    private final List<ProviderSupporter> providerSupporters;
 
     public SupportHandlerImpl(
             AnalyserSupportMaintainService analyserSupportMaintainService,
@@ -40,20 +39,24 @@ public class SupportHandlerImpl implements SupportHandler {
             JudgerSupportMaintainService judgerSupportMaintainService,
             SinkerSupportMaintainService sinkerSupportMaintainService,
             SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService,
+            ProviderSupportMaintainService providerSupportMaintainService,
             List<AnalyserSupporter> analyserSupporters,
             List<DriverSupporter> driverSupporters,
             List<JudgerSupporter> judgerSupporters,
-            List<SinkerSupporter> sinkerSupporters
+            List<SinkerSupporter> sinkerSupporters,
+            List<ProviderSupporter> providerSupporters
     ) {
         this.analyserSupportMaintainService = analyserSupportMaintainService;
         this.driverSupportMaintainService = driverSupportMaintainService;
         this.judgerSupportMaintainService = judgerSupportMaintainService;
         this.sinkerSupportMaintainService = sinkerSupportMaintainService;
         this.sinkerMetaIndicatorMaintainService = sinkerMetaIndicatorMaintainService;
+        this.providerSupportMaintainService = providerSupportMaintainService;
         this.analyserSupporters = Optional.ofNullable(analyserSupporters).orElse(Collections.emptyList());
         this.driverSupporters = Optional.ofNullable(driverSupporters).orElse(Collections.emptyList());
         this.judgerSupporters = Optional.ofNullable(judgerSupporters).orElse(Collections.emptyList());
         this.sinkerSupporters = Optional.ofNullable(sinkerSupporters).orElse(Collections.emptyList());
+        this.providerSupporters = Optional.ofNullable(providerSupporters).orElse(Collections.emptyList());
     }
 
     @Override
@@ -170,5 +173,30 @@ public class SupportHandlerImpl implements SupportHandler {
                         entry.getValue().getDescription()
                 )
         );
+    }
+
+    @Override
+    @BehaviorAnalyse
+    public void resetProvider() throws HandlerException {
+        try {
+            doResetProvider();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        }
+    }
+
+    private void doResetProvider() throws Exception {
+        List<StringIdKey> providerKeys = providerSupportMaintainService.lookupAsList().stream()
+                .map(ProviderSupport::getKey).collect(Collectors.toList());
+        providerSupportMaintainService.batchDelete(providerKeys);
+        List<ProviderSupport> providerSupports = providerSupporters.stream().map(
+                supporter -> new ProviderSupport(
+                        new StringIdKey(supporter.provideType()),
+                        supporter.provideLabel(),
+                        supporter.provideDescription(),
+                        supporter.provideExampleParam()
+                )
+        ).collect(Collectors.toList());
+        providerSupportMaintainService.batchInsert(providerSupports);
     }
 }
