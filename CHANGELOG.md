@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerBindingLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerSessionCommand。
+
 - 实现预设下沉器。
   - com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerRegistry。
   - com.dwarfeng.judge.impl.handler.sinker.mock.MockSinkerRegistry。
