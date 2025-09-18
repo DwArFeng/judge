@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class FastJsonSinkInfo implements Dto {
 
-    private static final long serialVersionUID = -7349360161115864280L;
+    private static final long serialVersionUID = -1301306351309308751L;
 
     public static FastJsonSinkInfo of(SinkInfo sinkInfo) {
         if (Objects.isNull(sinkInfo)) {
@@ -44,7 +44,7 @@ public class FastJsonSinkInfo implements Dto {
                     Optional.ofNullable(sinkInfo.getTaskEvents()).map(
                             f -> f.stream().map(FastJsonTaskEvent::of).collect(Collectors.toList())
                     ).orElse(null),
-                    Optional.ofNullable(sinkInfo.getAnalysises()).map(
+                    Optional.ofNullable(sinkInfo.getAnalyses()).map(
                             f -> f.stream().map(FastJsonAnalysis::of).collect(Collectors.toList())
                     ).orElse(null),
                     Optional.ofNullable(sinkInfo.getJudgements()).map(
@@ -99,8 +99,8 @@ public class FastJsonSinkInfo implements Dto {
     @JSONField(name = "task_events", ordinal = 15)
     private List<FastJsonTaskEvent> taskEvents;
 
-    @JSONField(name = "analysises", ordinal = 16)
-    private List<FastJsonAnalysis> analysises;
+    @JSONField(name = "analyses", ordinal = 16)
+    private List<FastJsonAnalysis> analyses;
 
     @JSONField(name = "analysis_pictures", ordinal = 17)
     private List<FastJsonJudgement> judgements;
@@ -112,7 +112,7 @@ public class FastJsonSinkInfo implements Dto {
             FastJsonLongIdKey sectionKey, FastJsonLongIdKey taskKey, String sectionName, String sectionRemark,
             int taskStatus, Date taskCreatedDate, Date taskStartedDate, Date taskEndedDate, Long taskDuration,
             Date taskShouldExpireDate, Date taskShouldDieDate, Date taskExpiredDate, Date taskDiedDate,
-            String taskAnchorMessage, List<FastJsonTaskEvent> taskEvents, List<FastJsonAnalysis> analysises,
+            String taskAnchorMessage, List<FastJsonTaskEvent> taskEvents, List<FastJsonAnalysis> analyses,
             List<FastJsonJudgement> judgements
     ) {
         this.sectionKey = sectionKey;
@@ -130,7 +130,7 @@ public class FastJsonSinkInfo implements Dto {
         this.taskDiedDate = taskDiedDate;
         this.taskAnchorMessage = taskAnchorMessage;
         this.taskEvents = taskEvents;
-        this.analysises = analysises;
+        this.analyses = analyses;
         this.judgements = judgements;
     }
 
@@ -254,12 +254,12 @@ public class FastJsonSinkInfo implements Dto {
         this.taskEvents = taskEvents;
     }
 
-    public List<FastJsonAnalysis> getAnalysises() {
-        return analysises;
+    public List<FastJsonAnalysis> getAnalyses() {
+        return analyses;
     }
 
-    public void setAnalysises(List<FastJsonAnalysis> analysises) {
-        this.analysises = analysises;
+    public void setAnalyses(List<FastJsonAnalysis> analyses) {
+        this.analyses = analyses;
     }
 
     public List<FastJsonJudgement> getJudgements() {
@@ -288,7 +288,7 @@ public class FastJsonSinkInfo implements Dto {
                 ", taskDiedDate=" + taskDiedDate +
                 ", taskAnchorMessage='" + taskAnchorMessage + '\'' +
                 ", taskEvents=" + taskEvents +
-                ", analysises=" + analysises +
+                ", analyses=" + analyses +
                 ", judgements=" + judgements +
                 '}';
     }

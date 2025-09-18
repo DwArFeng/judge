@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SinkInfo implements Dto {
 
-    private static final long serialVersionUID = -7081455758788840298L;
+    private static final long serialVersionUID = -1305234402648272336L;
 
     private LongIdKey sectionKey;
     private LongIdKey taskKey;
@@ -50,7 +50,7 @@ public class SinkInfo implements Dto {
     private String taskAnchorMessage;
 
     private List<TaskEvent> taskEvents;
-    private List<Analysis> analysises;
+    private List<Analysis> analyses;
     private List<Judgement> judgements;
 
     public SinkInfo() {
@@ -60,7 +60,7 @@ public class SinkInfo implements Dto {
             LongIdKey sectionKey, LongIdKey taskKey, String sectionName, String sectionRemark, int taskStatus,
             Date taskCreatedDate, Date taskStartedDate, Date taskEndedDate, Long taskDuration,
             Date taskShouldExpireDate, Date taskShouldDieDate, Date taskExpiredDate, Date taskDiedDate,
-            String taskAnchorMessage, List<TaskEvent> taskEvents, List<Analysis> analysises, List<Judgement> judgements
+            String taskAnchorMessage, List<TaskEvent> taskEvents, List<Analysis> analyses, List<Judgement> judgements
     ) {
         this.sectionKey = sectionKey;
         this.taskKey = taskKey;
@@ -77,7 +77,7 @@ public class SinkInfo implements Dto {
         this.taskDiedDate = taskDiedDate;
         this.taskAnchorMessage = taskAnchorMessage;
         this.taskEvents = taskEvents;
-        this.analysises = analysises;
+        this.analyses = analyses;
         this.judgements = judgements;
     }
 
@@ -201,12 +201,12 @@ public class SinkInfo implements Dto {
         this.taskEvents = taskEvents;
     }
 
-    public List<Analysis> getAnalysises() {
-        return analysises;
+    public List<Analysis> getAnalyses() {
+        return analyses;
     }
 
-    public void setAnalysises(List<Analysis> analysises) {
-        this.analysises = analysises;
+    public void setAnalyses(List<Analysis> analyses) {
+        this.analyses = analyses;
     }
 
     public List<Judgement> getJudgements() {
@@ -235,7 +235,7 @@ public class SinkInfo implements Dto {
                 ", taskDiedDate=" + taskDiedDate +
                 ", taskAnchorMessage='" + taskAnchorMessage + '\'' +
                 ", taskEvents=" + taskEvents +
-                ", analysises=" + analysises +
+                ", analyses=" + analyses +
                 ", judgements=" + judgements +
                 '}';
     }

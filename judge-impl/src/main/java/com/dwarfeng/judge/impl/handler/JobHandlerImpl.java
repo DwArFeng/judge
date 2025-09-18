@@ -366,7 +366,7 @@ public class JobHandlerImpl implements JobHandler {
         Section section = sectionMaintainService.get(sectionKey);
         Task task = taskMaintainService.get(taskKey);
         List<SinkInfo.TaskEvent> taskEvents = lookupTaskEvents(taskKey);
-        List<SinkInfo.Analysis> analysises = lookupAnalysises(taskKey);
+        List<SinkInfo.Analysis> analyses = lookupAnalyses(taskKey);
         List<SinkInfo.Judgement> judgements = lookupJudgements(taskKey);
         SinkInfo sinkInfo = new SinkInfo(
                 sectionKey, taskKey,
@@ -374,7 +374,7 @@ public class JobHandlerImpl implements JobHandler {
                 task.getStatus(), task.getCreatedDate(), task.getStartedDate(), task.getEndedDate(), task.getDuration(),
                 task.getShouldExpireDate(), task.getShouldDieDate(), task.getExpiredDate(), task.getDiedDate(),
                 task.getAnchorMessage(),
-                taskEvents, analysises, judgements
+                taskEvents, analyses, judgements
         );
         sinkHandler.sink(sinkInfo);
     }
@@ -390,12 +390,12 @@ public class JobHandlerImpl implements JobHandler {
         return sinkInfoTaskEvent;
     }
 
-    private List<SinkInfo.Analysis> lookupAnalysises(LongIdKey taskKey) throws Exception {
-        List<Analysis> analysises = analysisMaintainService.lookupAsList(
+    private List<SinkInfo.Analysis> lookupAnalyses(LongIdKey taskKey) throws Exception {
+        List<Analysis> analyses = analysisMaintainService.lookupAsList(
                 AnalysisMaintainService.CHILD_FOR_TASK, new Object[]{taskKey}
         );
-        List<SinkInfo.Analysis> sinkInfoAnalysises = new ArrayList<>();
-        for (Analysis analysis : analysises) {
+        List<SinkInfo.Analysis> sinkInfoAnalyses = new ArrayList<>();
+        for (Analysis analysis : analyses) {
             String dataId = analysis.getKey().getDataStringId();
             int dataType = analysis.getDataType();
             Object value;
@@ -430,9 +430,9 @@ public class JobHandlerImpl implements JobHandler {
                 default:
                     throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
             }
-            sinkInfoAnalysises.add(new SinkInfo.Analysis(dataId, dataType, value));
+            sinkInfoAnalyses.add(new SinkInfo.Analysis(dataId, dataType, value));
         }
-        return sinkInfoAnalysises;
+        return sinkInfoAnalyses;
     }
 
     private SinkInfo.AnalysisPicture lookupAnalysisPicture(Long pictureValue) throws Exception {

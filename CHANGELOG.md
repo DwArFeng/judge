@@ -8,6 +8,9 @@
 
 ### Bug 修复
 
+- 修复错误的方法、字段、变量拼写。
+  - `ayalysises` -> `analyses`。
+
 - 修复 CHANGELOG.md 中意外添加的字符。
 
 ### 功能移除

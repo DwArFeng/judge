@@ -150,22 +150,22 @@ public class AnalysisCrudOperation implements BatchCrudOperation<AnalysisKey, An
             if (!analysisDao.allExists(keys)) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
-            List<Analysis> analysises = analysisDao.batchGet(keys);
-            analysisCache.batchPush(analysises, analysisTimeout);
-            return analysises;
+            List<Analysis> analyses = analysisDao.batchGet(keys);
+            analysisCache.batchPush(analyses, analysisTimeout);
+            return analyses;
         }
     }
 
     @Override
-    public List<AnalysisKey> batchInsert(List<Analysis> analysises) throws Exception {
-        analysisCache.batchPush(analysises, analysisTimeout);
-        return analysisDao.batchInsert(analysises);
+    public List<AnalysisKey> batchInsert(List<Analysis> analyses) throws Exception {
+        analysisCache.batchPush(analyses, analysisTimeout);
+        return analysisDao.batchInsert(analyses);
     }
 
     @Override
-    public void batchUpdate(List<Analysis> analysises) throws Exception {
-        analysisCache.batchPush(analysises, analysisTimeout);
-        analysisDao.batchUpdate(analysises);
+    public void batchUpdate(List<Analysis> analyses) throws Exception {
+        analysisCache.batchPush(analyses, analysisTimeout);
+        analysisDao.batchUpdate(analyses);
     }
 
     @Override
