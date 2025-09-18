@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.ConsumeCommand。
 
 ### Bug 修复
 
