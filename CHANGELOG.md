@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化分析机制。
+  - 为分析器上下文增加提供数据方法，将数据获取功能委托给提供器，解除分析器与数据获取功能的耦合。
+
 - 实现运维指令。
   - com.dwarfeng.judge.impl.service.telqos.SinkerBindingLocalCacheCommand。
   - com.dwarfeng.judge.impl.service.telqos.SinkerLocalCacheCommand。

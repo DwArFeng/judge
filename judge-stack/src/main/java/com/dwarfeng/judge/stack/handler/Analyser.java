@@ -275,5 +275,14 @@ public interface Analyser {
          */
         AnalysisFilePackItemFileStream downloadFilePackItemFileStream(AnalysisFilePackItemFileStreamDownloadInfo info)
                 throws HandlerException;
+
+        /**
+         * 提供数据。
+         *
+         * @param info 提供信息。
+         * @throws HandlerException 处理器异常。
+         * @since 2.1.0-beta
+         */
+        ProvideResult provide(ProvideInfo info) throws HandlerException;
     }
 }

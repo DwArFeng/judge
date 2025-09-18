@@ -14,7 +14,7 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
 public interface ProvideHandler extends Handler {
 
     /**
-     * 提供。
+     * 提供数据。
      *
      * @param info 提供信息。
      * @throws HandlerException 处理器异常。

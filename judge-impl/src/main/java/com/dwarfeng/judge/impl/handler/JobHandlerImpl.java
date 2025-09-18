@@ -66,6 +66,7 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
     private final JudgementOperateHandler judgementOperateHandler;
     private final SinkHandler sinkHandler;
+    private final ProvideHandler provideHandler;
 
     private final ThreadPoolTaskExecutor executor;
     private final ThreadPoolTaskScheduler scheduler;
@@ -100,6 +101,7 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
             JudgementOperateHandler judgementOperateHandler,
             SinkHandler sinkHandler,
+            ProvideHandler provideHandler,
             ThreadPoolTaskExecutor executor,
             ThreadPoolTaskScheduler scheduler,
             HandlerValidator handlerValidator
@@ -128,6 +130,7 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
         this.judgementOperateHandler = judgementOperateHandler;
         this.sinkHandler = sinkHandler;
+        this.provideHandler = provideHandler;
         this.executor = executor;
         this.scheduler = scheduler;
         this.handlerValidator = handlerValidator;
@@ -316,7 +319,7 @@ public class JobHandlerImpl implements JobHandler {
                     analyserVariableOperateHandler,
                     analysisOperateHandler, analysisPictureFileOperateHandler,
                     analysisPicturePackItemFileOperateHandler, analysisFileFileOperateHandler,
-                    analysisFilePackItemFileOperateHandler
+                    analysisFilePackItemFileOperateHandler, provideHandler
             );
 
             // 获取分析器。
@@ -566,6 +569,7 @@ public class JobHandlerImpl implements JobHandler {
         private final AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler;
         private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
         private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
+        private final ProvideHandler provideHandler;
 
         public InternalAnalyserContext(
                 LongIdKey sectionKey,
@@ -578,7 +582,8 @@ public class JobHandlerImpl implements JobHandler {
                 AnalysisPictureFileOperateHandler analysisPictureFileOperateHandler,
                 AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler,
                 AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
-                AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler
+                AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
+                ProvideHandler provideHandler
         ) {
             this.sectionKey = sectionKey;
             this.analyserInfoKey = analyserInfoKey;
@@ -591,6 +596,7 @@ public class JobHandlerImpl implements JobHandler {
             this.analysisPicturePackItemFileOperateHandler = analysisPicturePackItemFileOperateHandler;
             this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
             this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
+            this.provideHandler = provideHandler;
         }
 
         @Override
@@ -713,6 +719,11 @@ public class JobHandlerImpl implements JobHandler {
         }
 
         @Override
+        public ProvideResult provide(ProvideInfo info) throws HandlerException {
+            return provideHandler.provide(info);
+        }
+
+        @Override
         public String toString() {
             return "InternalAnalyserContext{" +
                     "sectionKey=" + sectionKey +
@@ -726,6 +737,7 @@ public class JobHandlerImpl implements JobHandler {
                     ", analysisPicturePackItemFileOperateHandler=" + analysisPicturePackItemFileOperateHandler +
                     ", analysisFileFileOperateHandler=" + analysisFileFileOperateHandler +
                     ", analysisFilePackItemFileOperateHandler=" + analysisFilePackItemFileOperateHandler +
+                    ", provideHandler=" + provideHandler +
                     '}';
         }
     }
