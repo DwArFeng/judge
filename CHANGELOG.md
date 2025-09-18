@@ -27,6 +27,12 @@
 
 ### Bug 修复
 
+- 修复部分重置器中缺失的主管功能重置逻辑。
+  - com.dwarfeng.judge.impl.handler.resetter.CronResetter。
+  - com.dwarfeng.judge.impl.handler.resetter.DubboResetter。
+  - com.dwarfeng.judge.impl.handler.resetter.FixedDelayResetter。
+  - com.dwarfeng.judge.impl.handler.resetter.FixedRateResetter。
+
 - 优化部分处理器实现的构造器方法，以规避潜在的空指针异常。
   - com.dwarfeng.judge.impl.handler.SupportHandlerImpl。
 
