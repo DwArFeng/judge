@@ -8,7 +8,7 @@
 
 ### Bug 修复
 
-- (无)
+- 修复 CHANGELOG.md 中意外添加的字符。
 
 ### 功能移除
 
@@ -70,7 +70,7 @@
 - 新建实体以及维护服务，并通过单元测试。
   - com.dwarfeng.judge.stack.service.JudgementMaintainService。
 
-### Bug 修复****
+### Bug 修复
 
 - 修复部分重置器中缺失的主管功能重置逻辑。
   - com.dwarfeng.judge.impl.handler.resetter.CronResetter。
