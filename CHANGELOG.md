@@ -4,7 +4,11 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/SystemRequirements.md。
+
 - Wiki 更新。
+  - docs/wiki/zh-CN/Contents.md。
   - docs/wiki/zh-CN/VersionBlacklist.md。
 
 - 优化分析机制。
