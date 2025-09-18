@@ -47,7 +47,6 @@ public class DrainPusher extends AbstractPusher {
     public void sinkReset() {
     }
 
-
     @Override
     public void provideReset() {
     }

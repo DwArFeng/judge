@@ -53,6 +53,7 @@ public class CronResetter extends AbstractResetter {
 
     private class ResetTask implements Runnable {
 
+        @SuppressWarnings("DuplicatedCode")
         @Override
         public void run() {
             try {
