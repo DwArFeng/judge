@@ -5,10 +5,7 @@ import com.dwarfeng.judge.sdk.bean.entity.*;
 import com.dwarfeng.judge.sdk.bean.key.*;
 import com.dwarfeng.judge.stack.bean.dto.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
-import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
-import com.dwarfeng.judge.stack.bean.key.JudgementKey;
-import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.bean.key.*;
 import com.dwarfeng.subgrade.sdk.bean.key.*;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -113,6 +110,51 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     JudgementKey judgementKeyFromWebInput(WebInputJudgementKey webInputJudgementKey);
+
+    FastJsonSinkerMetaIndicatorKey sinkerMetaIndicatorKeyToFastJson(SinkerMetaIndicatorKey sinkerMetaIndicatorKey);
+
+    @InheritInverseConfiguration
+    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromFastJson(FastJsonSinkerMetaIndicatorKey fastJsonSinkerMetaIndicatorKey);
+
+    FastJsonSinkerMetaKey sinkerMetaKeyToFastJson(SinkerMetaKey sinkerMetaKey);
+
+    @InheritInverseConfiguration
+    SinkerMetaKey sinkerMetaKeyFromFastJson(FastJsonSinkerMetaKey fastJsonSinkerMetaKey);
+
+    FastJsonSinkerRelationKey sinkerRelationKeyToFastJson(SinkerRelationKey sinkerRelationKey);
+
+    @InheritInverseConfiguration
+    SinkerRelationKey sinkerRelationKeyFromFastJson(FastJsonSinkerRelationKey fastJsonSinkerRelationKey);
+
+    FastJsonSinkerVariableKey sinkerVariableKeyToFastJson(SinkerVariableKey sinkerVariableKey);
+
+    @InheritInverseConfiguration
+    SinkerVariableKey sinkerVariableKeyFromFastJson(FastJsonSinkerVariableKey fastJsonSinkerVariableKey);
+
+    JSFixedFastJsonSinkerMetaKey sinkerMetaKeyToJSFixedFastJson(SinkerMetaKey sinkerMetaKey);
+
+    @InheritInverseConfiguration
+    SinkerMetaKey sinkerMetaKeyFromJSFixedFastJson(JSFixedFastJsonSinkerMetaKey jSFixedFastJsonSinkerMetaKey);
+
+    JSFixedFastJsonSinkerRelationKey sinkerRelationKeyToJSFixedFastJson(SinkerRelationKey sinkerRelationKey);
+
+    @InheritInverseConfiguration
+    SinkerRelationKey sinkerRelationKeyFromJSFixedFastJson(JSFixedFastJsonSinkerRelationKey jSFixedFastJsonSinkerRelationKey);
+
+    JSFixedFastJsonSinkerVariableKey sinkerVariableKeyToJSFixedFastJson(SinkerVariableKey sinkerVariableKey);
+
+    @InheritInverseConfiguration
+    SinkerVariableKey sinkerVariableKeyFromJSFixedFastJson(JSFixedFastJsonSinkerVariableKey jSFixedFastJsonSinkerVariableKey);
+
+    WebInputSinkerMetaKey sinkerMetaKeyToWebInput(SinkerMetaKey sinkerMetaKey);
+
+    @InheritInverseConfiguration
+    SinkerMetaKey sinkerMetaKeyFromWebInput(WebInputSinkerMetaKey webInputSinkerMetaKey);
+
+    WebInputSinkerRelationKey sinkerRelationKeyToWebInput(SinkerRelationKey sinkerRelationKey);
+
+    @InheritInverseConfiguration
+    SinkerRelationKey sinkerRelationKeyFromWebInput(WebInputSinkerRelationKey webInputSinkerRelationKey);
 
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     FastJsonAnalyserInfo analyserInfoToFastJson(AnalyserInfo analyserInfo);
@@ -335,6 +377,71 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     Judgement judgementFromJSFixedFastJson(JSFixedFastJsonJudgement jSFixedFastJsonJudgement);
+
+    FastJsonSinkerInfo sinkerInfoToFastJson(SinkerInfo sinkerInfo);
+
+    @InheritInverseConfiguration
+    SinkerInfo sinkerInfoFromFastJson(FastJsonSinkerInfo fastJsonSinkerInfo);
+
+    FastJsonSinkerMeta sinkerMetaToFastJson(SinkerMeta sinkerMeta);
+
+    @InheritInverseConfiguration
+    SinkerMeta sinkerMetaFromFastJson(FastJsonSinkerMeta fastJsonSinkerMeta);
+
+    FastJsonSinkerMetaIndicator sinkerMetaIndicatorToFastJson(SinkerMetaIndicator sinkerMetaIndicator);
+
+    @InheritInverseConfiguration
+    SinkerMetaIndicator sinkerMetaIndicatorFromFastJson(FastJsonSinkerMetaIndicator fastJsonSinkerMetaIndicator);
+
+    FastJsonSinkerRelation sinkerRelationToFastJson(SinkerRelation sinkerRelation);
+
+    @InheritInverseConfiguration
+    SinkerRelation sinkerRelationFromFastJson(FastJsonSinkerRelation fastJsonSinkerRelation);
+
+    FastJsonSinkerSupport sinkerSupportToFastJson(SinkerSupport sinkerSupport);
+
+    @InheritInverseConfiguration
+    SinkerSupport sinkerSupportFromFastJson(FastJsonSinkerSupport fastJsonSinkerSupport);
+
+    FastJsonSinkerVariable sinkerVariableToFastJson(SinkerVariable sinkerVariable);
+
+    @InheritInverseConfiguration
+    SinkerVariable sinkerVariableFromFastJson(FastJsonSinkerVariable fastJsonSinkerVariable);
+
+    JSFixedFastJsonSinkerInfo sinkerInfoToJSFixedFastJson(SinkerInfo sinkerInfo);
+
+    @InheritInverseConfiguration
+    SinkerInfo sinkerInfoFromJSFixedFastJson(JSFixedFastJsonSinkerInfo jSFixedFastJsonSinkerInfo);
+
+    JSFixedFastJsonSinkerMeta sinkerMetaToJSFixedFastJson(SinkerMeta sinkerMeta);
+
+    @InheritInverseConfiguration
+    SinkerMeta sinkerMetaFromJSFixedFastJson(JSFixedFastJsonSinkerMeta jSFixedFastJsonSinkerMeta);
+
+    JSFixedFastJsonSinkerRelation sinkerRelationToJSFixedFastJson(SinkerRelation sinkerRelation);
+
+    @InheritInverseConfiguration
+    SinkerRelation sinkerRelationFromJSFixedFastJson(JSFixedFastJsonSinkerRelation jSFixedFastJsonSinkerRelation);
+
+    JSFixedFastJsonSinkerVariable sinkerVariableToJSFixedFastJson(SinkerVariable sinkerVariable);
+
+    @InheritInverseConfiguration
+    SinkerVariable sinkerVariableFromJSFixedFastJson(JSFixedFastJsonSinkerVariable jSFixedFastJsonSinkerVariable);
+
+    WebInputSinkerInfo sinkerInfoToWebInput(SinkerInfo sinkerInfo);
+
+    @InheritInverseConfiguration
+    SinkerInfo sinkerInfoFromWebInput(WebInputSinkerInfo webInputSinkerInfo);
+
+    WebInputSinkerMeta sinkerMetaToWebInput(SinkerMeta sinkerMeta);
+
+    @InheritInverseConfiguration
+    SinkerMeta sinkerMetaFromWebInput(WebInputSinkerMeta webInputSinkerMeta);
+
+    WebInputSinkerRelation sinkerRelationToWebInput(SinkerRelation sinkerRelation);
+
+    @InheritInverseConfiguration
+    SinkerRelation sinkerRelationFromWebInput(WebInputSinkerRelation webInputSinkerRelation);
 
     // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(

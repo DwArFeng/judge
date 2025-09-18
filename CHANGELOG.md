@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- 建立实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.bean.entity.SinkerInfo。
+  - com.dwarfeng.judge.stack.bean.entity.SinkerMeta。
+  - com.dwarfeng.judge.stack.bean.entity.SinkerMetaIndicator。
+  - com.dwarfeng.judge.stack.bean.entity.SinkerRelation。
+  - com.dwarfeng.judge.stack.bean.entity.SinkerSupport。
+  - com.dwarfeng.judge.stack.bean.entity.SinkerVariable。
+
 - 优化作业逻辑。
   - 调整作业过程中判断器的使用方式，由单独使用变为联合使用。
 

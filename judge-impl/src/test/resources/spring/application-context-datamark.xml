@@ -40,4 +40,12 @@
             resource-charset="${datamark.judger.resource_charset}"
             update-allowed="${datamark.judger.update_allowed}"
     />
+
+    <!-- Sink 数据标识 -->
+    <datamark:handler
+            handler-name="sinkDatamarkHandler"
+            resource-url="${datamark.sink.resource_url}"
+            resource-charset="${datamark.sink.resource_charset}"
+            update-allowed="${datamark.sink.update_allowed}"
+    />
 </beans>

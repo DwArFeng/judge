@@ -2,15 +2,9 @@ package com.dwarfeng.judge.impl.configuration;
 
 import com.dwarfeng.judge.sdk.bean.BeanMapper;
 import com.dwarfeng.judge.sdk.bean.entity.*;
-import com.dwarfeng.judge.sdk.bean.key.formatter.AnalyserVariableStringKeyFormatter;
-import com.dwarfeng.judge.sdk.bean.key.formatter.AnalysisStringKeyFormatter;
-import com.dwarfeng.judge.sdk.bean.key.formatter.JudgementStringKeyFormatter;
-import com.dwarfeng.judge.sdk.bean.key.formatter.JudgerVariableStringKeyFormatter;
+import com.dwarfeng.judge.sdk.bean.key.formatter.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
-import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
-import com.dwarfeng.judge.stack.bean.key.JudgementKey;
-import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.bean.key.*;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
@@ -65,6 +59,18 @@ public class CacheConfiguration {
     private String analysisPicturePackItemInfoPrefix;
     @Value("${cache.prefix.entity.judgement}")
     private String judgementPrefix;
+    @Value("${cache.prefix.entity.sinker_info}")
+    private String sinkerInfoPrefix;
+    @Value("${cache.prefix.entity.sinker_meta}")
+    private String sinkerMetaPrefix;
+    @Value("${cache.prefix.entity.sinker_meta_indicator}")
+    private String sinkerMetaIndicatorPrefix;
+    @Value("${cache.prefix.entity.sinker_relation}")
+    private String sinkerRelationPrefix;
+    @Value("${cache.prefix.entity.sinker_support}")
+    private String sinkerSupportPrefix;
+    @Value("${cache.prefix.entity.sinker_variable}")
+    private String sinkerVariablePrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -275,6 +281,75 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonJudgement>) template,
                 new JudgementStringKeyFormatter(judgementPrefix),
                 new MapStructBeanTransformer<>(Judgement.class, FastJsonJudgement.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, SinkerInfo, FastJsonSinkerInfo> sinkerInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonSinkerInfo>) template,
+                new LongIdStringKeyFormatter(sinkerInfoPrefix),
+                new MapStructBeanTransformer<>(SinkerInfo.class, FastJsonSinkerInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<SinkerMetaKey, SinkerMeta, FastJsonSinkerMeta> sinkerMetaRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonSinkerMeta>) template,
+                new SinkerMetaStringKeyFormatter(sinkerMetaPrefix),
+                new MapStructBeanTransformer<>(SinkerMeta.class, FastJsonSinkerMeta.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<SinkerMetaIndicatorKey, SinkerMetaIndicator, FastJsonSinkerMetaIndicator>
+    sinkerMetaIndicatorRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonSinkerMetaIndicator>) template,
+                new SinkerMetaIndicatorStringKeyFormatter(sinkerMetaIndicatorPrefix),
+                new MapStructBeanTransformer<>(
+                        SinkerMetaIndicator.class, FastJsonSinkerMetaIndicator.class, BeanMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<SinkerRelationKey, SinkerRelation, FastJsonSinkerRelation>
+    sinkerRelationRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonSinkerRelation>) template,
+                new SinkerRelationStringKeyFormatter(sinkerRelationPrefix),
+                new MapStructBeanTransformer<>(
+                        SinkerRelation.class, FastJsonSinkerRelation.class, BeanMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, SinkerSupport, FastJsonSinkerSupport> sinkerSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonSinkerSupport>) template,
+                new StringIdStringKeyFormatter(sinkerSupportPrefix),
+                new MapStructBeanTransformer<>(SinkerSupport.class, FastJsonSinkerSupport.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<SinkerVariableKey, SinkerVariable, FastJsonSinkerVariable>
+    sinkerVariableRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonSinkerVariable>) template,
+                new SinkerVariableStringKeyFormatter(sinkerVariablePrefix),
+                new MapStructBeanTransformer<>(
+                        SinkerVariable.class, FastJsonSinkerVariable.class, BeanMapper.class
+                )
         );
     }
 }

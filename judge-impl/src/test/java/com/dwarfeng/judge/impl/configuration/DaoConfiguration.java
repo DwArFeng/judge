@@ -2,16 +2,10 @@ package com.dwarfeng.judge.impl.configuration;
 
 import com.dwarfeng.judge.impl.bean.BeanMapper;
 import com.dwarfeng.judge.impl.bean.entity.*;
-import com.dwarfeng.judge.impl.bean.key.HibernateAnalyserVariableKey;
-import com.dwarfeng.judge.impl.bean.key.HibernateAnalysisKey;
-import com.dwarfeng.judge.impl.bean.key.HibernateJudgementKey;
-import com.dwarfeng.judge.impl.bean.key.HibernateJudgerVariableKey;
+import com.dwarfeng.judge.impl.bean.key.*;
 import com.dwarfeng.judge.impl.dao.preset.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
-import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
-import com.dwarfeng.judge.stack.bean.key.JudgementKey;
-import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.bean.key.*;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
@@ -50,6 +44,12 @@ public class DaoConfiguration {
     private final AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker;
     private final AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker;
     private final JudgementPresetCriteriaMaker judgementPresetCriteriaMaker;
+    private final SinkerInfoPresetCriteriaMaker sinkerInfoPresetCriteriaMaker;
+    private final SinkerMetaIndicatorPresetCriteriaMaker sinkerMetaIndicatorPresetCriteriaMaker;
+    private final SinkerMetaPresetCriteriaMaker sinkerMetaPresetCriteriaMaker;
+    private final SinkerRelationPresetCriteriaMaker sinkerRelationPresetCriteriaMaker;
+    private final SinkerSupportPresetCriteriaMaker sinkerSupportPresetCriteriaMaker;
+    private final SinkerVariablePresetCriteriaMaker sinkerVariablePresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -74,7 +74,13 @@ public class DaoConfiguration {
             AnalysisPictureInfoPresetCriteriaMaker analysisPictureInfoPresetCriteriaMaker,
             AnalysisPicturePackPresetCriteriaMaker analysisPicturePackPresetCriteriaMaker,
             AnalysisPicturePackItemInfoPresetCriteriaMaker analysisPicturePackItemInfoPresetCriteriaMaker,
-            JudgementPresetCriteriaMaker judgementPresetCriteriaMaker
+            JudgementPresetCriteriaMaker judgementPresetCriteriaMaker,
+            SinkerInfoPresetCriteriaMaker sinkerInfoPresetCriteriaMaker,
+            SinkerMetaIndicatorPresetCriteriaMaker sinkerMetaIndicatorPresetCriteriaMaker,
+            SinkerMetaPresetCriteriaMaker sinkerMetaPresetCriteriaMaker,
+            SinkerRelationPresetCriteriaMaker sinkerRelationPresetCriteriaMaker,
+            SinkerSupportPresetCriteriaMaker sinkerSupportPresetCriteriaMaker,
+            SinkerVariablePresetCriteriaMaker sinkerVariablePresetCriteriaMaker
     ) {
         this.hibernateTemplate = hibernateTemplate;
         this.analyserInfoPresetCriteriaMaker = analyserInfoPresetCriteriaMaker;
@@ -96,6 +102,12 @@ public class DaoConfiguration {
         this.analysisPicturePackPresetCriteriaMaker = analysisPicturePackPresetCriteriaMaker;
         this.analysisPicturePackItemInfoPresetCriteriaMaker = analysisPicturePackItemInfoPresetCriteriaMaker;
         this.judgementPresetCriteriaMaker = judgementPresetCriteriaMaker;
+        this.sinkerInfoPresetCriteriaMaker = sinkerInfoPresetCriteriaMaker;
+        this.sinkerMetaIndicatorPresetCriteriaMaker = sinkerMetaIndicatorPresetCriteriaMaker;
+        this.sinkerMetaPresetCriteriaMaker = sinkerMetaPresetCriteriaMaker;
+        this.sinkerRelationPresetCriteriaMaker = sinkerRelationPresetCriteriaMaker;
+        this.sinkerSupportPresetCriteriaMaker = sinkerSupportPresetCriteriaMaker;
+        this.sinkerVariablePresetCriteriaMaker = sinkerVariablePresetCriteriaMaker;
     }
 
     @Bean
@@ -773,6 +785,231 @@ public class DaoConfiguration {
                 new MapStructBeanTransformer<>(Judgement.class, HibernateJudgement.class, BeanMapper.class),
                 HibernateJudgement.class,
                 judgementPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, SinkerInfo, HibernateSinkerInfo>
+    sinkerInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(SinkerInfo.class, HibernateSinkerInfo.class, BeanMapper.class),
+                HibernateSinkerInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<SinkerInfo, HibernateSinkerInfo> sinkerInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(SinkerInfo.class, HibernateSinkerInfo.class, BeanMapper.class),
+                HibernateSinkerInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<SinkerInfo, HibernateSinkerInfo> sinkerInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(SinkerInfo.class, HibernateSinkerInfo.class, BeanMapper.class),
+                HibernateSinkerInfo.class,
+                sinkerInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<SinkerMetaKey, HibernateSinkerMetaKey, SinkerMeta, HibernateSinkerMeta>
+    sinkerMetaHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(SinkerMetaKey.class, HibernateSinkerMetaKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(SinkerMeta.class, HibernateSinkerMeta.class, BeanMapper.class),
+                HibernateSinkerMeta.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<SinkerMeta, HibernateSinkerMeta> sinkerMetaHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(SinkerMeta.class, HibernateSinkerMeta.class, BeanMapper.class),
+                HibernateSinkerMeta.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<SinkerMeta, HibernateSinkerMeta> sinkerMetaHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(SinkerMeta.class, HibernateSinkerMeta.class, BeanMapper.class),
+                HibernateSinkerMeta.class,
+                sinkerMetaPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<SinkerMetaIndicatorKey, HibernateSinkerMetaIndicatorKey, SinkerMetaIndicator,
+            HibernateSinkerMetaIndicator> sinkerMetaIndicatorHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerMetaIndicatorKey.class, HibernateSinkerMetaIndicatorKey.class, BeanMapper.class
+                ),
+                new MapStructBeanTransformer<>(
+                        SinkerMetaIndicator.class, HibernateSinkerMetaIndicator.class, BeanMapper.class
+                ),
+                HibernateSinkerMetaIndicator.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<SinkerMetaIndicator, HibernateSinkerMetaIndicator>
+    sinkerMetaIndicatorHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerMetaIndicator.class, HibernateSinkerMetaIndicator.class, BeanMapper.class
+                ),
+                HibernateSinkerMetaIndicator.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<SinkerMetaIndicator, HibernateSinkerMetaIndicator>
+    sinkerMetaIndicatorHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerMetaIndicator.class, HibernateSinkerMetaIndicator.class, BeanMapper.class
+                ),
+                HibernateSinkerMetaIndicator.class,
+                sinkerMetaIndicatorPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<SinkerRelationKey, HibernateSinkerRelationKey, SinkerRelation, HibernateSinkerRelation>
+    sinkerRelationHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerRelationKey.class, HibernateSinkerRelationKey.class, BeanMapper.class
+                ),
+                new MapStructBeanTransformer<>(
+                        SinkerRelation.class, HibernateSinkerRelation.class, BeanMapper.class
+                ),
+                HibernateSinkerRelation.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<SinkerRelation, HibernateSinkerRelation> sinkerRelationHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerRelation.class, HibernateSinkerRelation.class, BeanMapper.class
+                ),
+                HibernateSinkerRelation.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<SinkerRelation, HibernateSinkerRelation> sinkerRelationHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerRelation.class, HibernateSinkerRelation.class, BeanMapper.class
+                ),
+                HibernateSinkerRelation.class,
+                sinkerRelationPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, SinkerSupport, HibernateSinkerSupport>
+    sinkerSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        SinkerSupport.class, HibernateSinkerSupport.class, BeanMapper.class
+                ),
+                HibernateSinkerSupport.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<SinkerSupport, HibernateSinkerSupport> sinkerSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerSupport.class, HibernateSinkerSupport.class, BeanMapper.class
+                ),
+                HibernateSinkerSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<SinkerSupport, HibernateSinkerSupport> sinkerSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerSupport.class, HibernateSinkerSupport.class, BeanMapper.class
+                ),
+                HibernateSinkerSupport.class,
+                sinkerSupportPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<SinkerVariableKey, HibernateSinkerVariableKey, SinkerVariable,
+            HibernateSinkerVariable> sinkerVariableHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerVariableKey.class, HibernateSinkerVariableKey.class, BeanMapper.class
+                ),
+                new MapStructBeanTransformer<>(
+                        SinkerVariable.class, HibernateSinkerVariable.class, BeanMapper.class
+                ),
+                HibernateSinkerVariable.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<SinkerVariable, HibernateSinkerVariable>
+    sinkerVariableHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerVariable.class, HibernateSinkerVariable.class, BeanMapper.class
+                ),
+                HibernateSinkerVariable.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<SinkerVariable, HibernateSinkerVariable> sinkerVariableHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(
+                        SinkerVariable.class, HibernateSinkerVariable.class, BeanMapper.class
+                ),
+                HibernateSinkerVariable.class,
+                sinkerVariablePresetCriteriaMaker
         );
     }
 }

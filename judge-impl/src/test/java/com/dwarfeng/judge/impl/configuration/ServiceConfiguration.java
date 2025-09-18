@@ -2,10 +2,7 @@ package com.dwarfeng.judge.impl.configuration;
 
 import com.dwarfeng.judge.impl.service.operation.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
-import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
-import com.dwarfeng.judge.stack.bean.key.JudgementKey;
-import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.bean.key.*;
 import com.dwarfeng.judge.stack.cache.*;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
@@ -64,6 +61,18 @@ public class ServiceConfiguration {
     private final AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao;
     private final JudgementCrudOperation judgementCrudOperation;
     private final JudgementDao judgementDao;
+    private final SinkerInfoCrudOperation sinkerInfoCrudOperation;
+    private final SinkerInfoDao sinkerInfoDao;
+    private final SinkerMetaCache sinkerMetaCache;
+    private final SinkerMetaDao sinkerMetaDao;
+    private final SinkerMetaIndicatorCache sinkerMetaIndicatorCache;
+    private final SinkerMetaIndicatorDao sinkerMetaIndicatorDao;
+    private final SinkerRelationCache sinkerRelationCache;
+    private final SinkerRelationDao sinkerRelationDao;
+    private final SinkerSupportCache sinkerSupportCache;
+    private final SinkerSupportDao sinkerSupportDao;
+    private final SinkerVariableDao sinkerVariableDao;
+    private final SinkerVariableCache sinkerVariableCache;
 
     @Value("${cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
@@ -79,6 +88,16 @@ public class ServiceConfiguration {
     private long judgerVariableTimeout;
     @Value("${cache.timeout.entity.task_event}")
     private long taskEventTimeout;
+    @Value("${cache.timeout.entity.sinker_meta}")
+    private long sinkerMetaTimeout;
+    @Value("${cache.timeout.entity.sinker_meta_indicator}")
+    private long sinkerMetaIndicatorTimeout;
+    @Value("${cache.timeout.entity.sinker_relation}")
+    private long sinkerRelationTimeout;
+    @Value("${cache.timeout.entity.sinker_support}")
+    private long sinkerSupportTimeout;
+    @Value("${cache.timeout.entity.sinker_variable}")
+    private long sinkerVariableTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -120,7 +139,19 @@ public class ServiceConfiguration {
             AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation,
             AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao,
             JudgementCrudOperation judgementCrudOperation,
-            JudgementDao judgementDao
+            JudgementDao judgementDao,
+            SinkerInfoCrudOperation sinkerInfoCrudOperation,
+            SinkerInfoDao sinkerInfoDao,
+            SinkerMetaCache sinkerMetaCache,
+            SinkerMetaDao sinkerMetaDao,
+            SinkerMetaIndicatorCache sinkerMetaIndicatorCache,
+            SinkerMetaIndicatorDao sinkerMetaIndicatorDao,
+            SinkerRelationCache sinkerRelationCache,
+            SinkerRelationDao sinkerRelationDao,
+            SinkerSupportCache sinkerSupportCache,
+            SinkerSupportDao sinkerSupportDao,
+            SinkerVariableDao sinkerVariableDao,
+            SinkerVariableCache sinkerVariableCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -162,6 +193,18 @@ public class ServiceConfiguration {
         this.analysisPicturePackItemInfoDao = analysisPicturePackItemInfoDao;
         this.judgementCrudOperation = judgementCrudOperation;
         this.judgementDao = judgementDao;
+        this.sinkerInfoCrudOperation = sinkerInfoCrudOperation;
+        this.sinkerInfoDao = sinkerInfoDao;
+        this.sinkerMetaCache = sinkerMetaCache;
+        this.sinkerMetaDao = sinkerMetaDao;
+        this.sinkerMetaIndicatorCache = sinkerMetaIndicatorCache;
+        this.sinkerMetaIndicatorDao = sinkerMetaIndicatorDao;
+        this.sinkerRelationCache = sinkerRelationCache;
+        this.sinkerRelationDao = sinkerRelationDao;
+        this.sinkerSupportCache = sinkerSupportCache;
+        this.sinkerSupportDao = sinkerSupportDao;
+        this.sinkerVariableDao = sinkerVariableDao;
+        this.sinkerVariableCache = sinkerVariableCache;
     }
 
     @Bean
@@ -711,6 +754,185 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 judgementDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, SinkerInfo> sinkerInfoBatchCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<SinkerInfo> sinkerInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<SinkerInfo> sinkerInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<SinkerMetaKey, SinkerMeta> sinkerMetaGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerMetaDao,
+                sinkerMetaCache,
+                new ExceptionKeyGenerator<>(),
+                sinkerMetaTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<SinkerMeta> sinkerMetaDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerMetaDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<SinkerMeta> sinkerMetaDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerMetaDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<SinkerMetaIndicatorKey, SinkerMetaIndicator>
+    sinkerMetaIndicatorGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerMetaIndicatorDao,
+                sinkerMetaIndicatorCache,
+                new ExceptionKeyGenerator<>(),
+                sinkerMetaIndicatorTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<SinkerMetaIndicator> sinkerMetaIndicatorDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerMetaIndicatorDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<SinkerMetaIndicator> sinkerMetaIndicatorDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerMetaIndicatorDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<SinkerRelationKey, SinkerRelation> sinkerRelationGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerRelationDao,
+                sinkerRelationCache,
+                new ExceptionKeyGenerator<>(),
+                sinkerRelationTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<SinkerRelation> sinkerRelationDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerRelationDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<SinkerRelation> sinkerRelationDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerRelationDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, SinkerSupport> sinkerSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerSupportDao,
+                sinkerSupportCache,
+                new ExceptionKeyGenerator<>(),
+                sinkerSupportTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<SinkerSupport> sinkerSupportDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerSupportDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<SinkerSupport> sinkerSupportDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerSupportDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<SinkerVariableKey, SinkerVariable> sinkerVariableBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerVariableDao,
+                sinkerVariableCache,
+                new ExceptionKeyGenerator<>(),
+                sinkerVariableTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<SinkerVariable> sinkerVariableDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerVariableDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<SinkerVariable> sinkerVariableDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                sinkerVariableDao
         );
     }
 }

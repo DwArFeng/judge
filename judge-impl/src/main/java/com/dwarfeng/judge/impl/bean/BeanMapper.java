@@ -1,15 +1,9 @@
 package com.dwarfeng.judge.impl.bean;
 
 import com.dwarfeng.judge.impl.bean.entity.*;
-import com.dwarfeng.judge.impl.bean.key.HibernateAnalyserVariableKey;
-import com.dwarfeng.judge.impl.bean.key.HibernateAnalysisKey;
-import com.dwarfeng.judge.impl.bean.key.HibernateJudgementKey;
-import com.dwarfeng.judge.impl.bean.key.HibernateJudgerVariableKey;
+import com.dwarfeng.judge.impl.bean.key.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
-import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
-import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
-import com.dwarfeng.judge.stack.bean.key.JudgementKey;
-import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
+import com.dwarfeng.judge.stack.bean.key.*;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -61,6 +55,26 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     JudgementKey judgementKeyFromHibernate(HibernateJudgementKey hibernateJudgementKey);
+
+    HibernateSinkerMetaIndicatorKey sinkerMetaIndicatorKeyToHibernate(SinkerMetaIndicatorKey sinkerMetaIndicatorKey);
+
+    @InheritInverseConfiguration
+    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromHibernate(HibernateSinkerMetaIndicatorKey hibernateSinkerMetaIndicatorKey);
+
+    HibernateSinkerMetaKey sinkerMetaKeyToHibernate(SinkerMetaKey sinkerMetaKey);
+
+    @InheritInverseConfiguration
+    SinkerMetaKey sinkerMetaKeyFromHibernate(HibernateSinkerMetaKey hibernateSinkerMetaKey);
+
+    HibernateSinkerRelationKey sinkerRelationKeyToHibernate(SinkerRelationKey sinkerRelationKey);
+
+    @InheritInverseConfiguration
+    SinkerRelationKey sinkerRelationKeyFromHibernate(HibernateSinkerRelationKey hibernateSinkerRelationKey);
+
+    HibernateSinkerVariableKey sinkerVariableKeyToHibernate(SinkerVariableKey sinkerVariableKey);
+
+    @InheritInverseConfiguration
+    SinkerVariableKey sinkerVariableKeyFromHibernate(HibernateSinkerVariableKey hibernateSinkerVariableKey);
 
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     @Mapping(target = "sectionLongId", ignore = true)
@@ -156,13 +170,14 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     JudgerVariable judgerVariableFromHibernate(HibernateJudgerVariable hibernateJudgerVariable);
 
+    @Mapping(target = "tasks", ignore = true)
+    @Mapping(target = "sinkerRelations", ignore = true)
     @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "judgerInfos", ignore = true)
     @Mapping(target = "driverInfos", ignore = true)
     @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "analyserInfos", ignore = true)
-    @Mapping(target = "tasks", ignore = true)
     HibernateSection sectionToHibernate(Section section);
 
     @InheritInverseConfiguration
@@ -225,4 +240,62 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     Judgement judgementFromHibernate(HibernateJudgement hibernateJudgement);
+
+    @Mapping(target = "sinkerVariables", ignore = true)
+    @Mapping(target = "sinkerRelations", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateSinkerInfo sinkerInfoToHibernate(SinkerInfo sinkerInfo);
+
+    @InheritInverseConfiguration
+    SinkerInfo sinkerInfoFromHibernate(HibernateSinkerInfo hibernateSinkerInfo);
+
+    @Mapping(target = "sinkerLongId", ignore = true)
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "metaStringId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateSinkerMeta sinkerMetaToHibernate(SinkerMeta sinkerMeta);
+
+    @InheritInverseConfiguration
+    SinkerMeta sinkerMetaFromHibernate(HibernateSinkerMeta hibernateSinkerMeta);
+
+    @Mapping(target = "sinkerTypeStringId", ignore = true)
+    @Mapping(target = "metaStringId", ignore = true)
+    HibernateSinkerMetaIndicator sinkerMetaIndicatorToHibernate(SinkerMetaIndicator sinkerMetaIndicator);
+
+    @InheritInverseConfiguration
+    SinkerMetaIndicator sinkerMetaIndicatorFromHibernate(HibernateSinkerMetaIndicator hibernateSinkerMetaIndicator);
+
+    @Mapping(target = "sinkerLongId", ignore = true)
+    @Mapping(target = "sinkerInfo", ignore = true)
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateSinkerRelation sinkerRelationToHibernate(SinkerRelation sinkerRelation);
+
+    @InheritInverseConfiguration
+    SinkerRelation sinkerRelationFromHibernate(HibernateSinkerRelation hibernateSinkerRelation);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateSinkerSupport sinkerSupportToHibernate(SinkerSupport sinkerSupport);
+
+    @InheritInverseConfiguration
+    SinkerSupport sinkerSupportFromHibernate(HibernateSinkerSupport hibernateSinkerSupport);
+
+    @Mapping(target = "variableStringId", ignore = true)
+    @Mapping(target = "valueType", ignore = true)
+    @Mapping(target = "stringValue", ignore = true)
+    @Mapping(target = "sinkerLongId", ignore = true)
+    @Mapping(target = "sinkerInfo", ignore = true)
+    @Mapping(target = "longValue", ignore = true)
+    @Mapping(target = "doubleValue", ignore = true)
+    @Mapping(target = "dateValue", ignore = true)
+    @Mapping(target = "booleanValue", ignore = true)
+    HibernateSinkerVariable sinkerVariableToHibernate(SinkerVariable sinkerVariable);
+
+    @InheritInverseConfiguration
+    SinkerVariable sinkerVariableFromHibernate(HibernateSinkerVariable hibernateSinkerVariable);
 }

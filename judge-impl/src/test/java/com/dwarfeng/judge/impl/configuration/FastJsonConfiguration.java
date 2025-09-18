@@ -33,6 +33,12 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonAnalysisPicturePack.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonAnalysisPicturePackItemInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonJudgement.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonSinkerInfo.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonSinkerMeta.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonSinkerMetaIndicator.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonSinkerRelation.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonSinkerSupport.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonSinkerVariable.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }
