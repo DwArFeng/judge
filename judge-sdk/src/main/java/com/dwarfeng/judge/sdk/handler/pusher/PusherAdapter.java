@@ -64,6 +64,11 @@ public abstract class PusherAdapter extends AbstractPusher {
     public void sinkReset() throws HandlerException {
     }
 
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void provideReset() throws HandlerException {
+    }
+
     @Override
     public String toString() {
         return "PusherAdapter{" +

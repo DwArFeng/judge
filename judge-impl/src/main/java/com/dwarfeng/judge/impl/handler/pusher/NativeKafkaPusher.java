@@ -50,6 +50,8 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String superviseResetTopic;
     @Value("${pusher.kafka.native.topic.sink_reset}")
     private String sinkResetTopic;
+    @Value("${pusher.kafka.native.topic.provide_reset}")
+    private String provideResetTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
@@ -92,6 +94,11 @@ public class NativeKafkaPusher extends AbstractPusher {
     @Override
     public void sinkReset() {
         kafkaTemplate.send(sinkResetTopic, StringUtils.EMPTY);
+    }
+
+    @Override
+    public void provideReset() {
+        kafkaTemplate.send(provideResetTopic, StringUtils.EMPTY);
     }
 
     @Override

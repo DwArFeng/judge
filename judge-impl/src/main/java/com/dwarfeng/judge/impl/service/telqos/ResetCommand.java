@@ -23,6 +23,7 @@ public class ResetCommand extends CliCommand {
     private static final String COMMAND_OPTION_RESET_JOB = "reset-job";
     private static final String COMMAND_OPTION_RESET_SUPERVISE = "reset-supervise";
     private static final String COMMAND_OPTION_RESET_SINK = "reset-sink";
+    private static final String COMMAND_OPTION_RESET_PROVIDE = "reset-provide";
 
     private static final String[] COMMAND_OPTION_ARRAY = new String[]{
             COMMAND_OPTION_LOOKUP,
@@ -31,7 +32,8 @@ public class ResetCommand extends CliCommand {
             COMMAND_OPTION_STATUS,
             COMMAND_OPTION_RESET_JOB,
             COMMAND_OPTION_RESET_SUPERVISE,
-            COMMAND_OPTION_RESET_SINK
+            COMMAND_OPTION_RESET_SINK,
+            COMMAND_OPTION_RESET_PROVIDE
     };
 
     private static final String IDENTITY = "reset";
@@ -51,6 +53,8 @@ public class ResetCommand extends CliCommand {
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SUPERVISE);
     private static final String CMD_LINE_SYNTAX_RESET_SINK = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SINK);
+    private static final String CMD_LINE_SYNTAX_RESET_PROVIDE = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_PROVIDE);
 
     private static final String[] CMD_LINE_ARRAY = new String[]{
             CMD_LINE_SYNTAX_LOOKUP,
@@ -59,7 +63,8 @@ public class ResetCommand extends CliCommand {
             CMD_LINE_SYNTAX_STATUS,
             CMD_LINE_SYNTAX_RESET_JOB,
             CMD_LINE_SYNTAX_RESET_SUPERVISE,
-            CMD_LINE_SYNTAX_RESET_SINK
+            CMD_LINE_SYNTAX_RESET_SINK,
+            CMD_LINE_SYNTAX_RESET_PROVIDE
     };
 
     private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
@@ -81,6 +86,7 @@ public class ResetCommand extends CliCommand {
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_JOB).desc("作业重置作业功能操作").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_SUPERVISE).desc("执行重置主管功能操作").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_SINK).desc("执行重置下沉功能操作").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_PROVIDE).desc("执行重置提供功能操作").build());
         return list;
     }
 
@@ -118,6 +124,10 @@ public class ResetCommand extends CliCommand {
                     break;
                 case COMMAND_OPTION_RESET_SINK:
                     resetQosService.resetSink();
+                    context.sendMessage("重置成功!");
+                    break;
+                case COMMAND_OPTION_RESET_PROVIDE:
+                    resetQosService.resetProvide();
                     context.sendMessage("重置成功!");
                     break;
             }

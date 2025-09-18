@@ -9,11 +9,15 @@
   - com.dwarfeng.judge.impl.service.telqos.SinkerLocalCacheCommand。
   - com.dwarfeng.judge.impl.service.telqos.SinkerSessionCommand。
 
+- 实现预设提供器。
+  - com.dwarfeng.judge.impl.handler.provider.groovy.GroovyProviderRegistry。
+
 - 实现预设下沉器。
   - com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerRegistry。
   - com.dwarfeng.judge.impl.handler.sinker.mock.MockSinkerRegistry。
 
 - 实现核心机制。
+  - 提供机制。
   - 下沉机制。
 
 - 新增实体操作服务。

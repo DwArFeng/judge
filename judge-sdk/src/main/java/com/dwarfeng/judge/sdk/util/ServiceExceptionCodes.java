@@ -102,6 +102,18 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(323), "sinker execution failed");
     public static final ServiceException.Code SINKER_SESSION_FAILED =
             new ServiceException.Code(offset(330), "sinker session failed");
+    public static final ServiceException.Code PROVIDER_NOT_EXISTS =
+            new ServiceException.Code(offset(340), "provider not exists");
+    public static final ServiceException.Code PROVIDER_FAILED =
+            new ServiceException.Code(offset(350), "provider failed");
+    public static final ServiceException.Code PROVIDER_MAKE_FAILED =
+            new ServiceException.Code(offset(351), "provider make failed");
+    public static final ServiceException.Code PROVIDER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(352), "provider type unsupported");
+    public static final ServiceException.Code PROVIDER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(353), "provider execution failed");
+    public static final ServiceException.Code PROVIDER_SESSION_FAILED =
+            new ServiceException.Code(offset(360), "provider session failed");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -171,6 +183,12 @@ public final class ServiceExceptionCodes {
         SINKER_TYPE_UNSUPPORTED.setCode(offset(322));
         SINKER_EXECUTION_FAILED.setCode(offset(323));
         SINKER_SESSION_FAILED.setCode(offset(330));
+        PROVIDER_NOT_EXISTS.setCode(offset(340));
+        PROVIDER_FAILED.setCode(offset(350));
+        PROVIDER_MAKE_FAILED.setCode(offset(351));
+        PROVIDER_TYPE_UNSUPPORTED.setCode(offset(352));
+        PROVIDER_EXECUTION_FAILED.setCode(offset(353));
+        PROVIDER_SESSION_FAILED.setCode(offset(360));
     }
 
     private ServiceExceptionCodes() {

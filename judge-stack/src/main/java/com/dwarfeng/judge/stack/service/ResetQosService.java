@@ -67,4 +67,12 @@ public interface ResetQosService extends Service {
      * @since 2.1.0-beta
      */
     void resetSink() throws ServiceException;
+
+    /**
+     * 重置提供功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.1.0-beta
+     */
+    void resetProvide() throws ServiceException;
 }

@@ -98,4 +98,13 @@ public class ResetQosServiceImpl implements ResetQosService {
             throw ServiceExceptionHelper.logParse("重置下沉功能时发生异常", LogLevel.WARN, e, sem);
         }
     }
+
+    @Override
+    public void resetProvide() throws ServiceException {
+        try {
+            resetHandler.resetProvide();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("重置提供功能时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
 }

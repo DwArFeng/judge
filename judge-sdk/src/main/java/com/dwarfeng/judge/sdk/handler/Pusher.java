@@ -78,4 +78,12 @@ public interface Pusher {
      * @since 2.1.0-beta
      */
     void sinkReset() throws HandlerException;
+
+    /**
+     * 提供功能重置时执行的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.1.0-beta
+     */
+    void provideReset() throws HandlerException;
 }

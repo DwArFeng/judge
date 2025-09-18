@@ -66,5 +66,13 @@ public interface Resetter {
          * @since 2.1.0-beta
          */
         void resetSink() throws Exception;
+
+        /**
+         * 重置提供功能。
+         *
+         * @throws Exception 执行重置时抛出的任何异常。
+         * @since 2.1.0-beta
+         */
+        void resetProvide() throws Exception;
     }
 }
