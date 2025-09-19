@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
@@ -335,6 +336,13 @@ public class JobHandlerImpl implements JobHandler {
             LongIdKey sectionKey, List<LongIdKey> analyserInfoKeys, LongIdKey taskKey,
             Map<LongIdKey, Analyser> analyserMap
     ) throws Exception {
+        // 开始计时，创建任务事件。
+        String taskMessage = "作业步骤 1/4: 开始分析...";
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
+        TimeMeasurer tm = new TimeMeasurer();
+        tm.start();
+
         // 遍历 analyserInfoKeys，按照先后顺序执行分析。
         for (LongIdKey analyserInfoKey : analyserInfoKeys) {
             // 构造分析器上下文。
@@ -358,12 +366,25 @@ public class JobHandlerImpl implements JobHandler {
             // 调用分析器执行器的分析方法。
             analyserExecutor.analyse();
         }
+
+        // 结束计时，创建任务事件。
+        tm.stop();
+        taskMessage = String.format("作业步骤 1/4: 分析完成, 耗时 %d ms", tm.getTimeMs());
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
 
     private void judge(
             LongIdKey sectionKey, List<LongIdKey> judgerInfoKeys, LongIdKey taskKey,
             Map<LongIdKey, Judger> judgerMap
     ) throws Exception {
+        // 开始计时，创建任务事件。
+        String taskMessage = "作业步骤 2/4: 开始判断...";
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
+        TimeMeasurer tm = new TimeMeasurer();
+        tm.start();
+
         // 遍历 judgerInfoKeys，按照先后顺序执行判断。
         for (LongIdKey judgerInfoKey : judgerInfoKeys) {
             // 构造判断器上下文。
@@ -386,12 +407,25 @@ public class JobHandlerImpl implements JobHandler {
             // 调用判断器执行器的判断方法。
             judgerExecutor.judge();
         }
+
+        // 结束计时，创建任务事件。
+        tm.stop();
+        taskMessage = String.format("作业步骤 2/4: 判断完成, 耗时 %d ms", tm.getTimeMs());
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
 
     private void visualize(
             LongIdKey sectionKey, List<LongIdKey> visualizerInfoKeys, LongIdKey taskKey,
             Map<LongIdKey, Visualizer> visualizerMap
     ) throws Exception {
+        // 开始计时，创建任务事件。
+        String taskMessage = "作业步骤 3/4: 开始可视化...";
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
+        TimeMeasurer tm = new TimeMeasurer();
+        tm.start();
+
         // 遍历 visualizerInfoKeys，按照先后顺序执行可视化。
         for (LongIdKey visualizerInfoKey : visualizerInfoKeys) {
             // 构造可视化器上下文。
@@ -414,9 +448,23 @@ public class JobHandlerImpl implements JobHandler {
             // 调用可视化器执行器的可视化方法。
             visualizerExecutor.analyse();
         }
+
+        // 结束计时，创建任务事件。
+        tm.stop();
+        taskMessage = String.format("作业步骤 3/4: 可视化完成, 耗时 %d ms", tm.getTimeMs());
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
 
     private void sink(LongIdKey sectionKey, LongIdKey taskKey) throws Exception {
+        // 开始计时，创建任务事件。
+        String taskMessage = "作业步骤 4/4: 开始下沉...";
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
+        TimeMeasurer tm = new TimeMeasurer();
+        tm.start();
+
+        // 生成下沉信息并下沉。
         Section section = sectionMaintainService.get(sectionKey);
         Task task = taskMaintainService.get(taskKey);
         List<SinkInfo.TaskEvent> taskEvents = lookupTaskEvents(taskKey);
@@ -432,6 +480,12 @@ public class JobHandlerImpl implements JobHandler {
                 taskEvents, analyses, judgements, visualizeDatas
         );
         sinkHandler.sink(sinkInfo);
+
+        // 结束计时，创建任务事件。
+        tm.stop();
+        taskMessage = String.format("作业步骤 4/4: 下沉完成, 耗时 %d ms", tm.getTimeMs());
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
 
     private List<SinkInfo.TaskEvent> lookupTaskEvents(LongIdKey taskKey) throws Exception {
