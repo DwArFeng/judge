@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.ProvideInfo;
-import com.dwarfeng.judge.stack.bean.dto.ProvideResult;
+import com.dwarfeng.judge.stack.bean.dto.DataLookupInfo;
+import com.dwarfeng.judge.stack.bean.dto.DataLookupResult;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
@@ -14,10 +14,11 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
 public interface ProvideHandler extends Handler {
 
     /**
-     * 提供数据。
+     * 查询数据。
      *
-     * @param info 提供信息。
+     * @param info 数据查询信息。
+     * @return 数据查询结果。
      * @throws HandlerException 处理器异常。
      */
-    ProvideResult provide(ProvideInfo info) throws HandlerException;
+    DataLookupResult lookupData(DataLookupInfo info) throws HandlerException;
 }

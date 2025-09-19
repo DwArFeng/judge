@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 优化部分接口方法的名称，使其更加符合方法的功能。
+  - `Analyser.Context.provide` -> `Analyser.Context.lookupData`。
+  - `ProvideHandler.provide` -> `ProvideHandler.lookupData`。
+  - `ProviderSession.provide` -> `ProviderSession.lookupData`。
+
 - 实现运维指令。
   - com.dwarfeng.judge.impl.service.telqos.ConsumeCommand。
 

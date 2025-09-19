@@ -39,10 +39,10 @@ public class GroovyProviderSession extends AbstractProviderSession {
     }
 
     @Override
-    protected List<Map<String, Object>> doProvide(String preset, Object[] objs) throws Exception {
+    protected List<Map<String, Object>> doLookupData(String preset, Object[] objs) throws Exception {
         lock.readLock().lock();
         try {
-            return processor.provide(preset, objs);
+            return processor.lookupData(preset, objs);
         } finally {
             lock.readLock().unlock();
         }

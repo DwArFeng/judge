@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.ProvideInfo;
-import com.dwarfeng.judge.stack.bean.dto.ProvideResult;
+import com.dwarfeng.judge.stack.bean.dto.DataLookupInfo;
+import com.dwarfeng.judge.stack.bean.dto.DataLookupResult;
 import com.dwarfeng.judge.stack.handler.ProvideHandler;
 import com.dwarfeng.judge.stack.handler.ProviderSession;
 import com.dwarfeng.judge.stack.handler.ProviderSessionHoldHandler;
@@ -22,7 +22,7 @@ public class ProvideHandlerImpl implements ProvideHandler {
 
     @Override
     @BehaviorAnalyse
-    public ProvideResult provide(ProvideInfo info) throws HandlerException {
+    public DataLookupResult lookupData(DataLookupInfo info) throws HandlerException {
         try {
             return provide0(info);
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class ProvideHandlerImpl implements ProvideHandler {
         }
     }
 
-    private ProvideResult provide0(ProvideInfo info) throws Exception {
+    private DataLookupResult provide0(DataLookupInfo info) throws Exception {
         // 展开参数。
         LongIdKey providerInfoKey = info.getProviderInfoKey();
         String preset = info.getPreset();
@@ -40,6 +40,6 @@ public class ProvideHandlerImpl implements ProvideHandler {
         ProviderSession providerSession = providerSessionHoldHandler.get(providerInfoKey);
 
         // 调用会话的方法，构造结果并返回。
-        return new ProvideResult(providerSession.provide(preset, objs));
+        return new DataLookupResult(providerSession.lookupData(preset, objs));
     }
 }

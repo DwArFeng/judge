@@ -719,8 +719,8 @@ public class JobHandlerImpl implements JobHandler {
         }
 
         @Override
-        public ProvideResult provide(ProvideInfo info) throws HandlerException {
-            return provideHandler.provide(info);
+        public DataLookupResult lookupData(DataLookupInfo info) throws HandlerException {
+            return provideHandler.lookupData(info);
         }
 
         @Override

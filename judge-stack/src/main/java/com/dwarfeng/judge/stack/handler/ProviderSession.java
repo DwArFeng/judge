@@ -28,7 +28,7 @@ public interface ProviderSession {
     void closeSession() throws ProviderSessionException;
 
     /**
-     * 提供数据。
+     * 查询数据。
      *
      * <p>
      * 方法中的 <code>preset</code> 参数用于区分数据的提供方式。<br>
@@ -77,5 +77,5 @@ public interface ProviderSession {
      * @return 提供的结果列表。
      * @throws ProviderSessionException 提供器会话异常。
      */
-    List<Map<String, Object>> provide(String preset, Object[] objs) throws ProviderSessionException;
+    List<Map<String, Object>> lookupData(String preset, Object[] objs) throws ProviderSessionException;
 }

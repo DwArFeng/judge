@@ -47,7 +47,7 @@ class ExampleProviderProcessor implements Processor {
     }
 
     @Override
-    List<Map<String, Object>> provide(String preset, Object[] objs) throws Exception {
+    List<Map<String, Object>> lookupData(String preset, Object[] objs) throws Exception {
         List<Map<String, Object>> list = new ArrayList<>()
         long currentTimeMillis = System.currentTimeMillis()
         Random random = new Random()

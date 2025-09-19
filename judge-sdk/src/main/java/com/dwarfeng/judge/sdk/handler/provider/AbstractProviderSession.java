@@ -49,16 +49,16 @@ public abstract class AbstractProviderSession implements ProviderSession {
     protected abstract void doCloseSession() throws Exception;
 
     @Override
-    public List<Map<String, Object>> provide(String preset, Object[] objs) throws ProviderSessionException {
+    public List<Map<String, Object>> lookupData(String preset, Object[] objs) throws ProviderSessionException {
         try {
-            return doProvide(preset, objs);
+            return doLookupData(preset, objs);
         } catch (Exception e) {
             throw ExceptionHelper.parseProviderSessionException(e);
         }
     }
 
     /**
-     * 提供数据。
+     * 查询数据。
      *
      * <p>
      * 方法中的 <code>preset</code> 参数用于区分数据的提供方式。<br>
@@ -69,18 +69,44 @@ public abstract class AbstractProviderSession implements ProviderSession {
      * 例如一个提供器可以根据时间范围提供历史数据，则 <code>objs</code> 中应该包含两个参数，分别表示开始时间和结束时间。
      *
      * <p>
-     * 方法中的 <code>objs</code> 参数中的每一个对象应该是简单对象，例如字符串、数字等。<br>
+     * 方法中的 <code>objs</code> 参数中的每一个对象必须是简单对象，例如字符串、数字等。<br>
      * 禁止使用无法序列化的复杂对象，例如数据库连接、文件句柄等。
      *
      * <p>
      * 提供器应明确地在描述或文档中说明每个预设所需的参数类型和顺序。<br>
      * 如果提供器无法识别指定的预设，或者提供的参数不符合预设的要求，则应抛出异常。
      *
+     * <p>
+     * 返回的数据列表中的每一个元素都是一个映射，表示一条数据记录。
+     * 映射的键是字符串，表示数据字段的名称；映射的值是对象，表示数据字段的值。<br>
+     * 例如，对于一个提供历史数据的提供器，返回的列表中的每一个映射可能包含以下键值对：
+     * <table>
+     *     <tr>
+     *         <th>键</th>
+     *         <th>值类型</th>
+     *         <th>描述</th>
+     *     </tr>
+     *     <tr>
+     *         <td>timestamp</td>
+     *         <td>Long</td>
+     *         <td>时间戳，表示数据记录的时间。</td>
+     *     </tr>
+     *     <tr>
+     *         <td>value</td>
+     *         <td>Double</td>
+     *         <td>数值，表示数据记录的数值。</td>
+     *     </tr>
+     * </table>
+     *
+     * <p>
+     * 返回的数据列表每个映射中键对应的值必须是简单对象，例如字符串、数字等。<br>
+     * 禁止使用无法序列化的复杂对象，例如数据库连接、文件句柄等。
+     *
      * @param preset 预设。
      * @param objs   参数对象数组。
      * @return 提供结果列表。
      * @throws Exception 任何可能的异常。
-     * @see #provide(String, Object[])
+     * @see #lookupData(String, Object[])
      */
-    protected abstract List<Map<String, Object>> doProvide(String preset, Object[] objs) throws Exception;
+    protected abstract List<Map<String, Object>> doLookupData(String preset, Object[] objs) throws Exception;
 }

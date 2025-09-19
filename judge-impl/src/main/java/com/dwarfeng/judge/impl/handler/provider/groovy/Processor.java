@@ -75,5 +75,5 @@ public interface Processor {
      * @return 提供的结果列表。
      * @throws Exception 方法执行过程中发生的任何异常。
      */
-    List<Map<String, Object>> provide(String preset, Object[] objs) throws Exception;
+    List<Map<String, Object>> lookupData(String preset, Object[] objs) throws Exception;
 }

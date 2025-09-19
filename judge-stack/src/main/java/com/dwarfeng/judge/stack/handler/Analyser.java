@@ -277,12 +277,13 @@ public interface Analyser {
                 throws HandlerException;
 
         /**
-         * 提供数据。
+         * 查询数据。
          *
-         * @param info 提供信息。
+         * @param info 数据查询信息。
+         * @return 数据查询结果。
          * @throws HandlerException 处理器异常。
          * @since 2.1.0-beta
          */
-        ProvideResult provide(ProvideInfo info) throws HandlerException;
+        DataLookupResult lookupData(DataLookupInfo info) throws HandlerException;
     }
 }

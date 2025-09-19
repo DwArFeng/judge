@@ -11,9 +11,9 @@ import java.util.Arrays;
  * @author DwArFeng
  * @since 2.1.0-beta
  */
-public class ProvideInfo implements Dto {
+public class DataLookupInfo implements Dto {
 
-    private static final long serialVersionUID = -3288491347046829360L;
+    private static final long serialVersionUID = -6215984652296036435L;
 
     private LongIdKey providerInfoKey;
 
@@ -39,10 +39,10 @@ public class ProvideInfo implements Dto {
      */
     private Object[] objs;
 
-    public ProvideInfo() {
+    public DataLookupInfo() {
     }
 
-    public ProvideInfo(LongIdKey providerInfoKey, String preset, Object[] objs) {
+    public DataLookupInfo(LongIdKey providerInfoKey, String preset, Object[] objs) {
         this.providerInfoKey = providerInfoKey;
         this.preset = preset;
         this.objs = objs;
@@ -74,7 +74,7 @@ public class ProvideInfo implements Dto {
 
     @Override
     public String toString() {
-        return "ProvideInfo{" +
+        return "DataLookupInfo{" +
                 "providerInfoKey=" + providerInfoKey +
                 ", preset='" + preset + '\'' +
                 ", objs=" + Arrays.toString(objs) +

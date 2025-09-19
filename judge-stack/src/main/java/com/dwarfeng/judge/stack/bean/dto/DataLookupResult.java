@@ -11,9 +11,9 @@ import java.util.Map;
  * @author DwArFeng
  * @since 2.1.0-beta
  */
-public class ProvideResult implements Dto {
+public class DataLookupResult implements Dto {
 
-    private static final long serialVersionUID = -8007298700404193836L;
+    private static final long serialVersionUID = -5780722216383469528L;
 
     /**
      * 结果列表。
@@ -46,10 +46,10 @@ public class ProvideResult implements Dto {
      */
     private List<Map<String, Object>> results;
 
-    public ProvideResult() {
+    public DataLookupResult() {
     }
 
-    public ProvideResult(List<Map<String, Object>> results) {
+    public DataLookupResult(List<Map<String, Object>> results) {
         this.results = results;
     }
 
@@ -63,7 +63,7 @@ public class ProvideResult implements Dto {
 
     @Override
     public String toString() {
-        return "ProvideResult{" +
+        return "DataLookupResult{" +
                 "results=" + results +
                 '}';
     }
