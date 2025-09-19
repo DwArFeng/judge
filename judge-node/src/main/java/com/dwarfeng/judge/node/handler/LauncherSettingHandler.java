@@ -22,6 +22,9 @@ public class LauncherSettingHandler implements Handler {
     @Value("${launcher.reset_provider_support}")
     private boolean resetProviderSupport;
 
+    @Value("${launcher.reset_visualizer_support}")
+    private boolean resetVisualizerSupport;
+
     @Value("${launcher.start_reset_delay}")
     private long startResetDelay;
 
@@ -58,6 +61,10 @@ public class LauncherSettingHandler implements Handler {
         return resetProviderSupport;
     }
 
+    public boolean isResetVisualizerSupport() {
+        return resetVisualizerSupport;
+    }
+
     public long getStartResetDelay() {
         return startResetDelay;
     }
@@ -90,6 +97,7 @@ public class LauncherSettingHandler implements Handler {
                 ", resetJudgerSupport=" + resetJudgerSupport +
                 ", resetSinkerSupport=" + resetSinkerSupport +
                 ", resetProviderSupport=" + resetProviderSupport +
+                ", resetVisualizerSupport=" + resetVisualizerSupport +
                 ", startResetDelay=" + startResetDelay +
                 ", onlineTaskCheckDelay=" + onlineTaskCheckDelay +
                 ", enableTaskCheckDelay=" + enableTaskCheckDelay +

@@ -50,4 +50,12 @@ public interface SupportQosService extends Service {
      * @since 2.1.0-beta
      */
     void resetProvider() throws ServiceException;
+
+    /**
+     * 重置可视化器。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.2.0
+     */
+    void resetVisualizer() throws ServiceException;
 }

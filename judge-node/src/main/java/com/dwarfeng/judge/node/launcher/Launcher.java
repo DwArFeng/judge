@@ -42,6 +42,9 @@ public class Launcher {
             // 根据启动器设置处理器的设置，选择性重置提供器。
             mayResetProvider(ctx);
 
+            // 根据启动器设置处理器的设置，选择性重置可视化器。
+            mayResetVisualizer(ctx);
+
             // 根据启动器设置处理器的设置，选择性开启重置服务。
             mayStartReset(ctx);
 
@@ -152,6 +155,25 @@ public class Launcher {
             supportQosService.resetProvider();
         } catch (ServiceException e) {
             LOGGER.warn("提供器支持重置失败，异常信息如下", e);
+        }
+    }
+
+    private static void mayResetVisualizer(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 如果不重置可视化器，则返回。
+        if (!launcherSettingHandler.isResetVisualizerSupport()) {
+            return;
+        }
+
+        // 重置可视化器支持。
+        LOGGER.info("重置可视化器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetVisualizer();
+        } catch (ServiceException e) {
+            LOGGER.warn("可视化器支持重置失败，异常信息如下", e);
         }
     }
 

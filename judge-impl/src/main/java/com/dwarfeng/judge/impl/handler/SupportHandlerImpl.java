@@ -26,12 +26,14 @@ public class SupportHandlerImpl implements SupportHandler {
     private final SinkerSupportMaintainService sinkerSupportMaintainService;
     private final SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService;
     private final ProviderSupportMaintainService providerSupportMaintainService;
+    private final VisualizerSupportMaintainService visualizerSupportMaintainService;
 
     private final List<AnalyserSupporter> analyserSupporters;
     private final List<DriverSupporter> driverSupporters;
     private final List<JudgerSupporter> judgerSupporters;
     private final List<SinkerSupporter> sinkerSupporters;
     private final List<ProviderSupporter> providerSupporters;
+    private final List<VisualizerSupporter> visualizerSupporters;
 
     public SupportHandlerImpl(
             AnalyserSupportMaintainService analyserSupportMaintainService,
@@ -40,11 +42,13 @@ public class SupportHandlerImpl implements SupportHandler {
             SinkerSupportMaintainService sinkerSupportMaintainService,
             SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService,
             ProviderSupportMaintainService providerSupportMaintainService,
+            VisualizerSupportMaintainService visualizerSupportMaintainService,
             List<AnalyserSupporter> analyserSupporters,
             List<DriverSupporter> driverSupporters,
             List<JudgerSupporter> judgerSupporters,
             List<SinkerSupporter> sinkerSupporters,
-            List<ProviderSupporter> providerSupporters
+            List<ProviderSupporter> providerSupporters,
+            List<VisualizerSupporter> visualizerSupporters
     ) {
         this.analyserSupportMaintainService = analyserSupportMaintainService;
         this.driverSupportMaintainService = driverSupportMaintainService;
@@ -52,11 +56,13 @@ public class SupportHandlerImpl implements SupportHandler {
         this.sinkerSupportMaintainService = sinkerSupportMaintainService;
         this.sinkerMetaIndicatorMaintainService = sinkerMetaIndicatorMaintainService;
         this.providerSupportMaintainService = providerSupportMaintainService;
+        this.visualizerSupportMaintainService = visualizerSupportMaintainService;
         this.analyserSupporters = Optional.ofNullable(analyserSupporters).orElse(Collections.emptyList());
         this.driverSupporters = Optional.ofNullable(driverSupporters).orElse(Collections.emptyList());
         this.judgerSupporters = Optional.ofNullable(judgerSupporters).orElse(Collections.emptyList());
         this.sinkerSupporters = Optional.ofNullable(sinkerSupporters).orElse(Collections.emptyList());
         this.providerSupporters = Optional.ofNullable(providerSupporters).orElse(Collections.emptyList());
+        this.visualizerSupporters = visualizerSupporters;
     }
 
     @Override
@@ -198,5 +204,30 @@ public class SupportHandlerImpl implements SupportHandler {
                 )
         ).collect(Collectors.toList());
         providerSupportMaintainService.batchInsert(providerSupports);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    public void resetVisualizer() throws HandlerException {
+        try {
+            doResetVisualizer();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        }
+    }
+
+    private void doResetVisualizer() throws Exception {
+        List<StringIdKey> visualizerKeys = visualizerSupportMaintainService.lookupAsList().stream()
+                .map(VisualizerSupport::getKey).collect(Collectors.toList());
+        visualizerSupportMaintainService.batchDelete(visualizerKeys);
+        List<VisualizerSupport> visualizerSupports = visualizerSupporters.stream().map(
+                supporter -> new VisualizerSupport(
+                        new StringIdKey(supporter.provideType()),
+                        supporter.provideLabel(),
+                        supporter.provideDescription(),
+                        supporter.provideExampleParam()
+                )
+        ).collect(Collectors.toList());
+        visualizerSupportMaintainService.batchInsert(visualizerSupports);
     }
 }
