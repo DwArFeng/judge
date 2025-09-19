@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 增加部分实体维护服务的预设查询。
+  - com.dwarfeng.judge.stack.service.ProviderSupportMaintainService.ID_LIKE。
+  - com.dwarfeng.judge.stack.service.ProviderSupportMaintainService.LABEL_LIKE。
+
 - 优化作业逻辑。
   - 关键作业节点开始和结束时更新任务模态，并创建任务事件。
   - 新增可视化数据下沉。

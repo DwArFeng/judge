@@ -15,4 +15,6 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 public interface ProviderSupportMaintainService extends BatchCrudService<StringIdKey, ProviderSupport>,
         EntireLookupService<ProviderSupport>, PresetLookupService<ProviderSupport> {
 
+    String ID_LIKE = "id_like";
+    String LABEL_LIKE = "label_like";
 }
