@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 新建实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.bean.entity.VisualizeData。
+  - com.dwarfeng.judge.stack.bean.entity.VisualizerInfo。
+  - com.dwarfeng.judge.stack.bean.entity.VisualizerSupport。
+
 - 优化部分接口方法的名称，使其更加符合方法的功能。
   - `Analyser.Context.provide` -> `Analyser.Context.lookupData`。
   - `ProvideHandler.provide` -> `ProvideHandler.lookupData`。

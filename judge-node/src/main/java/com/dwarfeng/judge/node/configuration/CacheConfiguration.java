@@ -75,6 +75,12 @@ public class CacheConfiguration {
     private String providerInfoPrefix;
     @Value("${cache.prefix.entity.provider_support}")
     private String providerSupportPrefix;
+    @Value("${cache.prefix.entity.visualizer_info}")
+    private String visualizerInfoPrefix;
+    @Value("${cache.prefix.entity.visualizer_support}")
+    private String visualizerSupportPrefix;
+    @Value("${cache.prefix.entity.visualize_data}")
+    private String visualizeDataPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -374,6 +380,41 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonProviderSupport>) template,
                 new StringIdStringKeyFormatter(providerSupportPrefix),
                 new MapStructBeanTransformer<>(ProviderSupport.class, FastJsonProviderSupport.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, VisualizerInfo, FastJsonVisualizerInfo>
+    visualizerInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonVisualizerInfo>) template,
+                new LongIdStringKeyFormatter(visualizerInfoPrefix),
+                new MapStructBeanTransformer<>(VisualizerInfo.class, FastJsonVisualizerInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, VisualizerSupport, FastJsonVisualizerSupport>
+    visualizerSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonVisualizerSupport>) template,
+                new StringIdStringKeyFormatter(visualizerSupportPrefix),
+                new MapStructBeanTransformer<>(
+                        VisualizerSupport.class, FastJsonVisualizerSupport.class, BeanMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<VisualizeDataKey, VisualizeData, FastJsonVisualizeData>
+    visualizeDataRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonVisualizeData>) template,
+                new VisualizeDataStringKeyFormatter(visualizeDataPrefix),
+                new MapStructBeanTransformer<>(VisualizeData.class, FastJsonVisualizeData.class, BeanMapper.class)
         );
     }
 }

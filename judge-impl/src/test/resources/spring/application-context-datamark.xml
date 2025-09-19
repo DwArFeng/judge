@@ -48,4 +48,12 @@
             resource-charset="${datamark.sink.resource_charset}"
             update-allowed="${datamark.sink.update_allowed}"
     />
+
+    <!-- Visualizer 数据标识 -->
+    <datamark:handler
+            handler-name="visualizerDatamarkHandler"
+            resource-url="${datamark.visualizer.resource_url}"
+            resource-charset="${datamark.visualizer.resource_charset}"
+            update-allowed="${datamark.visualizer.update_allowed}"
+    />
 </beans>

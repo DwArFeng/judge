@@ -3,10 +3,7 @@ package com.dwarfeng.judge.impl.service.operation;
 import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.SinkerMetaKey;
 import com.dwarfeng.judge.stack.bean.key.SinkerRelationKey;
-import com.dwarfeng.judge.stack.cache.DriverInfoCache;
-import com.dwarfeng.judge.stack.cache.SectionCache;
-import com.dwarfeng.judge.stack.cache.SinkerMetaCache;
-import com.dwarfeng.judge.stack.cache.SinkerRelationCache;
+import com.dwarfeng.judge.stack.cache.*;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
@@ -43,6 +40,9 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
     private final SinkerMetaDao sinkerMetaDao;
     private final SinkerMetaCache sinkerMetaCache;
 
+    private final VisualizerInfoDao visualizerInfoDao;
+    private final VisualizerInfoCache visualizerInfoCache;
+
     @Value("${cache.timeout.entity.section}")
     private long sectionTimeout;
 
@@ -60,7 +60,9 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             SinkerRelationDao sinkerRelationDao,
             SinkerRelationCache sinkerRelationCache,
             SinkerMetaDao sinkerMetaDao,
-            SinkerMetaCache sinkerMetaCache
+            SinkerMetaCache sinkerMetaCache,
+            VisualizerInfoDao visualizerInfoDao,
+            VisualizerInfoCache visualizerInfoCache
     ) {
         this.sectionDao = sectionDao;
         this.sectionCache = sectionCache;
@@ -76,6 +78,8 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         this.sinkerRelationCache = sinkerRelationCache;
         this.sinkerMetaDao = sinkerMetaDao;
         this.sinkerMetaCache = sinkerMetaCache;
+        this.visualizerInfoDao = visualizerInfoDao;
+        this.visualizerInfoCache = visualizerInfoCache;
     }
 
     @Override
@@ -149,6 +153,13 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         ).stream().map(SinkerMeta::getKey).collect(Collectors.toList());
         sinkerMetaCache.batchDelete(sinkerMetaKeys);
         sinkerMetaDao.batchDelete(sinkerMetaKeys);
+
+        // 删除与 统计设置 相关的 可视化器信息。
+        List<LongIdKey> longIdKeys = visualizerInfoDao.lookup(
+                VisualizerInfoMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+        ).stream().map(VisualizerInfo::getKey).collect(Collectors.toList());
+        visualizerInfoDao.batchDelete(longIdKeys);
+        visualizerInfoCache.batchDelete(longIdKeys);
 
         // 删除 部件 自身。
         sectionDao.delete(key);

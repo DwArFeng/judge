@@ -23,7 +23,7 @@ import java.util.Set;
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateSection implements Bean {
 
-    private static final long serialVersionUID = 2875325039327368005L;
+    private static final long serialVersionUID = -7330800258642226431L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -55,6 +55,9 @@ public class HibernateSection implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateSinkerRelation.class, mappedBy = "section")
     private Set<HibernateSinkerRelation> sinkerRelations = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateVisualizerInfo.class, mappedBy = "section")
+    private Set<HibernateVisualizerInfo> visualizerInfos = new HashSet<>();
 
     // -----------------------------------------------------------审计-----------------------------------------------------------
     @DatamarkField(handlerName = "sectionDatamarkHandler")
@@ -155,6 +158,14 @@ public class HibernateSection implements Bean {
 
     public void setSinkerRelations(Set<HibernateSinkerRelation> sinkerRelations) {
         this.sinkerRelations = sinkerRelations;
+    }
+
+    public Set<HibernateVisualizerInfo> getVisualizerInfos() {
+        return visualizerInfos;
+    }
+
+    public void setVisualizerInfos(Set<HibernateVisualizerInfo> visualizerInfos) {
+        this.visualizerInfos = visualizerInfos;
     }
 
     public String getCreatedDatamark() {

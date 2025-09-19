@@ -21,7 +21,7 @@ import java.util.Set;
 @Table(name = "tbl_task")
 public class HibernateTask implements Bean {
 
-    private static final long serialVersionUID = 6199036272640913491L;
+    private static final long serialVersionUID = 1605351928483024747L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -86,6 +86,9 @@ public class HibernateTask implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTaskEvent.class, mappedBy = "task")
     private Set<HibernateJudgement> judgements = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTaskEvent.class, mappedBy = "task")
+    private Set<HibernateVisualizeData> visualizeDatas = new HashSet<>();
 
     public HibernateTask() {
     }
@@ -234,6 +237,14 @@ public class HibernateTask implements Bean {
 
     public void setJudgements(Set<HibernateJudgement> judgements) {
         this.judgements = judgements;
+    }
+
+    public Set<HibernateVisualizeData> getVisualizeDatas() {
+        return visualizeDatas;
+    }
+
+    public void setVisualizeDatas(Set<HibernateVisualizeData> visualizeDatas) {
+        this.visualizeDatas = visualizeDatas;
     }
 
     @Override

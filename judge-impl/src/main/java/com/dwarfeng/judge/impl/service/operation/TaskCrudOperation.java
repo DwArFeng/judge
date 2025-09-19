@@ -1,22 +1,15 @@
 package com.dwarfeng.judge.impl.service.operation;
 
-import com.dwarfeng.judge.stack.bean.entity.Analysis;
-import com.dwarfeng.judge.stack.bean.entity.Judgement;
-import com.dwarfeng.judge.stack.bean.entity.Task;
-import com.dwarfeng.judge.stack.bean.entity.TaskEvent;
+import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
 import com.dwarfeng.judge.stack.bean.key.JudgementKey;
-import com.dwarfeng.judge.stack.cache.AnalysisCache;
-import com.dwarfeng.judge.stack.cache.JudgementCache;
-import com.dwarfeng.judge.stack.cache.TaskCache;
-import com.dwarfeng.judge.stack.cache.TaskEventCache;
-import com.dwarfeng.judge.stack.dao.AnalysisDao;
-import com.dwarfeng.judge.stack.dao.JudgementDao;
-import com.dwarfeng.judge.stack.dao.TaskDao;
-import com.dwarfeng.judge.stack.dao.TaskEventDao;
+import com.dwarfeng.judge.stack.bean.key.VisualizeDataKey;
+import com.dwarfeng.judge.stack.cache.*;
+import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.judge.stack.service.AnalysisMaintainService;
 import com.dwarfeng.judge.stack.service.JudgementMaintainService;
 import com.dwarfeng.judge.stack.service.TaskEventMaintainService;
+import com.dwarfeng.judge.stack.service.VisualizeDataMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -42,6 +35,9 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
     private final JudgementDao judgementDao;
     private final JudgementCache judgementCache;
 
+    private final VisualizeDataDao visualizeDataDao;
+    private final VisualizeDataCache visualizeDataCache;
+
     @Value("${cache.timeout.entity.task}")
     private long taskTimeout;
 
@@ -53,7 +49,9 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
             AnalysisDao analysisDao,
             AnalysisCache analysisCache,
             JudgementDao judgementDao,
-            JudgementCache judgementCache
+            JudgementCache judgementCache,
+            VisualizeDataDao visualizeDataDao,
+            VisualizeDataCache visualizeDataCache
     ) {
         this.taskDao = taskDao;
         this.taskCache = taskCache;
@@ -63,6 +61,8 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
         this.analysisCache = analysisCache;
         this.judgementDao = judgementDao;
         this.judgementCache = judgementCache;
+        this.visualizeDataDao = visualizeDataDao;
+        this.visualizeDataCache = visualizeDataCache;
     }
 
     @Override
@@ -118,6 +118,13 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
         ).stream().map(Judgement::getKey).collect(Collectors.toList());
         judgementDao.batchDelete(judgementKeys);
         judgementCache.batchDelete(judgementKeys);
+
+        // 删除 与 任务 相关的 可视化数据。
+        List<VisualizeDataKey> visualizeDataKeys = visualizeDataDao.lookup(
+                VisualizeDataMaintainService.CHILD_FOR_TASK, new Object[]{key}
+        ).stream().map(VisualizeData::getKey).collect(Collectors.toList());
+        visualizeDataDao.batchDelete(visualizeDataKeys);
+        visualizeDataCache.batchDelete(visualizeDataKeys);
 
         // 删除 任务 自身。
         taskDao.delete(key);

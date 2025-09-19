@@ -76,6 +76,11 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     SinkerVariableKey sinkerVariableKeyFromHibernate(HibernateSinkerVariableKey hibernateSinkerVariableKey);
 
+    HibernateVisualizeDataKey visualizeDataKeyToHibernate(VisualizeDataKey visualizeDataKey);
+
+    @InheritInverseConfiguration
+    VisualizeDataKey visualizeDataKeyFromHibernate(HibernateVisualizeDataKey hibernateVisualizeDataKey);
+
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
@@ -102,6 +107,7 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     AnalyserVariable analyserVariableFromHibernate(HibernateAnalyserVariable hibernateAnalyserVariable);
 
+    @Mapping(target = "visualizeDatas", ignore = true)
     @Mapping(target = "taskEvents", ignore = true)
     @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
@@ -170,6 +176,7 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     JudgerVariable judgerVariableFromHibernate(HibernateJudgerVariable hibernateJudgerVariable);
 
+    @Mapping(target = "visualizerInfos", ignore = true)
     @Mapping(target = "tasks", ignore = true)
     @Mapping(target = "sinkerRelations", ignore = true)
     @Mapping(target = "modifiedDatamark", ignore = true)
@@ -310,4 +317,28 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     ProviderSupport providerSupportFromHibernate(HibernateProviderSupport hibernateProviderSupport);
+
+    @Mapping(target = "taskLongId", ignore = true)
+    @Mapping(target = "task", ignore = true)
+    @Mapping(target = "perspectiveStringId", ignore = true)
+    HibernateVisualizeData visualizeDataToHibernate(VisualizeData visualizeData);
+
+    @InheritInverseConfiguration
+    VisualizeData visualizeDataFromHibernate(HibernateVisualizeData hibernateVisualizeData);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateVisualizerInfo visualizerInfoToHibernate(VisualizerInfo visualizerInfo);
+
+    @InheritInverseConfiguration
+    VisualizerInfo visualizerInfoFromHibernate(HibernateVisualizerInfo hibernateVisualizerInfo);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateVisualizerSupport visualizerSupportToHibernate(VisualizerSupport visualizerSupport);
+
+    @InheritInverseConfiguration
+    VisualizerSupport visualizerSupportFromHibernate(HibernateVisualizerSupport hibernateVisualizerSupport);
 }

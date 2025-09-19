@@ -77,6 +77,12 @@ public class ServiceConfiguration {
     private final ProviderInfoDao providerInfoDao;
     private final ProviderSupportCache providerSupportCache;
     private final ProviderSupportDao providerSupportDao;
+    private final VisualizerInfoDao visualizerInfoDao;
+    private final VisualizerInfoCache visualizerInfoCache;
+    private final VisualizerSupportDao visualizerSupportDao;
+    private final VisualizerSupportCache visualizerSupportCache;
+    private final VisualizeDataDao visualizeDataDao;
+    private final VisualizeDataCache visualizeDataCache;
 
     @Value("${cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
@@ -106,6 +112,12 @@ public class ServiceConfiguration {
     private long providerInfoTimeout;
     @Value("${cache.timeout.entity.provider_support}")
     private long providerSupportTimeout;
+    @Value("${cache.timeout.entity.visualizer_info}")
+    private long visualizerInfoTimeout;
+    @Value("${cache.timeout.entity.visualizer_support}")
+    private long visualizerSupportTimeout;
+    @Value("${cache.timeout.entity.visualize_data}")
+    private long visualizeDataTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -163,7 +175,13 @@ public class ServiceConfiguration {
             ProviderInfoCache providerInfoCache,
             ProviderInfoDao providerInfoDao,
             ProviderSupportCache providerSupportCache,
-            ProviderSupportDao providerSupportDao
+            ProviderSupportDao providerSupportDao,
+            VisualizerInfoDao visualizerInfoDao,
+            VisualizerInfoCache visualizerInfoCache,
+            VisualizerSupportDao visualizerSupportDao,
+            VisualizerSupportCache visualizerSupportCache,
+            VisualizeDataDao visualizeDataDao,
+            VisualizeDataCache visualizeDataCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -221,6 +239,12 @@ public class ServiceConfiguration {
         this.providerInfoDao = providerInfoDao;
         this.providerSupportCache = providerSupportCache;
         this.providerSupportDao = providerSupportDao;
+        this.visualizerInfoDao = visualizerInfoDao;
+        this.visualizerInfoCache = visualizerInfoCache;
+        this.visualizerSupportDao = visualizerSupportDao;
+        this.visualizerSupportCache = visualizerSupportCache;
+        this.visualizeDataDao = visualizeDataDao;
+        this.visualizeDataCache = visualizeDataCache;
     }
 
     @Bean
@@ -1009,6 +1033,96 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 providerSupportDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, VisualizerInfo> visualizerInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizerInfoDao,
+                visualizerInfoCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                visualizerInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<VisualizerInfo> visualizerInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizerInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<VisualizerInfo> visualizerInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizerInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, VisualizerSupport> visualizerSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizerSupportDao,
+                visualizerSupportCache,
+                new ExceptionKeyGenerator<>(),
+                visualizerSupportTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<VisualizerSupport> visualizerSupportDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizerSupportDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<VisualizerSupport> visualizerSupportDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizerSupportDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<VisualizeDataKey, VisualizeData> visualizeDataGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizeDataDao,
+                visualizeDataCache,
+                new ExceptionKeyGenerator<>(),
+                visualizeDataTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<VisualizeData> visualizeDataDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizeDataDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<VisualizeData> visualizeDataDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                visualizeDataDao
         );
     }
 }

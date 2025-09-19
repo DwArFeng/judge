@@ -156,6 +156,23 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     SinkerRelationKey sinkerRelationKeyFromWebInput(WebInputSinkerRelationKey webInputSinkerRelationKey);
 
+    FastJsonVisualizeDataKey visualizeDataKeyToFastJson(VisualizeDataKey visualizeDataKey);
+
+    @InheritInverseConfiguration
+    VisualizeDataKey visualizeDataKeyFromFastJson(FastJsonVisualizeDataKey fastJsonVisualizeDataKey);
+
+    JSFixedFastJsonVisualizeDataKey visualizeDataKeyToJSFixedFastJson(VisualizeDataKey visualizeDataKey);
+
+    @InheritInverseConfiguration
+    VisualizeDataKey visualizeDataKeyFromJSFixedFastJson(
+            JSFixedFastJsonVisualizeDataKey jSFixedFastJsonVisualizeDataKey
+    );
+
+    WebInputVisualizeDataKey visualizeDataKeyToWebInput(VisualizeDataKey visualizeDataKey);
+
+    @InheritInverseConfiguration
+    VisualizeDataKey visualizeDataKeyFromWebInput(WebInputVisualizeDataKey webInputVisualizeDataKey);
+
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     FastJsonAnalyserInfo analyserInfoToFastJson(AnalyserInfo analyserInfo);
 
@@ -462,6 +479,31 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     ProviderInfo providerInfoFromWebInput(WebInputProviderInfo webInputProviderInfo);
+
+    FastJsonVisualizeData visualizeDataToFastJson(VisualizeData visualizeData);
+
+    @InheritInverseConfiguration
+    VisualizeData visualizeDataFromFastJson(FastJsonVisualizeData fastJsonVisualizeData);
+
+    FastJsonVisualizerInfo visualizerInfoToFastJson(VisualizerInfo visualizerInfo);
+
+    @InheritInverseConfiguration
+    VisualizerInfo visualizerInfoFromFastJson(FastJsonVisualizerInfo fastJsonVisualizerInfo);
+
+    FastJsonVisualizerSupport visualizerSupportToFastJson(VisualizerSupport visualizerSupport);
+
+    @InheritInverseConfiguration
+    VisualizerSupport visualizerSupportFromFastJson(FastJsonVisualizerSupport fastJsonVisualizerSupport);
+
+    JSFixedFastJsonVisualizeData visualizeDataToJSFixedFastJson(VisualizeData visualizeData);
+
+    @InheritInverseConfiguration
+    VisualizeData visualizeDataFromJSFixedFastJson(JSFixedFastJsonVisualizeData jSFixedFastJsonVisualizeData);
+
+    JSFixedFastJsonVisualizerInfo visualizerInfoToJSFixedFastJson(VisualizerInfo visualizerInfo);
+
+    @InheritInverseConfiguration
+    VisualizerInfo visualizerInfoFromJSFixedFastJson(JSFixedFastJsonVisualizerInfo jSFixedFastJsonVisualizerInfo);
 
     // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(
