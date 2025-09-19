@@ -114,6 +114,14 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(353), "provider execution failed");
     public static final ServiceException.Code PROVIDER_SESSION_FAILED =
             new ServiceException.Code(offset(360), "provider session failed");
+    public static final ServiceException.Code VISUALIZER_FAILED =
+            new ServiceException.Code(offset(370), "visualizer failed");
+    public static final ServiceException.Code VISUALIZER_MAKE_FAILED =
+            new ServiceException.Code(offset(371), "visualizer make failed");
+    public static final ServiceException.Code VISUALIZER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(372), "visualizer execution failed");
+    public static final ServiceException.Code VISUALIZER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(373), "visualizer type unsupported");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -189,6 +197,10 @@ public final class ServiceExceptionCodes {
         PROVIDER_TYPE_UNSUPPORTED.setCode(offset(352));
         PROVIDER_EXECUTION_FAILED.setCode(offset(353));
         PROVIDER_SESSION_FAILED.setCode(offset(360));
+        VISUALIZER_FAILED.setCode(offset(370));
+        VISUALIZER_MAKE_FAILED.setCode(offset(371));
+        VISUALIZER_EXECUTION_FAILED.setCode(offset(372));
+        VISUALIZER_TYPE_UNSUPPORTED.setCode(offset(373));
     }
 
     private ServiceExceptionCodes() {

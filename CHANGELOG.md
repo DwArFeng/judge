@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 实现预设可视化器。
+  - com.dwarfeng.judge.impl.handler.visualizer.GroovyVisualizerRegistry。
+
+- 实现核心机制。
+  - 可视化机制。
+
 - 新建实体以及维护服务，并通过单元测试。
   - com.dwarfeng.judge.stack.bean.entity.VisualizeData。
   - com.dwarfeng.judge.stack.bean.entity.VisualizerInfo。
