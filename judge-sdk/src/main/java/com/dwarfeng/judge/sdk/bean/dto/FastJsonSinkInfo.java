@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class FastJsonSinkInfo implements Dto {
 
-    private static final long serialVersionUID = -1301306351309308751L;
+    private static final long serialVersionUID = 4540322352025692678L;
 
     public static FastJsonSinkInfo of(SinkInfo sinkInfo) {
         if (Objects.isNull(sinkInfo)) {
@@ -49,6 +49,9 @@ public class FastJsonSinkInfo implements Dto {
                     ).orElse(null),
                     Optional.ofNullable(sinkInfo.getJudgements()).map(
                             f -> f.stream().map(FastJsonJudgement::of).collect(Collectors.toList())
+                    ).orElse(null),
+                    Optional.ofNullable(sinkInfo.getVisualizeDatas()).map(
+                            f -> f.stream().map(FastJsonVisualizeData::of).collect(Collectors.toList())
                     ).orElse(null)
             );
         }
@@ -105,6 +108,9 @@ public class FastJsonSinkInfo implements Dto {
     @JSONField(name = "analysis_pictures", ordinal = 17)
     private List<FastJsonJudgement> judgements;
 
+    @JSONField(name = "visualize_datas", ordinal = 18)
+    private List<FastJsonVisualizeData> visualizeDatas;
+
     public FastJsonSinkInfo() {
     }
 
@@ -113,7 +119,7 @@ public class FastJsonSinkInfo implements Dto {
             int taskStatus, Date taskCreatedDate, Date taskStartedDate, Date taskEndedDate, Long taskDuration,
             Date taskShouldExpireDate, Date taskShouldDieDate, Date taskExpiredDate, Date taskDiedDate,
             String taskAnchorMessage, List<FastJsonTaskEvent> taskEvents, List<FastJsonAnalysis> analyses,
-            List<FastJsonJudgement> judgements
+            List<FastJsonJudgement> judgements, List<FastJsonVisualizeData> visualizeDatas
     ) {
         this.sectionKey = sectionKey;
         this.taskKey = taskKey;
@@ -132,6 +138,7 @@ public class FastJsonSinkInfo implements Dto {
         this.taskEvents = taskEvents;
         this.analyses = analyses;
         this.judgements = judgements;
+        this.visualizeDatas = visualizeDatas;
     }
 
     public Date getTaskShouldDieDate() {
@@ -270,6 +277,14 @@ public class FastJsonSinkInfo implements Dto {
         this.judgements = judgements;
     }
 
+    public List<FastJsonVisualizeData> getVisualizeDatas() {
+        return visualizeDatas;
+    }
+
+    public void setVisualizeDatas(List<FastJsonVisualizeData> visualizeDatas) {
+        this.visualizeDatas = visualizeDatas;
+    }
+
     @Override
     public String toString() {
         return "FastJsonSinkInfo{" +
@@ -290,6 +305,7 @@ public class FastJsonSinkInfo implements Dto {
                 ", taskEvents=" + taskEvents +
                 ", analyses=" + analyses +
                 ", judgements=" + judgements +
+                ", visualizeDatas=" + visualizeDatas +
                 '}';
     }
 
@@ -1070,6 +1086,60 @@ public class FastJsonSinkInfo implements Dto {
                     "dataId='" + dataId + '\'' +
                     ", value=" + value +
                     ", message='" + message + '\'' +
+                    '}';
+        }
+    }
+
+    public static class FastJsonVisualizeData implements Dto {
+
+        private static final long serialVersionUID = -7302383449627544746L;
+
+        public static FastJsonVisualizeData of(VisualizeData visualizeData) {
+            if (Objects.isNull(visualizeData)) {
+                return null;
+            } else {
+                return new FastJsonVisualizeData(
+                        visualizeData.getPerspectiveStringId(),
+                        visualizeData.getContent()
+                );
+            }
+        }
+
+        @JSONField(name = "perspective_string_id", ordinal = 1)
+        private String perspectiveStringId;
+
+        @JSONField(name = "content", ordinal = 2)
+        private String content;
+
+        public FastJsonVisualizeData() {
+        }
+
+        public FastJsonVisualizeData(String perspectiveStringId, String content) {
+            this.perspectiveStringId = perspectiveStringId;
+            this.content = content;
+        }
+
+        public String getPerspectiveStringId() {
+            return perspectiveStringId;
+        }
+
+        public void setPerspectiveStringId(String perspectiveStringId) {
+            this.perspectiveStringId = perspectiveStringId;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public String toString() {
+            return "FastJsonVisualizeData{" +
+                    "perspectiveStringId='" + perspectiveStringId + '\'' +
+                    ", content='" + content + '\'' +
                     '}';
         }
     }

@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化作业逻辑。
+  - 新增可视化数据下沉。
+
 - 实现预设可视化器。
   - com.dwarfeng.judge.impl.handler.visualizer.GroovyVisualizerRegistry。
 

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SinkInfo implements Dto {
 
-    private static final long serialVersionUID = -1305234402648272336L;
+    private static final long serialVersionUID = -3708631880200815710L;
 
     private LongIdKey sectionKey;
     private LongIdKey taskKey;
@@ -52,6 +52,7 @@ public class SinkInfo implements Dto {
     private List<TaskEvent> taskEvents;
     private List<Analysis> analyses;
     private List<Judgement> judgements;
+    private List<VisualizeData> visualizeDatas;
 
     public SinkInfo() {
     }
@@ -60,7 +61,8 @@ public class SinkInfo implements Dto {
             LongIdKey sectionKey, LongIdKey taskKey, String sectionName, String sectionRemark, int taskStatus,
             Date taskCreatedDate, Date taskStartedDate, Date taskEndedDate, Long taskDuration,
             Date taskShouldExpireDate, Date taskShouldDieDate, Date taskExpiredDate, Date taskDiedDate,
-            String taskAnchorMessage, List<TaskEvent> taskEvents, List<Analysis> analyses, List<Judgement> judgements
+            String taskAnchorMessage, List<TaskEvent> taskEvents, List<Analysis> analyses, List<Judgement> judgements,
+            List<VisualizeData> visualizeDatas
     ) {
         this.sectionKey = sectionKey;
         this.taskKey = taskKey;
@@ -79,6 +81,7 @@ public class SinkInfo implements Dto {
         this.taskEvents = taskEvents;
         this.analyses = analyses;
         this.judgements = judgements;
+        this.visualizeDatas = visualizeDatas;
     }
 
     public LongIdKey getSectionKey() {
@@ -217,6 +220,14 @@ public class SinkInfo implements Dto {
         this.judgements = judgements;
     }
 
+    public List<VisualizeData> getVisualizeDatas() {
+        return visualizeDatas;
+    }
+
+    public void setVisualizeDatas(List<VisualizeData> visualizeDatas) {
+        this.visualizeDatas = visualizeDatas;
+    }
+
     @Override
     public String toString() {
         return "SinkInfo{" +
@@ -237,6 +248,7 @@ public class SinkInfo implements Dto {
                 ", taskEvents=" + taskEvents +
                 ", analyses=" + analyses +
                 ", judgements=" + judgements +
+                ", visualizeDatas=" + visualizeDatas +
                 '}';
     }
 
@@ -933,6 +945,46 @@ public class SinkInfo implements Dto {
                     "dataId='" + dataId + '\'' +
                     ", value=" + value +
                     ", message='" + message + '\'' +
+                    '}';
+        }
+    }
+
+    public static class VisualizeData implements Dto {
+
+        private static final long serialVersionUID = 924021593902694952L;
+
+        private String perspectiveStringId;
+        private String content;
+
+        public VisualizeData() {
+        }
+
+        public VisualizeData(String perspectiveStringId, String content) {
+            this.perspectiveStringId = perspectiveStringId;
+            this.content = content;
+        }
+
+        public String getPerspectiveStringId() {
+            return perspectiveStringId;
+        }
+
+        public void setPerspectiveStringId(String perspectiveStringId) {
+            this.perspectiveStringId = perspectiveStringId;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public String toString() {
+            return "VisualizeData{" +
+                    "perspectiveStringId='" + perspectiveStringId + '\'' +
+                    ", content='" + content + '\'' +
                     '}';
         }
     }

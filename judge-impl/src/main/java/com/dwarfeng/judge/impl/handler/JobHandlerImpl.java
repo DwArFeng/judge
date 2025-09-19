@@ -53,11 +53,13 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisFileInfoMaintainService analysisFileInfoMaintainService;
     private final AnalysisFilePackMaintainService analysisFilePackMaintainService;
     private final AnalysisFilePackItemInfoMaintainService analysisFilePackItemInfoMaintainService;
+    private final VisualizeDataMaintainService visualizeDataMaintainService;
 
     private final TaskOperateHandler taskOperateHandler;
     private final TaskEventOperateHandler taskEventOperateHandler;
     private final JobLocalCacheHandler jobLocalCacheHandler;
     private final AnalyserVariableOperateHandler analyserVariableOperateHandler;
+    private final ProvideHandler provideHandler;
     private final JudgerVariableOperateHandler judgerVariableOperateHandler;
     private final AnalysisOperateHandler analysisOperateHandler;
     private final AnalysisPictureFileOperateHandler analysisPictureFileOperateHandler;
@@ -65,8 +67,8 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
     private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
     private final JudgementOperateHandler judgementOperateHandler;
+    private final VisualizeDataOperateHandler visualizeDataOperateHandler;
     private final SinkHandler sinkHandler;
-    private final ProvideHandler provideHandler;
 
     private final ThreadPoolTaskExecutor executor;
     private final ThreadPoolTaskScheduler scheduler;
@@ -89,10 +91,12 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisFileInfoMaintainService analysisFileInfoMaintainService,
             AnalysisFilePackMaintainService analysisFilePackMaintainService,
             AnalysisFilePackItemInfoMaintainService analysisFilePackItemInfoMaintainService,
+            VisualizeDataMaintainService visualizeDataMaintainService,
             TaskOperateHandler taskOperateHandler,
             TaskEventOperateHandler taskEventOperateHandler,
             JobLocalCacheHandler jobLocalCacheHandler,
             AnalyserVariableOperateHandler analyserVariableOperateHandler,
+            ProvideHandler provideHandler,
             JudgerVariableOperateHandler judgerVariableOperateHandler,
             AnalysisOperateHandler analysisOperateHandler,
             AnalysisPictureFileOperateHandler analysisPictureFileOperateHandler,
@@ -100,8 +104,8 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
             AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
             JudgementOperateHandler judgementOperateHandler,
+            VisualizeDataOperateHandler visualizeDataOperateHandler,
             SinkHandler sinkHandler,
-            ProvideHandler provideHandler,
             ThreadPoolTaskExecutor executor,
             ThreadPoolTaskScheduler scheduler,
             HandlerValidator handlerValidator
@@ -118,10 +122,12 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisFileInfoMaintainService = analysisFileInfoMaintainService;
         this.analysisFilePackMaintainService = analysisFilePackMaintainService;
         this.analysisFilePackItemInfoMaintainService = analysisFilePackItemInfoMaintainService;
+        this.visualizeDataMaintainService = visualizeDataMaintainService;
         this.taskOperateHandler = taskOperateHandler;
         this.taskEventOperateHandler = taskEventOperateHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
         this.analyserVariableOperateHandler = analyserVariableOperateHandler;
+        this.provideHandler = provideHandler;
         this.judgerVariableOperateHandler = judgerVariableOperateHandler;
         this.analysisOperateHandler = analysisOperateHandler;
         this.analysisPictureFileOperateHandler = analysisPictureFileOperateHandler;
@@ -129,8 +135,8 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
         this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
         this.judgementOperateHandler = judgementOperateHandler;
+        this.visualizeDataOperateHandler = visualizeDataOperateHandler;
         this.sinkHandler = sinkHandler;
-        this.provideHandler = provideHandler;
         this.executor = executor;
         this.scheduler = scheduler;
         this.handlerValidator = handlerValidator;
@@ -225,12 +231,16 @@ public class JobHandlerImpl implements JobHandler {
         Map<LongIdKey, Analyser> analyserMap;
         List<LongIdKey> judgerInfoKeys;
         Map<LongIdKey, Judger> judgerMap;
+        List<LongIdKey> visualizerInfoKeys;
+        Map<LongIdKey, Visualizer> visualizerMap;
         try {
             JobLocalCache jobLocalCache = jobLocalCacheHandler.get(sectionKey);
             analyserInfoKeys = jobLocalCache.getAnalyserInfoKeys();
             analyserMap = jobLocalCache.getAnalyserMap();
             judgerInfoKeys = jobLocalCache.getJudgerInfoKeys();
             judgerMap = jobLocalCache.getJudgerMap();
+            visualizerInfoKeys = jobLocalCache.getVisualizerInfoKeys();
+            visualizerMap = jobLocalCache.getVisualizerMap();
         } catch (Exception e) {
             // 取消心跳任务。
             beatTaskFuture.cancel(true);
@@ -263,6 +273,22 @@ public class JobHandlerImpl implements JobHandler {
         // 进行判断。
         try {
             judge(sectionKey, judgerInfoKeys, taskKey, judgerMap);
+        } catch (Exception e) {
+            // 取消心跳任务。
+            beatTaskFuture.cancel(true);
+            // 记录日志。
+            LOGGER.warn("作业执行失败, 任务主键: {}, 部件主键: {}, 异常信息如下: ", taskKey, sectionKey, e);
+            // 插入任务事件。
+            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
+            // 将任务状态置为失败。
+            taskOperateHandler.fail(new TaskFailInfo(taskKey));
+            // 结束方法。
+            return;
+        }
+
+        // 进行可视化。
+        try {
+            visualize(sectionKey, visualizerInfoKeys, taskKey, visualizerMap);
         } catch (Exception e) {
             // 取消心跳任务。
             beatTaskFuture.cancel(true);
@@ -362,19 +388,48 @@ public class JobHandlerImpl implements JobHandler {
         }
     }
 
+    private void visualize(
+            LongIdKey sectionKey, List<LongIdKey> visualizerInfoKeys, LongIdKey taskKey,
+            Map<LongIdKey, Visualizer> visualizerMap
+    ) throws Exception {
+        // 遍历 visualizerInfoKeys，按照先后顺序执行可视化。
+        for (LongIdKey visualizerInfoKey : visualizerInfoKeys) {
+            // 构造可视化器上下文。
+            Visualizer.Context visualizerContext = ctx.getBean(
+                    InternalVisualizerContext.class,
+                    sectionKey, visualizerInfoKey, taskKey,
+                    taskOperateHandler, taskEventOperateHandler,
+                    analysisOperateHandler, analysisPictureFileOperateHandler,
+                    analysisPicturePackItemFileOperateHandler, analysisFileFileOperateHandler,
+                    analysisFilePackItemFileOperateHandler, judgementOperateHandler, visualizeDataOperateHandler
+            );
+
+            // 获取可视化器。
+            Visualizer visualizer = visualizerMap.get(visualizerInfoKey);
+
+            // 创建可视化器执行器，并初始化。
+            Visualizer.Executor visualizerExecutor = visualizer.newExecutor();
+            visualizerExecutor.init(visualizerContext);
+
+            // 调用可视化器执行器的可视化方法。
+            visualizerExecutor.analyse();
+        }
+    }
+
     private void sink(LongIdKey sectionKey, LongIdKey taskKey) throws Exception {
         Section section = sectionMaintainService.get(sectionKey);
         Task task = taskMaintainService.get(taskKey);
         List<SinkInfo.TaskEvent> taskEvents = lookupTaskEvents(taskKey);
         List<SinkInfo.Analysis> analyses = lookupAnalyses(taskKey);
         List<SinkInfo.Judgement> judgements = lookupJudgements(taskKey);
+        List<SinkInfo.VisualizeData> visualizeDatas = lookupVisualizeDatas(taskKey);
         SinkInfo sinkInfo = new SinkInfo(
                 sectionKey, taskKey,
                 section.getName(), section.getRemark(),
                 task.getStatus(), task.getCreatedDate(), task.getStartedDate(), task.getEndedDate(), task.getDuration(),
                 task.getShouldExpireDate(), task.getShouldDieDate(), task.getExpiredDate(), task.getDiedDate(),
                 task.getAnchorMessage(),
-                taskEvents, analyses, judgements
+                taskEvents, analyses, judgements, visualizeDatas
         );
         sinkHandler.sink(sinkInfo);
     }
@@ -506,6 +561,19 @@ public class JobHandlerImpl implements JobHandler {
             ));
         }
         return sinkInfoJudgements;
+    }
+
+    private List<SinkInfo.VisualizeData> lookupVisualizeDatas(LongIdKey taskKey) throws Exception {
+        List<VisualizeData> visualizeDatas = visualizeDataMaintainService.lookupAsList(
+                VisualizeDataMaintainService.CHILD_FOR_TASK, new Object[]{taskKey}
+        );
+        List<SinkInfo.VisualizeData> sinkInfoVisualizeDatas = new ArrayList<>();
+        for (VisualizeData visualizeData : visualizeDatas) {
+            sinkInfoVisualizeDatas.add(new SinkInfo.VisualizeData(
+                    visualizeData.getKey().getPerspectiveStringId(), visualizeData.getContent()
+            ));
+        }
+        return sinkInfoVisualizeDatas;
     }
 
     /**
@@ -932,6 +1000,180 @@ public class JobHandlerImpl implements JobHandler {
                     ", analysisFileFileOperateHandler=" + analysisFileFileOperateHandler +
                     ", analysisFilePackItemFileOperateHandler=" + analysisFilePackItemFileOperateHandler +
                     ", judgementOperateHandler=" + judgementOperateHandler +
+                    '}';
+        }
+    }
+
+    /**
+     * 可视化器上下文的内部实现。
+     *
+     * @author DwArFeng
+     * @since 2.2.0
+     */
+    @Component
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public static class InternalVisualizerContext implements Visualizer.Context {
+
+        private final LongIdKey sectionKey;
+        private final LongIdKey visualizerInfoKey;
+        private final LongIdKey taskKey;
+
+        private final TaskOperateHandler taskOperateHandler;
+        private final TaskEventOperateHandler taskEventOperateHandler;
+        private final AnalysisOperateHandler analysisOperateHandler;
+        private final AnalysisPictureFileOperateHandler analysisPictureFileOperateHandler;
+        private final AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler;
+        private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
+        private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
+        private final JudgementOperateHandler judgementOperateHandler;
+        private final VisualizeDataOperateHandler visualizeDataOperateHandler;
+
+        public InternalVisualizerContext(
+                LongIdKey sectionKey,
+                LongIdKey visualizerInfoKey,
+                LongIdKey taskKey,
+                TaskOperateHandler taskOperateHandler,
+                TaskEventOperateHandler taskEventOperateHandler,
+                AnalysisOperateHandler analysisOperateHandler,
+                AnalysisPictureFileOperateHandler analysisPictureFileOperateHandler,
+                AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler,
+                AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
+                AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
+                JudgementOperateHandler judgementOperateHandler,
+                VisualizeDataOperateHandler visualizeDataOperateHandler
+        ) {
+            this.sectionKey = sectionKey;
+            this.visualizerInfoKey = visualizerInfoKey;
+            this.taskKey = taskKey;
+            this.taskOperateHandler = taskOperateHandler;
+            this.taskEventOperateHandler = taskEventOperateHandler;
+            this.analysisOperateHandler = analysisOperateHandler;
+            this.analysisPictureFileOperateHandler = analysisPictureFileOperateHandler;
+            this.analysisPicturePackItemFileOperateHandler = analysisPicturePackItemFileOperateHandler;
+            this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
+            this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
+            this.judgementOperateHandler = judgementOperateHandler;
+            this.visualizeDataOperateHandler = visualizeDataOperateHandler;
+        }
+
+        @Override
+        public LongIdKey getSectionKey() {
+            return sectionKey;
+        }
+
+        @Override
+        public LongIdKey getVisualizerInfoKey() {
+            return visualizerInfoKey;
+        }
+
+        @Override
+        public LongIdKey getTaskKey() {
+            return taskKey;
+        }
+
+        @Override
+        public void updateTaskModal(TaskUpdateModalInfo info) throws Exception {
+            taskOperateHandler.updateModal(info);
+        }
+
+        @Override
+        public void createTaskEvent(TaskEventCreateInfo info) throws Exception {
+            taskEventOperateHandler.create(info);
+        }
+
+        @Nullable
+        @Override
+        public AnalysisInspectResult inspectAnalysis(AnalysisInspectInfo info) throws HandlerException {
+            return analysisOperateHandler.inspect(info);
+        }
+
+        @Override
+        public AnalysisPictureFile downloadPictureFile(AnalysisPictureFileDownloadInfo info) throws HandlerException {
+            return analysisPictureFileOperateHandler.downloadFile(info);
+        }
+
+        @Override
+        public AnalysisPictureFileStream downloadPictureFileStream(AnalysisPictureFileStreamDownloadInfo info)
+                throws HandlerException {
+            return analysisPictureFileOperateHandler.downloadFileStream(info);
+        }
+
+        @Override
+        public AnalysisPictureThumbnail downloadPictureThumbnail(AnalysisPictureThumbnailDownloadInfo info)
+                throws HandlerException {
+            return analysisPictureFileOperateHandler.downloadThumbnail(info);
+        }
+
+        @Override
+        public AnalysisPicturePackItemFile downloadPicturePackItemFile(AnalysisPicturePackItemFileDownloadInfo info)
+                throws HandlerException {
+            return analysisPicturePackItemFileOperateHandler.downloadFile(info);
+        }
+
+        @Override
+        public AnalysisPicturePackItemFileStream downloadPicturePackItemFileStream(
+                AnalysisPicturePackItemFileStreamDownloadInfo info
+        ) throws HandlerException {
+            return analysisPicturePackItemFileOperateHandler.downloadFileStream(info);
+        }
+
+        @Override
+        public AnalysisPicturePackItemThumbnail downloadPicturePackItemThumbnail(
+                AnalysisPicturePackItemThumbnailDownloadInfo info
+        ) throws HandlerException {
+            return analysisPicturePackItemFileOperateHandler.downloadThumbnail(info);
+        }
+
+        @Override
+        public AnalysisFileFile downloadFileFile(AnalysisFileFileDownloadInfo info) throws HandlerException {
+            return analysisFileFileOperateHandler.downloadFile(info);
+        }
+
+        @Override
+        public AnalysisFileFileStream downloadFileFileStream(AnalysisFileFileStreamDownloadInfo info)
+                throws HandlerException {
+            return analysisFileFileOperateHandler.downloadFileStream(info);
+        }
+
+        @Override
+        public AnalysisFilePackItemFile downloadFilePackItemFile(AnalysisFilePackItemFileDownloadInfo info)
+                throws HandlerException {
+            return analysisFilePackItemFileOperateHandler.downloadFile(info);
+        }
+
+        @Override
+        public AnalysisFilePackItemFileStream downloadFilePackItemFileStream(
+                AnalysisFilePackItemFileStreamDownloadInfo info
+        ) throws HandlerException {
+            return analysisFilePackItemFileOperateHandler.downloadFileStream(info);
+        }
+
+        @Nullable
+        @Override
+        public JudgementInspectResult inspectJudgement(JudgementInspectInfo info) throws HandlerException {
+            return judgementOperateHandler.inspect(info);
+        }
+
+        @Override
+        public void upsertVisualizeData(VisualizeDataUpsertInfo info) throws HandlerException {
+            visualizeDataOperateHandler.upsert(info);
+        }
+
+        @Override
+        public String toString() {
+            return "InternalVisualizerContext{" +
+                    "sectionKey=" + sectionKey +
+                    ", visualizerInfoKey=" + visualizerInfoKey +
+                    ", taskKey=" + taskKey +
+                    ", taskOperateHandler=" + taskOperateHandler +
+                    ", taskEventOperateHandler=" + taskEventOperateHandler +
+                    ", analysisOperateHandler=" + analysisOperateHandler +
+                    ", analysisPictureFileOperateHandler=" + analysisPictureFileOperateHandler +
+                    ", analysisPicturePackItemFileOperateHandler=" + analysisPicturePackItemFileOperateHandler +
+                    ", analysisFileFileOperateHandler=" + analysisFileFileOperateHandler +
+                    ", analysisFilePackItemFileOperateHandler=" + analysisFilePackItemFileOperateHandler +
+                    ", judgementOperateHandler=" + judgementOperateHandler +
+                    ", visualizeDataOperateHandler=" + visualizeDataOperateHandler +
                     '}';
         }
     }

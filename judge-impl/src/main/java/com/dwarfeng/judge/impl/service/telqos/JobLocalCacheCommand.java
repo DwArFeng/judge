@@ -2,8 +2,10 @@ package com.dwarfeng.judge.impl.service.telqos;
 
 import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
+import com.dwarfeng.judge.stack.bean.entity.VisualizerInfo;
 import com.dwarfeng.judge.stack.handler.Analyser;
 import com.dwarfeng.judge.stack.handler.Judger;
+import com.dwarfeng.judge.stack.handler.Visualizer;
 import com.dwarfeng.judge.stack.service.JobQosService;
 import com.dwarfeng.judge.stack.struct.JobLocalCache;
 import com.dwarfeng.springtelqos.node.config.TelqosCommand;
@@ -130,6 +132,18 @@ public class JobLocalCacheCommand extends CliCommand {
             Judger judger = jobLocalCache.getJudgerMap().get(judgerInfoKey);
             context.sendMessage(String.format("  %-3d %s", index, judgerInfo));
             context.sendMessage(String.format("  %-3d %s", index, judger));
+        }
+        context.sendMessage("visualizers:");
+        index = 0;
+        for (LongIdKey visualizerInfoKey : jobLocalCache.getVisualizerInfoKeys()) {
+            if (index != 0) {
+                context.sendMessage("");
+            }
+            index++;
+            VisualizerInfo visualizerInfo = jobLocalCache.getVisualizerInfoMap().get(visualizerInfoKey);
+            Visualizer visualizer = jobLocalCache.getVisualizerMap().get(visualizerInfoKey);
+            context.sendMessage(String.format("  %-3d %s", index, visualizerInfo));
+            context.sendMessage(String.format("  %-3d %s", index, visualizer));
         }
     }
 }
