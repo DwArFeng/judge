@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * 提供器信息维护服务。
  *
  * @author wangyc
- * @since 2.1.0
+ * @since 2.1.0-beta
  */
 public interface ProviderInfoMaintainService extends BatchCrudService<LongIdKey, ProviderInfo>,
         EntireLookupService<ProviderInfo>, PresetLookupService<ProviderInfo> {

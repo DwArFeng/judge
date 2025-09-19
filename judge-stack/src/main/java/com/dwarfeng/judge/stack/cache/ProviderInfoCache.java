@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
  * 提供器信息缓存。
  *
  * @author wangyc
- * @since 2.1.0
+ * @since 2.1.0-beta
  */
 public interface ProviderInfoCache extends BatchBaseCache<LongIdKey, ProviderInfo> {
 }

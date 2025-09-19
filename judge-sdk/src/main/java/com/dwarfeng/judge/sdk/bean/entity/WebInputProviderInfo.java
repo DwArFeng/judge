@@ -14,7 +14,7 @@ import java.util.Objects;
  * WebInput 提供器信息。
  *
  * @author wangyc
- * @since 2.1.0
+ * @since 2.1.0-beta
  */
 public class WebInputProviderInfo implements Bean {
 

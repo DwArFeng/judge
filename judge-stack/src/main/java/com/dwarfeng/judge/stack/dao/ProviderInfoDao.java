@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * 提供器信息数据访问层。
  *
  * @author wangyc
- * @since 2.1.0
+ * @since 2.1.0-beta
  */
 public interface ProviderInfoDao extends BatchBaseDao<LongIdKey, ProviderInfo>, EntireLookupDao<ProviderInfo>,
         PresetLookupDao<ProviderInfo> {

@@ -11,7 +11,7 @@ import java.util.Objects;
  * FastJson 提供器支持。
  *
  * @author wangyc
- * @since 2.1.0
+ * @since 2.1.0-beta
  */
 public class FastJsonProviderSupport implements Bean {
 

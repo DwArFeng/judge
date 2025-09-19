@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  * 提供器信息。
  *
  * @author wangyc
- * @since 2.1.0
+ * @since 2.1.0-beta
  */
 public class ProviderInfo implements Entity<LongIdKey> {
 
