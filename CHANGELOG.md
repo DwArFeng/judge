@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh-CN/Introduction.md。
+
 - 增加部分实体维护服务的预设查询。
   - com.dwarfeng.judge.stack.service.TaskMaintainService.TO_PURGED。
   - com.dwarfeng.judge.stack.service.ProviderSupportMaintainService.ID_LIKE。
