@@ -9,13 +9,23 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
+
+    private static final Set<Integer> TO_PURGED_STATUS_SET;
+
+    static {
+        Set<Integer> TO_PURGED_STATUS_SET_DEJA_VU = new HashSet<>();
+        TO_PURGED_STATUS_SET_DEJA_VU.add(Constants.TASK_STATUS_FINISHED);
+        TO_PURGED_STATUS_SET_DEJA_VU.add(Constants.TASK_STATUS_FAILED);
+        TO_PURGED_STATUS_SET_DEJA_VU.add(Constants.TASK_STATUS_EXPIRED);
+        TO_PURGED_STATUS_SET_DEJA_VU.add(Constants.TASK_STATUS_DIED);
+        TO_PURGED_STATUS_SET = Collections.unmodifiableSet(
+                TO_PURGED_STATUS_SET_DEJA_VU
+        );
+    }
 
     @Override
     public void makeCriteria(DetachedCriteria criteria, String preset, Object[] objs) {
@@ -34,6 +44,9 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
                 break;
             case TaskMaintainService.CHILD_FOR_SECTION_CREATE_DATE_DESC:
                 childForSectionCreateDateDesc(criteria, objs);
+                break;
+            case TaskMaintainService.TO_PURGED:
+                toPurged(criteria, objs);
                 break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
@@ -93,6 +106,17 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
                 criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
             }
             criteria.addOrder(Order.desc("createDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void toPurged(DetachedCriteria criteria, Object[] objs) {
+        try {
+            criteria.add(Restrictions.in("status", TO_PURGED_STATUS_SET));
+            Date date = (Date) objs[0];
+            criteria.add(Restrictions.lt("endedDate", date));
+            criteria.addOrder(Order.asc("endedDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }

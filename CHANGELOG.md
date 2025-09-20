@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 增加部分实体维护服务的预设查询。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.TO_PURGED。
   - com.dwarfeng.judge.stack.service.ProviderSupportMaintainService.ID_LIKE。
   - com.dwarfeng.judge.stack.service.ProviderSupportMaintainService.LABEL_LIKE。
 
