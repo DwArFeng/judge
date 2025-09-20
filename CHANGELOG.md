@@ -8,6 +8,9 @@
 
 ### Bug 修复
 
+- 作业逻辑 bug 修复。
+  - 修复作业完成后未取消心跳任务的 bug。
+
 - 修复部分 Hibernate 实体中的字段缺失 bug。
   - com.dwarfeng.judge.impl.bean.entity.HibernateJudgerInfo。
 

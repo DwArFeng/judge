@@ -319,6 +319,8 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
+        // 取消心跳任务。
+        beatTaskFuture.cancel(true);
         // 将任务状态置为完成。
         taskOperateHandler.finish(new TaskFinishInfo(taskKey));
     }
