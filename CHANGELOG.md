@@ -7,6 +7,8 @@
 - 更新 README.md。
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/BatchScripts.md。
+  - docs/wiki/zh-CN/ShellScripts.md。
   - docs/wiki/zh-CN/VersionBlacklist.md。
   - docs/wiki/zh-CN/Introduction.md。
 

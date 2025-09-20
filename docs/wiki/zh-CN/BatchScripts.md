@@ -59,6 +59,24 @@ SET java_jmxremote_opts=^
 -Dcom.sun.management.jmxremote.ssl=false
 ```
 
+#### java_awt_headless_opts
+
+java_awt_headless_opts 是本项目的 AWT Headless 选项，默认值为：
+
+```bat
+SET java_awt_headless_opts=-Djava.awt.headless=true
+```
+
+该脚本默认本服务将会运行在服务器中，即处于 Headless 模式下。如果您需要关闭 Headless 模式，可以修改此选项。
+
+您可以通过该选项注释中的提示，修改该选项的值，以关闭 Headless 模式。
+
+关闭 Headless 模式的示例：
+
+```bat
+SET java_awt_headless_opts=
+```
+
 ### 关闭程序的技巧
 
 与 Linux 系统不同，本项目在 Windows 系统中，默认是以命令提示符的方式在前台运行的。

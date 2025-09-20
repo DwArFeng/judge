@@ -1,17 +1,17 @@
 # Shell Scripts - Shell 脚本
 
-## statistics-start.sh
+## judge-start.sh
 
 ### 简介
 
-statistics-start.sh 是本项目的启动脚本，用于启动本项目。 您可以调整脚本中的参数，以适应您的需求。
+judge-start.sh 是本项目的启动脚本，用于启动本项目。 您可以调整脚本中的参数，以适应您的需求。
 
 可调整的脚步参数包括：
 
 - JVM 内存选项。
 - JMX 远程选项。
 
-脚本执行后，将会以 nohup 方式启动本项目，并将 PID 写入 statistics.pid 文件中。
+脚本执行后，将会以 nohup 方式启动本项目，并将 PID 写入 judge.pid 文件中。
 
 ### 可配置变量
 
@@ -53,6 +53,24 @@ java_jmxremote_opts="\
 -Dcom.sun.management.jmxremote.port=23000 \
 -Dcom.sun.management.jmxremote.authenticate=false \
 -Dcom.sun.management.jmxremote.ssl=false"
+```
+
+#### java_awt_headless_opts
+
+java_awt_headless_opts 是本项目的 AWT Headless 选项，默认值为：
+
+```bash
+java_awt_headless_opts="-Djava.awt.headless=true"
+```
+
+该脚本默认本服务将会运行在服务器中，即处于 Headless 模式下。如果您需要关闭 Headless 模式，可以修改此选项。
+
+您可以通过该选项注释中的提示，修改该选项的值，以关闭 Headless 模式。
+
+关闭 Headless 模式的示例：
+
+```bash
+java_awt_headless_opts=""
 ```
 
 ### 调试技巧
