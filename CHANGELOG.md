@@ -7,6 +7,7 @@
 - 更新 README.md。
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
   - docs/wiki/zh-CN/Introduction.md。
 
 - 增加部分实体维护服务的预设查询。
