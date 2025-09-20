@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 Hibernate 实体中的字段缺失 bug。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateJudgerInfo。
 
 ### 功能移除
 

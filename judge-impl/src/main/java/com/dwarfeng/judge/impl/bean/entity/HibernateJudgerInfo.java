@@ -23,7 +23,7 @@ import java.util.Set;
 @EntityListeners(DatamarkEntityListener.class)
 public class HibernateJudgerInfo implements Bean {
 
-    private static final long serialVersionUID = 7937994053919038008L;
+    private static final long serialVersionUID = 8093084490736735318L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -35,6 +35,9 @@ public class HibernateJudgerInfo implements Bean {
     private Long sectionLongId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    @Column(name = "column_index", nullable = false)
+    private int index;
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
@@ -95,7 +98,6 @@ public class HibernateJudgerInfo implements Bean {
     }
 
     // -----------------------------------------------------------常规属性区-----------------------------------------------------------
-
     public Long getLongId() {
         return longId;
     }
@@ -110,6 +112,14 @@ public class HibernateJudgerInfo implements Bean {
 
     public void setSectionLongId(Long sectionLongId) {
         this.sectionLongId = sectionLongId;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public boolean isEnabled() {
@@ -181,6 +191,7 @@ public class HibernateJudgerInfo implements Bean {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
                 "sectionLongId = " + sectionLongId + ", " +
+                "index = " + index + ", " +
                 "enabled = " + enabled + ", " +
                 "type = " + type + ", " +
                 "param = " + param + ", " +
