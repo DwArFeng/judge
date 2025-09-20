@@ -31,6 +31,7 @@
   - `ProviderSession.provide` -> `ProviderSession.lookupData`。
 
 - 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.PurgeCommand。
   - com.dwarfeng.judge.impl.service.telqos.ConsumeCommand。
 
 ### Bug 修复
