@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.sdk.handler;
 
+import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
@@ -86,4 +87,21 @@ public interface Pusher {
      * @since 2.1.0-beta
      */
     void provideReset() throws HandlerException;
+
+    /**
+     * 清除完成时执行的调度。
+     *
+     * @param result 清除结束结果。
+     * @throws HandlerException 处理器异常。
+     * @since 2.2.0
+     */
+    void purgeFinished(PurgeFinishedResult result) throws HandlerException;
+
+    /**
+     * 清除失败时执行的调度。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.2.0
+     */
+    void purgeFailed() throws HandlerException;
 }

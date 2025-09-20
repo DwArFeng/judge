@@ -3,6 +3,7 @@ package com.dwarfeng.judge.impl.handler.pusher;
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * 将信息输出至日志的推送器。
@@ -101,6 +104,20 @@ public class LogPusher extends AbstractPusher {
     @Override
     public void provideReset() throws HandlerException {
         String title = "提供功能重置:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
+    }
+
+    @Override
+    public void purgeFinished(PurgeFinishedResult result) throws HandlerException {
+        String title = "清除完成事件:";
+        String message = Objects.toString(result);
+        logData(title, message);
+    }
+
+    @Override
+    public void purgeFailed() throws HandlerException {
+        String title = "清除失败事件:";
         String message = StringUtils.EMPTY;
         logData(title, message);
     }

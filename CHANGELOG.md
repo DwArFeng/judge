@@ -17,6 +17,7 @@
   - com.dwarfeng.judge.impl.handler.visualizer.GroovyVisualizerRegistry。
 
 - 实现核心机制。
+  - 清除机制。
   - 可视化机制。
 
 - 新建实体以及维护服务，并通过单元测试。

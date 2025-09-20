@@ -1,8 +1,10 @@
 package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
+import com.dwarfeng.judge.sdk.bean.dto.FastJsonPurgeFinishedResult;
 import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -52,6 +54,10 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String sinkResetTopic;
     @Value("${pusher.kafka.native.topic.provide_reset}")
     private String provideResetTopic;
+    @Value("${pusher.kafka.native.topic.purge_finished}")
+    private String purgeFinishedTopic;
+    @Value("${pusher.kafka.native.topic.purge_failed}")
+    private String purgeFailedTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
@@ -102,6 +108,16 @@ public class NativeKafkaPusher extends AbstractPusher {
     }
 
     @Override
+    public void purgeFinished(PurgeFinishedResult result) {
+        kafkaTemplate.send(purgeFinishedTopic, JSON.toJSONString(FastJsonPurgeFinishedResult.of(result)));
+    }
+
+    @Override
+    public void purgeFailed() {
+        kafkaTemplate.send(purgeFailedTopic, StringUtils.EMPTY);
+    }
+
+    @Override
     public String toString() {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
@@ -111,6 +127,11 @@ public class NativeKafkaPusher extends AbstractPusher {
                 ", taskDiedTopic='" + taskDiedTopic + '\'' +
                 ", jobResetTopic='" + jobResetTopic + '\'' +
                 ", superviseResetTopic='" + superviseResetTopic + '\'' +
+                ", sinkResetTopic='" + sinkResetTopic + '\'' +
+                ", provideResetTopic='" + provideResetTopic + '\'' +
+                ", purgeFinishedTopic='" + purgeFinishedTopic + '\'' +
+                ", purgeFailedTopic='" + purgeFailedTopic + '\'' +
+                ", pusherType='" + pusherType + '\'' +
                 '}';
     }
 

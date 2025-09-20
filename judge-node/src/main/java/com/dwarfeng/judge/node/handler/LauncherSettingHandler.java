@@ -41,6 +41,11 @@ public class LauncherSettingHandler implements Handler {
     @Value("${launcher.enable_supervise_delay}")
     private long enableSuperviseDelay;
 
+    @Value("${launcher.online_purge_delay}")
+    private long onlinePurgeDelay;
+    @Value("${launcher.enable_purge_delay}")
+    private long enablePurgeDelay;
+
     public boolean isResetAnalyserSupport() {
         return resetAnalyserSupport;
     }
@@ -89,6 +94,14 @@ public class LauncherSettingHandler implements Handler {
         return enableSuperviseDelay;
     }
 
+    public long getOnlinePurgeDelay() {
+        return onlinePurgeDelay;
+    }
+
+    public long getEnablePurgeDelay() {
+        return enablePurgeDelay;
+    }
+
     @Override
     public String toString() {
         return "LauncherSettingHandler{" +
@@ -104,6 +117,8 @@ public class LauncherSettingHandler implements Handler {
                 ", startReceiveDelay=" + startReceiveDelay +
                 ", onlineSuperviseDelay=" + onlineSuperviseDelay +
                 ", enableSuperviseDelay=" + enableSuperviseDelay +
+                ", onlinePurgeDelay=" + onlinePurgeDelay +
+                ", enablePurgeDelay=" + enablePurgeDelay +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.handler.Pusher;
+import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -71,6 +72,16 @@ public class PushHandlerImpl implements PushHandler {
     @Override
     public void provideReset() throws HandlerException {
         pusher.provideReset();
+    }
+
+    @Override
+    public void purgeFinished(PurgeFinishedResult result) throws HandlerException {
+        pusher.purgeFinished(result);
+    }
+
+    @Override
+    public void purgeFailed() throws HandlerException {
+        pusher.purgeFailed();
     }
 
     @Override
