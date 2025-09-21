@@ -17,7 +17,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
  *     <li>向判断器变量中写入值，键：groovy，值：UUID。</li>
  *     <li>更新任务模态，anchorMessage：groovy。</li>
  *     <li>插入任务事件，message：groovy。</li>
- *     <li>插入判断结果，键：groovy，判断值：符合标准高斯分布的随机数，判断消息: 符合标准高斯分布的随机数。</li>
+ *     <li>插入判断结果，键：groovy，判断值：介于 [0.0, 1.0] 之间的随机双精度浮点数，判断消息: 示例消息。</li>
  * </ol>
  *
  * @author Dwarfeng
@@ -47,7 +47,7 @@ class ExampleJudgerProcessor implements Processor {
 
         // 插入判断结果，键：groovy，判断值：符合标准高斯分布的随机数，判断消息: 符合标准高斯分布的随机数。
         context.upsertJudgement(new JudgementUpsertInfo(
-                taskKey, "groovy", new Random().nextGaussian(), "符合标准高斯分布的随机数"
+                taskKey, "groovy", new Random().nextDouble(), "示例消息"
         ))
     }
 }

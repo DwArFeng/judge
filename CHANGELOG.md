@@ -8,6 +8,9 @@
 
 ### Bug 修复
 
+- 修正部分判断器中的逻辑错误。
+  - 修正 `groovy` 判断器 `groovy/ExampleJudgerProcessor.groovy` 中生成的判断值越界的问题。
+
 - 作业逻辑 bug 修复。
   - 修复作业完成后未取消心跳任务的 bug。
 
