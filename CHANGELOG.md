@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- 优化部分本地缓存处理器的存在性判定逻辑，以规避潜在的非使能实体抓取问题。
+  - com.dwarfeng.judge.impl.handler.DriveLocalCacheHandlerImpl。
+  - com.dwarfeng.judge.impl.handler.JobLocalCacheHandlerImpl。
+  - com.dwarfeng.judge.impl.handler.ProviderLocalCacheHandlerImpl。
+  - com.dwarfeng.judge.impl.handler.SectionBindingLocalCacheHandlerImpl。
+  - com.dwarfeng.judge.impl.handler.SinkerBindingLocalCacheHandlerImpl。
+  - com.dwarfeng.judge.impl.handler.SinkerLocalCacheHandlerImpl。
+
 - 优化部分本地缓存处理器的抓取逻辑，以规避潜在的非使能实体抓取问题。
   - com.dwarfeng.judge.impl.handler.SectionBindingLocalCacheHandlerImpl。
   - com.dwarfeng.judge.impl.handler.SinkerBindingLocalCacheHandlerImpl。

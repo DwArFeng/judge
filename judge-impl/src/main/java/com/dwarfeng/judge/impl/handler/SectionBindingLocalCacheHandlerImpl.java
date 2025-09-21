@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.stack.bean.dto.SinkerMetaInspectInfo;
 import com.dwarfeng.judge.stack.bean.dto.SinkerMetaInspectResult;
+import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.bean.entity.SinkerRelation;
 import com.dwarfeng.judge.stack.handler.SectionBindingLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.SinkerMetaOperateHandler;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -78,8 +80,12 @@ public class SectionBindingLocalCacheHandlerImpl implements SectionBindingLocalC
         @Transactional(
                 transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
         )
-        public boolean exists(LongIdKey sectionKey) throws Exception {
-            return sectionMaintainService.exists(sectionKey);
+        public boolean exists(LongIdKey key) throws Exception {
+            Section section = sectionMaintainService.getIfExists(key);
+            if (Objects.isNull(section)) {
+                return false;
+            }
+            return section.isEnabled();
         }
 
         @SuppressWarnings("DuplicatedCode")
@@ -88,13 +94,13 @@ public class SectionBindingLocalCacheHandlerImpl implements SectionBindingLocalC
         @Transactional(
                 transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
         )
-        public SectionBinding fetch(LongIdKey sectionKey) throws Exception {
+        public SectionBinding fetch(LongIdKey key) throws Exception {
             // 定义部件绑定对象需要的所有信息。
             Map<LongIdKey, Map<String, SinkerMetaInfo>> map = new LinkedHashMap<>();
 
             // 取所有使能的关联信息。
             List<SinkerRelation> sinkerRelations = sinkerRelationMaintainService.lookupAsList(
-                    SinkerRelationMaintainService.CHILD_FOR_SECTION_BINDING, new Object[]{sectionKey}
+                    SinkerRelationMaintainService.CHILD_FOR_SECTION_BINDING, new Object[]{key}
             );
 
             // 遍历所有的关联信息。
@@ -103,7 +109,7 @@ public class SectionBindingLocalCacheHandlerImpl implements SectionBindingLocalC
                 LongIdKey sinkerInfoKey = new LongIdKey(sinkerRelation.getKey().getSinkerLongId());
                 // 查询元数据。
                 SinkerMetaInspectResult inspectResult = sinkerMetaOperateHandler.inspect(
-                        new SinkerMetaInspectInfo(sectionKey, sinkerInfoKey)
+                        new SinkerMetaInspectInfo(key, sinkerInfoKey)
                 );
                 Map<String, SinkerMetaInfo> sinkerMateInfoMap = inspectResult.getMetaInfoMap().entrySet().stream()
                         .collect(Collectors.toMap(Map.Entry::getKey, entry -> new SinkerMetaInfo(

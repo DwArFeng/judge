@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class DriveLocalCacheHandlerImpl implements DriveLocalCacheHandler {
@@ -77,7 +78,11 @@ public class DriveLocalCacheHandlerImpl implements DriveLocalCacheHandler {
                 transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
         )
         public boolean exists(LongIdKey key) throws Exception {
-            return sectionMaintainService.exists(key);
+            Section section = sectionMaintainService.getIfExists(key);
+            if (Objects.isNull(section)) {
+                return false;
+            }
+            return section.isEnabled();
         }
 
         @Override

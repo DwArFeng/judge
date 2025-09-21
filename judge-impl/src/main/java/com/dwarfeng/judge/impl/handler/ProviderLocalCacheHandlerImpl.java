@@ -13,6 +13,8 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Component
 public class ProviderLocalCacheHandlerImpl implements ProviderLocalCacheHandler {
 
@@ -67,7 +69,11 @@ public class ProviderLocalCacheHandlerImpl implements ProviderLocalCacheHandler 
                 transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
         )
         public boolean exists(LongIdKey key) throws Exception {
-            return providerInfoMaintainService.exists(key);
+            ProviderInfo providerInfo = providerInfoMaintainService.getIfExists(key);
+            if (Objects.isNull(providerInfo)) {
+                return false;
+            }
+            return providerInfo.isEnabled();
         }
 
         @Override

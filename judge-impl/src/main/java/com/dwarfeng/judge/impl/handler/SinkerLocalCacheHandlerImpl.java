@@ -13,6 +13,8 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Component
 public class SinkerLocalCacheHandlerImpl implements SinkerLocalCacheHandler {
 
@@ -67,7 +69,11 @@ public class SinkerLocalCacheHandlerImpl implements SinkerLocalCacheHandler {
                 transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
         )
         public boolean exists(LongIdKey key) throws Exception {
-            return sinkerInfoMaintainService.exists(key);
+            SinkerInfo sinkerInfo = sinkerInfoMaintainService.getIfExists(key);
+            if (Objects.isNull(sinkerInfo)) {
+                return false;
+            }
+            return sinkerInfo.isEnabled();
         }
 
         @Override

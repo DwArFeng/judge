@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.stack.bean.dto.SinkerMetaInspectInfo;
 import com.dwarfeng.judge.stack.bean.dto.SinkerMetaInspectResult;
+import com.dwarfeng.judge.stack.bean.entity.SinkerInfo;
 import com.dwarfeng.judge.stack.bean.entity.SinkerRelation;
 import com.dwarfeng.judge.stack.handler.SinkerBindingLocalCacheHandler;
 import com.dwarfeng.judge.stack.handler.SinkerMetaOperateHandler;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -78,8 +80,12 @@ public class SinkerBindingLocalCacheHandlerImpl implements SinkerBindingLocalCac
         @Transactional(
                 transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
         )
-        public boolean exists(LongIdKey sinkerInfoKey) throws Exception {
-            return sinkerInfoMaintainService.exists(sinkerInfoKey);
+        public boolean exists(LongIdKey key) throws Exception {
+            SinkerInfo sinkerInfo = sinkerInfoMaintainService.getIfExists(key);
+            if (Objects.isNull(sinkerInfo)) {
+                return false;
+            }
+            return sinkerInfo.isEnabled();
         }
 
         @SuppressWarnings("DuplicatedCode")
@@ -88,14 +94,14 @@ public class SinkerBindingLocalCacheHandlerImpl implements SinkerBindingLocalCac
         @Transactional(
                 transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class
         )
-        public SinkerBinding fetch(LongIdKey sinkerInfoKey) throws Exception {
+        public SinkerBinding fetch(LongIdKey key) throws Exception {
             // 定义下沉器绑定对象需要的所有信息。
             Map<LongIdKey, Map<String, SinkerMetaInfo>> map = new LinkedHashMap<>();
 
             // 取所有使能的关联信息。
             List<SinkerRelation> sinkerRelations = sinkerRelationMaintainService.lookupAsList(
                     SinkerRelationMaintainService.CHILD_FOR_SINKER_INFO_BINDING,
-                    new Object[]{sinkerInfoKey}
+                    new Object[]{key}
             );
 
             // 遍历所有的关联信息。
@@ -104,7 +110,7 @@ public class SinkerBindingLocalCacheHandlerImpl implements SinkerBindingLocalCac
                 LongIdKey sectionKey = new LongIdKey(sinkerRelation.getKey().getSectionLongId());
                 // 查询元数据。
                 SinkerMetaInspectResult inspectResult = sinkerMetaOperateHandler.inspect(
-                        new SinkerMetaInspectInfo(sectionKey, sinkerInfoKey)
+                        new SinkerMetaInspectInfo(sectionKey, key)
                 );
                 Map<String, SinkerMetaInfo> sinkerMateInfoMap = inspectResult.getMetaInfoMap().entrySet().stream()
                         .collect(Collectors.toMap(Map.Entry::getKey, entry -> new SinkerMetaInfo(
