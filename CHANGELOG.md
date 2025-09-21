@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
+
 - 为提供器相关实体增加数据标记机制。
   - com.dwarfeng.judge.impl.bean.entity.HibernateProviderInfo。
 
