@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- 完善部分本地缓存处理器的文档注释。
+  - com.dwarfeng.judge.stack.handler.DriveLocalCacheHandler。
+  - com.dwarfeng.judge.stack.handler.JobLocalCacheHandler。
+  - com.dwarfeng.judge.stack.handler.ProviderLocalCacheHandler。
+  - com.dwarfeng.judge.stack.handler.SectionBindingLocalCacheHandler。
+  - com.dwarfeng.judge.stack.handler.SinkerBindingLocalCacheHandler。
+  - com.dwarfeng.judge.stack.handler.SinkerLocalCacheHandler。
+
 - 完善部分 struct 结构体的文档注释。
   - com.dwarfeng.judge.stack.struct.SectionBinding。
   - com.dwarfeng.judge.stack.struct.SinkerBinding。
