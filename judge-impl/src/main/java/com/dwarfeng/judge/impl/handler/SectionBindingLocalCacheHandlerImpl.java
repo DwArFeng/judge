@@ -94,7 +94,7 @@ public class SectionBindingLocalCacheHandlerImpl implements SectionBindingLocalC
 
             // 取所有使能的关联信息。
             List<SinkerRelation> sinkerRelations = sinkerRelationMaintainService.lookupAsList(
-                    SinkerRelationMaintainService.CHILD_FOR_SECTION_ENABLED, new Object[]{sectionKey}
+                    SinkerRelationMaintainService.CHILD_FOR_SECTION_BINDING, new Object[]{sectionKey}
             );
 
             // 遍历所有的关联信息。

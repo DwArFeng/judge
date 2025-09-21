@@ -94,7 +94,7 @@ public class SinkerBindingLocalCacheHandlerImpl implements SinkerBindingLocalCac
 
             // 取所有使能的关联信息。
             List<SinkerRelation> sinkerRelations = sinkerRelationMaintainService.lookupAsList(
-                    SinkerRelationMaintainService.CHILD_FOR_SINKER_INFO_ENABLED_SECTION_ENABLED,
+                    SinkerRelationMaintainService.CHILD_FOR_SINKER_INFO_BINDING,
                     new Object[]{sinkerInfoKey}
             );
 

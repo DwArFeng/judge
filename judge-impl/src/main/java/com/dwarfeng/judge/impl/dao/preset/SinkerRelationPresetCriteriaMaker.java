@@ -32,6 +32,12 @@ public class SinkerRelationPresetCriteriaMaker implements PresetCriteriaMaker {
             case SinkerRelationMaintainService.CHILD_FOR_SINKER_INFO_ENABLED_SECTION_ENABLED:
                 childForSinkerInfoEnabledSectionEnabled(criteria, objs);
                 break;
+            case SinkerRelationMaintainService.CHILD_FOR_SECTION_BINDING:
+                childForSectionBinding(criteria, objs);
+                break;
+            case SinkerRelationMaintainService.CHILD_FOR_SINKER_INFO_BINDING:
+                childForSinkerInfoBinding(criteria, objs);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
@@ -107,6 +113,42 @@ public class SinkerRelationPresetCriteriaMaker implements PresetCriteriaMaker {
             criteria.add(Restrictions.eq("enabled", true));
             criteria.createAlias("section", "s");
             criteria.add(Restrictions.eq("s.enabled", true));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void childForSectionBinding(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sectionLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
+            }
+            criteria.add(Restrictions.eq("enabled", true));
+            criteria.createAlias("section", "se");
+            criteria.add(Restrictions.eq("se.enabled", true));
+            criteria.createAlias("sinkerInfo", "si");
+            criteria.add(Restrictions.eq("si.enabled", true));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void childForSinkerInfoBinding(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("sinkerLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("sinkerLongId", longIdKey.getLongId()));
+            }
+            criteria.add(Restrictions.eq("enabled", true));
+            criteria.createAlias("section", "se");
+            criteria.add(Restrictions.eq("se.enabled", true));
+            criteria.createAlias("sinkerInfo", "si");
+            criteria.add(Restrictions.eq("si.enabled", true));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
