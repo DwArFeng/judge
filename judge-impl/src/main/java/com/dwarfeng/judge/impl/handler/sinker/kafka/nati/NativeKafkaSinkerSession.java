@@ -110,7 +110,7 @@ public class NativeKafkaSinkerSession extends AbstractSinkerSession {
 
         // 创建 partition。
         Integer partition;
-        if (Objects.equals(patternString, NativeKafkaSinkerConstants.INDICATOR_VALUE_PARTITION_ALL)) {
+        if (Objects.equals(patternString, NativeKafkaSinkerConstants.INDICATOR_VALUE_PARTITION_ANY)) {
             partition = null;
         } else {
             partition = Integer.parseInt(patternString);

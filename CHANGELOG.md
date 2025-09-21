@@ -8,6 +8,9 @@
 
 ### Bug 修复
 
+- 修正部分下沉器中的逻辑错误。
+  - 修正 `kafka.native` 下沉器常量类中的错误。
+
 - 修正部分判断器中的逻辑错误。
   - 修正 `groovy` 判断器 `groovy/ExampleJudgerProcessor.groovy` 中生成的判断值越界的问题。
 

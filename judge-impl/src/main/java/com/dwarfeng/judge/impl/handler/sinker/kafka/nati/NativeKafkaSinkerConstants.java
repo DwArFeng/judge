@@ -10,7 +10,7 @@ public final class NativeKafkaSinkerConstants {
 
     public static final String INDICATOR_LABEL_PARTITION = "partition";
 
-    public static final String INDICATOR_VALUE_PARTITION_ALL = "all";
+    public static final String INDICATOR_VALUE_PARTITION_ANY = "any";
 
     private NativeKafkaSinkerConstants() {
         throw new IllegalStateException("禁止实例化");
