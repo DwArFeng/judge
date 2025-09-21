@@ -4,7 +4,9 @@
 
 ### 功能构建
 
-- (无)
+- 优化部分 DTO 的文档注释。
+  - com.dwarfeng.judge.stack.bean.dto.DataLookupInfo。
+  - com.dwarfeng.judge.stack.bean.dto.DataLookupResult。
 
 ### Bug 修复
 

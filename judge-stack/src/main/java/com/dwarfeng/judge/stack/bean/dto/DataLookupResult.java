@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 提供结果。
+ * 数据查询结果。
  *
  * @author DwArFeng
  * @since 2.1.0-beta

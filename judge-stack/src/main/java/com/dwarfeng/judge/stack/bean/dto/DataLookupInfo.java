@@ -6,7 +6,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import java.util.Arrays;
 
 /**
- * 提供信息。
+ * 数据查询信息。
  *
  * @author DwArFeng
  * @since 2.1.0-beta
