@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection, XmlUnusedNamespaceDeclaration -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!--
+            本配置文件为 NativeKafkaSinker 提供必要的 OpcUaHandler 等 bean。
+            如果需要使用 NativeKafkaSinker，请取消下方注释，并按照实际情况对下方参数进行配置。
+
+            可以在下方的参数中直接赋值，也可以使用 value placeholder 进行占位，
+            并将真正的配置值以 properties 文件的形式放在 confext 目录中。
+
+            如一个 OpcUaHandler 不满足使用需求（如读取多台设备的数据），应该将下方的 bean 定义文件复制多份，分配不同的 id，
+            为 ApplicationContext 提供多个 bean。
+
+            ProducerFactory 参数说明：
+            bootstrapServers: 引导服务器集群。
+            retries: 发送失败重试次数，acks 设置为 0 时不生效。
+            linger: 生产者在发送批处理之前等待更多消息加入批处理的时间，单位为毫秒。该值是一条记录被发送之前的最大延迟。
+              如果记录在等待中达到了 batch_size 的大小，就会立即把它们发送出去。
+            bufferMemory: 生产者的批处理缓冲区大小。
+            batchSize: 批处理条数: 当多个记录被发送到同一个分区时，生产者会尝试将记录合并到更少的请求中。
+              这有助于客户端和服务器的性能。如果记录等待时间达到了 linger 值，就会被立即发送。
+            acks: 生产者与服务器的确认模式，可选值为: 0, 1, all。
+              0: 生产者不会等待服务器的确认，继续发送下一条消息。
+              1: 生产者会等待服务器的确认，继续发送下一条消息。
+              all: 生产者会等待服务器及其所有副本的确认，继续发送下一条消息。
+            transactionPrefix: Kafka 事务的前缀。
+    -->
+    <!--
+    <bean
+            id="nativeKafkaSinkerProducerFactory"
+            class="com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerFactory"
+            factory-method="newProducerFactory"
+    >
+        <constructor-arg name="bootstrapServers" value="your-ip1:9092,your-ip2:9092,your-ip3:9092"/>
+        <constructor-arg name="retries" value="3"/>
+        <constructor-arg name="linger" value="10"/>
+        <constructor-arg name="bufferMemory" value="40960"/>
+        <constructor-arg name="batchSize" value="4096"/>
+        <constructor-arg name="acks" value="all"/>
+        <constructor-arg name="transactionPrefix" value="judge.sinker.kafka.native"/>
+    </bean>
+    <bean
+            id="nativeKafkaSinkerKafkaTemplate"
+            class="com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerFactory"
+            factory-method="newKafkaTemplate"
+    >
+        <constructor-arg name="producerFactory" ref="nativeKafkaSinkerProducerFactory"/>
+    </bean>
+    <bean
+            id="nativeKafkaSinkerKafkaTransactionManager"
+            class="com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerFactory"
+            factory-method="newKafkaTransactionManager"
+    >
+        <constructor-arg name="producerFactory" ref="nativeKafkaSinkerProducerFactory"/>
+    </bean>
+    -->
+</beans>
