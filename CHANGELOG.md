@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 完善部分 struct 结构体的文档注释。
+  - com.dwarfeng.judge.stack.struct.SectionBinding。
+  - com.dwarfeng.judge.stack.struct.SinkerBinding。
+
 - 优化部分 DTO 的文档注释。
   - com.dwarfeng.judge.stack.bean.dto.DataLookupInfo。
   - com.dwarfeng.judge.stack.bean.dto.DataLookupResult。
