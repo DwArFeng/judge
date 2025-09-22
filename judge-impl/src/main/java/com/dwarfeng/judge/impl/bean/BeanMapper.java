@@ -306,7 +306,9 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     SinkerVariable sinkerVariableFromHibernate(HibernateSinkerVariable hibernateSinkerVariable);
 
+    @Mapping(target = "modifiedDatamark", ignore = true)
     @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
     HibernateProviderInfo providerInfoToHibernate(ProviderInfo providerInfo);
 
     @InheritInverseConfiguration

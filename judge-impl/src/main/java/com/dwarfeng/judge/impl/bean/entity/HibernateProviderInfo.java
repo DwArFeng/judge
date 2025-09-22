@@ -1,5 +1,7 @@
 package com.dwarfeng.judge.impl.bean.entity;
 
+import com.dwarfeng.datamark.bean.jpa.DatamarkEntityListener;
+import com.dwarfeng.datamark.bean.jpa.DatamarkField;
 import com.dwarfeng.judge.sdk.util.Constraints;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -10,18 +12,17 @@ import java.util.Optional;
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_provider_info")
+@EntityListeners(DatamarkEntityListener.class)
 public class HibernateProviderInfo implements Bean {
 
-    private static final long serialVersionUID = 2719198532386312830L;
+    private static final long serialVersionUID = 934901018957323737L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
-
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
-
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
@@ -34,12 +35,26 @@ public class HibernateProviderInfo implements Bean {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
+    // -----------------------------------------------------------审计-----------------------------------------------------------
+    @DatamarkField(handlerName = "providerDatamarkHandler")
+    @Column(
+            name = "created_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE,
+            updatable = false
+    )
+    private String createdDatamark;
+
+    @DatamarkField(handlerName = "providerDatamarkHandler")
+    @Column(
+            name = "modified_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE
+    )
+    private String modifiedDatamark;
+
     public HibernateProviderInfo() {
     }
 
-
     // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
-
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -49,7 +64,6 @@ public class HibernateProviderInfo implements Bean {
     }
 
     // -----------------------------------------------------------常规属性区-----------------------------------------------------------
-
     public Long getLongId() {
         return longId;
     }
@@ -90,6 +104,22 @@ public class HibernateProviderInfo implements Bean {
         this.remark = remark;
     }
 
+    public String getCreatedDatamark() {
+        return createdDatamark;
+    }
+
+    public void setCreatedDatamark(String createdDatamark) {
+        this.createdDatamark = createdDatamark;
+    }
+
+    public String getModifiedDatamark() {
+        return modifiedDatamark;
+    }
+
+    public void setModifiedDatamark(String modifiedDatamark) {
+        this.modifiedDatamark = modifiedDatamark;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -97,6 +127,8 @@ public class HibernateProviderInfo implements Bean {
                 "enabled = " + enabled + ", " +
                 "type = " + type + ", " +
                 "param = " + param + ", " +
-                "remark = " + remark + ")";
+                "remark = " + remark + ", " +
+                "createdDatamark = " + createdDatamark + ", " +
+                "modifiedDatamark = " + modifiedDatamark + ")";
     }
 }
