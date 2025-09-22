@@ -4,6 +4,8 @@
 
 ### 功能构建
 
+- 优化数据标记机制的部分处理器的关键字，使其与其它处理器保持一致。
+
 - 优化部分本地缓存处理器的存在性判定逻辑，以规避潜在的非使能实体抓取问题。
   - com.dwarfeng.judge.impl.handler.DriveLocalCacheHandlerImpl。
   - com.dwarfeng.judge.impl.handler.JobLocalCacheHandlerImpl。

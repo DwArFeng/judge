@@ -45,7 +45,7 @@ public class HibernateSinkerInfo implements Bean {
     private Set<HibernateSinkerVariable> sinkerVariables = new HashSet<>();
 
     // -----------------------------------------------------------审计-----------------------------------------------------------
-    @DatamarkField(handlerName = "sinkDatamarkHandler")
+    @DatamarkField(handlerName = "sinkerDatamarkHandler")
     @Column(
             name = "created_datamark",
             length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE,
@@ -53,7 +53,7 @@ public class HibernateSinkerInfo implements Bean {
     )
     private String createdDatamark;
 
-    @DatamarkField(handlerName = "sinkDatamarkHandler")
+    @DatamarkField(handlerName = "sinkerDatamarkHandler")
     @Column(
             name = "modified_datamark",
             length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE
