@@ -11,11 +11,8 @@ public class ProviderInfoPresetCriteriaMaker implements PresetCriteriaMaker {
     @Override
     public void makeCriteria(DetachedCriteria criteria, String preset, Object[] objs) {
         switch (preset) {
-
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
     }
-
-
 }

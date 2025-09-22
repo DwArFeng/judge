@@ -57,7 +57,6 @@ public class ProviderSupportMaintainServiceImplTest {
         }
     }
 
-
     @After
     public void tearDown() {
         providerSupports.clear();

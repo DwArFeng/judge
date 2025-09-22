@@ -120,7 +120,6 @@ public class NativeKafkaSinkerSession extends AbstractSinkerSession {
         return new NativeKafkaSinkerSinkInfo(partition);
     }
 
-
     @Override
     protected void doSink(SinkInfo info) {
         lock.readLock().lock();

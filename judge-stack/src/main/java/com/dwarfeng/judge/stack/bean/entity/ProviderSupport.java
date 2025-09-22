@@ -3,7 +3,6 @@ package com.dwarfeng.judge.stack.bean.entity;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
-
 /**
  * 提供器支持。
  *

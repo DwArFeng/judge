@@ -54,7 +54,6 @@ public class ProviderInfoMaintainServiceImplTest {
         }
     }
 
-
     @After
     public void tearDown() {
         providerInfos.clear();
