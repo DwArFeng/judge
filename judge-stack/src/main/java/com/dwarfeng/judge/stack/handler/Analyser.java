@@ -277,13 +277,18 @@ public interface Analyser {
                 throws HandlerException;
 
         /**
-         * 查询数据。
+         * 查询。
          *
-         * @param info 数据查询信息。
-         * @return 数据查询结果。
+         * <p>
+         * 有关参数和返回值的详细描述，请参阅相关对象的文档注释。
+         *
+         * @param info 查询信息。
+         * @return 查询结果。
          * @throws HandlerException 处理器异常。
-         * @since 2.1.0-beta
+         * @see LookupInfo
+         * @see LookupResult
+         * @since 2.3.0
          */
-        DataLookupResult lookupData(DataLookupInfo info) throws HandlerException;
+        LookupResult lookup(LookupInfo info) throws HandlerException;
     }
 }

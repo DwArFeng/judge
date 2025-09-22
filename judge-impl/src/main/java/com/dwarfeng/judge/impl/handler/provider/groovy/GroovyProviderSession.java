@@ -1,12 +1,12 @@
 package com.dwarfeng.judge.impl.handler.provider.groovy;
 
 import com.dwarfeng.judge.sdk.handler.provider.AbstractProviderSession;
+import com.dwarfeng.judge.stack.bean.dto.LookupInfo;
+import com.dwarfeng.judge.stack.bean.dto.LookupResult;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -39,10 +39,10 @@ public class GroovyProviderSession extends AbstractProviderSession {
     }
 
     @Override
-    protected List<Map<String, Object>> doLookupData(String preset, Object[] objs) throws Exception {
+    protected LookupResult doLookupData(LookupInfo info) throws Exception {
         lock.readLock().lock();
         try {
-            return processor.lookupData(preset, objs);
+            return processor.lookup(info);
         } finally {
             lock.readLock().unlock();
         }

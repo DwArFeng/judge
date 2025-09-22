@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 重构核心机制。
+  - 提供机制。
+
 - 增加预设的运维指令。
   - com.dwarfeng.springtelqos.api.integration.system.UptimeCommand。
   - com.dwarfeng.springtelqos.api.integration.system.JmxRemoteCommand。
