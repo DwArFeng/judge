@@ -27,6 +27,7 @@ public class SupportHandlerImpl implements SupportHandler {
     private final SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService;
     private final ProviderSupportMaintainService providerSupportMaintainService;
     private final VisualizerSupportMaintainService visualizerSupportMaintainService;
+    private final AdapterSupportMaintainService adapterSupportMaintainService;
 
     private final List<AnalyserSupporter> analyserSupporters;
     private final List<DriverSupporter> driverSupporters;
@@ -34,6 +35,7 @@ public class SupportHandlerImpl implements SupportHandler {
     private final List<SinkerSupporter> sinkerSupporters;
     private final List<ProviderSupporter> providerSupporters;
     private final List<VisualizerSupporter> visualizerSupporters;
+    private final List<AdapterSupporter> adapterSupporters;
 
     public SupportHandlerImpl(
             AnalyserSupportMaintainService analyserSupportMaintainService,
@@ -43,12 +45,14 @@ public class SupportHandlerImpl implements SupportHandler {
             SinkerMetaIndicatorMaintainService sinkerMetaIndicatorMaintainService,
             ProviderSupportMaintainService providerSupportMaintainService,
             VisualizerSupportMaintainService visualizerSupportMaintainService,
+            AdapterSupportMaintainService adapterSupportMaintainService,
             List<AnalyserSupporter> analyserSupporters,
             List<DriverSupporter> driverSupporters,
             List<JudgerSupporter> judgerSupporters,
             List<SinkerSupporter> sinkerSupporters,
             List<ProviderSupporter> providerSupporters,
-            List<VisualizerSupporter> visualizerSupporters
+            List<VisualizerSupporter> visualizerSupporters,
+            List<AdapterSupporter> adapterSupporters
     ) {
         this.analyserSupportMaintainService = analyserSupportMaintainService;
         this.driverSupportMaintainService = driverSupportMaintainService;
@@ -57,12 +61,14 @@ public class SupportHandlerImpl implements SupportHandler {
         this.sinkerMetaIndicatorMaintainService = sinkerMetaIndicatorMaintainService;
         this.providerSupportMaintainService = providerSupportMaintainService;
         this.visualizerSupportMaintainService = visualizerSupportMaintainService;
+        this.adapterSupportMaintainService = adapterSupportMaintainService;
         this.analyserSupporters = Optional.ofNullable(analyserSupporters).orElse(Collections.emptyList());
         this.driverSupporters = Optional.ofNullable(driverSupporters).orElse(Collections.emptyList());
         this.judgerSupporters = Optional.ofNullable(judgerSupporters).orElse(Collections.emptyList());
         this.sinkerSupporters = Optional.ofNullable(sinkerSupporters).orElse(Collections.emptyList());
         this.providerSupporters = Optional.ofNullable(providerSupporters).orElse(Collections.emptyList());
         this.visualizerSupporters = visualizerSupporters;
+        this.adapterSupporters = Optional.ofNullable(adapterSupporters).orElse(Collections.emptyList());
     }
 
     @Override
@@ -229,5 +235,30 @@ public class SupportHandlerImpl implements SupportHandler {
                 )
         ).collect(Collectors.toList());
         visualizerSupportMaintainService.batchInsert(visualizerSupports);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    public void resetAdapter() throws HandlerException {
+        try {
+            doResetAdapter();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        }
+    }
+
+    private void doResetAdapter() throws Exception {
+        List<StringIdKey> adapterKeys = adapterSupportMaintainService.lookupAsList().stream()
+                .map(AdapterSupport::getKey).collect(Collectors.toList());
+        adapterSupportMaintainService.batchDelete(adapterKeys);
+        List<AdapterSupport> adapterSupports = adapterSupporters.stream().map(
+                supporter -> new AdapterSupport(
+                        new StringIdKey(supporter.adaptType()),
+                        supporter.adaptLabel(),
+                        supporter.adaptDescription(),
+                        supporter.adaptExampleParam()
+                )
+        ).collect(Collectors.toList());
+        adapterSupportMaintainService.batchInsert(adapterSupports);
     }
 }

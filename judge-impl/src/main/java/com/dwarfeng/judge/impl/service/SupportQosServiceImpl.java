@@ -74,4 +74,13 @@ public class SupportQosServiceImpl implements SupportQosService {
             throw ServiceExceptionHelper.logParse("重置可视化器时发生异常", LogLevel.WARN, e, sem);
         }
     }
+
+    @Override
+    public void resetAdapter() throws ServiceException {
+        try {
+            supportHandler.resetAdapter();
+        } catch (HandlerException e) {
+            throw ServiceExceptionHelper.logParse("重置适配器时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
 }

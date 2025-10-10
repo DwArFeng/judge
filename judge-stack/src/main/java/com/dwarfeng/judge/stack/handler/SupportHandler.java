@@ -58,4 +58,12 @@ public interface SupportHandler extends Handler {
      * @since 2.2.0
      */
     void resetVisualizer() throws HandlerException;
+
+    /**
+     * 重置适配器。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.3.0
+     */
+    void resetAdapter() throws HandlerException;
 }

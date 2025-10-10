@@ -25,6 +25,9 @@ public class LauncherSettingHandler implements Handler {
     @Value("${launcher.reset_visualizer_support}")
     private boolean resetVisualizerSupport;
 
+    @Value("${launcher.reset_adapter_support}")
+    private boolean resetAdapterSupport;
+
     @Value("${launcher.start_reset_delay}")
     private long startResetDelay;
 
@@ -68,6 +71,10 @@ public class LauncherSettingHandler implements Handler {
 
     public boolean isResetVisualizerSupport() {
         return resetVisualizerSupport;
+    }
+
+    public boolean isResetAdapterSupport() {
+        return resetAdapterSupport;
     }
 
     public long getStartResetDelay() {
