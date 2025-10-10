@@ -81,6 +81,10 @@ public class CacheConfiguration {
     private String visualizerSupportPrefix;
     @Value("${cache.prefix.entity.visualize_data}")
     private String visualizeDataPrefix;
+    @Value("${cache.prefix.entity.adapter_info}")
+    private String adapterInfoPrefix;
+    @Value("${cache.prefix.entity.adapter_support}")
+    private String adapterSupportPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -415,6 +419,26 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonVisualizeData>) template,
                 new VisualizeDataStringKeyFormatter(visualizeDataPrefix),
                 new MapStructBeanTransformer<>(VisualizeData.class, FastJsonVisualizeData.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AdapterInfo, FastJsonAdapterInfo> adapterInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAdapterInfo>) template,
+                new LongIdStringKeyFormatter(adapterInfoPrefix),
+                new MapStructBeanTransformer<>(AdapterInfo.class, FastJsonAdapterInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, AdapterSupport, FastJsonAdapterSupport> adapterSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAdapterSupport>) template,
+                new StringIdStringKeyFormatter(adapterSupportPrefix),
+                new MapStructBeanTransformer<>(AdapterSupport.class, FastJsonAdapterSupport.class, BeanMapper.class)
         );
     }
 }

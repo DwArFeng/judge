@@ -65,6 +65,14 @@
             update-allowed="${datamark.visualizer.update_allowed}"
     />
 
+    <!-- Adapter 数据标识 -->
+    <datamark:handler
+            handler-name="adapterDatamarkHandler"
+            resource-url="${datamark.adapter.resource_url}"
+            resource-charset="${datamark.adapter.resource_charset}"
+            update-allowed="${datamark.adapter.update_allowed}"
+    />
+
     <!-- QoS 服务 -->
     <datamark:qos/>
 </beans>

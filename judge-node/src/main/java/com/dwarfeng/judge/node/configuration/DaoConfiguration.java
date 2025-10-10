@@ -55,6 +55,8 @@ public class DaoConfiguration {
     private final VisualizerInfoPresetCriteriaMaker visualizerInfoPresetCriteriaMaker;
     private final VisualizerSupportPresetCriteriaMaker visualizerSupportPresetCriteriaMaker;
     private final VisualizeDataPresetCriteriaMaker visualizeDataPresetCriteriaMaker;
+    private final AdapterInfoPresetCriteriaMaker adapterInfoPresetCriteriaMaker;
+    private final AdapterSupportPresetCriteriaMaker adapterSupportPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -90,7 +92,9 @@ public class DaoConfiguration {
             ProviderSupportPresetCriteriaMaker providerSupportPresetCriteriaMaker,
             VisualizerInfoPresetCriteriaMaker visualizerInfoPresetCriteriaMaker,
             VisualizerSupportPresetCriteriaMaker visualizerSupportPresetCriteriaMaker,
-            VisualizeDataPresetCriteriaMaker visualizeDataPresetCriteriaMaker
+            VisualizeDataPresetCriteriaMaker visualizeDataPresetCriteriaMaker,
+            AdapterInfoPresetCriteriaMaker adapterInfoPresetCriteriaMaker,
+            AdapterSupportPresetCriteriaMaker adapterSupportPresetCriteriaMaker
     ) {
         this.hibernateTemplate = hibernateTemplate;
         this.analyserInfoPresetCriteriaMaker = analyserInfoPresetCriteriaMaker;
@@ -123,6 +127,8 @@ public class DaoConfiguration {
         this.visualizerInfoPresetCriteriaMaker = visualizerInfoPresetCriteriaMaker;
         this.visualizerSupportPresetCriteriaMaker = visualizerSupportPresetCriteriaMaker;
         this.visualizeDataPresetCriteriaMaker = visualizeDataPresetCriteriaMaker;
+        this.adapterInfoPresetCriteriaMaker = adapterInfoPresetCriteriaMaker;
+        this.adapterSupportPresetCriteriaMaker = adapterSupportPresetCriteriaMaker;
     }
 
     @Bean
@@ -1195,6 +1201,68 @@ public class DaoConfiguration {
                 new MapStructBeanTransformer<>(VisualizeData.class, HibernateVisualizeData.class, BeanMapper.class),
                 HibernateVisualizeData.class,
                 visualizeDataPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AdapterInfo, HibernateAdapterInfo> adapterInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(AdapterInfo.class, HibernateAdapterInfo.class, BeanMapper.class),
+                HibernateAdapterInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AdapterInfo, HibernateAdapterInfo> adapterInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(AdapterInfo.class, HibernateAdapterInfo.class, BeanMapper.class),
+                HibernateAdapterInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AdapterInfo, HibernateAdapterInfo> adapterInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(AdapterInfo.class, HibernateAdapterInfo.class, BeanMapper.class),
+                HibernateAdapterInfo.class,
+                adapterInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AdapterSupport, HibernateAdapterSupport> adapterSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(AdapterSupport.class, HibernateAdapterSupport.class, BeanMapper.class),
+                HibernateAdapterSupport.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AdapterSupport, HibernateAdapterSupport> adapterSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(AdapterSupport.class, HibernateAdapterSupport.class, BeanMapper.class),
+                HibernateAdapterSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<AdapterSupport, HibernateAdapterSupport> adapterSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(AdapterSupport.class, HibernateAdapterSupport.class, BeanMapper.class),
+                HibernateAdapterSupport.class,
+                adapterSupportPresetCriteriaMaker
         );
     }
 }

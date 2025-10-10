@@ -343,4 +343,18 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     VisualizerSupport visualizerSupportFromHibernate(HibernateVisualizerSupport hibernateVisualizerSupport);
+
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateAdapterInfo adapterInfoToHibernate(AdapterInfo adapterInfo);
+
+    @InheritInverseConfiguration
+    AdapterInfo adapterInfoFromHibernate(HibernateAdapterInfo hibernateAdapterInfo);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateAdapterSupport adapterSupportToHibernate(AdapterSupport adapterSupport);
+
+    @InheritInverseConfiguration
+    AdapterSupport adapterSupportFromHibernate(HibernateAdapterSupport hibernateAdapterSupport);
 }

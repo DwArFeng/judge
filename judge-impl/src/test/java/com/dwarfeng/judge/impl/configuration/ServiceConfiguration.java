@@ -83,6 +83,10 @@ public class ServiceConfiguration {
     private final VisualizerSupportCache visualizerSupportCache;
     private final VisualizeDataDao visualizeDataDao;
     private final VisualizeDataCache visualizeDataCache;
+    private final AdapterInfoCache adapterInfoCache;
+    private final AdapterInfoDao adapterInfoDao;
+    private final AdapterSupportCache adapterSupportCache;
+    private final AdapterSupportDao adapterSupportDao;
 
     @Value("${cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
@@ -118,6 +122,10 @@ public class ServiceConfiguration {
     private long visualizerSupportTimeout;
     @Value("${cache.timeout.entity.visualize_data}")
     private long visualizeDataTimeout;
+    @Value("${cache.timeout.entity.adapter_info}")
+    private long adapterInfoTimeout;
+    @Value("${cache.timeout.entity.adapter_support}")
+    private long adapterSupportTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -181,7 +189,11 @@ public class ServiceConfiguration {
             VisualizerSupportDao visualizerSupportDao,
             VisualizerSupportCache visualizerSupportCache,
             VisualizeDataDao visualizeDataDao,
-            VisualizeDataCache visualizeDataCache
+            VisualizeDataCache visualizeDataCache,
+            AdapterInfoCache adapterInfoCache,
+            AdapterInfoDao adapterInfoDao,
+            AdapterSupportCache adapterSupportCache,
+            AdapterSupportDao adapterSupportDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -245,6 +257,10 @@ public class ServiceConfiguration {
         this.visualizerSupportCache = visualizerSupportCache;
         this.visualizeDataDao = visualizeDataDao;
         this.visualizeDataCache = visualizeDataCache;
+        this.adapterInfoCache = adapterInfoCache;
+        this.adapterInfoDao = adapterInfoDao;
+        this.adapterSupportCache = adapterSupportCache;
+        this.adapterSupportDao = adapterSupportDao;
     }
 
     @Bean
@@ -1123,6 +1139,66 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 visualizeDataDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, AdapterInfo> adapterInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                adapterInfoDao,
+                adapterInfoCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                adapterInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AdapterInfo> adapterInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                adapterInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AdapterInfo> adapterInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                adapterInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, AdapterSupport> adapterSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                adapterSupportDao,
+                adapterSupportCache,
+                new ExceptionKeyGenerator<>(),
+                adapterSupportTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AdapterSupport> adapterSupportDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                adapterSupportDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AdapterSupport> adapterSupportDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                adapterSupportDao
         );
     }
 }

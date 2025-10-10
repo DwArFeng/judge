@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 建立实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.bean.entity.AdapterInfo。
+  - com.dwarfeng.judge.stack.bean.entity.AdapterSupport。
+
 - 重构核心机制。
   - 提供机制。
 
