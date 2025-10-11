@@ -122,6 +122,16 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(372), "visualizer execution failed");
     public static final ServiceException.Code VISUALIZER_TYPE_UNSUPPORTED =
             new ServiceException.Code(offset(373), "visualizer type unsupported");
+    public static final ServiceException.Code ADAPTER_NOT_EXISTS =
+            new ServiceException.Code(offset(380), "adapter not exists");
+    public static final ServiceException.Code ADAPTER_FAILED =
+            new ServiceException.Code(offset(390), "adapter failed");
+    public static final ServiceException.Code ADAPTER_MAKE_FAILED =
+            new ServiceException.Code(offset(391), "adapter make failed");
+    public static final ServiceException.Code ADAPTER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(392), "adapter type unsupported");
+    public static final ServiceException.Code ADAPTER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(393), "adapter execution failed");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -201,6 +211,11 @@ public final class ServiceExceptionCodes {
         VISUALIZER_MAKE_FAILED.setCode(offset(371));
         VISUALIZER_EXECUTION_FAILED.setCode(offset(372));
         VISUALIZER_TYPE_UNSUPPORTED.setCode(offset(373));
+        ADAPTER_NOT_EXISTS.setCode(offset(380));
+        ADAPTER_FAILED.setCode(offset(390));
+        ADAPTER_MAKE_FAILED.setCode(offset(391));
+        ADAPTER_TYPE_UNSUPPORTED.setCode(offset(392));
+        ADAPTER_EXECUTION_FAILED.setCode(offset(393));
     }
 
     private ServiceExceptionCodes() {

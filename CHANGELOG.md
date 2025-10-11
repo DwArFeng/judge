@@ -8,6 +8,12 @@
   - com.dwarfeng.judge.stack.bean.entity.AdapterInfo。
   - com.dwarfeng.judge.stack.bean.entity.AdapterSupport。
 
+- 实现预设适配器。
+  - com.dwarfeng.judge.impl.handler.adapter.groovy.GroovyAdapterRegistry。
+
+- 实现核心机制。
+  - 适配机制。
+
 - 重构核心机制。
   - 提供机制。
 

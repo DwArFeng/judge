@@ -33,8 +33,11 @@ public interface ProviderSession {
      * 有关参数和返回值的详细描述，请参阅相关对象的文档注释。
      *
      * <p>
-     * <code>LookupInfo.providerInfoKey</code> 字段为本提供器会话对应的提供器信息的主键。<br>
-     * <code>LookupInfo.providerInfoKey</code> 字段是通过提供处理器的相关方法传递到此处的，本方法在实现时不得使用这个字段。
+     * 部分字段是通过提供处理器的相关方法传递到此处的，本方法在实现时不得使用：
+     * <ul>
+     *     <li>LookupInfo.providerInfoKey</li>
+     *     <li>LookupInfo.adapterInfoKey</li>
+     * </ul>
      *
      * @param info 查询信息。
      * @return 查询结果。

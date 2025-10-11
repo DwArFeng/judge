@@ -9,16 +9,41 @@ import java.util.Arrays;
  * 查询信息。
  *
  * @author DwArFeng
+ * @author wangyc
  * @since 2.3.0
  */
 public class LookupInfo implements Dto {
 
-    private static final long serialVersionUID = 2618275964452367420L;
+    private static final long serialVersionUID = -4728418298113771459L;
 
     /**
      * 提供器信息键。
      */
     private LongIdKey providerInfoKey;
+
+    /**
+     * 适配器信息键。
+     *
+     * <p>
+     * 该字段用于指定查询过程中使用的数据适配器。<br>
+     * 当该字段不为 <code>null</code> 时，系统会在调用提供器查询数据之前，
+     * 先使用指定的适配器对查询参数进行适配处理。<br>
+     * 适配器的主要作用是将分析器的查询参数转换为提供器能够理解的格式，
+     * 或者对查询参数进行预处理、验证、转换等操作。
+     *
+     * <p>
+     * 例如，分析器可能需要查询某个时间范围内的数据，但提供器期望接收的是
+     * 时间戳格式的参数，此时可以通过适配器将 <code>Date</code> 对象转换为
+     * <code>Long</code> 类型的时间戳。
+     *
+     * <p>
+     * 当该字段为 <code>null</code> 时，表示不需要使用适配器，直接使用原始的
+     * 查询参数调用提供器。
+     *
+     * <p>
+     * 该字段对应的适配器信息必须存在于系统中，且必须处于启用状态。
+     */
+    private LongIdKey adapterInfoKey;
 
     /**
      * 预设。
@@ -72,8 +97,9 @@ public class LookupInfo implements Dto {
     public LookupInfo() {
     }
 
-    public LookupInfo(LongIdKey providerInfoKey, String preset, Object[] objs) {
+    public LookupInfo(LongIdKey providerInfoKey, LongIdKey adapterInfoKey, String preset, Object[] objs) {
         this.providerInfoKey = providerInfoKey;
+        this.adapterInfoKey = adapterInfoKey;
         this.preset = preset;
         this.objs = objs;
     }
@@ -84,6 +110,14 @@ public class LookupInfo implements Dto {
 
     public void setProviderInfoKey(LongIdKey providerInfoKey) {
         this.providerInfoKey = providerInfoKey;
+    }
+
+    public LongIdKey getAdapterInfoKey() {
+        return adapterInfoKey;
+    }
+
+    public void setAdapterInfoKey(LongIdKey adapterInfoKey) {
+        this.adapterInfoKey = adapterInfoKey;
     }
 
     public String getPreset() {
@@ -106,6 +140,7 @@ public class LookupInfo implements Dto {
     public String toString() {
         return "LookupInfo{" +
                 "providerInfoKey=" + providerInfoKey +
+                ", adapterInfoKey=" + adapterInfoKey +
                 ", preset='" + preset + '\'' +
                 ", objs=" + Arrays.toString(objs) +
                 '}';
