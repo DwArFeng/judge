@@ -28,6 +28,9 @@ public class LauncherSettingHandler implements Handler {
     @Value("${launcher.reset_adapter_support}")
     private boolean resetAdapterSupport;
 
+    @Value("${launcher.reset_filter_support}")
+    private boolean resetFilterSupport;
+
     @Value("${launcher.start_reset_delay}")
     private long startResetDelay;
 
@@ -77,6 +80,10 @@ public class LauncherSettingHandler implements Handler {
         return resetAdapterSupport;
     }
 
+    public boolean isResetFilterSupport() {
+        return resetFilterSupport;
+    }
+
     public long getStartResetDelay() {
         return startResetDelay;
     }
@@ -118,6 +125,8 @@ public class LauncherSettingHandler implements Handler {
                 ", resetSinkerSupport=" + resetSinkerSupport +
                 ", resetProviderSupport=" + resetProviderSupport +
                 ", resetVisualizerSupport=" + resetVisualizerSupport +
+                ", resetAdapterSupport=" + resetAdapterSupport +
+                ", resetFilterSupport=" + resetFilterSupport +
                 ", startResetDelay=" + startResetDelay +
                 ", onlineTaskCheckDelay=" + onlineTaskCheckDelay +
                 ", enableTaskCheckDelay=" + enableTaskCheckDelay +

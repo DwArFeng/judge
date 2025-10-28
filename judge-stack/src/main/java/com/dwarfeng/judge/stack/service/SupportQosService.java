@@ -66,4 +66,12 @@ public interface SupportQosService extends Service {
      * @since 2.3.0
      */
     void resetAdapter() throws ServiceException;
+
+    /**
+     * 重置过滤器。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.3.0
+     */
+    void resetFilter() throws ServiceException;
 }

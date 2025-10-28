@@ -22,6 +22,7 @@ public class SupportCommand extends CliCommand {
     private static final String COMMAND_OPTION_RESET_PROVIDER = "reset-provider";
     private static final String COMMAND_OPTION_RESET_VISUALIZER = "reset-visualizer";
     private static final String COMMAND_OPTION_RESET_ADAPTER = "reset-adapter";
+    private static final String COMMAND_OPTION_RESET_FILTER = "reset-filter";
 
     private static final String[] COMMAND_OPTION_ARRAY = new String[]{
             COMMAND_OPTION_RESET_ANALYSER,
@@ -30,7 +31,8 @@ public class SupportCommand extends CliCommand {
             COMMAND_OPTION_RESET_SINKER,
             COMMAND_OPTION_RESET_PROVIDER,
             COMMAND_OPTION_RESET_VISUALIZER,
-            COMMAND_OPTION_RESET_ADAPTER
+            COMMAND_OPTION_RESET_ADAPTER,
+            COMMAND_OPTION_RESET_FILTER
     };
 
     private static final String IDENTITY = "support";
@@ -50,6 +52,8 @@ public class SupportCommand extends CliCommand {
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_VISUALIZER);
     private static final String CMD_LINE_SYNTAX_RESET_ADAPTER = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_ADAPTER);
+    private static final String CMD_LINE_SYNTAX_RESET_FILTER = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_FILTER);
 
     private static final String[] CMD_LINE_ARRAY = new String[]{
             CMD_LINE_SYNTAX_RESET_ANALYSER,
@@ -58,7 +62,8 @@ public class SupportCommand extends CliCommand {
             CMD_LINE_SYNTAX_RESET_SINKER,
             CMD_LINE_SYNTAX_RESET_PROVIDER,
             CMD_LINE_SYNTAX_RESET_VISUALIZER,
-            CMD_LINE_SYNTAX_RESET_ADAPTER
+            CMD_LINE_SYNTAX_RESET_ADAPTER,
+            CMD_LINE_SYNTAX_RESET_FILTER
     };
 
     private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
@@ -80,6 +85,7 @@ public class SupportCommand extends CliCommand {
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_PROVIDER).desc("重置提供器").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_VISUALIZER).desc("重置可视化器支持").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_ADAPTER).desc("重置适配器").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_FILTER).desc("重置过滤器").build());
         return list;
     }
 
@@ -120,6 +126,10 @@ public class SupportCommand extends CliCommand {
                 case COMMAND_OPTION_RESET_ADAPTER:
                     supportQosService.resetAdapter();
                     context.sendMessage("重置适配器成功。");
+                    break;
+                case COMMAND_OPTION_RESET_FILTER:
+                    supportQosService.resetFilter();
+                    context.sendMessage("重置过滤器成功。");
                     break;
             }
         } catch (Exception e) {

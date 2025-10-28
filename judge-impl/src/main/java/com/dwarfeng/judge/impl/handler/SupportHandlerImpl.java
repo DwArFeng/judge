@@ -28,6 +28,7 @@ public class SupportHandlerImpl implements SupportHandler {
     private final ProviderSupportMaintainService providerSupportMaintainService;
     private final VisualizerSupportMaintainService visualizerSupportMaintainService;
     private final AdapterSupportMaintainService adapterSupportMaintainService;
+    private final FilterSupportMaintainService filterSupportMaintainService;
 
     private final List<AnalyserSupporter> analyserSupporters;
     private final List<DriverSupporter> driverSupporters;
@@ -36,6 +37,7 @@ public class SupportHandlerImpl implements SupportHandler {
     private final List<ProviderSupporter> providerSupporters;
     private final List<VisualizerSupporter> visualizerSupporters;
     private final List<AdapterSupporter> adapterSupporters;
+    private final List<FilterSupporter> filterSupporters;
 
     public SupportHandlerImpl(
             AnalyserSupportMaintainService analyserSupportMaintainService,
@@ -46,13 +48,15 @@ public class SupportHandlerImpl implements SupportHandler {
             ProviderSupportMaintainService providerSupportMaintainService,
             VisualizerSupportMaintainService visualizerSupportMaintainService,
             AdapterSupportMaintainService adapterSupportMaintainService,
+            FilterSupportMaintainService filterSupportMaintainService,
             List<AnalyserSupporter> analyserSupporters,
             List<DriverSupporter> driverSupporters,
             List<JudgerSupporter> judgerSupporters,
             List<SinkerSupporter> sinkerSupporters,
             List<ProviderSupporter> providerSupporters,
             List<VisualizerSupporter> visualizerSupporters,
-            List<AdapterSupporter> adapterSupporters
+            List<AdapterSupporter> adapterSupporters,
+            List<FilterSupporter> filterSupporters
     ) {
         this.analyserSupportMaintainService = analyserSupportMaintainService;
         this.driverSupportMaintainService = driverSupportMaintainService;
@@ -62,6 +66,7 @@ public class SupportHandlerImpl implements SupportHandler {
         this.providerSupportMaintainService = providerSupportMaintainService;
         this.visualizerSupportMaintainService = visualizerSupportMaintainService;
         this.adapterSupportMaintainService = adapterSupportMaintainService;
+        this.filterSupportMaintainService = filterSupportMaintainService;
         this.analyserSupporters = Optional.ofNullable(analyserSupporters).orElse(Collections.emptyList());
         this.driverSupporters = Optional.ofNullable(driverSupporters).orElse(Collections.emptyList());
         this.judgerSupporters = Optional.ofNullable(judgerSupporters).orElse(Collections.emptyList());
@@ -69,6 +74,7 @@ public class SupportHandlerImpl implements SupportHandler {
         this.providerSupporters = Optional.ofNullable(providerSupporters).orElse(Collections.emptyList());
         this.visualizerSupporters = visualizerSupporters;
         this.adapterSupporters = Optional.ofNullable(adapterSupporters).orElse(Collections.emptyList());
+        this.filterSupporters = Optional.ofNullable(filterSupporters).orElse(Collections.emptyList());
     }
 
     @Override
@@ -260,5 +266,30 @@ public class SupportHandlerImpl implements SupportHandler {
                 )
         ).collect(Collectors.toList());
         adapterSupportMaintainService.batchInsert(adapterSupports);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    public void resetFilter() throws HandlerException {
+        try {
+            doResetFilter();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        }
+    }
+
+    private void doResetFilter() throws Exception {
+        List<StringIdKey> filterKeys = filterSupportMaintainService.lookupAsList().stream()
+                .map(FilterSupport::getKey).collect(Collectors.toList());
+        filterSupportMaintainService.batchDelete(filterKeys);
+        List<FilterSupport> filterSupports = filterSupporters.stream().map(
+                supporter -> new FilterSupport(
+                        new StringIdKey(supporter.filtType()),
+                        supporter.filtLabel(),
+                        supporter.filtDescription(),
+                        supporter.filtExampleParam()
+                )
+        ).collect(Collectors.toList());
+        filterSupportMaintainService.batchInsert(filterSupports);
     }
 }

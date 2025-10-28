@@ -66,4 +66,12 @@ public interface SupportHandler extends Handler {
      * @since 2.3.0
      */
     void resetAdapter() throws HandlerException;
+
+    /**
+     * 重置过滤器。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.3.0
+     */
+    void resetFilter() throws HandlerException;
 }

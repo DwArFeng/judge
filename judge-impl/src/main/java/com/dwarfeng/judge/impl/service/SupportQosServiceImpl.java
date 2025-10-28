@@ -83,4 +83,13 @@ public class SupportQosServiceImpl implements SupportQosService {
             throw ServiceExceptionHelper.logParse("重置适配器时发生异常", LogLevel.WARN, e, sem);
         }
     }
+
+    @Override
+    public void resetFilter() throws ServiceException {
+        try {
+            supportHandler.resetFilter();
+        } catch (HandlerException e) {
+            throw ServiceExceptionHelper.logParse("重置过滤器时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
 }
