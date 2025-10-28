@@ -90,7 +90,7 @@ public class SinkerSessionCommand extends CliCommand {
     private void handleLookup(Context context, CommandLine cmd) throws Exception {
         long sinkerInfoId;
         try {
-            sinkerInfoId = ((Number) cmd.getParsedOptionValue(COMMAND_OPTION_LOOKUP)).intValue();
+            sinkerInfoId = ((Number) cmd.getParsedOptionValue(COMMAND_OPTION_LOOKUP)).longValue();
         } catch (ParseException e) {
             LOGGER.warn("解析命令选项时发生异常，异常信息如下", e);
             context.sendMessage("命令行格式错误，正确的格式为: " + CMD_LINE_SYNTAX_LOOKUP);

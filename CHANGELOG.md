@@ -45,7 +45,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修正部分运维指令中的代码错误。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerSessionCommand。
 
 ### 功能移除
 
