@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.AdapterLocalCacheCommand。
+
 - 建立实体以及维护服务，并通过单元测试。
   - com.dwarfeng.judge.stack.bean.entity.FilterInfo。
   - com.dwarfeng.judge.stack.bean.entity.FilterSupport。
