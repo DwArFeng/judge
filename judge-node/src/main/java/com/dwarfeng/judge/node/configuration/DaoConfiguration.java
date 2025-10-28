@@ -57,6 +57,8 @@ public class DaoConfiguration {
     private final VisualizeDataPresetCriteriaMaker visualizeDataPresetCriteriaMaker;
     private final AdapterInfoPresetCriteriaMaker adapterInfoPresetCriteriaMaker;
     private final AdapterSupportPresetCriteriaMaker adapterSupportPresetCriteriaMaker;
+    private final FilterInfoPresetCriteriaMaker filterInfoPresetCriteriaMaker;
+    private final FilterSupportPresetCriteriaMaker filterSupportPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -94,7 +96,9 @@ public class DaoConfiguration {
             VisualizerSupportPresetCriteriaMaker visualizerSupportPresetCriteriaMaker,
             VisualizeDataPresetCriteriaMaker visualizeDataPresetCriteriaMaker,
             AdapterInfoPresetCriteriaMaker adapterInfoPresetCriteriaMaker,
-            AdapterSupportPresetCriteriaMaker adapterSupportPresetCriteriaMaker
+            AdapterSupportPresetCriteriaMaker adapterSupportPresetCriteriaMaker,
+            FilterInfoPresetCriteriaMaker filterInfoPresetCriteriaMaker,
+            FilterSupportPresetCriteriaMaker filterSupportPresetCriteriaMaker
     ) {
         this.hibernateTemplate = hibernateTemplate;
         this.analyserInfoPresetCriteriaMaker = analyserInfoPresetCriteriaMaker;
@@ -129,6 +133,8 @@ public class DaoConfiguration {
         this.visualizeDataPresetCriteriaMaker = visualizeDataPresetCriteriaMaker;
         this.adapterInfoPresetCriteriaMaker = adapterInfoPresetCriteriaMaker;
         this.adapterSupportPresetCriteriaMaker = adapterSupportPresetCriteriaMaker;
+        this.filterInfoPresetCriteriaMaker = filterInfoPresetCriteriaMaker;
+        this.filterSupportPresetCriteriaMaker = filterSupportPresetCriteriaMaker;
     }
 
     @Bean
@@ -1263,6 +1269,68 @@ public class DaoConfiguration {
                 new MapStructBeanTransformer<>(AdapterSupport.class, HibernateAdapterSupport.class, BeanMapper.class),
                 HibernateAdapterSupport.class,
                 adapterSupportPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, FilterInfo, HibernateFilterInfo> filterInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(FilterInfo.class, HibernateFilterInfo.class, BeanMapper.class),
+                HibernateFilterInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<FilterInfo, HibernateFilterInfo> filterInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(FilterInfo.class, HibernateFilterInfo.class, BeanMapper.class),
+                HibernateFilterInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<FilterInfo, HibernateFilterInfo> filterInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(FilterInfo.class, HibernateFilterInfo.class, BeanMapper.class),
+                HibernateFilterInfo.class,
+                filterInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, FilterSupport, HibernateFilterSupport> filterSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(FilterSupport.class, HibernateFilterSupport.class, BeanMapper.class),
+                HibernateFilterSupport.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<FilterSupport, HibernateFilterSupport> filterSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(FilterSupport.class, HibernateFilterSupport.class, BeanMapper.class),
+                HibernateFilterSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<FilterSupport, HibernateFilterSupport> filterSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new MapStructBeanTransformer<>(FilterSupport.class, HibernateFilterSupport.class, BeanMapper.class),
+                HibernateFilterSupport.class,
+                filterSupportPresetCriteriaMaker
         );
     }
 }

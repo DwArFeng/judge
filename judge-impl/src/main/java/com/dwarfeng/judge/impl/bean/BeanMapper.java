@@ -357,4 +357,18 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     AdapterSupport adapterSupportFromHibernate(HibernateAdapterSupport hibernateAdapterSupport);
+
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateFilterInfo filterInfoToHibernate(FilterInfo filterInfo);
+
+    @InheritInverseConfiguration
+    FilterInfo filterInfoFromHibernate(HibernateFilterInfo hibernateFilterInfo);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateFilterSupport filterSupportToHibernate(FilterSupport filterSupport);
+
+    @InheritInverseConfiguration
+    FilterSupport filterSupportFromHibernate(HibernateFilterSupport hibernateFilterSupport);
 }

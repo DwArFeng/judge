@@ -5,8 +5,11 @@
 ### 功能构建
 
 - 建立实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.bean.entity.FilterInfo。
+  - com.dwarfeng.judge.stack.bean.entity.FilterSupport。
   - com.dwarfeng.judge.stack.bean.entity.AdapterInfo。
   - com.dwarfeng.judge.stack.bean.entity.AdapterSupport。
+
 
 - 实现预设适配器。
   - com.dwarfeng.judge.impl.handler.adapter.groovy.GroovyAdapterRegistry。

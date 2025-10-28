@@ -525,6 +525,26 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     AdapterInfo adapterInfoFromWebInput(WebInputAdapterInfo webInputAdapterInfo);
 
+    FastJsonFilterInfo filterInfoToFastJson(FilterInfo filterInfo);
+
+    @InheritInverseConfiguration
+    FilterInfo filterInfoFromFastJson(FastJsonFilterInfo fastJsonFilterInfo);
+
+    FastJsonFilterSupport filterSupportToFastJson(FilterSupport filterSupport);
+
+    @InheritInverseConfiguration
+    FilterSupport filterSupportFromFastJson(FastJsonFilterSupport fastJsonFilterSupport);
+
+    JSFixedFastJsonFilterInfo filterInfoToJSFixedFastJson(FilterInfo filterInfo);
+
+    @InheritInverseConfiguration
+    FilterInfo filterInfoFromJSFixedFastJson(JSFixedFastJsonFilterInfo jSFixedFastJsonFilterInfo);
+
+    WebInputFilterInfo filterInfoToWebInput(FilterInfo filterInfo);
+
+    @InheritInverseConfiguration
+    FilterInfo filterInfoFromWebInput(WebInputFilterInfo webInputFilterInfo);
+
     // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(
             AnalysisFileFileDownloadInfo analysisFileFileDownloadInfo

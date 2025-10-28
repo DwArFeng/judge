@@ -87,6 +87,10 @@ public class ServiceConfiguration {
     private final AdapterInfoDao adapterInfoDao;
     private final AdapterSupportCache adapterSupportCache;
     private final AdapterSupportDao adapterSupportDao;
+    private final FilterInfoCache filterInfoCache;
+    private final FilterInfoDao filterInfoDao;
+    private final FilterSupportCache filterSupportCache;
+    private final FilterSupportDao filterSupportDao;
 
     @Value("${cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
@@ -126,6 +130,10 @@ public class ServiceConfiguration {
     private long adapterInfoTimeout;
     @Value("${cache.timeout.entity.adapter_support}")
     private long adapterSupportTimeout;
+    @Value("${cache.timeout.entity.filter_info}")
+    private long filterInfoTimeout;
+    @Value("${cache.timeout.entity.filter_support}")
+    private long filterSupportTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -193,7 +201,11 @@ public class ServiceConfiguration {
             AdapterInfoCache adapterInfoCache,
             AdapterInfoDao adapterInfoDao,
             AdapterSupportCache adapterSupportCache,
-            AdapterSupportDao adapterSupportDao
+            AdapterSupportDao adapterSupportDao,
+            FilterInfoCache filterInfoCache,
+            FilterInfoDao filterInfoDao,
+            FilterSupportCache filterSupportCache,
+            FilterSupportDao filterSupportDao
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -261,6 +273,10 @@ public class ServiceConfiguration {
         this.adapterInfoDao = adapterInfoDao;
         this.adapterSupportCache = adapterSupportCache;
         this.adapterSupportDao = adapterSupportDao;
+        this.filterInfoCache = filterInfoCache;
+        this.filterInfoDao = filterInfoDao;
+        this.filterSupportCache = filterSupportCache;
+        this.filterSupportDao = filterSupportDao;
     }
 
     @Bean
@@ -1199,6 +1215,66 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 adapterSupportDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, FilterInfo> filterInfoGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                filterInfoDao,
+                filterInfoCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                filterInfoTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<FilterInfo> filterInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                filterInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<FilterInfo> filterInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                filterInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, FilterSupport> filterSupportGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                filterSupportDao,
+                filterSupportCache,
+                new ExceptionKeyGenerator<>(),
+                filterSupportTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<FilterSupport> filterSupportDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                filterSupportDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<FilterSupport> filterSupportDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                filterSupportDao
         );
     }
 }

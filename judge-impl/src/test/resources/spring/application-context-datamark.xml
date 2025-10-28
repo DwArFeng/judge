@@ -72,4 +72,12 @@
             resource-charset="${datamark.adapter.resource_charset}"
             update-allowed="${datamark.adapter.update_allowed}"
     />
+
+    <!-- Filter 数据标识 -->
+    <datamark:handler
+            handler-name="filterDatamarkHandler"
+            resource-url="${datamark.filter.resource_url}"
+            resource-charset="${datamark.filter.resource_charset}"
+            update-allowed="${datamark.filter.update_allowed}"
+    />
 </beans>

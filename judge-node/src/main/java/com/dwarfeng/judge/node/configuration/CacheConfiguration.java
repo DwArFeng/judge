@@ -85,6 +85,10 @@ public class CacheConfiguration {
     private String adapterInfoPrefix;
     @Value("${cache.prefix.entity.adapter_support}")
     private String adapterSupportPrefix;
+    @Value("${cache.prefix.entity.filter_info}")
+    private String filterInfoPrefix;
+    @Value("${cache.prefix.entity.filter_support}")
+    private String filterSupportPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -439,6 +443,26 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonAdapterSupport>) template,
                 new StringIdStringKeyFormatter(adapterSupportPrefix),
                 new MapStructBeanTransformer<>(AdapterSupport.class, FastJsonAdapterSupport.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, FilterInfo, FastJsonFilterInfo> filterInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonFilterInfo>) template,
+                new LongIdStringKeyFormatter(filterInfoPrefix),
+                new MapStructBeanTransformer<>(FilterInfo.class, FastJsonFilterInfo.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, FilterSupport, FastJsonFilterSupport> filterSupportRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonFilterSupport>) template,
+                new StringIdStringKeyFormatter(filterSupportPrefix),
+                new MapStructBeanTransformer<>(FilterSupport.class, FastJsonFilterSupport.class, BeanMapper.class)
         );
     }
 }
