@@ -53,7 +53,8 @@
 
 ### 功能移除
 
-- (无)
+- 移除 judge-sdk 模块 BeanMapper 中多余的接口方法。
+  - BeanMapper.sinkerMetaCompleteInfoToWebInput(WebInputSinkerMetaCompleteInfo)。
 
 ---
 

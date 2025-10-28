@@ -600,10 +600,6 @@ public interface BeanMapper {
             WebInputAnalysisPictureThumbnailDownloadInfo webInputAnalysisPictureThumbnailDownloadInfo
     );
 
-    WebInputSinkerMetaCompleteInfo sinkerMetaCompleteInfoToWebInput(
-            WebInputSinkerMetaCompleteInfo webInputSinkerMetaCompleteInfo
-    );
-
     WebInputSinkerMetaCompleteInfo sinkerMetaCompleteInfoToWebInput(SinkerMetaCompleteInfo sinkerMetaCompleteInfo);
 
     @InheritInverseConfiguration
