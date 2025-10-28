@@ -621,4 +621,9 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     SinkInfo sinkInfoFromJSFixedFastJson(JSFixedFastJsonSinkInfo jSFixedFastJsonSinkInfo);
+
+    FastJsonPurgeFinishedResult purgeFinishedResultToFastJson(PurgeFinishedResult purgeFinishedResult);
+
+    @InheritInverseConfiguration
+    PurgeFinishedResult purgeFinishedResultFromFastJson(FastJsonPurgeFinishedResult fastJsonPurgeFinishedResult);
 }

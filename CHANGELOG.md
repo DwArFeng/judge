@@ -48,6 +48,10 @@
 
 ### Bug 修复
 
+- 补全 judge-sdk 模块 BeanMapper 中缺失的接口方法。
+  - com.dwarfeng.judge.sdk.bean.BeanMapper.purgeFinishedResultToFastJson。
+  - com.dwarfeng.judge.sdk.bean.BeanMapper.purgeFinishedResultFromFastJson。
+
 - 修正部分运维指令中的代码错误。
   - com.dwarfeng.judge.impl.service.telqos.SinkerSessionCommand。
 
