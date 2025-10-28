@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 实现运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.SectionBindingLocalCacheCommand。
   - com.dwarfeng.judge.impl.service.telqos.ProviderLocalCacheCommand。
   - com.dwarfeng.judge.impl.service.telqos.ProviderSessionCommand。
   - com.dwarfeng.judge.impl.service.telqos.AdapterLocalCacheCommand。
