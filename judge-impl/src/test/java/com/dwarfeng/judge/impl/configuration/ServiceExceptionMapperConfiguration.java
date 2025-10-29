@@ -78,6 +78,11 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(AdapterMakeException.class, ServiceExceptionCodes.ADAPTER_MAKE_FAILED);
         destination.put(UnsupportedAdapterTypeException.class, ServiceExceptionCodes.ADAPTER_TYPE_UNSUPPORTED);
         destination.put(AdapterExecutionException.class, ServiceExceptionCodes.ADAPTER_EXECUTION_FAILED);
+        destination.put(FilterNotExistsException.class, ServiceExceptionCodes.FILTER_NOT_EXISTS);
+        destination.put(FilterException.class, ServiceExceptionCodes.FILTER_FAILED);
+        destination.put(FilterMakeException.class, ServiceExceptionCodes.FILTER_MAKE_FAILED);
+        destination.put(UnsupportedFilterTypeException.class, ServiceExceptionCodes.FILTER_TYPE_UNSUPPORTED);
+        destination.put(FilterExecutionException.class, ServiceExceptionCodes.FILTER_EXECUTION_FAILED);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

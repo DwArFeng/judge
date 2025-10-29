@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 public class LookupInfo implements Dto {
 
-    private static final long serialVersionUID = -4728418298113771459L;
+    private static final long serialVersionUID = -7509398702083001209L;
 
     /**
      * 提供器信息键。
@@ -44,6 +44,29 @@ public class LookupInfo implements Dto {
      * 该字段对应的适配器信息必须存在于系统中，且必须处于启用状态。
      */
     private LongIdKey adapterInfoKey;
+
+    /**
+     * 过滤器信息键。
+     *
+     * <p>
+     * 该字段用于指定查询过程中使用的数据过滤器。<br>
+     * 当该字段不为 <code>null</code> 时，
+     * 系统会在调用提供器查询数据之后，在调用分析器分析数据之前，
+     * 先使用指定的过滤器对结果进行过滤处理。<br>
+     * 过滤器的主要作用是将提供器查询的数据进行预处理、验证、转换等操作。
+     *
+     * <p>
+     * 例如，分析器可能需要查询某个用户的数据，但提供器提供的是所有用户的数据，
+     * 此时可以通过过滤器将某个用户的数据提取出来。
+     *
+     * <p>
+     * 当该字段为 <code>null</code> 时，表示不需要使用过滤器，分析器直接使用
+     * 原始的提供器提供的数据。
+     *
+     * <p>
+     * 该字段对应的过滤器信息必须存在于系统中，且必须处于启用状态。
+     */
+    private LongIdKey filterInfoKey;
 
     /**
      * 预设。
@@ -97,9 +120,10 @@ public class LookupInfo implements Dto {
     public LookupInfo() {
     }
 
-    public LookupInfo(LongIdKey providerInfoKey, LongIdKey adapterInfoKey, String preset, Object[] objs) {
+    public LookupInfo(LongIdKey providerInfoKey, LongIdKey adapterInfoKey, LongIdKey filterInfoKey, String preset, Object[] objs) {
         this.providerInfoKey = providerInfoKey;
         this.adapterInfoKey = adapterInfoKey;
+        this.filterInfoKey = filterInfoKey;
         this.preset = preset;
         this.objs = objs;
     }
@@ -118,6 +142,14 @@ public class LookupInfo implements Dto {
 
     public void setAdapterInfoKey(LongIdKey adapterInfoKey) {
         this.adapterInfoKey = adapterInfoKey;
+    }
+
+    public LongIdKey getFilterInfoKey() {
+        return filterInfoKey;
+    }
+
+    public void setFilterInfoKey(LongIdKey filterInfoKey) {
+        this.filterInfoKey = filterInfoKey;
     }
 
     public String getPreset() {
@@ -141,6 +173,7 @@ public class LookupInfo implements Dto {
         return "LookupInfo{" +
                 "providerInfoKey=" + providerInfoKey +
                 ", adapterInfoKey=" + adapterInfoKey +
+                ", filterInfoKey=" + filterInfoKey +
                 ", preset='" + preset + '\'' +
                 ", objs=" + Arrays.toString(objs) +
                 '}';

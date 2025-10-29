@@ -132,6 +132,16 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(392), "adapter type unsupported");
     public static final ServiceException.Code ADAPTER_EXECUTION_FAILED =
             new ServiceException.Code(offset(393), "adapter execution failed");
+    public static final ServiceException.Code FILTER_NOT_EXISTS =
+            new ServiceException.Code(offset(400), "filter not exists");
+    public static final ServiceException.Code FILTER_FAILED =
+            new ServiceException.Code(offset(410), "filter failed");
+    public static final ServiceException.Code FILTER_MAKE_FAILED =
+            new ServiceException.Code(offset(411), "filter make failed");
+    public static final ServiceException.Code FILTER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(412), "filter type unsupported");
+    public static final ServiceException.Code FILTER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(413), "filter execution failed");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -216,6 +226,11 @@ public final class ServiceExceptionCodes {
         ADAPTER_MAKE_FAILED.setCode(offset(391));
         ADAPTER_TYPE_UNSUPPORTED.setCode(offset(392));
         ADAPTER_EXECUTION_FAILED.setCode(offset(393));
+        FILTER_NOT_EXISTS.setCode(offset(400));
+        FILTER_FAILED.setCode(offset(410));
+        FILTER_MAKE_FAILED.setCode(offset(411));
+        FILTER_TYPE_UNSUPPORTED.setCode(offset(412));
+        FILTER_EXECUTION_FAILED.setCode(offset(413));
     }
 
     private ServiceExceptionCodes() {

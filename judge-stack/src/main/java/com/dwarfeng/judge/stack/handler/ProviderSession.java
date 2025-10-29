@@ -37,6 +37,7 @@ public interface ProviderSession {
      * <ul>
      *     <li>LookupInfo.providerInfoKey</li>
      *     <li>LookupInfo.adapterInfoKey</li>
+     *     <li>LookupInfo.filterInfoKey</li>
      * </ul>
      *
      * @param info 查询信息。

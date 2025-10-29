@@ -3,6 +3,7 @@ package com.dwarfeng.judge.impl.handler;
 import com.dwarfeng.judge.stack.bean.dto.LookupInfo;
 import com.dwarfeng.judge.stack.bean.dto.LookupResult;
 import com.dwarfeng.judge.stack.exception.AdapterNotExistsException;
+import com.dwarfeng.judge.stack.exception.FilterNotExistsException;
 import com.dwarfeng.judge.stack.handler.*;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
@@ -21,13 +22,16 @@ public class ProvideHandlerImpl implements ProvideHandler {
 
     private final ProviderSessionHoldHandler providerSessionHoldHandler;
     private final AdapterLocalCacheHandler adapterLocalCacheHandler;
+    private final FilterLocalCacheHandler filterLocalCacheHandler;
 
     public ProvideHandlerImpl(
             ProviderSessionHoldHandler providerSessionHoldHandler,
-            AdapterLocalCacheHandler adapterLocalCacheHandler
+            AdapterLocalCacheHandler adapterLocalCacheHandler,
+            FilterLocalCacheHandler filterLocalCacheHandler
     ) {
         this.providerSessionHoldHandler = providerSessionHoldHandler;
         this.adapterLocalCacheHandler = adapterLocalCacheHandler;
+        this.filterLocalCacheHandler = filterLocalCacheHandler;
     }
 
     @Override
@@ -44,6 +48,7 @@ public class ProvideHandlerImpl implements ProvideHandler {
         // 展开参数。
         LongIdKey providerInfoKey = info.getProviderInfoKey();
         LongIdKey adapterInfoKey = info.getAdapterInfoKey();
+        LongIdKey filterInfoKey = info.getFilterInfoKey();
         String preset = info.getPreset();
         Object[] objs = info.getObjs();
 
@@ -60,7 +65,21 @@ public class ProvideHandlerImpl implements ProvideHandler {
         // 获取会话。
         ProviderSession providerSession = providerSessionHoldHandler.get(providerInfoKey);
 
+        // 调用会话的方法，构造结果
+        LookupResult result = providerSession.lookup(
+                new LookupInfo(providerInfoKey, adapterInfoKey, filterInfoKey, preset, objs));
+
+        // 获取过滤器
+        if (Objects.nonNull(filterInfoKey)) {
+            Filter filter = filterLocalCacheHandler.get(filterInfoKey);
+            if (Objects.isNull(filter)) {
+                LOGGER.debug("过滤器不存在, 将抛出异常... ");
+                throw new FilterNotExistsException(filterInfoKey);
+            }
+            result = filter.filt(result);
+        }
+
         // 调用会话的方法，构造结果并返回。
-        return providerSession.lookup(new LookupInfo(providerInfoKey, adapterInfoKey, preset, objs));
+        return result;
     }
 }
