@@ -62,6 +62,7 @@ public class SinkerBindingLocalCacheCommand extends CliCommand {
         return list;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     protected void executeWithCmd(Context context, CommandLine cmd) throws TelqosException {
         try {
@@ -108,6 +109,7 @@ public class SinkerBindingLocalCacheCommand extends CliCommand {
         processSinkerMetaInfoMapMapEntries(context, sinkerMetaInfoMapMapEntries);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void processSinkerMetaInfoMapMapEntries(
             Context context, List<Map.Entry<LongIdKey, Map<String, SinkerMetaInfo>>> entries
     ) throws Exception {
@@ -126,6 +128,7 @@ public class SinkerBindingLocalCacheCommand extends CliCommand {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void printSinkerMetaInfoMapMapEntry(
             Context context, int i, int endIndex, Map.Entry<LongIdKey, Map<String, SinkerMetaInfo>> entry
     ) throws Exception {
