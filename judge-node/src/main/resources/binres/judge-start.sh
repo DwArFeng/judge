@@ -1,35 +1,35 @@
 #!/bin/sh
 
-# 设置程序的根目录。
+# Set the root directory of the program.
 basedir="$(cd "$(dirname "$0")/.." && pwd)"
 
-# JVM 内存设置。
-# 如果您希望系统自动分配内存，请注释下方内容...
+# JVM memory settings.
+# If you want the program to automatically allocate memory, please comment out the content below...
 jvm_memory_opts="\
 -Xmx100m \
 -XX:MaxMetaspaceSize=130m \
 -XX:ReservedCodeCacheSize=15m \
 -XX:CompressedClassSpaceSize=15m"
-# 并取消下方注释。
+# and uncomment the content below.
 # jvm_memory_opts=""
 
-# JAVA JMXREMOTE 配置。
-# 如果您希望启用 JMX 远程管理，请注释下方内容...
+# JAVA JMXREMOTE configuration.
+# If you want to enable JMX remote management, please comment out the content below...
 java_jmxremote_opts=""
-# 并取消下方注释。
+# and uncomment the content below.
 # java_jmxremote_opts="\
 # -Dcom.sun.management.jmxremote.port=23000 \
 # -Dcom.sun.management.jmxremote.authenticate=false \
 # -Dcom.sun.management.jmxremote.ssl=false"
 
-# JAVA AWT HEADLESS 配置。
-# 如果该项目运行在有显示设备、键盘或鼠标的环境中，请注释下方内容...
+# JAVA AWT HEADLESS configuration.
+# If this project runs in an environment with display devices, keyboard or mouse, please comment out the content below...
 java_awt_headless_opts="-Djava.awt.headless=true"
-# 并取消下方注释。
+# and uncomment the content below.
 # java_awt_headless_opts=""
 
-# JAVA 日志配置。
-# 固定配置，请勿编辑此行。
+# JAVA logging configuration.
+# Fixed configuration, please do not edit this line.
 java_logging_opts="\
 -Dlog4j2.configurationFile=confext/logging-settings.xml,conf/logging/settings.xml \
 -Dlog4j.shutdownHookEnabled=false \

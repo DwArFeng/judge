@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 优化启停脚本注释，以规避潜在的字符集问题。
+  - binres/settingrepo-start.bat。
+  - binres/settingrepo-start.sh。
+  - binres/settingrepo-stop.sh。
+
 - 优化部分类中的文本内容。
   - com.dwarfeng.judge.impl.service.telqos.SinkerBindingLocalCacheCommand。
 
