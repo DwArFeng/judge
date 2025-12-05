@@ -66,6 +66,8 @@
 
 ### Bug 修复
 
+- 修复项目打包后输出的可执行制品中 `docs` 目录下图片损坏的问题。
+
 - 补全 judge-sdk 模块 BeanMapper 中缺失的接口方法。
   - com.dwarfeng.judge.sdk.bean.BeanMapper.purgeFinishedResultToFastJson。
   - com.dwarfeng.judge.sdk.bean.BeanMapper.purgeFinishedResultFromFastJson。
