@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化部分类中的文本内容。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerBindingLocalCacheCommand。
+
 - 优化部分类中的文档注释。
   - com.dwarfeng.judge.stack.handler.JobLocalCacheHandler。
 

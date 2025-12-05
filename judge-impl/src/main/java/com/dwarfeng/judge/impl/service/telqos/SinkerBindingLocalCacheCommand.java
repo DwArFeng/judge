@@ -33,7 +33,7 @@ public class SinkerBindingLocalCacheCommand extends CliCommand {
 
     @SuppressWarnings("SpellCheckingInspection")
     private static final String IDENTITY = "sblc";
-    private static final String DESCRIPTION = "下沉本地缓存操作";
+    private static final String DESCRIPTION = "下沉绑定本地缓存操作";
 
     private static final String CMD_LINE_SYNTAX_LOOKUP = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_LOOKUP) + " sinker-info-id";
