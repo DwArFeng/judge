@@ -6,10 +6,11 @@
 
 judge-start.sh 是本项目的启动脚本，用于启动本项目。 您可以调整脚本中的参数，以适应您的需求。
 
-可调整的脚步参数包括：
+可调整的脚本参数包括：
 
 - JVM 内存选项。
 - JMX 远程选项。
+- AWT Headless 选项。
 
 脚本执行后，将会以 nohup 方式启动本项目，并将 PID 写入 judge.pid 文件中。
 
@@ -86,6 +87,7 @@ eval \
 nohup /bin/java -classpath "lib/*:libext/*" \
 "$jvm_memory_opts" \
 "$java_jmxremote_opts" \
+"$java_awt_headless_opts" \
 "$java_logging_opts" \
 "${mainClass}" \
 >/dev/null 2>&1 "&"
@@ -99,6 +101,7 @@ eval \
 nohup /bin/java -classpath "lib/*:libext/*" \
 "$jvm_memory_opts" \
 "$java_jmxremote_opts" \
+"$java_awt_headless_opts" \
 "$java_logging_opts" \
 "${mainClass}" \
 >out.log 2>&1 "&"

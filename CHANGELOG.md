@@ -5,6 +5,8 @@
 ### 功能构建
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/BatchScripts.md。
+  - docs/wiki/zh-CN/ShellScripts.md。
   - docs/wiki/zh-CN/images/SystemArchitecture.png。
   - docs/wiki/en-US/README.md。
   - docs/wiki/zh-CN/README.md。
