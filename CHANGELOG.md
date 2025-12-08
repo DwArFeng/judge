@@ -5,6 +5,8 @@
 ### 功能构建
 
 - 增加预设查询。
+  - com.dwarfeng.judge.stack.service.SinkerSupportMaintainService.ID_LIKE。
+  - com.dwarfeng.judge.stack.service.SinkerSupportMaintainService.LABEL_LIKE。
   - com.dwarfeng.judge.stack.service.SinkerInfoMaintainService.KEY_NOT_IN。
 
 - 优化部分类的日志输出。

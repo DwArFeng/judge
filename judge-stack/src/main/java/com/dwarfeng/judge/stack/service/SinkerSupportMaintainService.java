@@ -14,4 +14,14 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  */
 public interface SinkerSupportMaintainService extends BatchCrudService<StringIdKey, SinkerSupport>,
         EntireLookupService<SinkerSupport>, PresetLookupService<SinkerSupport> {
+
+    /**
+     * @since 2.3.1
+     */
+    String ID_LIKE = "id_like";
+
+    /**
+     * @since 2.3.1
+     */
+    String LABEL_LIKE = "label_like";
 }
