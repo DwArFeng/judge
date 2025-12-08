@@ -20,6 +20,9 @@
 
 ### Bug 修复
 
+- 修复部分 Hibernate 实体中的字段错误。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSinkerVariable。
+
 - 修复部分 FastJson 实体字段注解中的错误。
   - com.dwarfeng.judge.sdk.bean.entity.FastJsonSinkerMetaIndicator。
 

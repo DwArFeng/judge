@@ -293,14 +293,8 @@ public interface BeanMapper {
     SinkerSupport sinkerSupportFromHibernate(HibernateSinkerSupport hibernateSinkerSupport);
 
     @Mapping(target = "variableStringId", ignore = true)
-    @Mapping(target = "valueType", ignore = true)
-    @Mapping(target = "stringValue", ignore = true)
     @Mapping(target = "sinkerLongId", ignore = true)
     @Mapping(target = "sinkerInfo", ignore = true)
-    @Mapping(target = "longValue", ignore = true)
-    @Mapping(target = "doubleValue", ignore = true)
-    @Mapping(target = "dateValue", ignore = true)
-    @Mapping(target = "booleanValue", ignore = true)
     HibernateSinkerVariable sinkerVariableToHibernate(SinkerVariable sinkerVariable);
 
     @InheritInverseConfiguration
