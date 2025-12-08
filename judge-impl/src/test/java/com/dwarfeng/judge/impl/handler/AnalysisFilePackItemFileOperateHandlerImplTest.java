@@ -5,6 +5,7 @@ import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackItemFile;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackItemFileDownloadInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackItemFileUploadInfo;
+import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackItemFileUploadResult;
 import com.dwarfeng.judge.stack.bean.entity.AnalysisFilePack;
 import com.dwarfeng.judge.stack.handler.AnalysisFilePackItemFileOperateHandler;
 import com.dwarfeng.judge.stack.service.AnalysisFilePackItemInfoMaintainService;
@@ -74,20 +75,21 @@ public class AnalysisFilePackItemFileOperateHandlerImplTest {
             AnalysisFilePackItemFileUploadInfo analysisFilePackItemFileUploadInfo =
                     new AnalysisFilePackItemFileUploadInfo(analysisFilePack.getKey(), "test-avatar.png", content);
 
-            LongIdKey longIdKey = analysisFilePackItemFileOperateHandler.uploadFile(
+            AnalysisFilePackItemFileUploadResult uploadResult = analysisFilePackItemFileOperateHandler.uploadFile(
                     analysisFilePackItemFileUploadInfo
             );
+            LongIdKey analysisFilePackItemKey = uploadResult.getAnalysisFilePackItemKey();
             // 下载文件，文件的内容应该与 content 相等。
             AnalysisFilePackItemFile analysisFilePackFile =
                     analysisFilePackItemFileOperateHandler.downloadFile(
-                            new AnalysisFilePackItemFileDownloadInfo(longIdKey)
+                            new AnalysisFilePackItemFileDownloadInfo(analysisFilePackItemKey)
                     );
             assertArrayEquals(content, analysisFilePackFile.getContent());
 
-            analysisFilePackItemInfoMaintainService.delete(longIdKey);
+            analysisFilePackItemInfoMaintainService.delete(analysisFilePackItemKey);
             assertFalse(ftpHandler.existsFile(
                     ftpPathResolver.resolvePath(FtpPathResolver.RELATIVE_ANALYSIS_FILE_PACK_ITEM_FILE),
-                    Long.toString(longIdKey.getLongId())
+                    Long.toString(analysisFilePackItemKey.getLongId())
             ));
         } finally {
             analysisFilePackMaintainService.deleteIfExists(analysisFilePack.getKey());

@@ -1,7 +1,6 @@
 package com.dwarfeng.judge.stack.handler;
 
 import com.dwarfeng.judge.stack.bean.dto.*;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
@@ -55,10 +54,11 @@ public interface AnalysisPicturePackItemFileOperateHandler extends Handler {
      * 如果上传的分析结果包条存在，则向图片包尾部追加图片包条目。
      *
      * @param info 上传信息。
-     * @return 生成的分析结果图片包条目文件信息主键。
+     * @return 上传结果。
      * @throws HandlerException 处理器异常。
      */
-    LongIdKey uploadFile(AnalysisPicturePackItemFileUploadInfo info) throws HandlerException;
+    AnalysisPicturePackItemFileUploadResult uploadFile(AnalysisPicturePackItemFileUploadInfo info)
+            throws HandlerException;
 
     /**
      * 上传分析结果图片包条目文件流。
@@ -75,8 +75,9 @@ public interface AnalysisPicturePackItemFileOperateHandler extends Handler {
      * 即其中的 {@link AnalysisPicturePackItemFileStreamUploadInfo#getContent()}。
      *
      * @param info 上传信息。
-     * @return 生成的分析结果图片包条目文件信息主键。
+     * @return 上传结果。
      * @throws HandlerException 处理器异常。
      */
-    LongIdKey uploadFileStream(AnalysisPicturePackItemFileStreamUploadInfo info) throws HandlerException;
+    AnalysisPicturePackItemFileUploadResult uploadFileStream(AnalysisPicturePackItemFileStreamUploadInfo info)
+            throws HandlerException;
 }

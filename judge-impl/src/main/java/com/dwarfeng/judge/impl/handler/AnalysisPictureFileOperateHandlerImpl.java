@@ -151,15 +151,15 @@ public class AnalysisPictureFileOperateHandlerImpl implements AnalysisPictureFil
     }
 
     @Override
-    public void uploadFile(AnalysisPictureFileUploadInfo info) throws HandlerException {
+    public AnalysisPictureFileUploadResult uploadFile(AnalysisPictureFileUploadInfo info) throws HandlerException {
         try {
-            uploadFile0(info);
+            return uploadFile0(info);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
     }
 
-    private void uploadFile0(AnalysisPictureFileUploadInfo info) throws Exception {
+    private AnalysisPictureFileUploadResult uploadFile0(AnalysisPictureFileUploadInfo info) throws Exception {
         // 展开参数。
         LongIdKey analysisPictureKey = info.getAnalysisPictureKey();
         String originName = info.getOriginName();
@@ -186,18 +186,23 @@ public class AnalysisPictureFileOperateHandlerImpl implements AnalysisPictureFil
 
         // 插入或更新 AnalysisPictureInfo 对象。
         analysisPictureInfoMaintainService.insertOrUpdate(analysisPictureInfo);
+
+        // 返回上传结果。
+        return new AnalysisPictureFileUploadResult(analysisPictureKey);
     }
 
     @Override
-    public void uploadFileStream(AnalysisPictureFileStreamUploadInfo info) throws HandlerException {
+    public AnalysisPictureFileUploadResult uploadFileStream(AnalysisPictureFileStreamUploadInfo info)
+            throws HandlerException {
         try {
-            uploadFileByStream0(info);
+            return uploadFileByStream0(info);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
     }
 
-    private void uploadFileByStream0(AnalysisPictureFileStreamUploadInfo info) throws Exception {
+    private AnalysisPictureFileUploadResult uploadFileByStream0(AnalysisPictureFileStreamUploadInfo info)
+            throws Exception {
         // 展开参数。
         LongIdKey analysisPictureKey = info.getAnalysisPictureKey();
         String originName = info.getOriginName();
@@ -226,6 +231,9 @@ public class AnalysisPictureFileOperateHandlerImpl implements AnalysisPictureFil
 
         // 插入或更新 AnalysisPictureInfo 对象。
         analysisPictureInfoMaintainService.insertOrUpdate(analysisPictureInfo);
+
+        // 返回上传结果。
+        return new AnalysisPictureFileUploadResult(analysisPictureKey);
     }
 
     @SuppressWarnings("DuplicatedCode")

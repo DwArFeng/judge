@@ -168,7 +168,8 @@ public class AnalysisPicturePackItemFileOperateHandlerImpl implements AnalysisPi
     }
 
     @Override
-    public LongIdKey uploadFile(AnalysisPicturePackItemFileUploadInfo info) throws HandlerException {
+    public AnalysisPicturePackItemFileUploadResult uploadFile(AnalysisPicturePackItemFileUploadInfo info)
+            throws HandlerException {
         try {
             return uploadFile0(info);
         } catch (Exception e) {
@@ -177,7 +178,8 @@ public class AnalysisPicturePackItemFileOperateHandlerImpl implements AnalysisPi
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private LongIdKey uploadFile0(AnalysisPicturePackItemFileUploadInfo info) throws Exception {
+    private AnalysisPicturePackItemFileUploadResult uploadFile0(AnalysisPicturePackItemFileUploadInfo info)
+            throws Exception {
         // 展开参数。
         LongIdKey analysisPicturePackKey = info.getAnalysisPicturePackKey();
         String originName = info.getOriginName();
@@ -222,11 +224,12 @@ public class AnalysisPicturePackItemFileOperateHandlerImpl implements AnalysisPi
         analysisPicturePackMaintainService.insertOrUpdate(analysisPicturePack);
 
         // 返回新的分析结果图片包条目文件主键。
-        return analysisPicturePackItemKey;
+        return new AnalysisPicturePackItemFileUploadResult(analysisPicturePackItemKey);
     }
 
     @Override
-    public LongIdKey uploadFileStream(AnalysisPicturePackItemFileStreamUploadInfo info) throws HandlerException {
+    public AnalysisPicturePackItemFileUploadResult uploadFileStream(AnalysisPicturePackItemFileStreamUploadInfo info)
+            throws HandlerException {
         try {
             return uploadFileByStream0(info);
         } catch (Exception e) {
@@ -235,7 +238,9 @@ public class AnalysisPicturePackItemFileOperateHandlerImpl implements AnalysisPi
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private LongIdKey uploadFileByStream0(AnalysisPicturePackItemFileStreamUploadInfo info) throws Exception {
+    private AnalysisPicturePackItemFileUploadResult uploadFileByStream0(
+            AnalysisPicturePackItemFileStreamUploadInfo info
+    ) throws Exception {
         // 展开参数。
         LongIdKey analysisPicturePackKey = info.getAnalysisPicturePackKey();
         String originName = info.getOriginName();
@@ -282,7 +287,7 @@ public class AnalysisPicturePackItemFileOperateHandlerImpl implements AnalysisPi
         analysisPicturePackMaintainService.insertOrUpdate(analysisPicturePack);
 
         // 返回新的分析结果图片包条目文件主键。
-        return analysisPicturePackItemKey;
+        return new AnalysisPicturePackItemFileUploadResult(analysisPicturePackItemKey);
     }
 
     @SuppressWarnings("DuplicatedCode")

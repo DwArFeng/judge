@@ -71,30 +71,32 @@ public class AnalysisPicturePackItemFileOperateHandlerImplTest {
             AnalysisPicturePackItemFileUploadInfo analysisPicturePackItemFileUploadInfo =
                     new AnalysisPicturePackItemFileUploadInfo(analysisPicturePack.getKey(), "test-avatar.png", content);
 
-            LongIdKey longIdKey = analysisPicturePackItemFileOperateHandler.uploadFile(
+            AnalysisPicturePackItemFileUploadResult uploadResult = analysisPicturePackItemFileOperateHandler.uploadFile(
                     analysisPicturePackItemFileUploadInfo
             );
+            LongIdKey analysisPicturePackItemKey =
+                    uploadResult.getAnalysisPicturePackItemKey();
             // 下载图片，图片的内容应该与 content 相等。
             AnalysisPicturePackItemFile analysisPicturePackFile =
                     analysisPicturePackItemFileOperateHandler.downloadFile(
-                            new AnalysisPicturePackItemFileDownloadInfo(longIdKey)
+                            new AnalysisPicturePackItemFileDownloadInfo(analysisPicturePackItemKey)
                     );
             assertArrayEquals(content, analysisPicturePackFile.getContent());
 
             AnalysisPicturePackItemThumbnail analysisPicturePackItemThumbnail =
                     analysisPicturePackItemFileOperateHandler.downloadThumbnail(
-                            new AnalysisPicturePackItemThumbnailDownloadInfo(longIdKey)
+                            new AnalysisPicturePackItemThumbnailDownloadInfo(analysisPicturePackItemKey)
                     );
             assertTrue(analysisPicturePackItemThumbnail.getContent().length > 0);
 
-            analysisPicturePackItemInfoMaintainService.delete(longIdKey);
+            analysisPicturePackItemInfoMaintainService.delete(analysisPicturePackItemKey);
             assertFalse(ftpHandler.existsFile(
                     ftpPathResolver.resolvePath(FtpPathResolver.RELATIVE_ANALYSIS_PICTURE_PACK_ITEM_FILE),
-                    Long.toString(longIdKey.getLongId())
+                    Long.toString(analysisPicturePackItemKey.getLongId())
             ));
             assertFalse(ftpHandler.existsFile(
                     ftpPathResolver.resolvePath(FtpPathResolver.RELATIVE_ANALYSIS_PICTURE_PACK_ITEM_THUMBNAIL),
-                    Long.toString(longIdKey.getLongId())
+                    Long.toString(analysisPicturePackItemKey.getLongId())
             ));
         } finally {
             analysisPicturePackMaintainService.deleteIfExists(analysisPicturePack.getKey());

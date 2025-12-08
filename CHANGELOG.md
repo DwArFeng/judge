@@ -4,7 +4,11 @@
 
 ### 功能构建
 
-- (无)
+- 优化部分操作处理器的方法签名。
+  - com.dwarfeng.judge.stack.handler.AnalysisFileFileOperateHandler。
+  - com.dwarfeng.judge.stack.handler.AnalysisFilePackItemFileOperateHandler。
+  - com.dwarfeng.judge.stack.handler.AnalysisPictureFileOperateHandler。
+  - com.dwarfeng.judge.stack.handler.AnalysisPicturePackItemFileOperateHandler。
 
 ### Bug 修复
 

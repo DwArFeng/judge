@@ -111,7 +111,8 @@ public class AnalysisFilePackItemFileOperateHandlerImpl implements AnalysisFileP
     }
 
     @Override
-    public LongIdKey uploadFile(AnalysisFilePackItemFileUploadInfo info) throws HandlerException {
+    public AnalysisFilePackItemFileUploadResult uploadFile(AnalysisFilePackItemFileUploadInfo info)
+            throws HandlerException {
         try {
             return uploadFile0(info);
         } catch (Exception e) {
@@ -120,7 +121,7 @@ public class AnalysisFilePackItemFileOperateHandlerImpl implements AnalysisFileP
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private LongIdKey uploadFile0(AnalysisFilePackItemFileUploadInfo info) throws Exception {
+    private AnalysisFilePackItemFileUploadResult uploadFile0(AnalysisFilePackItemFileUploadInfo info) throws Exception {
         // 展开参数。
         LongIdKey analysisFilePackKey = info.getAnalysisFilePackKey();
         String originName = info.getOriginName();
@@ -162,11 +163,12 @@ public class AnalysisFilePackItemFileOperateHandlerImpl implements AnalysisFileP
         analysisFilePackMaintainService.insertOrUpdate(analysisFilePack);
 
         // 返回新的分析结果文件包条目文件主键。
-        return analysisFilePackItemKey;
+        return new AnalysisFilePackItemFileUploadResult(analysisFilePackItemKey);
     }
 
     @Override
-    public LongIdKey uploadFileStream(AnalysisFilePackItemFileStreamUploadInfo info) throws HandlerException {
+    public AnalysisFilePackItemFileUploadResult uploadFileStream(AnalysisFilePackItemFileStreamUploadInfo info)
+            throws HandlerException {
         try {
             return uploadFileByStream0(info);
         } catch (Exception e) {
@@ -175,7 +177,8 @@ public class AnalysisFilePackItemFileOperateHandlerImpl implements AnalysisFileP
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private LongIdKey uploadFileByStream0(AnalysisFilePackItemFileStreamUploadInfo info) throws Exception {
+    private AnalysisFilePackItemFileUploadResult uploadFileByStream0(AnalysisFilePackItemFileStreamUploadInfo info)
+            throws Exception {
         // 展开参数。
         LongIdKey analysisFilePackKey = info.getAnalysisFilePackKey();
         String originName = info.getOriginName();
@@ -219,7 +222,7 @@ public class AnalysisFilePackItemFileOperateHandlerImpl implements AnalysisFileP
         analysisFilePackMaintainService.insertOrUpdate(analysisFilePack);
 
         // 返回新的分析结果文件包条目文件主键。
-        return analysisFilePackItemKey;
+        return new AnalysisFilePackItemFileUploadResult(analysisFilePackItemKey);
     }
 
     private String getFileName(LongIdKey analysisFilePackItemKey) {

@@ -96,15 +96,15 @@ public class AnalysisFileFileOperateHandlerImpl implements AnalysisFileFileOpera
     }
 
     @Override
-    public void uploadFile(AnalysisFileFileUploadInfo info) throws HandlerException {
+    public AnalysisFileFileUploadResult uploadFile(AnalysisFileFileUploadInfo info) throws HandlerException {
         try {
-            uploadFile0(info);
+            return uploadFile0(info);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
     }
 
-    private void uploadFile0(AnalysisFileFileUploadInfo info) throws Exception {
+    private AnalysisFileFileUploadResult uploadFile0(AnalysisFileFileUploadInfo info) throws Exception {
         // 展开参数。
         LongIdKey analysisFileKey = info.getAnalysisFileKey();
         String originName = info.getOriginName();
@@ -128,18 +128,22 @@ public class AnalysisFileFileOperateHandlerImpl implements AnalysisFileFileOpera
 
         // 插入或更新 AnalysisFileInfo 对象。
         analysisFileInfoMaintainService.insertOrUpdate(analysisFileInfo);
+
+        // 返回上传结果。
+        return new AnalysisFileFileUploadResult(analysisFileKey);
     }
 
     @Override
-    public void uploadFileStream(AnalysisFileFileStreamUploadInfo info) throws HandlerException {
+    public AnalysisFileFileUploadResult uploadFileStream(AnalysisFileFileStreamUploadInfo info)
+            throws HandlerException {
         try {
-            uploadFileByStream0(info);
+            return uploadFileByStream0(info);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
     }
 
-    private void uploadFileByStream0(AnalysisFileFileStreamUploadInfo info) throws Exception {
+    private AnalysisFileFileUploadResult uploadFileByStream0(AnalysisFileFileStreamUploadInfo info) throws Exception {
         // 展开参数。
         LongIdKey analysisFileKey = info.getAnalysisFileKey();
         String originName = info.getOriginName();
@@ -165,6 +169,9 @@ public class AnalysisFileFileOperateHandlerImpl implements AnalysisFileFileOpera
 
         // 插入或更新 AnalysisFileInfo 对象。
         analysisFileInfoMaintainService.insertOrUpdate(analysisFileInfo);
+
+        // 返回上传结果。
+        return new AnalysisFileFileUploadResult(analysisFileKey);
     }
 
     private String getFileName(LongIdKey analysisFileFileKey) {

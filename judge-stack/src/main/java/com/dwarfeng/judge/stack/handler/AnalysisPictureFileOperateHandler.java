@@ -51,9 +51,10 @@ public interface AnalysisPictureFileOperateHandler extends Handler {
      * 如果上传的分析结果图片文件存在，则进行替换。
      *
      * @param info 上传信息。
+     * @return 上传结果。
      * @throws HandlerException 处理器异常。
      */
-    void uploadFile(AnalysisPictureFileUploadInfo info) throws HandlerException;
+    AnalysisPictureFileUploadResult uploadFile(AnalysisPictureFileUploadInfo info) throws HandlerException;
 
     /**
      * 通过流的方式上传分析结果图片。
@@ -70,7 +71,8 @@ public interface AnalysisPictureFileOperateHandler extends Handler {
      * 即其中的 {@link AnalysisPictureFileStreamUploadInfo#getContent()}。
      *
      * @param info 上传信息。
+     * @return 上传结果。
      * @throws HandlerException 处理器异常。
      */
-    void uploadFileStream(AnalysisPictureFileStreamUploadInfo info) throws HandlerException;
+    AnalysisPictureFileUploadResult uploadFileStream(AnalysisPictureFileStreamUploadInfo info) throws HandlerException;
 }
