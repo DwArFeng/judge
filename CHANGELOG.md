@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化部分类的日志输出。
+  - com.dwarfeng.judge.impl.handler.AnalysisOperateHandlerImpl。
+
 - 优化部分操作处理器的方法签名。
   - com.dwarfeng.judge.stack.handler.AnalysisFileFileOperateHandler。
   - com.dwarfeng.judge.stack.handler.AnalysisFilePackItemFileOperateHandler。

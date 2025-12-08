@@ -10,6 +10,8 @@ import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class AnalysisOperateHandlerImpl implements AnalysisOperateHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalysisOperateHandlerImpl.class);
 
     private final AnalysisMaintainService analysisMaintainService;
     private final AnalysisPictureInfoMaintainService analysisPictureInfoMaintainService;
@@ -328,18 +332,20 @@ public class AnalysisOperateHandlerImpl implements AnalysisOperateHandler {
         // 如果 content 是 byte[]。
         if (content instanceof byte[]) {
             byte[] bytes = (byte[]) content;
-            analysisPictureFileOperateHandler.uploadFile(
+            AnalysisPictureFileUploadResult uploadResult = analysisPictureFileOperateHandler.uploadFile(
                     new AnalysisPictureFileUploadInfo(pictureKey, originName, bytes)
             );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 如果 content 是 AnalysisPictureUpsertInfo.FileStream。
         else if (content instanceof AnalysisPictureUpsertInfo.FileStream) {
             AnalysisPictureUpsertInfo.FileStream fileStream = (AnalysisPictureUpsertInfo.FileStream) content;
             long length = fileStream.getLength();
             InputStream inputStream = fileStream.getInputStream();
-            analysisPictureFileOperateHandler.uploadFileStream(
+            AnalysisPictureFileUploadResult uploadResult = analysisPictureFileOperateHandler.uploadFileStream(
                     new AnalysisPictureFileStreamUploadInfo(pictureKey, originName, length, inputStream)
             );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 其余情况。
         else {
@@ -406,18 +412,23 @@ public class AnalysisOperateHandlerImpl implements AnalysisOperateHandler {
         // 如果 content 是 byte[]。
         if (content instanceof byte[]) {
             byte[] bytes = (byte[]) content;
-            analysisPicturePackItemFileOperateHandler.uploadFile(
+            AnalysisPicturePackItemFileUploadResult uploadResult = analysisPicturePackItemFileOperateHandler.uploadFile(
                     new AnalysisPicturePackItemFileUploadInfo(picturePackKey, originName, bytes)
             );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 如果 content 是 AnalysisPicturePackUpsertInfo.FileStream。
         else if (content instanceof AnalysisPicturePackUpsertInfo.FileStream) {
             AnalysisPicturePackUpsertInfo.FileStream fileStream = (AnalysisPicturePackUpsertInfo.FileStream) content;
             long length = fileStream.getLength();
             InputStream inputStream = fileStream.getInputStream();
-            analysisPicturePackItemFileOperateHandler.uploadFileStream(
-                    new AnalysisPicturePackItemFileStreamUploadInfo(picturePackKey, originName, length, inputStream)
-            );
+            AnalysisPicturePackItemFileUploadResult uploadResult =
+                    analysisPicturePackItemFileOperateHandler.uploadFileStream(
+                            new AnalysisPicturePackItemFileStreamUploadInfo(
+                                    picturePackKey, originName, length, inputStream
+                            )
+                    );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 其余情况。
         else {
@@ -448,18 +459,20 @@ public class AnalysisOperateHandlerImpl implements AnalysisOperateHandler {
         // 如果 content 是 byte[]。
         if (content instanceof byte[]) {
             byte[] bytes = (byte[]) content;
-            analysisFileFileOperateHandler.uploadFile(
+            AnalysisFileFileUploadResult uploadResult = analysisFileFileOperateHandler.uploadFile(
                     new AnalysisFileFileUploadInfo(fileKey, originName, bytes)
             );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 如果 content 是 AnalysisFileUpsertInfo.FileStream。
         else if (content instanceof AnalysisFileUpsertInfo.FileStream) {
             AnalysisFileUpsertInfo.FileStream fileStream = (AnalysisFileUpsertInfo.FileStream) content;
             long length = fileStream.getLength();
             InputStream inputStream = fileStream.getInputStream();
-            analysisFileFileOperateHandler.uploadFileStream(
+            AnalysisFileFileUploadResult uploadResult = analysisFileFileOperateHandler.uploadFileStream(
                     new AnalysisFileFileStreamUploadInfo(fileKey, originName, length, inputStream)
             );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 其余情况。
         else {
@@ -526,18 +539,20 @@ public class AnalysisOperateHandlerImpl implements AnalysisOperateHandler {
         // 如果 content 是 byte[]。
         if (content instanceof byte[]) {
             byte[] bytes = (byte[]) content;
-            analysisFilePackItemFileOperateHandler.uploadFile(
+            AnalysisFilePackItemFileUploadResult uploadResult = analysisFilePackItemFileOperateHandler.uploadFile(
                     new AnalysisFilePackItemFileUploadInfo(filePackKey, originName, bytes)
             );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 如果 content 是 AnalysisFilePackUpsertInfo.FileStream。
         else if (content instanceof AnalysisFilePackUpsertInfo.FileStream) {
             AnalysisFilePackUpsertInfo.FileStream fileStream = (AnalysisFilePackUpsertInfo.FileStream) content;
             long length = fileStream.getLength();
             InputStream inputStream = fileStream.getInputStream();
-            analysisFilePackItemFileOperateHandler.uploadFileStream(
+            AnalysisFilePackItemFileUploadResult uploadResult = analysisFilePackItemFileOperateHandler.uploadFileStream(
                     new AnalysisFilePackItemFileStreamUploadInfo(filePackKey, originName, length, inputStream)
             );
+            LOGGER.debug("uploadResult: {}", uploadResult);
         }
         // 其余情况。
         else {
