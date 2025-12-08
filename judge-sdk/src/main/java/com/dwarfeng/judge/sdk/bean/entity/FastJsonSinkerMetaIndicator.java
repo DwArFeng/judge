@@ -37,7 +37,7 @@ public class FastJsonSinkerMetaIndicator implements Bean {
     @JSONField(name = "label", ordinal = 2)
     private String label;
 
-    @JSONField(name = "initial_value", ordinal = 3)
+    @JSONField(name = "default_value", ordinal = 3)
     private String defaultValue;
 
     @JSONField(name = "description", ordinal = 4)
