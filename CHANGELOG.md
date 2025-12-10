@@ -4,6 +4,8 @@
 
 ### 功能构建
 
+- 优化 `pom.xml` 文件的格式。
+
 - 增加预设查询。
   - com.dwarfeng.judge.stack.service.SinkerSupportMaintainService.ID_LIKE。
   - com.dwarfeng.judge.stack.service.SinkerSupportMaintainService.LABEL_LIKE。
