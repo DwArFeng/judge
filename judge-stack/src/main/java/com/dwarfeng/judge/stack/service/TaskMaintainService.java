@@ -41,4 +41,14 @@ public interface TaskMaintainService extends BatchCrudService<LongIdKey, Task>,
      * @since 2.2.0
      */
     String TO_PURGED = "to_purged";
+
+    /**
+     * @since 2.3.2
+     */
+    String STATUS_EQ = "status_eq";
+
+    /**
+     * @since 2.3.2
+     */
+    String STATUS_EQ_CREATE_DATE_DESC = "status_eq_create_date_desc";
 }

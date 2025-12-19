@@ -4,7 +4,9 @@
 
 ### 功能构建
 
-- (无)
+- 增加部分实体维护服务的预设查询。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.STATUS_EQ。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.STATUS_EQ_CREATE_DATE_DESC。
 
 ### Bug 修复
 

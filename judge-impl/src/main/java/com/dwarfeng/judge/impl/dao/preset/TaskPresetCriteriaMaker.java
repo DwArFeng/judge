@@ -48,6 +48,12 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
             case TaskMaintainService.TO_PURGED:
                 toPurged(criteria, objs);
                 break;
+            case TaskMaintainService.STATUS_EQ:
+                statusEq(criteria, objs);
+                break;
+            case TaskMaintainService.STATUS_EQ_CREATE_DATE_DESC:
+                statusEqCreateDateDesc(criteria, objs);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
@@ -117,6 +123,33 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
             Date date = (Date) objs[0];
             criteria.add(Restrictions.lt("endedDate", date));
             criteria.addOrder(Order.asc("endedDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void statusEq(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("status"));
+            } else {
+                Integer integer = (Integer) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("status", integer));
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void statusEqCreateDateDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("status"));
+            } else {
+                Integer integer = (Integer) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("status", integer));
+            }
+            criteria.addOrder(Order.desc("createDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
