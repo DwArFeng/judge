@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 优化文件格式。
+  - 优化 `ftp/connection.properties` 文件的格式。
   - 优化 `application-context-*.xml` 文件的格式。
 
 - 增加部分实体维护服务的预设查询。
