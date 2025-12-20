@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/TelqosCommands.md。
+
 - 优化文件格式。
   - 优化 `ftp/connection.properties` 文件的格式。
   - 优化 `application-context-*.xml` 文件的格式。
