@@ -78,5 +78,4 @@ public class WebInputSinkerRelation implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

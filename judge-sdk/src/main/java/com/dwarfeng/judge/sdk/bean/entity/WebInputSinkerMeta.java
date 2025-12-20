@@ -78,5 +78,4 @@ public class WebInputSinkerMeta implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

@@ -99,5 +99,4 @@ public class WebInputSinkerInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

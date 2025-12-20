@@ -108,5 +108,4 @@ public class FastJsonProviderInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

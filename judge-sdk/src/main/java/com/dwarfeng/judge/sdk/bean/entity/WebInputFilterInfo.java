@@ -104,5 +104,4 @@ public class WebInputFilterInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

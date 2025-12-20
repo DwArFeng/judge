@@ -84,5 +84,4 @@ public class JSFixedFastJsonSinkerRelationKey implements Key {
                 ", sinkerLongId=" + sinkerLongId +
                 '}';
     }
-}
-
+} 

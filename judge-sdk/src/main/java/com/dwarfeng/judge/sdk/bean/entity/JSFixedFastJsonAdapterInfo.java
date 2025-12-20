@@ -108,5 +108,4 @@ public class JSFixedFastJsonAdapterInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

@@ -107,5 +107,4 @@ public class JSFixedFastJsonSinkerInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

@@ -94,5 +94,4 @@ public class FastJsonFilterSupport implements Bean {
                 ", exampleParam=" + exampleParam + '\'' +
                 '}';
     }
-}
-
+} 

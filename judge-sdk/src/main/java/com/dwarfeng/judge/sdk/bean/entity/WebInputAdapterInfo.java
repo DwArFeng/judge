@@ -104,5 +104,4 @@ public class WebInputAdapterInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

@@ -83,5 +83,4 @@ public class FastJsonSinkerRelationKey implements Key {
                 ", sinkerLongId=" + sinkerLongId +
                 '}';
     }
-}
-
+} 

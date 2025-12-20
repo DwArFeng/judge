@@ -94,5 +94,4 @@ public class FastJsonAdapterSupport implements Bean {
                 ", exampleParam=" + exampleParam + '\'' +
                 '}';
     }
-}
-
+} 

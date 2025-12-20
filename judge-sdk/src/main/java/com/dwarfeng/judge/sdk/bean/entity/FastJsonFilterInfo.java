@@ -108,5 +108,4 @@ public class FastJsonFilterInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 

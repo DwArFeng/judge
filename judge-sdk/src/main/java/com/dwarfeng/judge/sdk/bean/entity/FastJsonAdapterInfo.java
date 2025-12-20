@@ -108,5 +108,4 @@ public class FastJsonAdapterInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-}
-
+} 
