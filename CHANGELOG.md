@@ -13,6 +13,9 @@
 
 ### Bug 修复
 
+- 补全 `judge-impl` 模块测试目录下缺失的配置文件。
+  - spring/application-context-terminator.xml。
+
 - 修复部分 JSFixed、FastJson 映射错误。
   - com.dwarfeng.judge.sdk.bean.entity.FastJsonTask.anchorMessage。
   - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonTask.anchorMessage。
