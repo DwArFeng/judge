@@ -9,6 +9,7 @@ import java.util.Objects;
  * 抽象适配器注册。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 public abstract class AbstractAdapterRegistry implements AdapterMaker, AdapterSupporter {
@@ -27,8 +28,14 @@ public abstract class AbstractAdapterRegistry implements AdapterMaker, AdapterSu
         return Objects.equals(AdapterType, type);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String adaptType() {
+    public String provideType() {
         return AdapterType;
     }
 

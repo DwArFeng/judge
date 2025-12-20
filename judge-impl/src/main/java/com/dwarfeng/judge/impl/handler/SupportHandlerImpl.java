@@ -17,6 +17,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * 支持处理器实现。
+ *
+ * @author DwArFeng
+ * @since 2.0.0-beta
+ */
 @Component
 public class SupportHandlerImpl implements SupportHandler {
 
@@ -259,10 +265,10 @@ public class SupportHandlerImpl implements SupportHandler {
         adapterSupportMaintainService.batchDelete(adapterKeys);
         List<AdapterSupport> adapterSupports = adapterSupporters.stream().map(
                 supporter -> new AdapterSupport(
-                        new StringIdKey(supporter.adaptType()),
-                        supporter.adaptLabel(),
-                        supporter.adaptDescription(),
-                        supporter.adaptExampleParam()
+                        new StringIdKey(supporter.provideType()),
+                        supporter.provideLabel(),
+                        supporter.provideDescription(),
+                        supporter.provideExampleParam()
                 )
         ).collect(Collectors.toList());
         adapterSupportMaintainService.batchInsert(adapterSupports);
@@ -284,10 +290,10 @@ public class SupportHandlerImpl implements SupportHandler {
         filterSupportMaintainService.batchDelete(filterKeys);
         List<FilterSupport> filterSupports = filterSupporters.stream().map(
                 supporter -> new FilterSupport(
-                        new StringIdKey(supporter.filtType()),
-                        supporter.filtLabel(),
-                        supporter.filtDescription(),
-                        supporter.filtExampleParam()
+                        new StringIdKey(supporter.provideType()),
+                        supporter.provideLabel(),
+                        supporter.provideDescription(),
+                        supporter.provideExampleParam()
                 )
         ).collect(Collectors.toList());
         filterSupportMaintainService.batchInsert(filterSupports);

@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
  * 模拟过滤器注册。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 @Component
@@ -36,18 +37,36 @@ public class GroovyFilterRegistry extends AbstractFilterRegistry {
         this.ctx = ctx;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String filtLabel() {
+    public String provideLabel() {
         return "Groovy 过滤器";
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String filtDescription() {
+    public String provideDescription() {
         return "通过自定义的 groovy 脚本进行数据过滤。";
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String filtExampleParam() {
+    public String provideExampleParam() {
         try {
             Resource resource = ctx.getResource("classpath:groovy/ExampleFilterProcessor.groovy");
             String example;

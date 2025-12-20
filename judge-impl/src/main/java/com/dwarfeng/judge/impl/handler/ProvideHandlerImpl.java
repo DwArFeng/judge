@@ -15,6 +15,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+/**
+ * 提供处理器实现。
+ *
+ * @author DwArFeng
+ * @since 2.3.0
+ */
 @Component
 public class ProvideHandlerImpl implements ProvideHandler {
 
@@ -76,7 +82,7 @@ public class ProvideHandlerImpl implements ProvideHandler {
                 LOGGER.debug("过滤器不存在, 将抛出异常... ");
                 throw new FilterNotExistsException(filterInfoKey);
             }
-            result = filter.filt(result);
+            result = filter.filter(result);
         }
 
         // 调用会话的方法，构造结果并返回。

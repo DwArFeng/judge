@@ -9,6 +9,7 @@ import java.util.Objects;
  * 抽象过滤器注册。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 public abstract class AbstractFilterRegistry implements FilterMaker, FilterSupporter {
@@ -27,8 +28,14 @@ public abstract class AbstractFilterRegistry implements FilterMaker, FilterSuppo
         return Objects.equals(FilterType, type);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String filtType() {
+    public String provideType() {
         return FilterType;
     }
 

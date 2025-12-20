@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  * 模拟过滤器。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 @Component("groovyFilterRegistry.groovyFilter")
@@ -22,9 +23,15 @@ public class GroovyFilter extends AbstractFilter {
         this.processor = processor;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    protected LookupResult doFilt(LookupResult lookupResult) throws Exception {
-        return processor.filt(lookupResult);
+    protected LookupResult doFilter(LookupResult lookupResult) throws Exception {
+        return processor.filter(lookupResult);
     }
 
     @Override

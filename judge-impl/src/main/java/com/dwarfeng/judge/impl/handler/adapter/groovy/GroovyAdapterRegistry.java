@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
  * 模拟适配器注册。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 @Component
@@ -36,18 +37,36 @@ public class GroovyAdapterRegistry extends AbstractAdapterRegistry {
         this.ctx = ctx;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String adaptLabel() {
+    public String provideLabel() {
         return "Groovy 适配器";
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String adaptDescription() {
+    public String provideDescription() {
         return "通过自定义的 groovy 脚本进行数据适配。";
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public String adaptExampleParam() {
+    public String provideExampleParam() {
         try {
             Resource resource = ctx.getResource("classpath:groovy/ExampleAdapterProcessor.groovy");
             String example;

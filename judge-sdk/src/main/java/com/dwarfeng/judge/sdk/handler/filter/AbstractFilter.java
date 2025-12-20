@@ -9,14 +9,21 @@ import com.dwarfeng.judge.stack.handler.Filter;
  * 过滤器的抽象实现。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 public abstract class AbstractFilter implements Filter {
 
+    /**
+     * {@inheritDoc}
+     *
+     * @author DwArFeng
+     * @since 2.4.0
+     */
     @Override
-    public LookupResult filt(LookupResult lookupResult) throws FilterException {
+    public LookupResult filter(LookupResult lookupResult) throws FilterException {
         try {
-            return doFilt(lookupResult);
+            return doFilter(lookupResult);
         } catch (FilterException e) {
             throw e;
         } catch (Exception e) {
@@ -29,8 +36,10 @@ public abstract class AbstractFilter implements Filter {
      *
      * @return 新建生成的过滤器会话。
      * @throws Exception 任何可能的异常。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    protected abstract LookupResult doFilt(LookupResult lookupResult) throws Exception;
+    protected abstract LookupResult doFilter(LookupResult lookupResult) throws Exception;
 
     @Override
     public String toString() {

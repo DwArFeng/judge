@@ -4,35 +4,44 @@ package com.dwarfeng.judge.sdk.handler;
  * 适配器支持器。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 public interface AdapterSupporter {
 
     /**
-     * 适配类型。
+     * 提供类型。
      *
      * @return 类型。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String adaptType();
+    String provideType();
 
     /**
-     * 适配标签。
+     * 提供标签。
      *
      * @return 标签。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String adaptLabel();
+    String provideLabel();
 
     /**
-     * 适配描述。
+     * 提供描述。
      *
      * @return 描述。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String adaptDescription();
+    String provideDescription();
 
     /**
-     * 适配示例参数。
+     * 提供示例参数。
      *
      * @return 示例参数。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String adaptExampleParam();
+    String provideExampleParam();
 }

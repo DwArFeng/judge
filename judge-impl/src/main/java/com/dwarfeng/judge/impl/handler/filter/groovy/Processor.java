@@ -6,6 +6,7 @@ import com.dwarfeng.judge.stack.bean.dto.LookupResult;
  * Groovy 处理器。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 public interface Processor {
@@ -15,6 +16,8 @@ public interface Processor {
      *
      * @return 过滤后的参数。
      * @throws Exception 方法执行过程中发生的任何异常。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    LookupResult filt(LookupResult lookupResult) throws Exception;
+    LookupResult filter(LookupResult lookupResult) throws Exception;
 }

@@ -17,7 +17,7 @@ class ExampleFilterProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExampleFilterProcessor.class)
 
     @Override
-    LookupResult filt(LookupResult lookupResult) throws Exception {
+    LookupResult filter(LookupResult lookupResult) throws Exception {
         LOGGER.debug("数据过滤...")
         return lookupResult
     }

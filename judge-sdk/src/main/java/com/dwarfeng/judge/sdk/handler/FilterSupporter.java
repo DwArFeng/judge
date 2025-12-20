@@ -4,35 +4,44 @@ package com.dwarfeng.judge.sdk.handler;
  * 过滤器支持器。
  *
  * @author wangyc
+ * @author DwArFeng
  * @since 2.3.0
  */
 public interface FilterSupporter {
 
     /**
-     * 过滤类型。
+     * 提供类型。
      *
      * @return 类型。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String filtType();
+    String provideType();
 
     /**
-     * 过滤标签。
+     * 提供标签。
      *
      * @return 标签。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String filtLabel();
+    String provideLabel();
 
     /**
-     * 过滤描述。
+     * 提供描述。
      *
      * @return 描述。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String filtDescription();
+    String provideDescription();
 
     /**
-     * 过滤示例参数。
+     * 提供示例参数。
      *
      * @return 示例参数。
+     * @author DwArFeng
+     * @since 2.4.0
      */
-    String filtExampleParam();
+    String provideExampleParam();
 }
