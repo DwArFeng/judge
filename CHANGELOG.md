@@ -10,7 +10,9 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 JSFixed、FastJson 映射错误。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonTask.anchorMessage。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonTask.anchorMessage。
 
 ### 功能移除
 

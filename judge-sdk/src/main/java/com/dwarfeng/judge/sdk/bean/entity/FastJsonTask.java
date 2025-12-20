@@ -72,7 +72,7 @@ public class FastJsonTask implements Bean {
     @JSONField(name = "died_date", ordinal = 11)
     private Date diedDate;
 
-    @JSONField(name = "current_step", ordinal = 12)
+    @JSONField(name = "anchor_message", ordinal = 12)
     private String anchorMessage;
 
     public FastJsonTask() {
