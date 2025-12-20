@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化文件格式。
+  - 优化 `application-context-*.xml` 文件的格式。
+
 - 增加部分实体维护服务的预设查询。
   - com.dwarfeng.judge.stack.service.TaskMaintainService.STATUS_EQ。
   - com.dwarfeng.judge.stack.service.TaskMaintainService.STATUS_EQ_CREATE_DATE_DESC。

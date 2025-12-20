@@ -20,10 +20,10 @@
             name="dubbo" port="${dubbo.protocol.dubbo.port}" host="${dubbo.protocol.dubbo.host}"
             dispatcher="message" threadpool="fixed" threads="100"
     />
-    <!-- hessian协议 -->
+    <!-- hessian 协议 -->
     <dubbo:protocol name="hessian" port="${dubbo.protocol.hessian.port}" server="jetty"/>
 
-    <!-- 默认使用dubbo协议 -->
+    <!-- 默认使用 dubbo 协议 -->
     <dubbo:provider protocol="dubbo"/>
 
     <!-- 向注册中心注册暴露服务地址,注册服务 -->
