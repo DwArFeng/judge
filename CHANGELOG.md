@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复 `application-context-dubbo.xml` 中缺失的服务注册。
+  - com.dwarfeng.judge.stack.service.JudgementMaintainService。
 
 ### 功能移除
 
