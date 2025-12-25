@@ -32,6 +32,7 @@ public class AdapterLocalCacheCommand extends CliCommand {
             COMMAND_OPTION_CLEAR
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "alc";
     private static final String DESCRIPTION = "适配器本地缓存操作";
 

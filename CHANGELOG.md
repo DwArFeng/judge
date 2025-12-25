@@ -4,7 +4,26 @@
 
 ### 功能构建
 
-- (无)
+- 优化部分类中的字段的注解。
+  - com.dwarfeng.judge.impl.service.telqos.DispatchCommand。
+  - com.dwarfeng.judge.impl.service.telqos.AdapterLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.ConsumeCommand。
+  - com.dwarfeng.judge.impl.service.telqos.DispatcherCommand。
+  - com.dwarfeng.judge.impl.service.telqos.DriveCommand。
+  - com.dwarfeng.judge.impl.service.telqos.DriveLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.JobLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.ProviderLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.ProviderSessionCommand。
+  - com.dwarfeng.judge.impl.service.telqos.PurgeCommand。
+  - com.dwarfeng.judge.impl.service.telqos.ReceiveCommand。
+  - com.dwarfeng.judge.impl.service.telqos.ReceiverCommand。
+  - com.dwarfeng.judge.impl.service.telqos.ResetCommand。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerBindingLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerLocalCacheCommand。
+  - com.dwarfeng.judge.impl.service.telqos.SinkerSessionCommand。
+  - com.dwarfeng.judge.impl.service.telqos.SuperviseCommand。
+  - com.dwarfeng.judge.impl.service.telqos.SupportCommand。
+  - com.dwarfeng.judge.impl.service.telqos.TaskCheckCommand。
 
 ### Bug 修复
 

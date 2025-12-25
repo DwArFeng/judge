@@ -24,6 +24,7 @@ public class DispatcherCommand extends CliCommand {
             COMMAND_OPTION_ALL
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "dispatcher";
     private static final String DESCRIPTION = "调度器处理器操作/查看";
 

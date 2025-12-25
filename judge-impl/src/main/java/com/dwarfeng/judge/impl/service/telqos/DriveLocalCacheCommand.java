@@ -34,6 +34,7 @@ public class DriveLocalCacheCommand extends CliCommand {
             COMMAND_OPTION_CLEAR
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "dlc";
     private static final String DESCRIPTION = "驱动器本地缓存操作";
 

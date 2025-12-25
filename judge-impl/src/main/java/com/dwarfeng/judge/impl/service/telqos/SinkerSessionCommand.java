@@ -33,6 +33,7 @@ public class SinkerSessionCommand extends CliCommand {
             COMMAND_OPTION_CLOSE_AND_CLEAR
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "ss";
     private static final String DESCRIPTION = "下沉会话操作";
 

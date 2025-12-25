@@ -35,6 +35,7 @@ public class SupportCommand extends CliCommand {
             COMMAND_OPTION_RESET_FILTER
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "support";
     private static final String DESCRIPTION = "支持操作";
 

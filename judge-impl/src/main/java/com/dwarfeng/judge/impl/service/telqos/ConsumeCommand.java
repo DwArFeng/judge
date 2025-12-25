@@ -36,6 +36,7 @@ public class ConsumeCommand extends CliCommand {
     private static final String COMMAND_OPTION_BATCH = "b";
     private static final String COMMAND_OPTION_THREAD = "t";
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "csu";
     private static final String DESCRIPTION = "消费者操作";
 

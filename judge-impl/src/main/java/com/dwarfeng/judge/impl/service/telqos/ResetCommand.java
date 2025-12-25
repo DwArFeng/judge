@@ -36,6 +36,7 @@ public class ResetCommand extends CliCommand {
             COMMAND_OPTION_RESET_PROVIDE
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "reset";
     private static final String DESCRIPTION = "重置处理器操作/查看";
 

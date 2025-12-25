@@ -21,6 +21,7 @@ public class DriveCommand extends CliCommand {
             COMMAND_OPTION_STATUS
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "drive";
     private static final String DESCRIPTION = "驱动处理器操作/查看";
 

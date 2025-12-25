@@ -29,6 +29,7 @@ public class PurgeCommand extends CliCommand {
             COMMAND_OPTION_STATUS
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "purge";
     private static final String DESCRIPTION = "清除处理器操作/查看";
 

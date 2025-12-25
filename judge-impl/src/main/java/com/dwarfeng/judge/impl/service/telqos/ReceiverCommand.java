@@ -24,6 +24,7 @@ public class ReceiverCommand extends CliCommand {
             COMMAND_OPTION_ALL
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "receiver";
     private static final String DESCRIPTION = "接收器处理器操作/查看";
 

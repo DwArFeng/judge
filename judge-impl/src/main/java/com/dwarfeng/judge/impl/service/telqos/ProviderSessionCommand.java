@@ -33,6 +33,7 @@ public class ProviderSessionCommand extends CliCommand {
             COMMAND_OPTION_CLOSE_AND_CLEAR
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "ps";
     private static final String DESCRIPTION = "提供器会话操作";
 

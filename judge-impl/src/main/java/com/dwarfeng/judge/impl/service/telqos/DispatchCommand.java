@@ -21,6 +21,7 @@ public class DispatchCommand extends CliCommand {
             COMMAND_OPTION_STATUS
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "dispatch";
     private static final String DESCRIPTION = "调度处理器操作/查看";
 

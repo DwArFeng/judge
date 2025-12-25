@@ -32,6 +32,7 @@ public class SinkerLocalCacheCommand extends CliCommand {
             COMMAND_OPTION_CLEAR
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "slc";
     private static final String DESCRIPTION = "下沉器本地缓存操作";
 

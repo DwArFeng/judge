@@ -31,7 +31,7 @@ public class SinkerBindingLocalCacheCommand extends CliCommand {
             COMMAND_OPTION_CLEAR
     };
 
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "sblc";
     private static final String DESCRIPTION = "下沉绑定本地缓存操作";
 

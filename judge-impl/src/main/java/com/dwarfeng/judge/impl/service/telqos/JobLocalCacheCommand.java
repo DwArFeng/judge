@@ -37,6 +37,7 @@ public class JobLocalCacheCommand extends CliCommand {
             COMMAND_OPTION_CLEAR
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "jlc";
     private static final String DESCRIPTION = "作业器本地缓存操作";
 

@@ -29,6 +29,7 @@ public class TaskCheckCommand extends CliCommand {
             COMMAND_OPTION_STATUS
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "tc";
     private static final String DESCRIPTION = "任务检查处理器操作/查看";
 

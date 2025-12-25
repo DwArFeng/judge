@@ -32,6 +32,7 @@ public class ProviderLocalCacheCommand extends CliCommand {
             COMMAND_OPTION_CLEAR
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "plc";
     private static final String DESCRIPTION = "提供器本地缓存操作";
 

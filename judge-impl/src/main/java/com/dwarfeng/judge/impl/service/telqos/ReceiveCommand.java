@@ -25,6 +25,7 @@ public class ReceiveCommand extends CliCommand {
             COMMAND_OPTION_OFFLINE
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "receive";
     private static final String DESCRIPTION = "接收功能上线/下线";
 

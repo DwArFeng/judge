@@ -29,6 +29,7 @@ public class SuperviseCommand extends CliCommand {
             COMMAND_OPTION_STATUS
     };
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private static final String IDENTITY = "supervise";
     private static final String DESCRIPTION = "主管处理器操作/查看";
 
