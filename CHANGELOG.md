@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
+
 - 优化部分类中的字段的注解。
   - com.dwarfeng.judge.impl.service.telqos.DispatchCommand。
   - com.dwarfeng.judge.impl.service.telqos.AdapterLocalCacheCommand。

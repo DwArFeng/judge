@@ -32,6 +32,9 @@
 
 | 编号                                                 | 大版本   | 起始版本    | 结束版本    | 原因                                     |
 |----------------------------------------------------|-------|---------|---------|----------------------------------------|
+| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.4.x | 2.4.0.a | 2.4.0.a | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用       |
+| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.3.x | 2.3.0.a | 2.3.2.a | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用       |
+| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.2.x | 2.2.0.a | 2.2.1.a | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用       |
 | [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.3.x | 2.3.0.a | 2.3.0.a | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
 | [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.2.x | 2.2.0.a | 2.2.1.a | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
 | [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.1.x | 2.1.0.a | 2.1.0.a | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
@@ -40,6 +43,25 @@
 | [BLACKLIST-LEGACY-2.0.0.a](#BLACKLIST-LEGACY-200a) | 2.0.x | 2.0.0.a | 2.0.0.a | Beta 版本，与现行接口差异较大                      |
 
 ## 详细原因
+
+### BLACKLIST-20251221.1
+
+原因：`application-context-dubbo.xml` 中缺失 `JudgementMaintainService` 的 Dubbo 服务注册配置。
+
+- 受影响模块/类：
+  - `com.dwarfeng.judge.stack.service.JudgementMaintainService`
+  - `judge-node/src/main/resources/spring/application-context-dubbo.xml`
+- 典型触发条件：
+  - 通过 Dubbo RPC 调用 `JudgementMaintainService` 接口；
+  - 使用 Dubbo 服务发现机制查找 `JudgementMaintainService` 服务。
+- 典型症状：
+  - 无法通过 Dubbo 调用 `JudgementMaintainService` 的方法；
+  - 服务注册中心中找不到 `JudgementMaintainService` 服务；
+  - RPC 调用失败，抛出服务未找到异常。
+- 影响范围：
+  - 所有需要通过 Dubbo RPC 调用 `JudgementMaintainService` 的功能与接口。
+
+迁移建议：升级至 2.4.1.a 及以上版本。
 
 ### BLACKLIST-20251210.1
 
