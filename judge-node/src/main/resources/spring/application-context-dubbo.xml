@@ -43,6 +43,11 @@
             group="${dubbo.provider.group}"
     />
     <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AnalyserVariableOperateService"
+            ref="analyserVariableOperateServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
             interface="com.dwarfeng.judge.stack.service.AnalysisMaintainService"
             ref="analysisMaintainServiceImpl"
             group="${dubbo.provider.group}"
@@ -70,6 +75,11 @@
     <dubbo:service
             interface="com.dwarfeng.judge.stack.service.JudgerVariableMaintainService"
             ref="judgerVariableMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.JudgerVariableOperateService"
+            ref="judgerVariableOperateServiceImpl"
             group="${dubbo.provider.group}"
     />
     <dubbo:service
@@ -169,6 +179,11 @@
     <dubbo:service
             interface="com.dwarfeng.judge.stack.service.SinkerVariableMaintainService"
             ref="sinkerVariableMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.SinkerVariableOperateService"
+            ref="sinkerVariableOperateServiceImpl"
             group="${dubbo.provider.group}"
     />
     <dubbo:service

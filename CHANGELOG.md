@@ -4,7 +4,10 @@
 
 ### 功能构建
 
-- (无)
+- 新增实体操作服务。
+  - com.dwarfeng.judge.stack.service.AnalyserVariableOperateService。
+  - com.dwarfeng.judge.stack.service.JudgerVariableOperateService。
+  - com.dwarfeng.judge.stack.service.SinkerVariableOperateService。
 
 ### Bug 修复
 
