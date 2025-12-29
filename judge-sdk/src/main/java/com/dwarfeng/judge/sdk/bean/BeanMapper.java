@@ -626,4 +626,112 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     PurgeFinishedResult purgeFinishedResultFromFastJson(FastJsonPurgeFinishedResult fastJsonPurgeFinishedResult);
+
+    FastJsonAnalyserVariableInspectResult analyserVariableInspectResultToFastJson(
+            AnalyserVariableInspectResult analyserVariableInspectResult
+    );
+
+    @InheritInverseConfiguration
+    AnalyserVariableInspectResult analyserVariableInspectResultFromFastJson(
+            FastJsonAnalyserVariableInspectResult fastJsonAnalyserVariableInspectResult
+    );
+
+    FastJsonJudgerVariableInspectResult judgerVariableInspectResultToFastJson(
+            JudgerVariableInspectResult judgerVariableInspectResult
+    );
+
+    @InheritInverseConfiguration
+    JudgerVariableInspectResult judgerVariableInspectResultFromFastJson(
+            FastJsonJudgerVariableInspectResult fastJsonJudgerVariableInspectResult
+    );
+
+    FastJsonSinkerVariableInspectResult sinkerVariableInspectResultToFastJson(
+            SinkerVariableInspectResult sinkerVariableInspectResult
+    );
+
+    @InheritInverseConfiguration
+    SinkerVariableInspectResult sinkerVariableInspectResultFromFastJson(
+            FastJsonSinkerVariableInspectResult fastJsonSinkerVariableInspectResult
+    );
+
+    WebInputAnalyserVariableInspectInfo analyserVariableInspectInfoToWebInput(
+            AnalyserVariableInspectInfo analyserVariableInspectInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalyserVariableInspectInfo analyserVariableInspectInfoFromWebInput(
+            WebInputAnalyserVariableInspectInfo webInputAnalyserVariableInspectInfo
+    );
+
+    WebInputAnalyserVariableRemoveInfo analyserVariableRemoveInfoToWebInput(
+            AnalyserVariableRemoveInfo analyserVariableRemoveInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalyserVariableRemoveInfo analyserVariableRemoveInfoFromWebInput(
+            WebInputAnalyserVariableRemoveInfo webInputAnalyserVariableRemoveInfo
+    );
+
+    WebInputAnalyserVariableUpsertInfo analyserVariableUpsertInfoToWebInput(
+            AnalyserVariableUpsertInfo analyserVariableUpsertInfo
+    );
+
+    @InheritInverseConfiguration
+    AnalyserVariableUpsertInfo analyserVariableUpsertInfoFromWebInput(
+            WebInputAnalyserVariableUpsertInfo webInputAnalyserVariableUpsertInfo
+    );
+
+    WebInputJudgerVariableInspectInfo judgerVariableInspectInfoToWebInput(
+            JudgerVariableInspectInfo judgerVariableInspectInfo
+    );
+
+    @InheritInverseConfiguration
+    JudgerVariableInspectInfo judgerVariableInspectInfoFromWebInput(
+            WebInputJudgerVariableInspectInfo webInputJudgerVariableInspectInfo
+    );
+
+    WebInputJudgerVariableRemoveInfo judgerVariableRemoveInfoToWebInput(
+            JudgerVariableRemoveInfo judgerVariableRemoveInfo
+    );
+
+    @InheritInverseConfiguration
+    JudgerVariableRemoveInfo judgerVariableRemoveInfoFromWebInput(
+            WebInputJudgerVariableRemoveInfo webInputJudgerVariableRemoveInfo
+    );
+
+    WebInputJudgerVariableUpsertInfo judgerVariableUpsertInfoToWebInput(
+            JudgerVariableUpsertInfo judgerVariableUpsertInfo
+    );
+
+    @InheritInverseConfiguration
+    JudgerVariableUpsertInfo judgerVariableUpsertInfoFromWebInput(
+            WebInputJudgerVariableUpsertInfo webInputJudgerVariableUpsertInfo
+    );
+
+    WebInputSinkerVariableInspectInfo sinkerVariableInspectInfoToWebInput(
+            SinkerVariableInspectInfo sinkerVariableInspectInfo
+    );
+
+    @InheritInverseConfiguration
+    SinkerVariableInspectInfo sinkerVariableInspectInfoFromWebInput(
+            WebInputSinkerVariableInspectInfo webInputSinkerVariableInspectInfo
+    );
+
+    WebInputSinkerVariableRemoveInfo sinkerVariableRemoveInfoToWebInput(
+            SinkerVariableRemoveInfo sinkerVariableRemoveInfo
+    );
+
+    @InheritInverseConfiguration
+    SinkerVariableRemoveInfo sinkerVariableRemoveInfoFromWebInput(
+            WebInputSinkerVariableRemoveInfo webInputSinkerVariableRemoveInfo
+    );
+
+    WebInputSinkerVariableUpsertInfo sinkerVariableUpsertInfoToWebInput(
+            SinkerVariableUpsertInfo sinkerVariableUpsertInfo
+    );
+
+    @InheritInverseConfiguration
+    SinkerVariableUpsertInfo sinkerVariableUpsertInfoFromWebInput(
+            WebInputSinkerVariableUpsertInfo webInputSinkerVariableUpsertInfo
+    );
 }

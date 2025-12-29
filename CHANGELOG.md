@@ -4,6 +4,20 @@
 
 ### 功能构建
 
+- 新增 FastJson 以及 WebInput DTO 实体。
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonAnalyserVariableInspectResult。
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgerVariableInspectResult。
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonSinkerVariableInspectResult。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputAnalyserVariableInspectInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputAnalyserVariableRemoveInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputAnalyserVariableUpsertInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputJudgerVariableInspectInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputJudgerVariableRemoveInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputJudgerVariableUpsertInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputSinkerVariableInspectInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputSinkerVariableRemoveInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.WebInputSinkerVariableUpsertInfo。
+
 - 新增实体操作服务。
   - com.dwarfeng.judge.stack.service.AnalyserVariableOperateService。
   - com.dwarfeng.judge.stack.service.JudgerVariableOperateService。
