@@ -173,6 +173,16 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     VisualizeDataKey visualizeDataKeyFromWebInput(WebInputVisualizeDataKey webInputVisualizeDataKey);
 
+    WebInputSinkerMetaIndicatorKey sinkerMetaIndicatorKeyToWebInput(SinkerMetaIndicatorKey sinkerMetaIndicatorKey);
+
+    @InheritInverseConfiguration
+    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromWebInput(WebInputSinkerMetaIndicatorKey webInputSinkerMetaIndicatorKey);
+
+    WebInputSinkerVariableKey sinkerVariableKeyToWebInput(SinkerVariableKey sinkerVariableKey);
+
+    @InheritInverseConfiguration
+    SinkerVariableKey sinkerVariableKeyFromWebInput(WebInputSinkerVariableKey webInputSinkerVariableKey);
+
     // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
     FastJsonAnalyserInfo analyserInfoToFastJson(AnalyserInfo analyserInfo);
 

@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 新增 WebInput Key 实体。
+  - com.dwarfeng.judge.sdk.bean.key.WebInputSinkerMetaIndicatorKey。
+  - com.dwarfeng.judge.sdk.bean.key.WebInputSinkerVariableKey。
+
 - 新增 FastJson 以及 WebInput DTO 实体。
   - com.dwarfeng.judge.sdk.bean.dto.FastJsonAnalyserVariableInspectResult。
   - com.dwarfeng.judge.sdk.bean.dto.FastJsonJudgerVariableInspectResult。
