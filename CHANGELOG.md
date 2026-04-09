@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `settingrepo-stack` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.stack.handler.Adapter。
+  - com.dwarfeng.judge.stack.handler.Filter。
+
 - 优化文件格式。
   - 优化 `opt-*.xml` 文件的格式。
   - 优化 `*.properties` 文件的格式。
