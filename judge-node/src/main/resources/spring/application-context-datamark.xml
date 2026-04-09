@@ -9,7 +9,7 @@
         http://dwarfeng.com/schema/dwarfeng-datamark/dwarfeng-datamark.xsd"
 >
 
-    <!-- Section 数据标识 -->
+    <!-- Section 数据标识。 -->
     <datamark:handler
             handler-name="sectionDatamarkHandler"
             resource-url="${datamark.section.resource_url}"
@@ -17,7 +17,7 @@
             update-allowed="${datamark.section.update_allowed}"
     />
 
-    <!-- Driver 数据标识 -->
+    <!-- Driver 数据标识。 -->
     <datamark:handler
             handler-name="driverDatamarkHandler"
             resource-url="${datamark.driver.resource_url}"
@@ -25,7 +25,7 @@
             update-allowed="${datamark.driver.update_allowed}"
     />
 
-    <!-- Analyser 数据标识 -->
+    <!-- Analyser 数据标识。 -->
     <datamark:handler
             handler-name="analyserDatamarkHandler"
             resource-url="${datamark.analyser.resource_url}"
@@ -33,7 +33,7 @@
             update-allowed="${datamark.analyser.update_allowed}"
     />
 
-    <!-- Judger 数据标识 -->
+    <!-- Judger 数据标识。 -->
     <datamark:handler
             handler-name="judgerDatamarkHandler"
             resource-url="${datamark.judger.resource_url}"
@@ -41,7 +41,7 @@
             update-allowed="${datamark.judger.update_allowed}"
     />
 
-    <!-- Sinker 数据标识 -->
+    <!-- Sinker 数据标识。 -->
     <datamark:handler
             handler-name="sinkerDatamarkHandler"
             resource-url="${datamark.sinker.resource_url}"
@@ -49,7 +49,7 @@
             update-allowed="${datamark.sinker.update_allowed}"
     />
 
-    <!-- Provider 数据标识 -->
+    <!-- Provider 数据标识。 -->
     <datamark:handler
             handler-name="providerDatamarkHandler"
             resource-url="${datamark.provider.resource_url}"
@@ -57,7 +57,7 @@
             update-allowed="${datamark.provider.update_allowed}"
     />
 
-    <!-- Visualizer 数据标识 -->
+    <!-- Visualizer 数据标识。 -->
     <datamark:handler
             handler-name="visualizerDatamarkHandler"
             resource-url="${datamark.visualizer.resource_url}"
@@ -65,7 +65,7 @@
             update-allowed="${datamark.visualizer.update_allowed}"
     />
 
-    <!-- Adapter 数据标识 -->
+    <!-- Adapter 数据标识。 -->
     <datamark:handler
             handler-name="adapterDatamarkHandler"
             resource-url="${datamark.adapter.resource_url}"
@@ -73,7 +73,7 @@
             update-allowed="${datamark.adapter.update_allowed}"
     />
 
-    <!-- Filter 数据标识 -->
+    <!-- Filter 数据标识。 -->
     <datamark:handler
             handler-name="filterDatamarkHandler"
             resource-url="${datamark.filter.resource_url}"
@@ -81,6 +81,6 @@
             update-allowed="${datamark.filter.update_allowed}"
     />
 
-    <!-- QoS 服务 -->
+    <!-- QoS 服务。 -->
     <datamark:qos/>
 </beans>
