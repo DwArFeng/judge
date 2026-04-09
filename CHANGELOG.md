@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `settingrepo-node` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.node.configuration.FastJsonConfiguration。
+
 - `settingrepo-impl` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.impl.handler.adapter.groovy.GroovyAdapterRegistry。
   - com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerFactory。
