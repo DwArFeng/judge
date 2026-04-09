@@ -198,7 +198,7 @@ public class PurgeProcessor {
                         new PagingInfo(0, pageSize)
                 );
                 if (deriveHistories.isEmpty()) {
-                    // 没有更多数据可删除
+                    // 没有更多数据可删除。
                     break;
                 }
                 // 调用维护服务批量删除当前页的数据。

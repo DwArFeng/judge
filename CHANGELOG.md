@@ -4,6 +4,22 @@
 
 ### 功能构建
 
+- `settingrepo-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.impl.handler.adapter.groovy.GroovyAdapterRegistry。
+  - com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerFactory。
+  - com.dwarfeng.judge.impl.handler.pusher.NativeKafkaPusher。
+  - com.dwarfeng.judge.impl.handler.visualizer.GroovyVisualizerRegistry。
+  - com.dwarfeng.judge.impl.handler.judger.groovy.GroovyJudgerRegistry。
+  - com.dwarfeng.judge.impl.handler.ProvideHandlerImpl。
+  - com.dwarfeng.judge.impl.handler.dispatcher.KafkaDispatcher。
+  - com.dwarfeng.judge.impl.handler.filter.groovy.GroovyFilterRegistry。
+  - com.dwarfeng.judge.impl.handler.receiver.KafkaReceiver。
+  - com.dwarfeng.judge.impl.handler.driver.DctiKafkaDriverProvider。
+  - com.dwarfeng.judge.impl.handler.PurgeProcessor。
+  - com.dwarfeng.judge.impl.handler.provider.groovy.GroovyProviderRegistry。
+  - com.dwarfeng.judge.impl.handler.analyser.groovy.GroovyAnalyserRegistry。
+  - com.dwarfeng.judge.impl.configuration.FastJsonConfiguration。
+
 - `settingrepo-stack` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.stack.handler.Adapter。
   - com.dwarfeng.judge.stack.handler.Filter。

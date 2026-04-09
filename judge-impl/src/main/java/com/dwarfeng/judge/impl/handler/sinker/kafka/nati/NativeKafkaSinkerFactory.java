@@ -46,17 +46,17 @@ public class NativeKafkaSinkerFactory {
     }
 
     public static KafkaTemplate<String, String> newKafkaTemplate(ProducerFactory<String, String> producerFactory) {
-        LOGGER.info("生成KafkaTemplate...");
+        LOGGER.info("生成 KafkaTemplate...");
         KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(producerFactory, true);
-        LOGGER.debug("KafkaTemplate生成完成...");
+        LOGGER.debug("KafkaTemplate 生成完成...");
         return kafkaTemplate;
     }
 
     public static KafkaTransactionManager<String, String> newKafkaTransactionManager(
             ProducerFactory<String, String> producerFactory
     ) {
-        LOGGER.info("生成KafkaTransactionManager...");
-        LOGGER.debug("KafkaTransactionManager生成完成...");
+        LOGGER.info("生成 KafkaTransactionManager...");
+        LOGGER.debug("KafkaTransactionManager 生成完成...");
         return new KafkaTransactionManager<>(producerFactory);
     }
 }

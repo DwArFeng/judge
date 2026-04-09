@@ -58,7 +58,7 @@ public class ProvideHandlerImpl implements ProvideHandler {
         String preset = info.getPreset();
         Object[] objs = info.getObjs();
 
-        // 获取适配器
+        // 获取适配器。
         if (Objects.nonNull(adapterInfoKey)) {
             Adapter adapter = adapterLocalCacheHandler.get(adapterInfoKey);
             if (Objects.isNull(adapter)) {
@@ -71,11 +71,11 @@ public class ProvideHandlerImpl implements ProvideHandler {
         // 获取会话。
         ProviderSession providerSession = providerSessionHoldHandler.get(providerInfoKey);
 
-        // 调用会话的方法，构造结果
+        // 调用会话的方法，构造结果。
         LookupResult result = providerSession.lookup(
                 new LookupInfo(providerInfoKey, adapterInfoKey, filterInfoKey, preset, objs));
 
-        // 获取过滤器
+        // 获取过滤器。
         if (Objects.nonNull(filterInfoKey)) {
             Filter filter = filterLocalCacheHandler.get(filterInfoKey);
             if (Objects.isNull(filter)) {
