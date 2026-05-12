@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- `settingrepo-stack` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.stack.service.AdapterInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.FilterInfoMaintainService。
+  - com.dwarfeng.judge.stack.service.ProviderInfoMaintainService。
+
 - 依赖升级。
   - 升级 `jedis` 依赖版本为 `3.10.0` 以规避漏洞。
   - 升级 `spring-data-redis` 依赖版本为 `2.7.18` 以规避漏洞。

@@ -14,5 +14,4 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  */
 public interface ProviderInfoMaintainService extends BatchCrudService<LongIdKey, ProviderInfo>,
         EntireLookupService<ProviderInfo>, PresetLookupService<ProviderInfo> {
-
 }

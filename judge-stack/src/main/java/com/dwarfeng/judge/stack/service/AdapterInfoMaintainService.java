@@ -14,5 +14,4 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  */
 public interface AdapterInfoMaintainService extends BatchCrudService<LongIdKey, AdapterInfo>,
         EntireLookupService<AdapterInfo>, PresetLookupService<AdapterInfo> {
-
 }

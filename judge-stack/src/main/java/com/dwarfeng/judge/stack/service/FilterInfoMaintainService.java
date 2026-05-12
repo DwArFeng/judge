@@ -14,5 +14,4 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  */
 public interface FilterInfoMaintainService extends BatchCrudService<LongIdKey, FilterInfo>,
         EntireLookupService<FilterInfo>, PresetLookupService<FilterInfo> {
-
 }
