@@ -25,12 +25,16 @@ public class HibernateSection implements Bean {
 
     private static final long serialVersionUID = -7330800258642226431L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "name", length = Constraints.LENGTH_NAME, nullable = false)
     private String name;
 
@@ -40,7 +44,10 @@ public class HibernateSection implements Bean {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    // endregion
+
+    // region 一对多
+
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateDriverInfo.class, mappedBy = "section")
     private Set<HibernateDriverInfo> driverInfos = new HashSet<>();
 
@@ -59,7 +66,10 @@ public class HibernateSection implements Bean {
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateVisualizerInfo.class, mappedBy = "section")
     private Set<HibernateVisualizerInfo> visualizerInfos = new HashSet<>();
 
-    // -----------------------------------------------------------审计-----------------------------------------------------------
+    // endregion
+
+    // region 审计
+
     @DatamarkField(handlerName = "sectionDatamarkHandler")
     @Column(
             name = "created_datamark",
@@ -75,10 +85,13 @@ public class HibernateSection implements Bean {
     )
     private String modifiedDatamark;
 
+    // endregion
+
     public HibernateSection() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -87,7 +100,10 @@ public class HibernateSection implements Bean {
         this.longId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -183,6 +199,8 @@ public class HibernateSection implements Bean {
     public void setModifiedDatamark(String modifiedDatamark) {
         this.modifiedDatamark = modifiedDatamark;
     }
+
+    // endregion
 
     @Override
     public String toString() {

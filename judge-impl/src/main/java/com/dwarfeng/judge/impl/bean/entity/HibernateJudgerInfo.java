@@ -25,16 +25,23 @@ public class HibernateJudgerInfo implements Bean {
 
     private static final long serialVersionUID = 8093084490736735318L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------外键-----------------------------------------------------------
+    // endregion
+
+    // region 外键
+
     @Column(name = "section_id")
     private Long sectionLongId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "column_index", nullable = false)
     private int index;
 
@@ -50,18 +57,27 @@ public class HibernateJudgerInfo implements Bean {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateSection.class)
     @JoinColumns({ //
             @JoinColumn(name = "section_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateSection section;
 
-    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    // endregion
+
+    // region 一对多
+
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateJudgerVariable.class, mappedBy = "judgerInfo")
     private Set<HibernateJudgerVariable> judgerVariables = new HashSet<>();
 
-    // -----------------------------------------------------------审计-----------------------------------------------------------
+    // endregion
+
+    // region 审计
+
     @DatamarkField(handlerName = "judgerDatamarkHandler")
     @Column(
             name = "created_datamark",
@@ -77,10 +93,13 @@ public class HibernateJudgerInfo implements Bean {
     )
     private String modifiedDatamark;
 
+    // endregion
+
     public HibernateJudgerInfo() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -97,7 +116,10 @@ public class HibernateJudgerInfo implements Bean {
         this.sectionLongId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -185,6 +207,8 @@ public class HibernateJudgerInfo implements Bean {
     public void setModifiedDatamark(String modifiedDatamark) {
         this.modifiedDatamark = modifiedDatamark;
     }
+
+    // endregion
 
     @Override
     public String toString() {

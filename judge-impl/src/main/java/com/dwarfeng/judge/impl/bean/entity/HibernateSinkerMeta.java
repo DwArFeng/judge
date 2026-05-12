@@ -17,7 +17,8 @@ public class HibernateSinkerMeta implements Bean {
 
     private static final long serialVersionUID = -2082142672684476777L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "section_id", nullable = false)
     private Long sectionLongId;
@@ -30,14 +31,20 @@ public class HibernateSinkerMeta implements Bean {
     @Column(name = "meta_id", length = Constraints.LENGTH_STRING_ID, nullable = false)
     private String metaStringId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "value", columnDefinition = "TEXT")
     private String value;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------审计-----------------------------------------------------------
+    // endregion
+
+    // region 审计
+
     @DatamarkField(handlerName = "sinkerDatamarkHandler")
     @Column(
             name = "created_datamark",
@@ -53,10 +60,13 @@ public class HibernateSinkerMeta implements Bean {
     )
     private String modifiedDatamark;
 
+    // endregion
+
     public HibernateSinkerMeta() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateSinkerMetaKey getKey() {
         if (Objects.isNull(sectionLongId) || Objects.isNull(sinkerLongId) || Objects.isNull(metaStringId)) {
             return null;
@@ -76,7 +86,10 @@ public class HibernateSinkerMeta implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getSectionLongId() {
         return sectionLongId;
     }
@@ -132,6 +145,8 @@ public class HibernateSinkerMeta implements Bean {
     public void setModifiedDatamark(String modifiedDatamark) {
         this.modifiedDatamark = modifiedDatamark;
     }
+
+    // endregion
 
     @Override
     public String toString() {

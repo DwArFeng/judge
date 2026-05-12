@@ -23,16 +23,23 @@ public class HibernateTask implements Bean {
 
     private static final long serialVersionUID = 1605351928483024747L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------外键-----------------------------------------------------------
+    // endregion
+
+    // region 外键
+
     @Column(name = "section_id")
     private Long sectionLongId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "status", nullable = false)
     private int status;
 
@@ -70,14 +77,20 @@ public class HibernateTask implements Bean {
     @Column(name = "anchor_message", length = Constraints.LENGTH_MESSAGE)
     private String anchorMessage;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateSection.class)
     @JoinColumns({ //
             @JoinColumn(name = "section_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateSection section;
 
-    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    // endregion
+
+    // region 一对多
+
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTaskEvent.class, mappedBy = "task")
     private Set<HibernateTaskEvent> taskEvents = new HashSet<>();
 
@@ -90,10 +103,13 @@ public class HibernateTask implements Bean {
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTaskEvent.class, mappedBy = "task")
     private Set<HibernateVisualizeData> visualizeDatas = new HashSet<>();
 
+    // endregion
+
     public HibernateTask() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -110,7 +126,10 @@ public class HibernateTask implements Bean {
         this.sectionLongId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -246,6 +265,8 @@ public class HibernateTask implements Bean {
     public void setVisualizeDatas(Set<HibernateVisualizeData> visualizeDatas) {
         this.visualizeDatas = visualizeDatas;
     }
+
+    // endregion
 
     @Override
     public String toString() {

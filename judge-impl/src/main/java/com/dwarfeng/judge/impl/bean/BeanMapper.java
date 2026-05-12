@@ -24,7 +24,8 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface BeanMapper {
 
-    // -----------------------------------------------------------Subgrade Key-----------------------------------------------------------
+    // region Subgrade Key
+
     HibernateLongIdKey longIdKeyToHibernate(LongIdKey longIdKey);
 
     @InheritInverseConfiguration
@@ -35,7 +36,10 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     StringIdKey stringIdKeyFromHibernate(HibernateStringIdKey hibernateStringIdKey);
 
-    // -----------------------------------------------------------Judge Key-----------------------------------------------------------
+    // endregion
+
+    // region Judge Key
+
     HibernateAnalyserVariableKey analyserVariableKeyToHibernate(AnalyserVariableKey analyserVariableKey);
 
     @InheritInverseConfiguration
@@ -81,7 +85,10 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     VisualizeDataKey visualizeDataKeyFromHibernate(HibernateVisualizeDataKey hibernateVisualizeDataKey);
 
-    // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
+    // endregion
+
+    // region Judge Entity
+
     @Mapping(target = "sectionLongId", ignore = true)
     @Mapping(target = "section", ignore = true)
     @Mapping(target = "modifiedDatamark", ignore = true)
@@ -365,4 +372,6 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     FilterSupport filterSupportFromHibernate(HibernateFilterSupport hibernateFilterSupport);
+
+    // endregion
 }

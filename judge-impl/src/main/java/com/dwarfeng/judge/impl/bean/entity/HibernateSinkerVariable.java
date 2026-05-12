@@ -14,7 +14,8 @@ public class HibernateSinkerVariable implements Bean {
 
     private static final long serialVersionUID = -1651382760273589063L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "sinker_id", nullable = false)
     private Long sinkerLongId;
@@ -23,21 +24,30 @@ public class HibernateSinkerVariable implements Bean {
     @Column(name = "variable_id", length = Constraints.LENGTH_STRING_ID, nullable = false)
     private String variableStringId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "value", columnDefinition = "TEXT")
     private String value;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateSinkerInfo.class)
     @JoinColumns({ //
             @JoinColumn(name = "sinker_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateSinkerInfo sinkerInfo;
 
+    // endregion
+
     public HibernateSinkerVariable() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateSinkerVariableKey getKey() {
         if (Objects.isNull(sinkerLongId) || Objects.isNull(variableStringId)) {
             return null;
@@ -55,7 +65,10 @@ public class HibernateSinkerVariable implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getSinkerLongId() {
         return sinkerLongId;
     }
@@ -87,6 +100,8 @@ public class HibernateSinkerVariable implements Bean {
     public void setSinkerInfo(HibernateSinkerInfo sinkerInfo) {
         this.sinkerInfo = sinkerInfo;
     }
+
+    // endregion
 
     @Override
     public String toString() {

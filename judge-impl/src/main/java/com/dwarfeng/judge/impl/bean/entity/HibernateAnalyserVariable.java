@@ -20,7 +20,8 @@ public class HibernateAnalyserVariable implements Bean {
 
     private static final long serialVersionUID = -5526559940001417406L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "analyser_info_id", nullable = false)
     private Long analyserInfoLongId;
@@ -29,21 +30,30 @@ public class HibernateAnalyserVariable implements Bean {
     @Column(name = "variable_id", length = Constraints.LENGTH_STRING_ID, nullable = false)
     private String variableStringId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "value", columnDefinition = "TEXT")
     private String value;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateAnalyserInfo.class)
     @JoinColumns({ //
             @JoinColumn(name = "analyser_info_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateAnalyserInfo analyserInfo;
 
+    // endregion
+
     public HibernateAnalyserVariable() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateAnalyserVariableKey getKey() {
         if (Objects.isNull(analyserInfoLongId) || Objects.isNull(variableStringId)) {
             return null;
@@ -61,7 +71,10 @@ public class HibernateAnalyserVariable implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getAnalyserInfoLongId() {
         return analyserInfoLongId;
     }
@@ -93,6 +106,8 @@ public class HibernateAnalyserVariable implements Bean {
     public void setAnalyserInfo(HibernateAnalyserInfo analyserInfo) {
         this.analyserInfo = analyserInfo;
     }
+
+    // endregion
 
     @Override
     public String toString() {

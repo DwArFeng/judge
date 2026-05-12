@@ -20,7 +20,8 @@ public class HibernateJudgement implements Bean {
 
     private static final long serialVersionUID = -1443523848741582828L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "task_id", nullable = false)
     private Long taskLongId;
@@ -29,24 +30,33 @@ public class HibernateJudgement implements Bean {
     @Column(name = "data_id", length = Constraints.LENGTH_STRING_ID, nullable = false)
     private String dataStringId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "value", nullable = false)
     private double value;
 
     @Column(name = "message", length = Constraints.LENGTH_MESSAGE)
     private String message;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateTask.class)
     @JoinColumns({ //
             @JoinColumn(name = "task_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateTask task;
 
+    // endregion
+
     public HibernateJudgement() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateJudgementKey getKey() {
         if (Objects.isNull(taskLongId) || Objects.isNull(dataStringId)) {
             return null;
@@ -64,7 +74,10 @@ public class HibernateJudgement implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getTaskLongId() {
         return taskLongId;
     }
@@ -104,6 +117,8 @@ public class HibernateJudgement implements Bean {
     public void setTask(HibernateTask task) {
         this.task = task;
     }
+
+    // endregion
 
     @Override
     public String toString() {

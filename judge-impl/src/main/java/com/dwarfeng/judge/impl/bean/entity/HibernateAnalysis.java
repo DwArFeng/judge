@@ -21,7 +21,8 @@ public class HibernateAnalysis implements Bean {
 
     private static final long serialVersionUID = -943078684486190102L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "task_id", nullable = false)
     private Long taskLongId;
@@ -30,7 +31,10 @@ public class HibernateAnalysis implements Bean {
     @Column(name = "data_id", length = Constraints.LENGTH_STRING_ID, nullable = false)
     private String dataStringId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "data_type", nullable = false)
     private int dataType;
 
@@ -62,17 +66,23 @@ public class HibernateAnalysis implements Bean {
     @Column(name = "file_pack_value")
     private Long filePackValue;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateTask.class)
     @JoinColumns({ //
             @JoinColumn(name = "task_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateTask task;
 
+    // endregion
+
     public HibernateAnalysis() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateAnalysisKey getKey() {
         if (Objects.isNull(taskLongId) || Objects.isNull(dataStringId)) {
             return null;
@@ -90,7 +100,10 @@ public class HibernateAnalysis implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getTaskLongId() {
         return taskLongId;
     }
@@ -194,6 +207,8 @@ public class HibernateAnalysis implements Bean {
     public void setTask(HibernateTask task) {
         this.task = task;
     }
+
+    // endregion
 
     @Override
     public String toString() {

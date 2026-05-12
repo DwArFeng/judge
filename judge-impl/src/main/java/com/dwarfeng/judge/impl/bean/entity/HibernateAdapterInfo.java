@@ -17,12 +17,16 @@ public class HibernateAdapterInfo implements Bean {
 
     private static final long serialVersionUID = 218170260397028755L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
@@ -35,7 +39,10 @@ public class HibernateAdapterInfo implements Bean {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------审计-----------------------------------------------------------
+    // endregion
+
+    // region 审计
+
     @DatamarkField(handlerName = "adapterDatamarkHandler")
     @Column(
             name = "created_datamark",
@@ -51,10 +58,13 @@ public class HibernateAdapterInfo implements Bean {
     )
     private String modifiedDatamark;
 
+    // endregion
+
     public HibernateAdapterInfo() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -63,7 +73,10 @@ public class HibernateAdapterInfo implements Bean {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -119,6 +132,8 @@ public class HibernateAdapterInfo implements Bean {
     public void setModifiedDatamark(String modifiedDatamark) {
         this.modifiedDatamark = modifiedDatamark;
     }
+
+    // endregion
 
     @Override
     public String toString() {

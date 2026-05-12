@@ -17,7 +17,8 @@ public class HibernateSinkerRelation implements Bean {
 
     private static final long serialVersionUID = 8483375426873764806L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "section_id", nullable = false)
     private Long sectionLongId;
@@ -26,14 +27,20 @@ public class HibernateSinkerRelation implements Bean {
     @Column(name = "sinker_id", nullable = false)
     private Long sinkerLongId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateSection.class)
     @JoinColumns({ //
             @JoinColumn(name = "section_id", referencedColumnName = "id", insertable = false, updatable = false), //
@@ -46,7 +53,10 @@ public class HibernateSinkerRelation implements Bean {
     })
     private HibernateSinkerInfo sinkerInfo;
 
-    // -----------------------------------------------------------审计-----------------------------------------------------------
+    // endregion
+
+    // region 审计
+
     @DatamarkField(handlerName = "sinkerDatamarkHandler")
     @Column(
             name = "created_datamark",
@@ -62,10 +72,13 @@ public class HibernateSinkerRelation implements Bean {
     )
     private String modifiedDatamark;
 
+    // endregion
+
     public HibernateSinkerRelation() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateSinkerRelationKey getKey() {
         return new HibernateSinkerRelationKey(sectionLongId, sinkerLongId);
     }
@@ -80,7 +93,10 @@ public class HibernateSinkerRelation implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getSectionLongId() {
         return sectionLongId;
     }
@@ -144,6 +160,8 @@ public class HibernateSinkerRelation implements Bean {
     public void setModifiedDatamark(String modifiedDatamark) {
         this.modifiedDatamark = modifiedDatamark;
     }
+
+    // endregion
 
     @Override
     public String toString() {

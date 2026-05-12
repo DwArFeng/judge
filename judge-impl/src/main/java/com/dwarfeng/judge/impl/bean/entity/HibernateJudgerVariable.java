@@ -20,7 +20,8 @@ public class HibernateJudgerVariable implements Bean {
 
     private static final long serialVersionUID = -8856294361960537070L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "judger_info_id", nullable = false)
     private Long judgerInfoLongId;
@@ -29,21 +30,30 @@ public class HibernateJudgerVariable implements Bean {
     @Column(name = "variable_id", length = Constraints.LENGTH_STRING_ID, nullable = false)
     private String variableStringId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "value", columnDefinition = "TEXT")
     private String value;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateJudgerInfo.class)
     @JoinColumns({ //
             @JoinColumn(name = "judger_info_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateJudgerInfo judgerInfo;
 
+    // endregion
+
     public HibernateJudgerVariable() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateJudgerVariableKey getKey() {
         if (Objects.isNull(judgerInfoLongId) || Objects.isNull(variableStringId)) {
             return null;
@@ -61,7 +71,10 @@ public class HibernateJudgerVariable implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getJudgerInfoLongId() {
         return judgerInfoLongId;
     }
@@ -93,6 +106,8 @@ public class HibernateJudgerVariable implements Bean {
     public void setJudgerInfo(HibernateJudgerInfo judgerInfo) {
         this.judgerInfo = judgerInfo;
     }
+
+    // endregion
 
     @Override
     public String toString() {

@@ -16,26 +16,36 @@ public class HibernateAnalysisPicturePack implements Bean {
 
     private static final long serialVersionUID = 39400427344686741L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "item_anchor_index", nullable = false)
     private int itemAnchorIndex;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    // endregion
+
+    // region 一对多
+
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAnalysisPicturePackItemInfo.class, mappedBy = "pack")
     private Set<HibernateAnalysisPicturePackItemInfo> items = new HashSet<>();
+
+    // endregion
 
     public HibernateAnalysisPicturePack() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -44,7 +54,10 @@ public class HibernateAnalysisPicturePack implements Bean {
         this.longId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -76,6 +89,8 @@ public class HibernateAnalysisPicturePack implements Bean {
     public void setItems(Set<HibernateAnalysisPicturePackItemInfo> items) {
         this.items = items;
     }
+
+    // endregion
 
     @Override
     public String toString() {

@@ -4,6 +4,43 @@
 
 ### 功能构建
 
+- `settingrepo-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.impl.bean.BeanMapper。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAdapterInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAdapterSupport。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalyserInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalyserSupport。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalyserVariable。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalysis。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisFileInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisFilePack。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisFilePackItemInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisPictureInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisPicturePack。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisPicturePackItemInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateDriverInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateDriverSupport。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateFilterInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateFilterSupport。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateJudgement。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateJudgerInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateJudgerSupport。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateJudgerVariable。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateProviderInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateProviderSupport。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSection。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSinkerInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSinkerMeta。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSinkerMetaIndicator。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSinkerRelation。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSinkerSupport。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateSinkerVariable。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateTask。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateTaskEvent。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateVisualizeData。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateVisualizerInfo。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateVisualizerSupport。
+
 - `settingrepo-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.sdk.bean.BeanMapper。
 

@@ -14,16 +14,23 @@ public class HibernateAnalysisPicturePackItemInfo implements Bean {
 
     private static final long serialVersionUID = 8926796495444205656L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------外键-----------------------------------------------------------
+    // endregion
+
+    // region 外键
+
     @Column(name = "pack_id")
     private Long packLongId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "column_index", nullable = false)
     private int index;
 
@@ -36,17 +43,23 @@ public class HibernateAnalysisPicturePackItemInfo implements Bean {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @ManyToOne(targetEntity = HibernateAnalysisPicturePack.class)
     @JoinColumns({ //
             @JoinColumn(name = "pack_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateAnalysisPicturePack pack;
 
+    // endregion
+
     public HibernateAnalysisPicturePackItemInfo() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -63,7 +76,10 @@ public class HibernateAnalysisPicturePackItemInfo implements Bean {
         this.packLongId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -119,6 +135,8 @@ public class HibernateAnalysisPicturePackItemInfo implements Bean {
     public void setPack(HibernateAnalysisPicturePack pack) {
         this.pack = pack;
     }
+
+    // endregion
 
     @Override
     public String toString() {

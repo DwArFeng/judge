@@ -14,7 +14,8 @@ public class HibernateSinkerMetaIndicator implements Bean {
 
     private static final long serialVersionUID = -2625419652823981827L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "sinker_type_id", length = Constraints.LENGTH_TYPE, nullable = false)
     private String sinkerTypeStringId;
@@ -23,7 +24,10 @@ public class HibernateSinkerMetaIndicator implements Bean {
     @Column(name = "meta_id", length = Constraints.LENGTH_STRING_ID, nullable = false)
     private String metaStringId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "label", length = Constraints.LENGTH_LABEL, nullable = false)
     private String label;
 
@@ -33,10 +37,13 @@ public class HibernateSinkerMetaIndicator implements Bean {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    // endregion
+
     public HibernateSinkerMetaIndicator() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateSinkerMetaIndicatorKey getKey() {
         if (Objects.isNull(sinkerTypeStringId) || Objects.isNull(metaStringId)) {
             return null;
@@ -54,7 +61,10 @@ public class HibernateSinkerMetaIndicator implements Bean {
         }
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public String getSinkerTypeStringId() {
         return sinkerTypeStringId;
     }
@@ -94,6 +104,8 @@ public class HibernateSinkerMetaIndicator implements Bean {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    // endregion
 
     @Override
     public String toString() {

@@ -19,12 +19,16 @@ public class HibernateSinkerInfo implements Bean {
 
     private static final long serialVersionUID = -1628645409664384881L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
@@ -37,14 +41,20 @@ public class HibernateSinkerInfo implements Bean {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    // endregion
+
+    // region 多对一
+
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateSinkerRelation.class, mappedBy = "sinkerInfo")
     private Set<HibernateSinkerRelation> sinkerRelations = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateSinkerVariable.class, mappedBy = "sinkerInfo")
     private Set<HibernateSinkerVariable> sinkerVariables = new HashSet<>();
 
-    // -----------------------------------------------------------审计-----------------------------------------------------------
+    // endregion
+
+    // region 审计
+
     @DatamarkField(handlerName = "sinkerDatamarkHandler")
     @Column(
             name = "created_datamark",
@@ -60,10 +70,13 @@ public class HibernateSinkerInfo implements Bean {
     )
     private String modifiedDatamark;
 
+    // endregion
+
     public HibernateSinkerInfo() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -72,7 +85,10 @@ public class HibernateSinkerInfo implements Bean {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -144,6 +160,8 @@ public class HibernateSinkerInfo implements Bean {
     public void setModifiedDatamark(String modifiedDatamark) {
         this.modifiedDatamark = modifiedDatamark;
     }
+
+    // endregion
 
     @Override
     public String toString() {
