@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `settingrepo-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.sdk.bean.BeanMapper。
+
 - `settingrepo-stack` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.stack.service.AdapterInfoMaintainService。
   - com.dwarfeng.judge.stack.service.FilterInfoMaintainService。

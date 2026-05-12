@@ -24,7 +24,8 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface BeanMapper {
 
-    // -----------------------------------------------------------Subgrade Key-----------------------------------------------------------
+    // region Subgrade Key
+
     FastJsonLongIdKey longIdKeyToFastJson(LongIdKey longIdKey);
 
     @InheritInverseConfiguration
@@ -50,7 +51,10 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     StringIdKey stringIdKeyFromWebInput(WebInputStringIdKey webInputStringIdKey);
 
-    // -----------------------------------------------------------Judge Key-----------------------------------------------------------
+    // endregion
+
+    // region Judge Key
+
     FastJsonAnalyserVariableKey analyserVariableKeyToFastJson(AnalyserVariableKey analyserVariableKey);
 
     @InheritInverseConfiguration
@@ -183,7 +187,10 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     SinkerVariableKey sinkerVariableKeyFromWebInput(WebInputSinkerVariableKey webInputSinkerVariableKey);
 
-    // -----------------------------------------------------------Judge Entity-----------------------------------------------------------
+    // endregion
+
+    // region Judge Entity
+
     FastJsonAnalyserInfo analyserInfoToFastJson(AnalyserInfo analyserInfo);
 
     @InheritInverseConfiguration
@@ -555,7 +562,10 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     FilterInfo filterInfoFromWebInput(WebInputFilterInfo webInputFilterInfo);
 
-    // -----------------------------------------------------------Judge DTO-----------------------------------------------------------
+    // endregion
+
+    // region Judge DTO
+
     WebInputAnalysisFileFileDownloadInfo analysisFileFileDownloadInfoToWebInput(
             AnalysisFileFileDownloadInfo analysisFileFileDownloadInfo
     );
@@ -744,4 +754,6 @@ public interface BeanMapper {
     SinkerVariableUpsertInfo sinkerVariableUpsertInfoFromWebInput(
             WebInputSinkerVariableUpsertInfo webInputSinkerVariableUpsertInfo
     );
+
+    // endregion
 }
