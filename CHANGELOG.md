@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/OptDirectory.md。
+
 - `settingrepo-impl` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.impl.bean.BeanMapper。
   - com.dwarfeng.judge.impl.bean.entity.HibernateAdapterInfo。
