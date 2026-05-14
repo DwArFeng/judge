@@ -45,9 +45,7 @@ public class JSFixedFastJsonAnalysisPictureInfo implements Bean {
     public JSFixedFastJsonAnalysisPictureInfo() {
     }
 
-    public JSFixedFastJsonAnalysisPictureInfo(
-            JSFixedFastJsonLongIdKey key, String originName, Long length, String remark
-    ) {
+    public JSFixedFastJsonAnalysisPictureInfo(JSFixedFastJsonLongIdKey key, String originName, Long length, String remark) {
         this.key = key;
         this.originName = originName;
         this.length = length;

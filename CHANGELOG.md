@@ -4,7 +4,33 @@
 
 ### 功能构建
 
-- (无)
+- `settingrepo-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonAdapterInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonAdapterSupport。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonFilterInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonFilterSupport。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonProviderInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonProviderSupport。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonSinkerInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonSinkerMeta。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonSinkerRelation。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonSinkerSupport。
+  - com.dwarfeng.judge.sdk.bean.entity.FastJsonTaskEvent。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonAdapterInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonAnalysisFileInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonAnalysisPictureInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonFilterInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonJudgerInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonProviderInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonSinkerInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonSinkerMeta。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonSinkerRelation。
+  - com.dwarfeng.judge.sdk.bean.entity.WebInputAdapterInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.WebInputFilterInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.WebInputProviderInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.WebInputSinkerInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.WebInputSinkerMeta。
+  - com.dwarfeng.judge.sdk.bean.entity.WebInputSinkerRelation。
 
 ### Bug 修复
 

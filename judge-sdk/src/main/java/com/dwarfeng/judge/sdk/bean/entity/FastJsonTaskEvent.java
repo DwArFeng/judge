@@ -46,9 +46,7 @@ public class FastJsonTaskEvent implements Bean {
     public FastJsonTaskEvent() {
     }
 
-    public FastJsonTaskEvent(
-            FastJsonLongIdKey key, FastJsonLongIdKey taskKey, Date happenedDate, String message
-    ) {
+    public FastJsonTaskEvent(FastJsonLongIdKey key, FastJsonLongIdKey taskKey, Date happenedDate, String message) {
         this.key = key;
         this.taskKey = taskKey;
         this.happenedDate = happenedDate;

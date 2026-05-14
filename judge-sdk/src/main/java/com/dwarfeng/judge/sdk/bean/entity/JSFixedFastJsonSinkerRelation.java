@@ -79,4 +79,4 @@ public class JSFixedFastJsonSinkerRelation implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-} 
+}

@@ -32,21 +32,20 @@ public class FastJsonAdapterSupport implements Bean {
 
     @JSONField(name = "key", ordinal = 1)
     private FastJsonStringIdKey key;
+
     @JSONField(name = "label", ordinal = 2)
     private String label;
+
     @JSONField(name = "description", ordinal = 3)
     private String description;
+
     @JSONField(name = "example_param", ordinal = 4)
     private String exampleParam;
 
     public FastJsonAdapterSupport() {
     }
 
-    public FastJsonAdapterSupport(
-            FastJsonStringIdKey key,
-            String label,
-            String description,
-            String exampleParam) {
+    public FastJsonAdapterSupport(FastJsonStringIdKey key, String label, String description, String exampleParam) {
         this.key = key;
         this.label = label;
         this.description = description;
@@ -94,4 +93,4 @@ public class FastJsonAdapterSupport implements Bean {
                 ", exampleParam=" + exampleParam + '\'' +
                 '}';
     }
-} 
+}

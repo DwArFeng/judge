@@ -93,4 +93,4 @@ public class FastJsonSinkerSupport implements Bean {
                 ", description=" + description + '\'' +
                 '}';
     }
-} 
+}

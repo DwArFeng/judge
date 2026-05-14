@@ -104,4 +104,4 @@ public class WebInputProviderInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-} 
+}

@@ -58,8 +58,8 @@ public class JSFixedFastJsonJudgerInfo implements Bean {
     }
 
     public JSFixedFastJsonJudgerInfo(
-            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, int index, boolean enabled,
-            String type, String param, String remark
+            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey sectionKey, int index, boolean enabled, String type,
+            String param, String remark
     ) {
         this.key = key;
         this.sectionKey = sectionKey;

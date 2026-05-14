@@ -49,7 +49,9 @@ public class JSFixedFastJsonSinkerInfo implements Bean {
     public JSFixedFastJsonSinkerInfo() {
     }
 
-    public JSFixedFastJsonSinkerInfo(JSFixedFastJsonLongIdKey key, boolean enabled, String type, String param, String remark) {
+    public JSFixedFastJsonSinkerInfo(
+            JSFixedFastJsonLongIdKey key, boolean enabled, String type, String param, String remark
+    ) {
         this.key = key;
         this.enabled = enabled;
         this.type = type;
@@ -107,4 +109,4 @@ public class JSFixedFastJsonSinkerInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-} 
+}

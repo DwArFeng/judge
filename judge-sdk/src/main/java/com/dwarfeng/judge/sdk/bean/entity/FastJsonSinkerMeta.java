@@ -79,4 +79,4 @@ public class FastJsonSinkerMeta implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-} 
+}

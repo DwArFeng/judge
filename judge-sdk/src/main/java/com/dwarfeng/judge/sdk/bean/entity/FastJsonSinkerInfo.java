@@ -107,4 +107,4 @@ public class FastJsonSinkerInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-} 
+}

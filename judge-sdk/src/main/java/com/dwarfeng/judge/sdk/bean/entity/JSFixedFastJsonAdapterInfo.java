@@ -33,12 +33,16 @@ public class JSFixedFastJsonAdapterInfo implements Bean {
 
     @JSONField(name = "key", ordinal = 1)
     private JSFixedFastJsonLongIdKey key;
+
     @JSONField(name = "enabled", ordinal = 2)
     private boolean enabled;
+
     @JSONField(name = "type", ordinal = 3)
     private String type;
+
     @JSONField(name = "param", ordinal = 4)
     private String param;
+
     @JSONField(name = "remark", ordinal = 5)
     private String remark;
 
@@ -46,11 +50,8 @@ public class JSFixedFastJsonAdapterInfo implements Bean {
     }
 
     public JSFixedFastJsonAdapterInfo(
-            JSFixedFastJsonLongIdKey key,
-            boolean enabled,
-            String type,
-            String param,
-            String remark) {
+            JSFixedFastJsonLongIdKey key, boolean enabled, String type, String param, String remark
+    ) {
         this.key = key;
         this.enabled = enabled;
         this.type = type;
@@ -108,4 +109,4 @@ public class JSFixedFastJsonAdapterInfo implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-} 
+}

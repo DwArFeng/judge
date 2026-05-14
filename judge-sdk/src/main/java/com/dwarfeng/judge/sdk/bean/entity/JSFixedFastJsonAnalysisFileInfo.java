@@ -45,9 +45,7 @@ public class JSFixedFastJsonAnalysisFileInfo implements Bean {
     public JSFixedFastJsonAnalysisFileInfo() {
     }
 
-    public JSFixedFastJsonAnalysisFileInfo(
-            JSFixedFastJsonLongIdKey key, String originName, Long length, String remark
-    ) {
+    public JSFixedFastJsonAnalysisFileInfo(JSFixedFastJsonLongIdKey key, String originName, Long length, String remark) {
         this.key = key;
         this.originName = originName;
         this.length = length;

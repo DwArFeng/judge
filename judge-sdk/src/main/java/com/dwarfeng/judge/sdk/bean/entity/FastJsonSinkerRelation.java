@@ -79,4 +79,4 @@ public class FastJsonSinkerRelation implements Bean {
                 ", remark=" + remark + '\'' +
                 '}';
     }
-} 
+}
