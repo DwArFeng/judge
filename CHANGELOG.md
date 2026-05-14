@@ -34,7 +34,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 JSFixedFastJson 实体中错误的字段注解。
+  - com.dwarfeng.judge.sdk.bean.key.JSFixedFastJsonSinkerRelationKey。
 
 ### 功能移除
 
