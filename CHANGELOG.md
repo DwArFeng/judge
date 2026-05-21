@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `judge-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.impl.dao.preset.TaskPresetCriteriaMaker。
+
 - `judge-stack` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.stack.service.TaskMaintainService。
 

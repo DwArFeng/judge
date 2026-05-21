@@ -39,14 +39,14 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
             case TaskMaintainService.SHOULD_DIE:
                 shouldDie(criteria, objs);
                 break;
+            case TaskMaintainService.TO_PURGED:
+                toPurged(criteria, objs);
+                break;
             case TaskMaintainService.CREATE_DATE_DESC:
                 createDateDesc(criteria, objs);
                 break;
             case TaskMaintainService.CHILD_FOR_SECTION_CREATE_DATE_DESC:
                 childForSectionCreateDateDesc(criteria, objs);
-                break;
-            case TaskMaintainService.TO_PURGED:
-                toPurged(criteria, objs);
                 break;
             case TaskMaintainService.STATUS_EQ:
                 statusEq(criteria, objs);
