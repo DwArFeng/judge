@@ -5,6 +5,7 @@
 ### 功能构建
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
   - docs/wiki/zh-CN/ConfDirectory.md。
 
 - `settingrepo-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
