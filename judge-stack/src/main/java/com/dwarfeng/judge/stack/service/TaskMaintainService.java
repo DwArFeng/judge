@@ -15,13 +15,16 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 public interface TaskMaintainService extends BatchCrudService<LongIdKey, Task>,
         EntireLookupService<Task>, PresetLookupService<Task> {
 
+    // region 预设查询 - 级联
+
     String CHILD_FOR_SECTION = "child_for_section";
+
+    // endregion
+
+    // region 预设查询 - 业务逻辑
 
     String SHOULD_EXPIRE = "should_expire";
     String SHOULD_DIE = "should_die";
-
-    String CREATE_DATE_DESC = "create_date_desc";
-    String CHILD_FOR_SECTION_CREATE_DATE_DESC = "child_for_section_create_date_desc";
 
     /**
      * 获取将要被清理的任务实体。
@@ -42,6 +45,13 @@ public interface TaskMaintainService extends BatchCrudService<LongIdKey, Task>,
      */
     String TO_PURGED = "to_purged";
 
+    // endregion
+
+    // region 预设查询 - UI
+
+    String CREATE_DATE_DESC = "create_date_desc";
+    String CHILD_FOR_SECTION_CREATE_DATE_DESC = "child_for_section_create_date_desc";
+
     /**
      * @since 2.3.2
      */
@@ -51,4 +61,6 @@ public interface TaskMaintainService extends BatchCrudService<LongIdKey, Task>,
      * @since 2.3.2
      */
     String STATUS_EQ_CREATE_DATE_DESC = "status_eq_create_date_desc";
+
+    // endregion
 }
