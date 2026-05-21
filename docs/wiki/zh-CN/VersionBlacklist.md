@@ -32,6 +32,10 @@
 
 | 编号                                                 | 大版本   | 起始版本    | 结束版本    | 原因                                            |
 |----------------------------------------------------|-------|---------|---------|-----------------------------------------------|
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.5.x | 2.5.0.a | 2.5.1.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.4.x | 2.4.0.a | 2.4.3.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.3.x | 2.3.0.a | 2.3.2.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.2.x | 2.2.0.a | 2.2.1.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
 | [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.5.x | 2.5.0.a | 2.5.0.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
 | [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.4.x | 2.4.0.a | 2.4.3.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
 | [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.3.x | 2.3.0.a | 2.3.2.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
@@ -47,6 +51,28 @@
 | [BLACKLIST-LEGACY-2.0.0.a](#BLACKLIST-LEGACY-200a) | 2.0.x | 2.0.0.a | 2.0.0.a | Beta 版本，与现行接口差异较大                             |
 
 ## 详细原因
+
+### BLACKLIST-20260521.2
+
+原因：`TaskPresetCriteriaMaker` 在按任务创建时间降序排序时，
+Hibernate Criteria 使用了实体上不存在的属性名 `createDate`（实体与 Hibernate 映射的实际属性为 `createdDate`）。
+执行相应预设查询时，Hibernate 无法解析该排序属性，进而导致查询失败。
+
+- 受影响模块/类：
+  - `com.dwarfeng.judge.stack.service.TaskMaintainService`
+  - `com.dwarfeng.judge.impl.dao.preset.TaskPresetCriteriaMaker`
+- 典型触发条件：
+  - 通过 `TaskMaintainService` 的预设查询传入预设字符串 `create_date_desc`（自 `2.0.0.a` 起）；
+  - 通过 `TaskMaintainService` 的预设查询传入预设字符串 `child_for_section_create_date_desc`（自 `2.0.0.a` 起）；
+  - 通过 `TaskMaintainService` 的预设查询传入预设字符串 `status_eq_create_date_desc`（自 `2.3.2.a` 起）。
+- 典型症状：
+  - 预设查询执行失败，日志或异常中出现 Hibernate 无法解析属性 `createDate`（或等价表述）；
+  - 依赖上述预设的任务列表、按区段筛选的任务列表、按状态筛选并排序等 UI 或接口功能不可用。
+- 影响范围：
+  - 仅影响使用上述预设字符串的查询路径。
+  - 不影响 `TaskMaintainService` 的其它预设，及不涉及这些预设的 CRUD 操作。
+
+迁移建议：升级至 2.5.2.a 及以上版本。
 
 ### BLACKLIST-20260514.1
 

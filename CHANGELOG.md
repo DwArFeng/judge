@@ -5,6 +5,7 @@
 ### 功能构建
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
   - docs/wiki/zh-CN/ConfDirectory.md。
 
 - 增加部分实体维护服务的预设查询。
