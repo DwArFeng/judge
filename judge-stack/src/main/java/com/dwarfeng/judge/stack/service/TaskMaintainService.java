@@ -49,8 +49,25 @@ public interface TaskMaintainService extends BatchCrudService<LongIdKey, Task>,
 
     // region 预设查询 - UI
 
+    // 该预设继续在 PresetCriteriaMaker 中使用，以向上兼容，故忽略相关警告。
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated
     String CREATE_DATE_DESC = "create_date_desc";
+
+    /**
+     * @since 2.5.2
+     */
+    String CREATED_DATE_DESC = "created_date_desc";
+
+    // 该预设继续在 PresetCriteriaMaker 中使用，以向上兼容，故忽略相关警告。
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated
     String CHILD_FOR_SECTION_CREATE_DATE_DESC = "child_for_section_create_date_desc";
+
+    /**
+     * @since 2.5.2
+     */
+    String CHILD_FOR_SECTION_CREATED_DATE_DESC = "child_for_section_created_date_desc";
 
     /**
      * @since 2.3.2
@@ -60,7 +77,15 @@ public interface TaskMaintainService extends BatchCrudService<LongIdKey, Task>,
     /**
      * @since 2.3.2
      */
+    // 该预设继续在 PresetCriteriaMaker 中使用，以向上兼容，故忽略相关警告。
+    @SuppressWarnings("DeprecatedIsStillUsed")
+    @Deprecated
     String STATUS_EQ_CREATE_DATE_DESC = "status_eq_create_date_desc";
+
+    /**
+     * @since 2.5.2
+     */
+    String STATUS_EQ_CREATED_DATE_DESC = "status_eq_created_date_desc";
 
     // endregion
 }

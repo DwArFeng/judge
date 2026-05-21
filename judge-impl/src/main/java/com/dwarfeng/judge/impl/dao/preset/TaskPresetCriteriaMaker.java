@@ -27,6 +27,7 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
         );
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void makeCriteria(DetachedCriteria criteria, String preset, Object[] objs) {
         switch (preset) {
@@ -43,16 +44,19 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
                 toPurged(criteria, objs);
                 break;
             case TaskMaintainService.CREATE_DATE_DESC:
-                createDateDesc(criteria, objs);
+            case TaskMaintainService.CREATED_DATE_DESC:
+                createdDateDesc(criteria, objs);
                 break;
             case TaskMaintainService.CHILD_FOR_SECTION_CREATE_DATE_DESC:
-                childForSectionCreateDateDesc(criteria, objs);
+            case TaskMaintainService.CHILD_FOR_SECTION_CREATED_DATE_DESC:
+                childForSectionCreatedDateDesc(criteria, objs);
                 break;
             case TaskMaintainService.STATUS_EQ:
                 statusEq(criteria, objs);
                 break;
             case TaskMaintainService.STATUS_EQ_CREATE_DATE_DESC:
-                statusEqCreateDateDesc(criteria, objs);
+            case TaskMaintainService.STATUS_EQ_CREATED_DATE_DESC:
+                statusEqCreatedDateDesc(criteria, objs);
                 break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
@@ -95,15 +99,15 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-    private void createDateDesc(DetachedCriteria criteria, Object[] objs) {
+    private void createdDateDesc(DetachedCriteria criteria, Object[] objs) {
         try {
-            criteria.addOrder(Order.desc("createDate"));
+            criteria.addOrder(Order.desc("createdDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
     }
 
-    private void childForSectionCreateDateDesc(DetachedCriteria criteria, Object[] objs) {
+    private void childForSectionCreatedDateDesc(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {
                 criteria.add(Restrictions.isNull("sectionLongId"));
@@ -111,7 +115,7 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
                 LongIdKey longIdKey = (LongIdKey) objs[0];
                 criteria.add(Restrictions.eqOrIsNull("sectionLongId", longIdKey.getLongId()));
             }
-            criteria.addOrder(Order.desc("createDate"));
+            criteria.addOrder(Order.desc("createdDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
@@ -141,7 +145,7 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-    private void statusEqCreateDateDesc(DetachedCriteria criteria, Object[] objs) {
+    private void statusEqCreatedDateDesc(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {
                 criteria.add(Restrictions.isNull("status"));
@@ -149,7 +153,7 @@ public class TaskPresetCriteriaMaker implements PresetCriteriaMaker {
                 Integer integer = (Integer) objs[0];
                 criteria.add(Restrictions.eqOrIsNull("status", integer));
             }
-            criteria.addOrder(Order.desc("createDate"));
+            criteria.addOrder(Order.desc("createdDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }

@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 增加部分实体维护服务的预设查询。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.CREATED_DATE_DESC。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.CHILD_FOR_SECTION_CREATED_DATE_DESC。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.STATUS_EQ_CREATED_DATE_DESC。
+
 - `judge-impl` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.impl.dao.preset.TaskPresetCriteriaMaker。
 
@@ -12,7 +17,10 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分实体维护服务中错误的预设查询逻辑。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.CREATE_DATE_DESC。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.CHILD_FOR_SECTION_CREATE_DATE_DESC。
+  - com.dwarfeng.judge.stack.service.TaskMaintainService.STATUS_EQ_CREATE_DATE_DESC。
 
 ### 功能移除
 
