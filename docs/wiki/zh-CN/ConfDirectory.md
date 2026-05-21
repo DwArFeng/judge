@@ -212,7 +212,7 @@ dubbo.consumer.snowflake.group=
 | 文件名                   | 说明         |
 |-----------------------|------------|
 | connection.properties | FTP 连接配置文件 |
-| path.properties       | FTP 路径配置文件  |
+| path.properties       | FTP 路径配置文件 |
 
 ### connection.properties
 
