@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/ConfDirectory.md。
+
 - 增加部分实体维护服务的预设查询。
   - com.dwarfeng.judge.stack.service.TaskMaintainService.CREATED_DATE_DESC。
   - com.dwarfeng.judge.stack.service.TaskMaintainService.CHILD_FOR_SECTION_CREATED_DATE_DESC。
