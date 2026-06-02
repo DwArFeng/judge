@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `judge-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.impl.handler.ProvideHandlerImpl。
+  - com.dwarfeng.judge.impl.configuration.ServiceExceptionMapperConfiguration。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.8.3.a` 以规避漏洞。
 

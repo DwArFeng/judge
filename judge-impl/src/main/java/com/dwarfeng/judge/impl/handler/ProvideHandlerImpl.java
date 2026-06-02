@@ -44,13 +44,13 @@ public class ProvideHandlerImpl implements ProvideHandler {
     @BehaviorAnalyse
     public LookupResult lookup(LookupInfo info) throws HandlerException {
         try {
-            return provide0(info);
+            return lookup0(info);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
     }
 
-    private LookupResult provide0(LookupInfo info) throws Exception {
+    private LookupResult lookup0(LookupInfo info) throws Exception {
         // 展开参数。
         LongIdKey providerInfoKey = info.getProviderInfoKey();
         LongIdKey adapterInfoKey = info.getAdapterInfoKey();
