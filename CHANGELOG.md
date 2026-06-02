@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `judge-node` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.node.configuration.ServiceExceptionMapperConfiguration。
+
 - `judge-impl` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.impl.handler.ProvideHandlerImpl。
   - com.dwarfeng.judge.impl.configuration.ServiceExceptionMapperConfiguration。
