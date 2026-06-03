@@ -1,8 +1,7 @@
 package com.dwarfeng.judge.impl.handler.provider.groovy;
 
-import com.dwarfeng.judge.stack.bean.dto.LookupInfo;
-import com.dwarfeng.judge.stack.bean.dto.LookupResult;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.judge.stack.handler.ProviderSession.LookupInfo;
+import com.dwarfeng.judge.stack.handler.ProviderSession.LookupResult;
 
 /**
  * Groovy 处理器。
@@ -34,10 +33,8 @@ public interface Processor {
      *
      * @param info 查询信息。
      * @return 查询结果。
-     * @throws HandlerException 处理器异常。
-     * @see LookupInfo
-     * @see LookupResult
-     * @since 2.3.0
+     * @throws Exception 方法执行过程中发生的任何异常。
+     * @since 2.6.0
      */
     LookupResult lookup(LookupInfo info) throws Exception;
 }

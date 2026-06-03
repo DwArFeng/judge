@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -58,34 +60,41 @@ public class ProvideHandlerImpl implements ProvideHandler {
         String preset = info.getPreset();
         Object[] objs = info.getObjs();
 
-        // 获取适配器。
+        // 获取适配器，进行参数适配。
         if (Objects.nonNull(adapterInfoKey)) {
             Adapter adapter = adapterLocalCacheHandler.get(adapterInfoKey);
             if (Objects.isNull(adapter)) {
                 LOGGER.debug("适配器不存在, 将抛出异常... ");
                 throw new AdapterNotExistsException(adapterInfoKey);
             }
-            objs = adapter.adapt(objs);
+            Adapter.AdaptResult adaptResult = adapter.adapt(new Adapter.AdaptInfo(preset, objs));
+            preset = adaptResult.getPreset();
+            objs = adaptResult.getObjs();
         }
 
         // 获取会话。
         ProviderSession providerSession = providerSessionHoldHandler.get(providerInfoKey);
 
-        // 调用会话的方法，构造结果。
-        LookupResult result = providerSession.lookup(
-                new LookupInfo(providerInfoKey, adapterInfoKey, filterInfoKey, preset, objs));
+        // 调用会话方法，构造结果。
+        ProviderSession.LookupResult lookupResult = providerSession.lookup(
+                new ProviderSession.LookupInfo(preset, objs)
+        );
+        List<Map<String, Object>> datas = lookupResult.getDatas();
+        Map<String, Object> meta = lookupResult.getMeta();
 
-        // 获取过滤器。
+        // 获取过滤器，进行结果过滤。
         if (Objects.nonNull(filterInfoKey)) {
             Filter filter = filterLocalCacheHandler.get(filterInfoKey);
             if (Objects.isNull(filter)) {
                 LOGGER.debug("过滤器不存在, 将抛出异常... ");
                 throw new FilterNotExistsException(filterInfoKey);
             }
-            result = filter.filter(result);
+            Filter.FilterResult filterResult = filter.filter(new Filter.FilterInfo(datas, meta));
+            datas = filterResult.getDatas();
+            meta = filterResult.getMeta();
         }
 
-        // 调用会话的方法，构造结果并返回。
-        return result;
+        // 基于过滤后的数据，构造结果并返回。
+        return new LookupResult(datas, meta);
     }
 }

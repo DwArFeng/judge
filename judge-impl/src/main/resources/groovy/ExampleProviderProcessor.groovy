@@ -1,8 +1,7 @@
 package groovy
 
 import com.dwarfeng.judge.impl.handler.provider.groovy.Processor
-import com.dwarfeng.judge.stack.bean.dto.LookupInfo
-import com.dwarfeng.judge.stack.bean.dto.LookupResult
+import com.dwarfeng.judge.stack.handler.ProviderSession
 
 /**
  * 提供随机数据，以提供示例。
@@ -79,7 +78,7 @@ class ExampleProviderProcessor implements Processor {
     }
 
     @Override
-    LookupResult lookup(LookupInfo info) throws Exception {
+    ProviderSession.LookupResult lookup(ProviderSession.LookupInfo info) throws Exception {
         List<Map<String, Object>> datas = new ArrayList<>()
         long currentTimeMillis = System.currentTimeMillis()
         Random random = new Random()
@@ -93,6 +92,6 @@ class ExampleProviderProcessor implements Processor {
         meta.put("length", DATA_LENGTH)
         meta.put("expand", DATA_EXPAND)
         meta.put("happenedTimestamp", currentTimeMillis)
-        return new LookupResult(datas, meta)
+        return new ProviderSession.LookupResult(datas, meta)
     }
 }

@@ -13,9 +13,9 @@ import com.dwarfeng.judge.stack.handler.Adapter;
 public abstract class AbstractAdapter implements Adapter {
 
     @Override
-    public Object[] adapt(Object[] args) throws AdapterException {
+    public AdaptResult adapt(AdaptInfo info) throws AdapterException {
         try {
-            return doAdapt(args);
+            return doAdapt(info);
         } catch (AdapterException e) {
             throw e;
         } catch (Exception e) {
@@ -24,12 +24,18 @@ public abstract class AbstractAdapter implements Adapter {
     }
 
     /**
-     * 新建适配器会话。
+     * 适配。
      *
-     * @return 新建生成的适配器会话。
-     * @throws Exception 任何可能的异常。
+     * <p>
+     * 该方法被调用时，会按照预定的逻辑对提供的数据进行适配，并把适配的结果进行返回，
+     *
+     * @param info 适配信息。
+     * @return 适配结果。
+     * @throws AdapterException 适配器异常。
+     * @see #adapt(AdaptInfo)
+     * @since 2.6.0
      */
-    protected abstract Object[] doAdapt(Object[] args) throws Exception;
+    protected abstract AdaptResult doAdapt(AdaptInfo info) throws Exception;
 
     @Override
     public String toString() {

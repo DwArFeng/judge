@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 提供机制优化。
+  - 优化 `com.dwarfeng.judge.stack.handler.Adapter` 接口签名。
+  - 优化 `com.dwarfeng.judge.stack.handler.ProviderSession` 接口签名。
+  - 优化 `com.dwarfeng.judge.stack.handler.Filter` 接口签名。
+
 - 实体字段优化。
   - com.dwarfeng.judge.stack.bean.entity.AnalyserVariable。
   - com.dwarfeng.judge.stack.bean.entity.JudgerVariable。

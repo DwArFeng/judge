@@ -1,8 +1,6 @@
 package com.dwarfeng.judge.impl.handler.provider.groovy;
 
 import com.dwarfeng.judge.sdk.handler.provider.AbstractProviderSession;
-import com.dwarfeng.judge.stack.bean.dto.LookupInfo;
-import com.dwarfeng.judge.stack.bean.dto.LookupResult;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

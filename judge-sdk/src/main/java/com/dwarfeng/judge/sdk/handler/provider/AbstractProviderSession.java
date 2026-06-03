@@ -1,7 +1,5 @@
 package com.dwarfeng.judge.sdk.handler.provider;
 
-import com.dwarfeng.judge.stack.bean.dto.LookupInfo;
-import com.dwarfeng.judge.stack.bean.dto.LookupResult;
 import com.dwarfeng.judge.stack.exception.ProviderSessionException;
 import com.dwarfeng.judge.stack.handler.ProviderSession;
 

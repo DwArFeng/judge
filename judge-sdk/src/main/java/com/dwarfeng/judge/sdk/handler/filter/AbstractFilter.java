@@ -1,6 +1,5 @@
 package com.dwarfeng.judge.sdk.handler.filter;
 
-import com.dwarfeng.judge.stack.bean.dto.LookupResult;
 import com.dwarfeng.judge.stack.exception.FilterException;
 import com.dwarfeng.judge.stack.exception.FilterExecutionException;
 import com.dwarfeng.judge.stack.handler.Filter;
@@ -21,9 +20,9 @@ public abstract class AbstractFilter implements Filter {
      * @since 2.4.0
      */
     @Override
-    public LookupResult filter(LookupResult lookupResult) throws FilterException {
+    public FilterResult filter(FilterInfo info) throws FilterException {
         try {
-            return doFilter(lookupResult);
+            return doFilter(info);
         } catch (FilterException e) {
             throw e;
         } catch (Exception e) {
@@ -32,14 +31,18 @@ public abstract class AbstractFilter implements Filter {
     }
 
     /**
-     * 新建过滤器会话。
+     * 过滤。
      *
-     * @return 新建生成的过滤器会话。
-     * @throws Exception 任何可能的异常。
-     * @author DwArFeng
-     * @since 2.4.0
+     * <p>
+     * 该方法被调用时，会按照预定的逻辑对提供的数据进行过滤，并把过滤的结果进行返回。
+     *
+     * @param info 过滤信息。
+     * @return 过滤结果。
+     * @throws FilterException 过滤器异常。
+     * @see #filter(FilterInfo)
+     * @since 2.6.0
      */
-    protected abstract LookupResult doFilter(LookupResult lookupResult) throws Exception;
+    protected abstract FilterResult doFilter(FilterInfo info) throws Exception;
 
     @Override
     public String toString() {
