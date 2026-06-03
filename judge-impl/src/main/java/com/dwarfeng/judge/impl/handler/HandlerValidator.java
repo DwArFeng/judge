@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.dutil.basic.cls.ClassUtil;
 import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackUpsertInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalysisFileUpsertInfo;
@@ -14,6 +15,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -339,6 +341,41 @@ public class HandlerValidator {
             }
         } catch (ServiceException e) {
             throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureVariableValueTypeValid(int valueType, Object value) throws HandlerException {
+        if (!Constants.variableValueTypeSpace().contains(valueType)) {
+            throw new InvalidVariableValueTypeException(valueType);
+        }
+        if (Objects.isNull(value)) {
+            return;
+        }
+        Class<?> expectedValueClazz;
+        switch (valueType) {
+            case Constants.VARIABLE_VALUE_TYPE_STRING:
+                expectedValueClazz = String.class;
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_LONG:
+                expectedValueClazz = Long.class;
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DOUBLE:
+                expectedValueClazz = Double.class;
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_BOOLEAN:
+                expectedValueClazz = Boolean.class;
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DATE:
+                expectedValueClazz = Date.class;
+                break;
+            default:
+                throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+        }
+        // 获取 value 的实际类型，特别地，如果 actualValueClazz 是基本类型，则转换为对应的包装类型。
+        Class<?> actualValueClazz = ClassUtil.getPackedClass(value.getClass());
+        // 如果 actualValueClazz 不是 expectedValueClazz 或 expectedValueClazz 的子类，则抛出异常。
+        if (!expectedValueClazz.isAssignableFrom(actualValueClazz)) {
+            throw new VariableValueTypeMismatchException(valueType, expectedValueClazz, actualValueClazz);
         }
     }
 }

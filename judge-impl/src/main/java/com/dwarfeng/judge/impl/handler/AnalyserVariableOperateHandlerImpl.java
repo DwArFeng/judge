@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.AnalyserVariableInspectInfo;
 import com.dwarfeng.judge.stack.bean.dto.AnalyserVariableInspectResult;
 import com.dwarfeng.judge.stack.bean.dto.AnalyserVariableRemoveInfo;
@@ -14,6 +15,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
+import java.util.Date;
 import java.util.Objects;
 
 @Component
@@ -41,28 +43,44 @@ public class AnalyserVariableOperateHandlerImpl implements AnalyserVariableOpera
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private AnalyserVariableInspectResult inspect0(AnalyserVariableInspectInfo info) throws Exception {
-        // 展开参数。
         LongIdKey analyserInfoKey = info.getAnalyserInfoKey();
         String analyserVariableId = info.getAnalyserVariableId();
 
-        // 确认部件存在。
         handlerValidator.makeSureAnalyserInfoExists(analyserInfoKey);
 
-        // 调用维护服务获取分析器变量。
         AnalyserVariableKey analyserVariableKey = new AnalyserVariableKey(
                 analyserInfoKey.getLongId(), analyserVariableId
         );
         AnalyserVariable analyserVariable = analyserVariableMaintainService.getIfExists(analyserVariableKey);
 
-        // 如果分析器变量不存在，则返回 null。
         if (Objects.isNull(analyserVariable)) {
             return null;
         }
 
-        // 构建返回值并返回。
-        String value = analyserVariable.getValue();
-        return new AnalyserVariableInspectResult(value);
+        int valueType = analyserVariable.getValueType();
+        Object value;
+        switch (valueType) {
+            case Constants.VARIABLE_VALUE_TYPE_STRING:
+                value = analyserVariable.getStringValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_LONG:
+                value = analyserVariable.getLongValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DOUBLE:
+                value = analyserVariable.getDoubleValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_BOOLEAN:
+                value = analyserVariable.getBooleanValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DATE:
+                value = analyserVariable.getDateValue();
+                break;
+            default:
+                throw new IllegalStateException("非法的 valueType 值: " + valueType);
+        }
+        return new AnalyserVariableInspectResult(valueType, value);
     }
 
     @Override
@@ -74,21 +92,42 @@ public class AnalyserVariableOperateHandlerImpl implements AnalyserVariableOpera
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void upsert0(AnalyserVariableUpsertInfo info) throws Exception {
-        // 展开参数。
         LongIdKey analyserInfoKey = info.getAnalyserInfoKey();
         String analyserVariableId = info.getAnalyserVariableId();
-        String value = info.getValue();
+        int valueType = info.getValueType();
+        Object value = info.getValue();
 
-        // 确认部件存在。
         handlerValidator.makeSureAnalyserInfoExists(analyserInfoKey);
+        handlerValidator.makeSureVariableValueTypeValid(valueType, value);
 
-        // 构建分析器变量。
         AnalyserVariable analyserVariable = new AnalyserVariable(
-                new AnalyserVariableKey(analyserInfoKey.getLongId(), analyserVariableId), value
+                new AnalyserVariableKey(analyserInfoKey.getLongId(), analyserVariableId),
+                valueType, null, null, null, null, null
         );
+        if (Objects.nonNull(value)) {
+            switch (valueType) {
+                case Constants.VARIABLE_VALUE_TYPE_STRING:
+                    analyserVariable.setStringValue((String) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_LONG:
+                    analyserVariable.setLongValue((Long) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_DOUBLE:
+                    analyserVariable.setDoubleValue((Double) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_BOOLEAN:
+                    analyserVariable.setBooleanValue((Boolean) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_DATE:
+                    analyserVariable.setDateValue((Date) value);
+                    break;
+                default:
+                    throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+            }
+        }
 
-        // 调用维护服务插入/更新分析器变量。
         analyserVariableMaintainService.insertOrUpdate(analyserVariable);
     }
 
@@ -102,19 +141,15 @@ public class AnalyserVariableOperateHandlerImpl implements AnalyserVariableOpera
     }
 
     private void remove0(AnalyserVariableRemoveInfo info) throws Exception {
-        // 展开参数。
         LongIdKey analyserInfoKey = info.getAnalyserInfoKey();
         String analyserVariableId = info.getAnalyserVariableId();
 
-        // 确认部件存在。
         handlerValidator.makeSureAnalyserInfoExists(analyserInfoKey);
-        // 确认分析器变量存在。
         AnalyserVariableKey analyserVariableKey = new AnalyserVariableKey(
                 analyserInfoKey.getLongId(), analyserVariableId
         );
         handlerValidator.makeSureAnalyserVariableExists(analyserVariableKey);
 
-        // 调用维护服务删除分析器变量。
         analyserVariableMaintainService.delete(analyserVariableKey);
     }
 }

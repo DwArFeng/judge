@@ -647,33 +647,6 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     PurgeFinishedResult purgeFinishedResultFromFastJson(FastJsonPurgeFinishedResult fastJsonPurgeFinishedResult);
 
-    FastJsonAnalyserVariableInspectResult analyserVariableInspectResultToFastJson(
-            AnalyserVariableInspectResult analyserVariableInspectResult
-    );
-
-    @InheritInverseConfiguration
-    AnalyserVariableInspectResult analyserVariableInspectResultFromFastJson(
-            FastJsonAnalyserVariableInspectResult fastJsonAnalyserVariableInspectResult
-    );
-
-    FastJsonJudgerVariableInspectResult judgerVariableInspectResultToFastJson(
-            JudgerVariableInspectResult judgerVariableInspectResult
-    );
-
-    @InheritInverseConfiguration
-    JudgerVariableInspectResult judgerVariableInspectResultFromFastJson(
-            FastJsonJudgerVariableInspectResult fastJsonJudgerVariableInspectResult
-    );
-
-    FastJsonSinkerVariableInspectResult sinkerVariableInspectResultToFastJson(
-            SinkerVariableInspectResult sinkerVariableInspectResult
-    );
-
-    @InheritInverseConfiguration
-    SinkerVariableInspectResult sinkerVariableInspectResultFromFastJson(
-            FastJsonSinkerVariableInspectResult fastJsonSinkerVariableInspectResult
-    );
-
     WebInputAnalyserVariableInspectInfo analyserVariableInspectInfoToWebInput(
             AnalyserVariableInspectInfo analyserVariableInspectInfo
     );

@@ -5,6 +5,7 @@ import com.dwarfeng.judge.sdk.util.Constraints;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Objects;
 @Table(name = "tbl_judger_variable")
 public class HibernateJudgerVariable implements Bean {
 
-    private static final long serialVersionUID = -8856294361960537070L;
+    private static final long serialVersionUID = -6102041394646599726L;
 
     // region 主键
 
@@ -34,8 +35,24 @@ public class HibernateJudgerVariable implements Bean {
 
     // region 主属性字段
 
-    @Column(name = "value", columnDefinition = "TEXT")
-    private String value;
+    @Column(name = "value_type", nullable = false)
+    private int valueType;
+
+    @Column(name = "string_value", columnDefinition = "TEXT")
+    private String stringValue;
+
+    @Column(name = "long_value")
+    private Long longValue;
+
+    @Column(name = "double_value")
+    private Double doubleValue;
+
+    @Column(name = "boolean_value")
+    private Boolean booleanValue;
+
+    @Column(name = "date_value")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateValue;
 
     // endregion
 
@@ -91,12 +108,52 @@ public class HibernateJudgerVariable implements Bean {
         this.variableStringId = variableStringId;
     }
 
-    public String getValue() {
-        return value;
+    public int getValueType() {
+        return valueType;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValueType(int valueType) {
+        this.valueType = valueType;
+    }
+
+    public String getStringValue() {
+        return stringValue;
+    }
+
+    public void setStringValue(String stringValue) {
+        this.stringValue = stringValue;
+    }
+
+    public Long getLongValue() {
+        return longValue;
+    }
+
+    public void setLongValue(Long longValue) {
+        this.longValue = longValue;
+    }
+
+    public Double getDoubleValue() {
+        return doubleValue;
+    }
+
+    public void setDoubleValue(Double doubleValue) {
+        this.doubleValue = doubleValue;
+    }
+
+    public Boolean getBooleanValue() {
+        return booleanValue;
+    }
+
+    public void setBooleanValue(Boolean booleanValue) {
+        this.booleanValue = booleanValue;
+    }
+
+    public Date getDateValue() {
+        return dateValue;
+    }
+
+    public void setDateValue(Date dateValue) {
+        this.dateValue = dateValue;
     }
 
     public HibernateJudgerInfo getJudgerInfo() {
@@ -114,7 +171,12 @@ public class HibernateJudgerVariable implements Bean {
         return getClass().getSimpleName() + "(" +
                 "judgerInfoLongId = " + judgerInfoLongId + ", " +
                 "variableStringId = " + variableStringId + ", " +
-                "value = " + value + ", " +
+                "valueType = " + valueType + ", " +
+                "stringValue = " + stringValue + ", " +
+                "longValue = " + longValue + ", " +
+                "doubleValue = " + doubleValue + ", " +
+                "booleanValue = " + booleanValue + ", " +
+                "dateValue = " + dateValue + ", " +
                 "judgerInfo = " + judgerInfo + ")";
     }
 }

@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 实体字段优化。
+  - com.dwarfeng.judge.stack.bean.entity.AnalyserVariable。
+  - com.dwarfeng.judge.stack.bean.entity.JudgerVariable。
+  - com.dwarfeng.judge.stack.bean.entity.SinkerVariable。
+
 - `judge-node` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.node.configuration.ServiceExceptionMapperConfiguration。
 

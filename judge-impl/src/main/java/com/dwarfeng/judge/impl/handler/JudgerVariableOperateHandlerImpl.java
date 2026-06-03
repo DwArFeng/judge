@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.JudgerVariableInspectInfo;
 import com.dwarfeng.judge.stack.bean.dto.JudgerVariableInspectResult;
 import com.dwarfeng.judge.stack.bean.dto.JudgerVariableRemoveInfo;
@@ -14,6 +15,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
+import java.util.Date;
 import java.util.Objects;
 
 @Component
@@ -41,26 +43,42 @@ public class JudgerVariableOperateHandlerImpl implements JudgerVariableOperateHa
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private JudgerVariableInspectResult inspect0(JudgerVariableInspectInfo info) throws Exception {
-        // 展开参数。
         LongIdKey judgerInfoKey = info.getJudgerInfoKey();
         String judgerVariableId = info.getJudgerVariableId();
 
-        // 确认部件存在。
         handlerValidator.makeSureJudgerInfoExists(judgerInfoKey);
 
-        // 调用维护服务获取判断器变量。
         JudgerVariableKey judgerVariableKey = new JudgerVariableKey(judgerInfoKey.getLongId(), judgerVariableId);
         JudgerVariable judgerVariable = judgerVariableMaintainService.getIfExists(judgerVariableKey);
 
-        // 如果判断器变量不存在，则返回 null。
         if (Objects.isNull(judgerVariable)) {
             return null;
         }
 
-        // 构建返回值并返回。
-        String value = judgerVariable.getValue();
-        return new JudgerVariableInspectResult(value);
+        int valueType = judgerVariable.getValueType();
+        Object value;
+        switch (valueType) {
+            case Constants.VARIABLE_VALUE_TYPE_STRING:
+                value = judgerVariable.getStringValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_LONG:
+                value = judgerVariable.getLongValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DOUBLE:
+                value = judgerVariable.getDoubleValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_BOOLEAN:
+                value = judgerVariable.getBooleanValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DATE:
+                value = judgerVariable.getDateValue();
+                break;
+            default:
+                throw new IllegalStateException("非法的 valueType 值: " + valueType);
+        }
+        return new JudgerVariableInspectResult(valueType, value);
     }
 
     @Override
@@ -72,21 +90,42 @@ public class JudgerVariableOperateHandlerImpl implements JudgerVariableOperateHa
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void upsert0(JudgerVariableUpsertInfo info) throws Exception {
-        // 展开参数。
         LongIdKey judgerInfoKey = info.getJudgerInfoKey();
         String judgerVariableId = info.getJudgerVariableId();
-        String value = info.getValue();
+        int valueType = info.getValueType();
+        Object value = info.getValue();
 
-        // 确认部件存在。
         handlerValidator.makeSureJudgerInfoExists(judgerInfoKey);
+        handlerValidator.makeSureVariableValueTypeValid(valueType, value);
 
-        // 构建判断器变量。
         JudgerVariable judgerVariable = new JudgerVariable(
-                new JudgerVariableKey(judgerInfoKey.getLongId(), judgerVariableId), value
+                new JudgerVariableKey(judgerInfoKey.getLongId(), judgerVariableId),
+                valueType, null, null, null, null, null
         );
+        if (Objects.nonNull(value)) {
+            switch (valueType) {
+                case Constants.VARIABLE_VALUE_TYPE_STRING:
+                    judgerVariable.setStringValue((String) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_LONG:
+                    judgerVariable.setLongValue((Long) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_DOUBLE:
+                    judgerVariable.setDoubleValue((Double) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_BOOLEAN:
+                    judgerVariable.setBooleanValue((Boolean) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_DATE:
+                    judgerVariable.setDateValue((Date) value);
+                    break;
+                default:
+                    throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+            }
+        }
 
-        // 调用维护服务插入/更新判断器变量。
         judgerVariableMaintainService.insertOrUpdate(judgerVariable);
     }
 
@@ -100,17 +139,13 @@ public class JudgerVariableOperateHandlerImpl implements JudgerVariableOperateHa
     }
 
     private void remove0(JudgerVariableRemoveInfo info) throws Exception {
-        // 展开参数。
         LongIdKey judgerInfoKey = info.getJudgerInfoKey();
         String judgerVariableId = info.getJudgerVariableId();
 
-        // 确认部件存在。
         handlerValidator.makeSureJudgerInfoExists(judgerInfoKey);
-        // 确认判断器变量存在。
         JudgerVariableKey judgerVariableKey = new JudgerVariableKey(judgerInfoKey.getLongId(), judgerVariableId);
         handlerValidator.makeSureJudgerVariableExists(judgerVariableKey);
 
-        // 调用维护服务删除判断器变量。
         judgerVariableMaintainService.delete(judgerVariableKey);
     }
 }

@@ -10,29 +10,55 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
  */
 public class JudgerVariableInspectResult implements Dto {
 
-    private static final long serialVersionUID = 6390167393358641L;
+    private static final long serialVersionUID = 1473920762142072910L;
 
-    private String value;
+    /**
+     * 变量类型。
+     *
+     * <p>
+     * int 枚举，可能的状态为：
+     * <ol>
+     *     <li>文本</li>
+     *     <li>整数</li>
+     *     <li>浮点数</li>
+     *     <li>布尔值</li>
+     *     <li>日期值</li>
+     * </ol>
+     * 详细值参考 sdk 模块的常量工具类。
+     */
+    private int valueType;
+
+    private Object value;
 
     public JudgerVariableInspectResult() {
     }
 
-    public JudgerVariableInspectResult(String value) {
+    public JudgerVariableInspectResult(int valueType, Object value) {
+        this.valueType = valueType;
         this.value = value;
     }
 
-    public String getValue() {
+    public int getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(int valueType) {
+        this.valueType = valueType;
+    }
+
+    public Object getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 
     @Override
     public String toString() {
         return "JudgerVariableInspectResult{" +
-                "value='" + value + '\'' +
+                "valueType=" + valueType +
+                ", value=" + value +
                 '}';
     }
 }

@@ -37,9 +37,9 @@ class ExampleAnalyserProcessor implements Processor {
         LongIdKey analyserInfoKey = context.getAnalyserInfoKey()
 
         // 向分析器变量中写入值，键：groovy，值：UUID。
-        context.upsertAnalyserVariable(
-                new AnalyserVariableUpsertInfo(analyserInfoKey, "groovy", UUID.randomUUID().toString())
-        )
+        context.upsertAnalyserVariable(new AnalyserVariableUpsertInfo(
+                analyserInfoKey, "groovy", Constants.VARIABLE_VALUE_TYPE_STRING, UUID.randomUUID().toString()
+        ))
 
         // 获取任务键。
         LongIdKey taskKey = context.getTaskKey()

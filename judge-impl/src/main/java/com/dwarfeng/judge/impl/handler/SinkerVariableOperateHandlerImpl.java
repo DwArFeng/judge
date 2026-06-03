@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.handler;
 
+import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.SinkerVariableInspectInfo;
 import com.dwarfeng.judge.stack.bean.dto.SinkerVariableInspectResult;
 import com.dwarfeng.judge.stack.bean.dto.SinkerVariableRemoveInfo;
@@ -14,6 +15,7 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
+import java.util.Date;
 import java.util.Objects;
 
 @Component
@@ -41,26 +43,42 @@ public class SinkerVariableOperateHandlerImpl implements SinkerVariableOperateHa
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private SinkerVariableInspectResult inspect0(SinkerVariableInspectInfo info) throws Exception {
-        // 展开参数。
         LongIdKey sinkerInfoKey = info.getSinkerInfoKey();
         String sinkerVariableId = info.getSinkerVariableId();
 
-        // 确认部件存在。
         handlerValidator.makeSureSinkerInfoExists(sinkerInfoKey);
 
-        // 调用维护服务获取下沉器变量。
         SinkerVariableKey sinkerVariableKey = new SinkerVariableKey(sinkerInfoKey.getLongId(), sinkerVariableId);
         SinkerVariable sinkerVariable = sinkerVariableMaintainService.getIfExists(sinkerVariableKey);
 
-        // 如果下沉器变量不存在，则返回 null。
         if (Objects.isNull(sinkerVariable)) {
             return null;
         }
 
-        // 构建返回值并返回。
-        String value = sinkerVariable.getValue();
-        return new SinkerVariableInspectResult(value);
+        int valueType = sinkerVariable.getValueType();
+        Object value;
+        switch (valueType) {
+            case Constants.VARIABLE_VALUE_TYPE_STRING:
+                value = sinkerVariable.getStringValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_LONG:
+                value = sinkerVariable.getLongValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DOUBLE:
+                value = sinkerVariable.getDoubleValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_BOOLEAN:
+                value = sinkerVariable.getBooleanValue();
+                break;
+            case Constants.VARIABLE_VALUE_TYPE_DATE:
+                value = sinkerVariable.getDateValue();
+                break;
+            default:
+                throw new IllegalStateException("非法的 valueType 值: " + valueType);
+        }
+        return new SinkerVariableInspectResult(valueType, value);
     }
 
     @Override
@@ -72,21 +90,42 @@ public class SinkerVariableOperateHandlerImpl implements SinkerVariableOperateHa
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void upsert0(SinkerVariableUpsertInfo info) throws Exception {
-        // 展开参数。
         LongIdKey sinkerInfoKey = info.getSinkerInfoKey();
         String sinkerVariableId = info.getSinkerVariableId();
-        String value = info.getValue();
+        int valueType = info.getValueType();
+        Object value = info.getValue();
 
-        // 确认部件存在。
         handlerValidator.makeSureSinkerInfoExists(sinkerInfoKey);
+        handlerValidator.makeSureVariableValueTypeValid(valueType, value);
 
-        // 构建下沉器变量。
         SinkerVariable sinkerVariable = new SinkerVariable(
-                new SinkerVariableKey(sinkerInfoKey.getLongId(), sinkerVariableId), value
+                new SinkerVariableKey(sinkerInfoKey.getLongId(), sinkerVariableId),
+                valueType, null, null, null, null, null
         );
+        if (Objects.nonNull(value)) {
+            switch (valueType) {
+                case Constants.VARIABLE_VALUE_TYPE_STRING:
+                    sinkerVariable.setStringValue((String) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_LONG:
+                    sinkerVariable.setLongValue((Long) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_DOUBLE:
+                    sinkerVariable.setDoubleValue((Double) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_BOOLEAN:
+                    sinkerVariable.setBooleanValue((Boolean) value);
+                    break;
+                case Constants.VARIABLE_VALUE_TYPE_DATE:
+                    sinkerVariable.setDateValue((Date) value);
+                    break;
+                default:
+                    throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+            }
+        }
 
-        // 调用维护服务插入/更新下沉器变量。
         sinkerVariableMaintainService.insertOrUpdate(sinkerVariable);
     }
 
@@ -100,17 +139,13 @@ public class SinkerVariableOperateHandlerImpl implements SinkerVariableOperateHa
     }
 
     private void remove0(SinkerVariableRemoveInfo info) throws Exception {
-        // 展开参数。
         LongIdKey sinkerInfoKey = info.getSinkerInfoKey();
         String sinkerVariableId = info.getSinkerVariableId();
 
-        // 确认部件存在。
         handlerValidator.makeSureSinkerInfoExists(sinkerInfoKey);
-        // 确认下沉器变量存在。
         SinkerVariableKey sinkerVariableKey = new SinkerVariableKey(sinkerInfoKey.getLongId(), sinkerVariableId);
         handlerValidator.makeSureSinkerVariableExists(sinkerVariableKey);
 
-        // 调用维护服务删除下沉器变量。
         sinkerVariableMaintainService.delete(sinkerVariableKey);
     }
 }

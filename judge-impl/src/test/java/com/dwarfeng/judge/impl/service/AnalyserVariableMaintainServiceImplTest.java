@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
@@ -41,7 +42,8 @@ public class AnalyserVariableMaintainServiceImplTest {
                 new LongIdKey(ANALYSER_INFO_LONG_ID), null, 12450, true, "type", "param", "remark"
         );
         analyserVariable = new AnalyserVariable(
-                new AnalyserVariableKey(ANALYSER_INFO_LONG_ID, VARIABLE_STRING_ID), "value"
+                new AnalyserVariableKey(ANALYSER_INFO_LONG_ID, VARIABLE_STRING_ID),
+                12450, "stringValue", 12450L, 12.450, true, new Date()
         );
     }
 

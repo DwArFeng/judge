@@ -5,17 +5,18 @@ import com.dwarfeng.judge.sdk.bean.key.FastJsonSinkerVariableKey;
 import com.dwarfeng.judge.stack.bean.entity.SinkerVariable;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
  * FastJson 下沉器变量。
  *
  * @author DwArFeng
- * @since 2.1.0-beta
+ * @since 2.0.0-beta
  */
 public class FastJsonSinkerVariable implements Bean {
 
-    private static final long serialVersionUID = -9019264270464722065L;
+    private static final long serialVersionUID = 4263050618526805578L;
 
     public static FastJsonSinkerVariable of(SinkerVariable sinkerVariable) {
         if (Objects.isNull(sinkerVariable)) {
@@ -23,7 +24,12 @@ public class FastJsonSinkerVariable implements Bean {
         } else {
             return new FastJsonSinkerVariable(
                     FastJsonSinkerVariableKey.of(sinkerVariable.getKey()),
-                    sinkerVariable.getValue()
+                    sinkerVariable.getValueType(),
+                    sinkerVariable.getStringValue(),
+                    sinkerVariable.getLongValue(),
+                    sinkerVariable.getDoubleValue(),
+                    sinkerVariable.getBooleanValue(),
+                    sinkerVariable.getDateValue()
             );
         }
     }
@@ -31,15 +37,38 @@ public class FastJsonSinkerVariable implements Bean {
     @JSONField(name = "key", ordinal = 1)
     private FastJsonSinkerVariableKey key;
 
-    @JSONField(name = "value", ordinal = 2)
-    private String value;
+    @JSONField(name = "value_type", ordinal = 2)
+    private int valueType;
+
+    @JSONField(name = "string_value", ordinal = 3)
+    private String stringValue;
+
+    @JSONField(name = "long_value", ordinal = 4)
+    private Long longValue;
+
+    @JSONField(name = "double_value", ordinal = 5)
+    private Double doubleValue;
+
+    @JSONField(name = "boolean_value", ordinal = 6)
+    private Boolean booleanValue;
+
+    @JSONField(name = "date_value", ordinal = 7)
+    private Date dateValue;
 
     public FastJsonSinkerVariable() {
     }
 
-    public FastJsonSinkerVariable(FastJsonSinkerVariableKey key, String value) {
+    public FastJsonSinkerVariable(
+            FastJsonSinkerVariableKey key, int valueType, String stringValue, Long longValue, Double doubleValue,
+            Boolean booleanValue, Date dateValue
+    ) {
         this.key = key;
-        this.value = value;
+        this.valueType = valueType;
+        this.stringValue = stringValue;
+        this.longValue = longValue;
+        this.doubleValue = doubleValue;
+        this.booleanValue = booleanValue;
+        this.dateValue = dateValue;
     }
 
     public FastJsonSinkerVariableKey getKey() {
@@ -50,19 +79,64 @@ public class FastJsonSinkerVariable implements Bean {
         this.key = key;
     }
 
-    public String getValue() {
-        return value;
+    public int getValueType() {
+        return valueType;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValueType(int valueType) {
+        this.valueType = valueType;
+    }
+
+    public String getStringValue() {
+        return stringValue;
+    }
+
+    public void setStringValue(String stringValue) {
+        this.stringValue = stringValue;
+    }
+
+    public Long getLongValue() {
+        return longValue;
+    }
+
+    public void setLongValue(Long longValue) {
+        this.longValue = longValue;
+    }
+
+    public Double getDoubleValue() {
+        return doubleValue;
+    }
+
+    public void setDoubleValue(Double doubleValue) {
+        this.doubleValue = doubleValue;
+    }
+
+    public Boolean getBooleanValue() {
+        return booleanValue;
+    }
+
+    public void setBooleanValue(Boolean booleanValue) {
+        this.booleanValue = booleanValue;
+    }
+
+    public Date getDateValue() {
+        return dateValue;
+    }
+
+    public void setDateValue(Date dateValue) {
+        this.dateValue = dateValue;
     }
 
     @Override
     public String toString() {
         return "FastJsonSinkerVariable{" +
                 "key=" + key +
-                ", value='" + value + '\'' +
+                ", valueType=" + valueType +
+                ", stringValue='" + stringValue + '\'' +
+                ", longValue=" + longValue +
+                ", doubleValue=" + doubleValue +
+                ", booleanValue=" + booleanValue +
+                ", dateValue=" + dateValue +
                 '}';
     }
 }

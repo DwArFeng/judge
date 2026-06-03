@@ -1,6 +1,7 @@
 package groovy
 
 import com.dwarfeng.judge.impl.handler.judger.groovy.Processor
+import com.dwarfeng.judge.sdk.util.Constants
 import com.dwarfeng.judge.stack.bean.dto.JudgementUpsertInfo
 import com.dwarfeng.judge.stack.bean.dto.JudgerVariableUpsertInfo
 import com.dwarfeng.judge.stack.bean.dto.TaskEventCreateInfo
@@ -32,9 +33,9 @@ class ExampleJudgerProcessor implements Processor {
         LongIdKey judgerInfoKey = context.getJudgerInfoKey()
 
         // 向判断器变量中写入值，键：groovy，值：UUID。
-        context.upsertJudgerVariable(
-                new JudgerVariableUpsertInfo(judgerInfoKey, "groovy", UUID.randomUUID().toString())
-        )
+        context.upsertJudgerVariable(new JudgerVariableUpsertInfo(
+                judgerInfoKey, "groovy", Constants.VARIABLE_VALUE_TYPE_STRING, UUID.randomUUID().toString()
+        ))
 
         // 获取任务键。
         LongIdKey taskKey = context.getTaskKey()

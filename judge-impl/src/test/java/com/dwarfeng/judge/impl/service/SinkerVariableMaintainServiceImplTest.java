@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +43,8 @@ public class SinkerVariableMaintainServiceImplTest {
         sinkerVariables = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             SinkerVariable sinkerVariable = new SinkerVariable(
-                    new SinkerVariableKey(SINKER_INFO_ID, "variableStringId." + i), "value"
+                    new SinkerVariableKey(SINKER_INFO_ID, "variableStringId." + i),
+                    12450, "stringValue", 12450L, 12.450, true, new Date()
             );
             sinkerVariables.add(sinkerVariable);
         }
