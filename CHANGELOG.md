@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/InstallToCentos.md。
+
 - 提供机制优化。
   - 优化 `com.dwarfeng.judge.stack.handler.Adapter` 接口签名。
   - 优化 `com.dwarfeng.judge.stack.handler.ProviderSession` 接口签名。
