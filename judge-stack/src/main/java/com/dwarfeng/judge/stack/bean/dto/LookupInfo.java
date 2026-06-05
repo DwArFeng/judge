@@ -120,7 +120,10 @@ public class LookupInfo implements Dto {
     public LookupInfo() {
     }
 
-    public LookupInfo(LongIdKey providerInfoKey, LongIdKey adapterInfoKey, LongIdKey filterInfoKey, String preset, Object[] objs) {
+    public LookupInfo(
+            LongIdKey providerInfoKey, LongIdKey adapterInfoKey, LongIdKey filterInfoKey, String preset,
+            Object[] objs
+    ) {
         this.providerInfoKey = providerInfoKey;
         this.adapterInfoKey = adapterInfoKey;
         this.filterInfoKey = filterInfoKey;

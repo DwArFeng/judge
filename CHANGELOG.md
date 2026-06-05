@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- `judge-stack` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.stack.bean.dto.LookupInfo。
 
 ### Bug 修复
 
