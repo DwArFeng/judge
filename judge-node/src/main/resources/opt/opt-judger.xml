@@ -19,4 +19,9 @@
     <!--
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.identity"/>
     -->
+
+    <!-- 加载 LinearMappingJudger -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.linear"/>
+    -->
 </beans>

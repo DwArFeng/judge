@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 实现预设判断器。
+  - com.dwarfeng.judge.impl.handler.judger.linear.LinearMappingJudgerRegistry。
   - com.dwarfeng.judge.impl.handler.judger.identity.IdentityJudgerRegistry。
 
 - `judge-stack` 子模块类优化注释、文档注释格式、代码换行格式。
