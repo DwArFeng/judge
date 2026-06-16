@@ -19,4 +19,9 @@
     <!--
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.analyser.valset"/>
     -->
+
+    <!-- 加载 ValueDeleteAnalyser -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.analyser.valdel"/>
+    -->
 </beans>

@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 实现预设分析器。
+  - com.dwarfeng.judge.impl.handler.analyser.valdel.ValueDeleteAnalyserRegistry。
   - com.dwarfeng.judge.impl.handler.analyser.value.ValueSetAnalyserRegistry。
 
 - 实现预设判断器。
