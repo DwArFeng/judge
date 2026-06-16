@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 实现预设判断器。
+  - com.dwarfeng.judge.impl.handler.judger.binarization.BinarizationJudgerRegistry。
   - com.dwarfeng.judge.impl.handler.judger.linear.LinearMappingJudgerRegistry。
   - com.dwarfeng.judge.impl.handler.judger.identity.IdentityJudgerRegistry。
 

@@ -24,4 +24,9 @@
     <!--
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.linear"/>
     -->
+
+    <!-- 加载 BinarizationJudger -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.binarization"/>
+    -->
 </beans>
