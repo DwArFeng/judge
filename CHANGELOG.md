@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 实现预设提供器。
+  - com.dwarfeng.judge.impl.handler.provider.date.DateProviderRegistry。
+
 - 实现预设分析器。
   - com.dwarfeng.judge.impl.handler.analyser.valllstset.ValueLookupListSetAnalyserRegistry。
   - com.dwarfeng.judge.impl.handler.analyser.vallbatset.ValueLookupBatchSetAnalyserRegistry。
