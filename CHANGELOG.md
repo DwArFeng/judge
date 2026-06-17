@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/OptDirectory.md。
+
 - 实现预设提供器。
   - com.dwarfeng.judge.impl.handler.provider.date.DateProviderRegistry。
 

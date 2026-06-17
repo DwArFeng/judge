@@ -67,6 +67,26 @@ opt
     <!--
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.analyser.groovy"/>
     -->
+
+    <!-- 加载 ValueSetAnalyser -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.analyser.valset"/>
+    -->
+
+    <!-- 加载 ValueDeleteAnalyser -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.analyser.valdel"/>
+    -->
+
+    <!-- 加载 ValueLookupBatchSetAnalyser -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.analyser.vallbatset"/>
+    -->
+
+    <!-- 加载 ValueLookupListSetAnalyser -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.analyser.valllstset"/>
+    -->
 </beans>
 ```
 
@@ -223,6 +243,26 @@ opt
     <!--
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.groovy"/>
     -->
+
+    <!-- 加载 IdentityJudger -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.identity"/>
+    -->
+
+    <!-- 加载 LinearMappingJudger -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.linear"/>
+    -->
+
+    <!-- 加载 BinarizationJudger -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.binarization"/>
+    -->
+
+    <!-- 加载 ThresholdJudger -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.judger.threshold"/>
+    -->
 </beans>
 ```
 
@@ -244,6 +284,11 @@ opt
     <!-- 加载 GroovyProvider。 -->
     <!--
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.provider.groovy"/>
+    -->
+
+    <!-- 加载 DateProvider。 -->
+    <!--
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.provider.date"/>
     -->
 </beans>
 ```
