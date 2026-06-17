@@ -32,6 +32,12 @@
 
 | 编号                                                 | 大版本   | 起始版本    | 结束版本    | 原因                                            |
 |----------------------------------------------------|-------|---------|---------|-----------------------------------------------|
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.6.x | 2.6.0.a | 2.6.0.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.5.x | 2.5.0.a | 2.5.2.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.4.x | 2.4.0.a | 2.4.3.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.3.x | 2.3.0.a | 2.3.2.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.2.x | 2.2.0.a | 2.2.1.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.1.x | 2.1.0.a | 2.1.0.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
 | [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.5.x | 2.5.0.a | 2.5.1.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
 | [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.4.x | 2.4.0.a | 2.4.3.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
 | [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.3.x | 2.3.0.a | 2.3.2.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
@@ -51,6 +57,33 @@
 | [BLACKLIST-LEGACY-2.0.0.a](#BLACKLIST-LEGACY-200a) | 2.0.x | 2.0.0.a | 2.0.0.a | Beta 版本，与现行接口差异较大                             |
 
 ## 详细原因
+
+### BLACKLIST-20260615.1
+
+原因：`JSFixedFastJsonSinkerMetaKey` 中 `sinkerLongId` 字段的 `@JSONField`
+缺少 `serializeUsing = ToStringSerializer.class`，与同类的 `sectionLongId` 不一致。
+FastJson 序列化时 `section_id` 以字符串输出、`sinker_id` 以数字输出；
+在 JavaScript 等运行环境中将 `sinker_id` 按 JSON 数字解析时，受双精度浮点精度限制，无法精确表示 Java `Long` 范围内的整型值，
+较大 ID 会发生舍入或失真，进而导致主键不准确、元数据查询或更新指向错误对象等严重问题。
+还有可能因为字段格式与同契约下其它 JSFixed 长整型 ID 不一致，导致对接方严格格式校验失败，属于同一缺陷下的次要表现。
+
+- 受影响模块/类：
+  - `com.dwarfeng.judge.sdk.bean.key.JSFixedFastJsonSinkerMetaKey`
+  - `com.dwarfeng.judge.sdk.bean.BeanMapper`（涉及上述类型的 JSFixed 转换方法）
+- 典型触发条件：
+  - 使用 FastJson 序列化/反序列化 `JSFixedFastJsonSinkerMetaKey`；
+  - 通过 HTTP API 等传输含 `section_id` / `sinker_id` / `meta_string_id` 的 JSON；
+  - 对接方假定 JSFixed 长整型 ID 字段统一以字符串形式出现（避免 JavaScript 精度问题）。
+- 典型症状：
+  - JavaScript 客户端将 `sinker_id` 解析为 Number 时发生精度丢失，得到的 ID 与服务器实际值不一致；
+  - 基于失真 ID 的查询、绑定、更新等操作命中错误数据或失败，可能导致数据错误等严重后果；
+  - 序列化 JSON 中 `section_id` 为字符串、`sinker_id` 为数字，与同实体其它 JSFixed 长整型 ID 字段的约定不一致；
+  - 对接方若对字段类型或格式做严格校验，可能报错或拒绝请求。
+- 影响范围：
+  - 直接或间接对上述类型进行 JSFixed FastJson 序列化/反序列化的功能与接口。
+  - Redis 缓存路径使用 `FastJsonSinkerMeta`，不经过该 JSFixed 主键类，通常不命中此问题。
+
+迁移建议：升级至 2.6.1.a 及以上版本。
 
 ### BLACKLIST-20260521.2
 
