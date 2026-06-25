@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/CoreConcepts.md。
+
 - 新增 WebInput 实体。
   - com.dwarfeng.judge.sdk.bean.entity.WebInputVisualizerInfo。
 
