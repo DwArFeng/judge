@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- 新增 WebInput 实体。
+  - com.dwarfeng.judge.sdk.bean.entity.WebInputVisualizerInfo。
 
 ### Bug 修复
 

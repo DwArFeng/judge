@@ -562,6 +562,11 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     FilterInfo filterInfoFromWebInput(WebInputFilterInfo webInputFilterInfo);
 
+    WebInputVisualizerInfo visualizerInfoToWebInput(VisualizerInfo visualizerInfo);
+
+    @InheritInverseConfiguration
+    VisualizerInfo visualizerInfoFromWebInput(WebInputVisualizerInfo webInputVisualizerInfo);
+
     // endregion
 
     // region Judge DTO
