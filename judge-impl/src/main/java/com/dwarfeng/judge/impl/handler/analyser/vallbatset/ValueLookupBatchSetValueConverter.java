@@ -149,6 +149,7 @@ final class ValueLookupBatchSetValueConverter {
         return String.valueOf(sourceValue);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private static Long convertToLong(String sourceField, String targetType, Object sourceValue)
             throws AnalyserExecutionException {
         if (sourceValue instanceof Long) {
@@ -181,6 +182,7 @@ final class ValueLookupBatchSetValueConverter {
         throw conversionFailed(sourceField, sourceValue, targetType);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private static Double convertToDouble(String sourceField, String targetType, Object sourceValue)
             throws AnalyserExecutionException {
         if (sourceValue instanceof Double) {
@@ -224,6 +226,7 @@ final class ValueLookupBatchSetValueConverter {
         throw conversionFailed(sourceField, sourceValue, targetType);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private static Date convertToDate(String sourceField, String targetType, Object sourceValue)
             throws AnalyserExecutionException {
         if (sourceValue instanceof Date) {
