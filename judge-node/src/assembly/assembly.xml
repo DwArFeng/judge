@@ -1,6 +1,6 @@
 <assembly
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0
         http://maven.apache.org/xsd/assembly-2.0.0.xsd"
 >
@@ -25,6 +25,7 @@
         <fileSet>
             <outputDirectory>docs</outputDirectory>
             <directory>../docs</directory>
+            <!-- 仅应用于文本文件 -->
             <includes>
                 <include>**/*.md</include>
             </includes>
@@ -35,6 +36,7 @@
         <fileSet>
             <outputDirectory>docs</outputDirectory>
             <directory>../docs</directory>
+            <!-- 仅应用于二进制文件 -->
             <includes>
                 <include>**/*.png</include>
             </includes>
@@ -144,6 +146,7 @@
             <outputDirectory>opt</outputDirectory>
             <directory>src/main/resources/opt</directory>
             <includes>
+                <include>README.md</include>
                 <include>*.xml</include>
             </includes>
             <fileMode>0644</fileMode>
