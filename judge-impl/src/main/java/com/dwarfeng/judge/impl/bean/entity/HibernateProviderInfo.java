@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.bean.entity;
 
-import com.dwarfeng.datamark.bean.jpa.DatamarkEntityListener;
-import com.dwarfeng.datamark.bean.jpa.DatamarkField;
+import com.dwarfeng.datamark.sdk.jpa.DatamarkEntityListener;
+import com.dwarfeng.datamark.sdk.jpa.DatamarkField;
 import com.dwarfeng.judge.sdk.util.Constraints;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -46,7 +46,7 @@ public class HibernateProviderInfo implements Bean {
     @DatamarkField(handlerName = "providerDatamarkHandler")
     @Column(
             name = "created_datamark",
-            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE,
+            length = com.dwarfeng.datamark.sdk.util.Constraints.LENGTH_DATAMARK_VALUE,
             updatable = false
     )
     private String createdDatamark;
@@ -54,7 +54,7 @@ public class HibernateProviderInfo implements Bean {
     @DatamarkField(handlerName = "providerDatamarkHandler")
     @Column(
             name = "modified_datamark",
-            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE
+            length = com.dwarfeng.datamark.sdk.util.Constraints.LENGTH_DATAMARK_VALUE
     )
     private String modifiedDatamark;
 

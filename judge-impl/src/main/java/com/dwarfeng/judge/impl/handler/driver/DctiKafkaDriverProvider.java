@@ -1,7 +1,8 @@
 package com.dwarfeng.judge.impl.handler.driver;
 
-import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
+import com.dwarfeng.dcti.impl.handler.DctiHandlerImpl;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import com.dwarfeng.dcti.stack.handler.DctiHandler;
 import com.dwarfeng.judge.sdk.handler.DriverProvider;
 import com.dwarfeng.judge.sdk.handler.driver.AbstractDriver;
 import com.dwarfeng.judge.stack.bean.entity.DriverInfo;
@@ -67,6 +68,8 @@ public class DctiKafkaDriverProvider implements DriverProvider {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(DctiKafkaDriver.class);
 
+        private final DctiHandler dctiHandler;
+
         private final KafkaListenerEndpointRegistry registry;
 
         @Value("${driver.kafka.dcti.listener_id}")
@@ -77,8 +80,9 @@ public class DctiKafkaDriverProvider implements DriverProvider {
 
         private boolean kafkaListenerContainerStartFlag = false;
 
-        public DctiKafkaDriver(KafkaListenerEndpointRegistry registry) {
+        public DctiKafkaDriver(DctiHandler dctiHandler, KafkaListenerEndpointRegistry registry) {
             this.registry = registry;
+            this.dctiHandler = dctiHandler;
         }
 
         @Override
@@ -158,7 +162,7 @@ public class DctiKafkaDriverProvider implements DriverProvider {
                 // 无论之后的驱动判断是否正常，都只判断一次，因此首先提交 ack。
                 ack.acknowledge();
                 // 驱动判断。
-                DataInfo dataInfo = DataInfoUtil.fromMessage(message);
+                DataInfo dataInfo = dctiHandler.fromMessage(message);
                 Long dataInfoKey = dataInfo.getPointLongId();
                 LongIdKey sectionKey = registerMap.getOrDefault(dataInfoKey, null);
                 if (Objects.nonNull(sectionKey)) {
@@ -199,6 +203,11 @@ public class DctiKafkaDriverProvider implements DriverProvider {
         private int maxPollRecords;
         @Value("${driver.kafka.dcti.max_poll_interval_ms}")
         private int maxPollIntervalMs;
+
+        @Bean("dctiKafkaDriver.dctiHandler")
+        public DctiHandler dctiHandler() {
+            return new DctiHandlerImpl();
+        }
 
         @SuppressWarnings("DuplicatedCode")
         @Bean("dctiKafkaDriver.consumerProperties")

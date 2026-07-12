@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.dutil.basic.io.IOUtil;
-import com.dwarfeng.ftp.handler.FtpHandler;
+import com.dwarfeng.ftp.stack.handler.FtpHandler;
 import com.dwarfeng.judge.stack.bean.dto.*;
 import com.dwarfeng.judge.stack.bean.entity.AnalysisPicturePack;
 import com.dwarfeng.judge.stack.bean.entity.AnalysisPicturePackItemInfo;

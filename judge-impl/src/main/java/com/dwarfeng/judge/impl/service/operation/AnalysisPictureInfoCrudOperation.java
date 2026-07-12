@@ -1,6 +1,6 @@
 package com.dwarfeng.judge.impl.service.operation;
 
-import com.dwarfeng.ftp.handler.FtpHandler;
+import com.dwarfeng.ftp.stack.handler.FtpHandler;
 import com.dwarfeng.judge.impl.handler.FtpPathResolver;
 import com.dwarfeng.judge.stack.bean.entity.AnalysisPictureInfo;
 import com.dwarfeng.judge.stack.cache.AnalysisPictureInfoCache;

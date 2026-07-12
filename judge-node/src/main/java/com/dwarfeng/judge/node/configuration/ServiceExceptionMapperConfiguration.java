@@ -16,8 +16,8 @@ public class ServiceExceptionMapperConfiguration {
     @Bean
     public MapServiceExceptionMapper mapServiceExceptionMapper() {
         Map<Class<? extends Exception>, ServiceException.Code> des = ServiceExceptionHelper.putDefaultDestination(null);
-        des = com.dwarfeng.datamark.util.ServiceExceptionHelper.putDefaultDestination(des);
-        des = com.dwarfeng.ftp.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.datamark.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.ftp.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
         des.put(AnalyserInfoNotExistsException.class, ServiceExceptionCodes.ANALYSER_INFO_NOT_EXISTS);
         des.put(JudgerInfoNotExistsException.class, ServiceExceptionCodes.JUDGER_INFO_NOT_EXISTS);
         des.put(AnalyserVariableNotExistsException.class, ServiceExceptionCodes.ANALYSER_VARIABLE_NOT_EXISTS);

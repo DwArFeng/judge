@@ -3,10 +3,11 @@ package com.dwarfeng.judge.impl.service.telqos;
 import com.dwarfeng.judge.stack.service.SectionBindingQosService;
 import com.dwarfeng.judge.stack.struct.SectionBinding;
 import com.dwarfeng.judge.stack.struct.SinkerMetaInfo;
-import com.dwarfeng.springtelqos.node.config.TelqosCommand;
 import com.dwarfeng.springtelqos.sdk.command.CliCommand;
-import com.dwarfeng.springtelqos.stack.command.Context;
-import com.dwarfeng.springtelqos.stack.exception.TelqosException;
+import com.dwarfeng.springtelqos.sdk.configuration.TelqosCommand;
+import com.dwarfeng.springtelqos.sdk.util.CliCommandUtil;
+import com.dwarfeng.springtelqos.stack.command.CommandDescriptor;
+import com.dwarfeng.springtelqos.stack.command.CommandExecutor;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -23,6 +24,11 @@ public class SectionBindingLocalCacheCommand extends CliCommand {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SectionBindingLocalCacheCommand.class);
 
+    @SuppressWarnings({"SpellCheckingInspection", "GrazieInspectionRunner", "RedundantSuppression"})
+    private static final String IDENTITY = "scblc";
+
+    // region 指令选项
+
     private static final String COMMAND_OPTION_LOOKUP = "l";
     private static final String COMMAND_OPTION_CLEAR = "c";
 
@@ -31,68 +37,75 @@ public class SectionBindingLocalCacheCommand extends CliCommand {
             COMMAND_OPTION_CLEAR
     };
 
-    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
-    private static final String IDENTITY = "scblc";
-    private static final String DESCRIPTION = "部件绑定本地缓存操作";
-
-    private static final String CMD_LINE_SYNTAX_LOOKUP = IDENTITY + " " +
-            CommandUtil.concatOptionPrefix(COMMAND_OPTION_LOOKUP) + " section-info-id";
-    private static final String CMD_LINE_SYNTAX_CLEAR = IDENTITY + " " +
-            CommandUtil.concatOptionPrefix(COMMAND_OPTION_CLEAR);
-
-    private static final String[] CMD_LINE_ARRAY = new String[]{
-            CMD_LINE_SYNTAX_LOOKUP,
-            CMD_LINE_SYNTAX_CLEAR
-    };
-
-    private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
+    // endregion
 
     private final SectionBindingQosService sectionBindingQosService;
 
     public SectionBindingLocalCacheCommand(SectionBindingQosService sectionBindingQosService) {
-        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
+        super(IDENTITY);
         this.sectionBindingQosService = sectionBindingQosService;
     }
 
     @Override
-    protected List<Option> buildOptions() {
+    protected DescriptionProvider provideDescriptionProvider() {
+        return context -> "部件绑定本地缓存操作";
+    }
+
+    @Override
+    protected CliSyntaxProvider provideCliSyntaxProvider() {
+        return this::cliSyntaxProvider;
+    }
+
+    private String cliSyntaxProvider(CommandDescriptor.Context context) throws Exception {
+        String identity = context.getRuntimeIdentity();
+        String[] patterns = new String[]{
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_LOOKUP) + " section-info-id",
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_CLEAR)
+        };
+        return CliCommandUtil.cliSyntax(patterns);
+    }
+
+    @Override
+    protected List<Option> provideOptions() {
         List<Option> list = new ArrayList<>();
-        list.add(Option.builder(COMMAND_OPTION_LOOKUP).desc("查询部件绑定").hasArg().type(Number.class).build());
-        list.add(Option.builder(COMMAND_OPTION_CLEAR).desc("清除部件绑定本地缓存").build());
+        list.add(
+                Option.builder(COMMAND_OPTION_LOOKUP).optionalArg(true).hasArg(true).type(Number.class)
+                        .desc("查询部件绑定").build()
+        );
+        list.add(Option.builder(COMMAND_OPTION_CLEAR).optionalArg(true).hasArg(false).desc("清除部件绑定本地缓存").build());
         return list;
     }
 
     @SuppressWarnings("DuplicatedCode")
     @Override
-    protected void executeWithCmd(Context context, CommandLine cmd) throws TelqosException {
-        try {
-            Pair<String, Integer> pair = CommandUtil.analyseCommand(cmd, COMMAND_OPTION_ARRAY);
-            if (pair.getRight() != 1) {
-                context.sendMessage(CommandUtil.optionMismatchMessage(COMMAND_OPTION_ARRAY));
-                context.sendMessage(CMD_LINE_SYNTAX);
-                return;
-            }
-            switch (pair.getLeft()) {
-                case COMMAND_OPTION_LOOKUP:
-                    handleLookup(context, cmd);
-                    break;
-                case COMMAND_OPTION_CLEAR:
-                    handleClear(context);
-                    break;
-            }
-        } catch (Exception e) {
-            throw new TelqosException(e);
+    protected void executeWithCmd(CommandExecutor.Context context, CommandLine cmd) throws Exception {
+        Pair<String, Integer> pair = CliCommandUtil.analyseCommand(cmd, COMMAND_OPTION_ARRAY);
+        if (pair.getRight() != 1) {
+            context.sendMessage(CliCommandUtil.optionMismatchMessage(COMMAND_OPTION_ARRAY));
+            context.sendMessage(context.getCommandManual(context.getRuntimeIdentity()));
+            return;
+        }
+        switch (pair.getLeft()) {
+            case COMMAND_OPTION_LOOKUP:
+                handleLookup(context, cmd);
+                break;
+            case COMMAND_OPTION_CLEAR:
+                handleClear(context);
+                break;
+            default:
+                throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
         }
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private void handleLookup(Context context, CommandLine cmd) throws Exception {
+    private void handleLookup(CommandExecutor.Context context, CommandLine cmd) throws Exception {
         long sectionId;
         try {
             sectionId = ((Number) cmd.getParsedOptionValue(COMMAND_OPTION_LOOKUP)).longValue();
         } catch (ParseException e) {
             LOGGER.warn("解析命令选项时发生异常，异常信息如下", e);
-            context.sendMessage("命令行格式错误，正确的格式为: " + CMD_LINE_SYNTAX_LOOKUP);
+            context.sendMessage("命令行格式错误，正确的格式为: " + context.getRuntimeIdentity() + " " +
+                    CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_LOOKUP) + " section-info-id");
             context.sendMessage("请留意选项 " + COMMAND_OPTION_LOOKUP + " 后接参数的类型应该是数字 ");
             return;
         }
@@ -111,11 +124,11 @@ public class SectionBindingLocalCacheCommand extends CliCommand {
 
     @SuppressWarnings("DuplicatedCode")
     private void processSinkerMetaInfoMapMapEntries(
-            Context context, List<Map.Entry<LongIdKey, Map<String, SinkerMetaInfo>>> entries
+            CommandExecutor.Context context, List<Map.Entry<LongIdKey, Map<String, SinkerMetaInfo>>> entries
     ) throws Exception {
         while (true) {
-            CommandUtil.CropResult cropResult = CommandUtil.cropData(
-                    context, entries, "数据总数: " + entries.size(), "输入 q 退出"
+            CliCommandUtil.CropResult cropResult = CliCommandUtil.cropData(
+                    context, entries, "数据总数: " + entries.size()
             );
             if (cropResult.isExitFlag()) {
                 break;
@@ -130,7 +143,8 @@ public class SectionBindingLocalCacheCommand extends CliCommand {
 
     @SuppressWarnings("DuplicatedCode")
     private void printSinkerMetaInfoMapMapEntry(
-            Context context, int i, int endIndex, Map.Entry<LongIdKey, Map<String, SinkerMetaInfo>> entry
+            CommandExecutor.Context context, int i, int endIndex,
+            Map.Entry<LongIdKey, Map<String, SinkerMetaInfo>> entry
     ) throws Exception {
         context.sendMessage(String.format("索引: %d/%d", i, endIndex));
         if (Objects.isNull(entry)) {
@@ -151,7 +165,7 @@ public class SectionBindingLocalCacheCommand extends CliCommand {
         context.sendMessage("");
     }
 
-    private void handleClear(Context context) throws Exception {
+    private void handleClear(CommandExecutor.Context context) throws Exception {
         sectionBindingQosService.clearLocalCache();
         context.sendMessage("缓存已清空");
     }
