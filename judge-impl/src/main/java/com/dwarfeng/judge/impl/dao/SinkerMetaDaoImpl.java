@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateSinkerMeta;
-import com.dwarfeng.judge.impl.bean.key.HibernateSinkerMetaKey;
 import com.dwarfeng.judge.stack.bean.entity.SinkerMeta;
 import com.dwarfeng.judge.stack.bean.key.SinkerMetaKey;
 import com.dwarfeng.judge.stack.dao.SinkerMetaDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +18,14 @@ import java.util.List;
 @Repository
 public class SinkerMetaDaoImpl implements SinkerMetaDao {
 
-    private final HibernateBatchBaseDao<SinkerMetaKey, HibernateSinkerMetaKey, SinkerMeta, HibernateSinkerMeta> batchBaseDao;
-    private final HibernateEntireLookupDao<SinkerMeta, HibernateSinkerMeta> entireLookupDao;
-    private final HibernatePresetLookupDao<SinkerMeta, HibernateSinkerMeta> presetLookupDao;
+    private final BatchBaseDao<SinkerMetaKey, SinkerMeta> batchBaseDao;
+    private final EntireLookupDao<SinkerMeta> entireLookupDao;
+    private final PresetLookupDao<SinkerMeta> presetLookupDao;
 
     public SinkerMetaDaoImpl(
-            HibernateBatchBaseDao<SinkerMetaKey, HibernateSinkerMetaKey, SinkerMeta, HibernateSinkerMeta> batchBaseDao,
-            HibernateEntireLookupDao<SinkerMeta, HibernateSinkerMeta> entireLookupDao,
-            HibernatePresetLookupDao<SinkerMeta, HibernateSinkerMeta> presetLookupDao
+            BatchBaseDao<SinkerMetaKey, SinkerMeta> batchBaseDao,
+            EntireLookupDao<SinkerMeta> entireLookupDao,
+            PresetLookupDao<SinkerMeta> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

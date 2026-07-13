@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserVariable;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.service.AnalyserVariableMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class AnalyserVariableMaintainServiceImpl implements AnalyserVariableMaintainService {
 
-    private final GeneralBatchCrudService<AnalyserVariableKey, AnalyserVariable> crudService;
-    private final DaoOnlyEntireLookupService<AnalyserVariable> entireLookupService;
-    private final DaoOnlyPresetLookupService<AnalyserVariable> presetLookupService;
+    private final BatchCrudService<AnalyserVariableKey, AnalyserVariable> crudService;
+    private final EntireLookupService<AnalyserVariable> entireLookupService;
+    private final PresetLookupService<AnalyserVariable> presetLookupService;
 
     public AnalyserVariableMaintainServiceImpl(
-            GeneralBatchCrudService<AnalyserVariableKey, AnalyserVariable> crudService,
-            DaoOnlyEntireLookupService<AnalyserVariable> entireLookupService,
-            DaoOnlyPresetLookupService<AnalyserVariable> presetLookupService
+            BatchCrudService<AnalyserVariableKey, AnalyserVariable> crudService,
+            EntireLookupService<AnalyserVariable> entireLookupService,
+            PresetLookupService<AnalyserVariable> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

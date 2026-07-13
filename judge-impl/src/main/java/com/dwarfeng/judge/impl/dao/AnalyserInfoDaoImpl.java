@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateAnalyserInfo;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
 import com.dwarfeng.judge.stack.dao.AnalyserInfoDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +18,14 @@ import java.util.List;
 @Repository
 public class AnalyserInfoDaoImpl implements AnalyserInfoDao {
 
-    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalyserInfo, HibernateAnalyserInfo>
-            batchBaseDao;
-    private final HibernateEntireLookupDao<AnalyserInfo, HibernateAnalyserInfo> entireLookupDao;
-    private final HibernatePresetLookupDao<AnalyserInfo, HibernateAnalyserInfo> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, AnalyserInfo> batchBaseDao;
+    private final EntireLookupDao<AnalyserInfo> entireLookupDao;
+    private final PresetLookupDao<AnalyserInfo> presetLookupDao;
 
     public AnalyserInfoDaoImpl(
-            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalyserInfo, HibernateAnalyserInfo> batchBaseDao,
-            HibernateEntireLookupDao<AnalyserInfo, HibernateAnalyserInfo> entireLookupDao,
-            HibernatePresetLookupDao<AnalyserInfo, HibernateAnalyserInfo> presetLookupDao
+            BatchBaseDao<LongIdKey, AnalyserInfo> batchBaseDao,
+            EntireLookupDao<AnalyserInfo> entireLookupDao,
+            PresetLookupDao<AnalyserInfo> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

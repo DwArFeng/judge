@@ -2,15 +2,15 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.AnalyserSupport;
 import com.dwarfeng.judge.stack.service.AnalyserSupportMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class AnalyserSupportMaintainServiceImpl implements AnalyserSupportMaintainService {
 
-    private final GeneralBatchCrudService<StringIdKey, AnalyserSupport> crudService;
-    private final DaoOnlyEntireLookupService<AnalyserSupport> entireLookupService;
-    private final DaoOnlyPresetLookupService<AnalyserSupport> presetLookupService;
+    private final BatchCrudService<StringIdKey, AnalyserSupport> crudService;
+    private final EntireLookupService<AnalyserSupport> entireLookupService;
+    private final PresetLookupService<AnalyserSupport> presetLookupService;
 
     public AnalyserSupportMaintainServiceImpl(
-            GeneralBatchCrudService<StringIdKey, AnalyserSupport> crudService,
-            DaoOnlyEntireLookupService<AnalyserSupport> entireLookupService,
-            DaoOnlyPresetLookupService<AnalyserSupport> presetLookupService
+            BatchCrudService<StringIdKey, AnalyserSupport> crudService,
+            EntireLookupService<AnalyserSupport> entireLookupService,
+            PresetLookupService<AnalyserSupport> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

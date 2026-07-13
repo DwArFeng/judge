@@ -1,12 +1,11 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonSinkerMetaIndicator;
 import com.dwarfeng.judge.stack.bean.entity.SinkerMetaIndicator;
 import com.dwarfeng.judge.stack.bean.key.SinkerMetaIndicatorKey;
 import com.dwarfeng.judge.stack.cache.SinkerMetaIndicatorCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +15,11 @@ import java.util.List;
 @Repository
 public class SinkerMetaIndicatorCacheImpl implements SinkerMetaIndicatorCache {
 
-    private final RedisBatchBaseCache<SinkerMetaIndicatorKey, SinkerMetaIndicator, FastJsonSinkerMetaIndicator> batchBaseCache;
+    private final BatchBaseCache<SinkerMetaIndicatorKey, SinkerMetaIndicator> batchBaseCache;
 
-    public SinkerMetaIndicatorCacheImpl(RedisBatchBaseCache<SinkerMetaIndicatorKey, SinkerMetaIndicator, FastJsonSinkerMetaIndicator> batchBaseCache) {
+    public SinkerMetaIndicatorCacheImpl(
+            BatchBaseCache<SinkerMetaIndicatorKey, SinkerMetaIndicator> batchBaseCache
+    ) {
         this.batchBaseCache = batchBaseCache;
     }
 

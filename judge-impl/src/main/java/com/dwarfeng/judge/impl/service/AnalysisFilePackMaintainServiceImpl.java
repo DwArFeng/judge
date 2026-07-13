@@ -2,15 +2,15 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.AnalysisFilePack;
 import com.dwarfeng.judge.stack.service.AnalysisFilePackMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class AnalysisFilePackMaintainServiceImpl implements AnalysisFilePackMaintainService {
 
-    private final CustomBatchCrudService<LongIdKey, AnalysisFilePack> crudService;
-    private final DaoOnlyEntireLookupService<AnalysisFilePack> entireLookupService;
-    private final DaoOnlyPresetLookupService<AnalysisFilePack> presetLookupService;
+    private final BatchCrudService<LongIdKey, AnalysisFilePack> crudService;
+    private final EntireLookupService<AnalysisFilePack> entireLookupService;
+    private final PresetLookupService<AnalysisFilePack> presetLookupService;
 
     public AnalysisFilePackMaintainServiceImpl(
-            CustomBatchCrudService<LongIdKey, AnalysisFilePack> crudService,
-            DaoOnlyEntireLookupService<AnalysisFilePack> entireLookupService,
-            DaoOnlyPresetLookupService<AnalysisFilePack> presetLookupService
+            BatchCrudService<LongIdKey, AnalysisFilePack> crudService,
+            EntireLookupService<AnalysisFilePack> entireLookupService,
+            PresetLookupService<AnalysisFilePack> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

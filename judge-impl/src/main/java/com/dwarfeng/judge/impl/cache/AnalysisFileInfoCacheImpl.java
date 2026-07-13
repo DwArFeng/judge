@@ -1,12 +1,11 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonAnalysisFileInfo;
 import com.dwarfeng.judge.stack.bean.entity.AnalysisFileInfo;
 import com.dwarfeng.judge.stack.cache.AnalysisFileInfoCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +15,10 @@ import java.util.List;
 @Repository
 public class AnalysisFileInfoCacheImpl implements AnalysisFileInfoCache {
 
-    private final RedisBatchBaseCache<LongIdKey, AnalysisFileInfo, FastJsonAnalysisFileInfo> batchBaseCache;
+    private final BatchBaseCache<LongIdKey, AnalysisFileInfo> batchBaseCache;
 
     public AnalysisFileInfoCacheImpl(
-            RedisBatchBaseCache<LongIdKey, AnalysisFileInfo, FastJsonAnalysisFileInfo> batchBaseCache
+            BatchBaseCache<LongIdKey, AnalysisFileInfo> batchBaseCache
     ) {
         this.batchBaseCache = batchBaseCache;
     }

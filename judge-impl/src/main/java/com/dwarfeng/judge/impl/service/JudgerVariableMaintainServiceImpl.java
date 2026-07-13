@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.JudgerVariable;
 import com.dwarfeng.judge.stack.bean.key.JudgerVariableKey;
 import com.dwarfeng.judge.stack.service.JudgerVariableMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class JudgerVariableMaintainServiceImpl implements JudgerVariableMaintainService {
 
-    private final GeneralBatchCrudService<JudgerVariableKey, JudgerVariable> crudService;
-    private final DaoOnlyEntireLookupService<JudgerVariable> entireLookupService;
-    private final DaoOnlyPresetLookupService<JudgerVariable> presetLookupService;
+    private final BatchCrudService<JudgerVariableKey, JudgerVariable> crudService;
+    private final EntireLookupService<JudgerVariable> entireLookupService;
+    private final PresetLookupService<JudgerVariable> presetLookupService;
 
     public JudgerVariableMaintainServiceImpl(
-            GeneralBatchCrudService<JudgerVariableKey, JudgerVariable> crudService,
-            DaoOnlyEntireLookupService<JudgerVariable> entireLookupService,
-            DaoOnlyPresetLookupService<JudgerVariable> presetLookupService
+            BatchCrudService<JudgerVariableKey, JudgerVariable> crudService,
+            EntireLookupService<JudgerVariable> entireLookupService,
+            PresetLookupService<JudgerVariable> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

@@ -1,12 +1,11 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonTaskEvent;
 import com.dwarfeng.judge.stack.bean.entity.TaskEvent;
 import com.dwarfeng.judge.stack.cache.TaskEventCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +15,10 @@ import java.util.List;
 @Repository
 public class TaskEventCacheImpl implements TaskEventCache {
 
-    private final RedisBatchBaseCache<LongIdKey, TaskEvent, FastJsonTaskEvent> batchBaseCache;
+    private final BatchBaseCache<LongIdKey, TaskEvent> batchBaseCache;
 
     public TaskEventCacheImpl(
-            RedisBatchBaseCache<LongIdKey, TaskEvent, FastJsonTaskEvent> batchBaseCache
+            BatchBaseCache<LongIdKey, TaskEvent> batchBaseCache
     ) {
         this.batchBaseCache = batchBaseCache;
     }

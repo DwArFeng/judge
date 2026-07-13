@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.VisualizeData;
 import com.dwarfeng.judge.stack.bean.key.VisualizeDataKey;
 import com.dwarfeng.judge.stack.service.VisualizeDataMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class VisualizeDataMaintainServiceImpl implements VisualizeDataMaintainService {
 
-    private final GeneralBatchCrudService<VisualizeDataKey, VisualizeData> crudService;
-    private final DaoOnlyEntireLookupService<VisualizeData> entireLookupService;
-    private final DaoOnlyPresetLookupService<VisualizeData> presetLookupService;
+    private final BatchCrudService<VisualizeDataKey, VisualizeData> crudService;
+    private final EntireLookupService<VisualizeData> entireLookupService;
+    private final PresetLookupService<VisualizeData> presetLookupService;
 
     public VisualizeDataMaintainServiceImpl(
-            GeneralBatchCrudService<VisualizeDataKey, VisualizeData> crudService,
-            DaoOnlyEntireLookupService<VisualizeData> entireLookupService,
-            DaoOnlyPresetLookupService<VisualizeData> presetLookupService
+            BatchCrudService<VisualizeDataKey, VisualizeData> crudService,
+            EntireLookupService<VisualizeData> entireLookupService,
+            PresetLookupService<VisualizeData> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

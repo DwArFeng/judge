@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateAdapterSupport;
 import com.dwarfeng.judge.stack.bean.entity.AdapterSupport;
 import com.dwarfeng.judge.stack.dao.AdapterSupportDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +18,14 @@ import java.util.List;
 @Repository
 public class AdapterSupportDaoImpl implements AdapterSupportDao {
 
-    private final HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AdapterSupport, HibernateAdapterSupport> batchBaseDao;
-    private final HibernateEntireLookupDao<AdapterSupport, HibernateAdapterSupport> entireLookupDao;
-    private final HibernatePresetLookupDao<AdapterSupport, HibernateAdapterSupport> presetLookupDao;
+    private final BatchBaseDao<StringIdKey, AdapterSupport> batchBaseDao;
+    private final EntireLookupDao<AdapterSupport> entireLookupDao;
+    private final PresetLookupDao<AdapterSupport> presetLookupDao;
 
     public AdapterSupportDaoImpl(
-            HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AdapterSupport, HibernateAdapterSupport> batchBaseDao,
-            HibernateEntireLookupDao<AdapterSupport, HibernateAdapterSupport> entireLookupDao,
-            HibernatePresetLookupDao<AdapterSupport, HibernateAdapterSupport> presetLookupDao
+            BatchBaseDao<StringIdKey, AdapterSupport> batchBaseDao,
+            EntireLookupDao<AdapterSupport> entireLookupDao,
+            PresetLookupDao<AdapterSupport> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

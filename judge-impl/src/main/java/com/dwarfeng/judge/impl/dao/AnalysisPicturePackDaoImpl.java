@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisPicturePack;
 import com.dwarfeng.judge.stack.bean.entity.AnalysisPicturePack;
 import com.dwarfeng.judge.stack.dao.AnalysisPicturePackDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +18,14 @@ import java.util.List;
 @Repository
 public class AnalysisPicturePackDaoImpl implements AnalysisPicturePackDao {
 
-    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisPicturePack,
-            HibernateAnalysisPicturePack> batchBaseDao;
-    private final HibernateEntireLookupDao<AnalysisPicturePack, HibernateAnalysisPicturePack> entireLookupDao;
-    private final HibernatePresetLookupDao<AnalysisPicturePack, HibernateAnalysisPicturePack> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, AnalysisPicturePack> batchBaseDao;
+    private final EntireLookupDao<AnalysisPicturePack> entireLookupDao;
+    private final PresetLookupDao<AnalysisPicturePack> presetLookupDao;
 
     public AnalysisPicturePackDaoImpl(
-            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisPicturePack,
-                    HibernateAnalysisPicturePack> batchBaseDao,
-            HibernateEntireLookupDao<AnalysisPicturePack, HibernateAnalysisPicturePack> entireLookupDao,
-            HibernatePresetLookupDao<AnalysisPicturePack, HibernateAnalysisPicturePack> presetLookupDao
+            BatchBaseDao<LongIdKey, AnalysisPicturePack> batchBaseDao,
+            EntireLookupDao<AnalysisPicturePack> entireLookupDao,
+            PresetLookupDao<AnalysisPicturePack> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

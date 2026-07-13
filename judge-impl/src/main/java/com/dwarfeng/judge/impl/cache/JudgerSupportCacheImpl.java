@@ -1,12 +1,11 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonJudgerSupport;
 import com.dwarfeng.judge.stack.bean.entity.JudgerSupport;
 import com.dwarfeng.judge.stack.cache.JudgerSupportCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +15,10 @@ import java.util.List;
 @Repository
 public class JudgerSupportCacheImpl implements JudgerSupportCache {
 
-    private final RedisBatchBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> batchBaseCache;
+    private final BatchBaseCache<StringIdKey, JudgerSupport> batchBaseCache;
 
     public JudgerSupportCacheImpl(
-            RedisBatchBaseCache<StringIdKey, JudgerSupport, FastJsonJudgerSupport> batchBaseCache
+            BatchBaseCache<StringIdKey, JudgerSupport> batchBaseCache
     ) {
         this.batchBaseCache = batchBaseCache;
     }

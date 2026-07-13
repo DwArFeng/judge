@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.Judgement;
 import com.dwarfeng.judge.stack.bean.key.JudgementKey;
 import com.dwarfeng.judge.stack.service.JudgementMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class JudgementMaintainServiceImpl implements JudgementMaintainService {
 
-    private final CustomBatchCrudService<JudgementKey, Judgement> crudService;
-    private final DaoOnlyEntireLookupService<Judgement> entireLookupService;
-    private final DaoOnlyPresetLookupService<Judgement> presetLookupService;
+    private final BatchCrudService<JudgementKey, Judgement> crudService;
+    private final EntireLookupService<Judgement> entireLookupService;
+    private final PresetLookupService<Judgement> presetLookupService;
 
     public JudgementMaintainServiceImpl(
-            CustomBatchCrudService<JudgementKey, Judgement> crudService,
-            DaoOnlyEntireLookupService<Judgement> entireLookupService,
-            DaoOnlyPresetLookupService<Judgement> presetLookupService
+            BatchCrudService<JudgementKey, Judgement> crudService,
+            EntireLookupService<Judgement> entireLookupService,
+            PresetLookupService<Judgement> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

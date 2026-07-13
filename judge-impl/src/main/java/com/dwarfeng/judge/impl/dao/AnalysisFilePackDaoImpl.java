@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateAnalysisFilePack;
 import com.dwarfeng.judge.stack.bean.entity.AnalysisFilePack;
 import com.dwarfeng.judge.stack.dao.AnalysisFilePackDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +18,14 @@ import java.util.List;
 @Repository
 public class AnalysisFilePackDaoImpl implements AnalysisFilePackDao {
 
-    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisFilePack, HibernateAnalysisFilePack>
-            batchBaseDao;
-    private final HibernateEntireLookupDao<AnalysisFilePack, HibernateAnalysisFilePack> entireLookupDao;
-    private final HibernatePresetLookupDao<AnalysisFilePack, HibernateAnalysisFilePack> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, AnalysisFilePack> batchBaseDao;
+    private final EntireLookupDao<AnalysisFilePack> entireLookupDao;
+    private final PresetLookupDao<AnalysisFilePack> presetLookupDao;
 
     public AnalysisFilePackDaoImpl(
-            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AnalysisFilePack, HibernateAnalysisFilePack>
-                    batchBaseDao,
-            HibernateEntireLookupDao<AnalysisFilePack, HibernateAnalysisFilePack> entireLookupDao,
-            HibernatePresetLookupDao<AnalysisFilePack, HibernateAnalysisFilePack> presetLookupDao
+            BatchBaseDao<LongIdKey, AnalysisFilePack> batchBaseDao,
+            EntireLookupDao<AnalysisFilePack> entireLookupDao,
+            PresetLookupDao<AnalysisFilePack> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

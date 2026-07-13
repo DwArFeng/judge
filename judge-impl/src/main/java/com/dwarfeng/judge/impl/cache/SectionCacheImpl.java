@@ -1,12 +1,11 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonSection;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.cache.SectionCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +15,11 @@ import java.util.List;
 @Repository
 public class SectionCacheImpl implements SectionCache {
 
-    private final RedisBatchBaseCache<LongIdKey, Section, FastJsonSection> batchBaseCache;
+    private final BatchBaseCache<LongIdKey, Section> batchBaseCache;
 
-    public SectionCacheImpl(RedisBatchBaseCache<LongIdKey, Section, FastJsonSection> batchBaseCache) {
+    public SectionCacheImpl(
+            BatchBaseCache<LongIdKey, Section> batchBaseCache
+    ) {
         this.batchBaseCache = batchBaseCache;
     }
 

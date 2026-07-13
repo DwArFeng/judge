@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateAnalyserSupport;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserSupport;
 import com.dwarfeng.judge.stack.dao.AnalyserSupportDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +18,14 @@ import java.util.List;
 @Repository
 public class AnalyserSupportDaoImpl implements AnalyserSupportDao {
 
-    private final HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AnalyserSupport, HibernateAnalyserSupport>
-            batchBaseDao;
-    private final HibernateEntireLookupDao<AnalyserSupport, HibernateAnalyserSupport> entireLookupDao;
-    private final HibernatePresetLookupDao<AnalyserSupport, HibernateAnalyserSupport> presetLookupDao;
+    private final BatchBaseDao<StringIdKey, AnalyserSupport> batchBaseDao;
+    private final EntireLookupDao<AnalyserSupport> entireLookupDao;
+    private final PresetLookupDao<AnalyserSupport> presetLookupDao;
 
     public AnalyserSupportDaoImpl(
-            HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AnalyserSupport, HibernateAnalyserSupport>
-                    batchBaseDao,
-            HibernateEntireLookupDao<AnalyserSupport, HibernateAnalyserSupport> entireLookupDao,
-            HibernatePresetLookupDao<AnalyserSupport, HibernateAnalyserSupport> presetLookupDao
+            BatchBaseDao<StringIdKey, AnalyserSupport> batchBaseDao,
+            EntireLookupDao<AnalyserSupport> entireLookupDao,
+            PresetLookupDao<AnalyserSupport> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

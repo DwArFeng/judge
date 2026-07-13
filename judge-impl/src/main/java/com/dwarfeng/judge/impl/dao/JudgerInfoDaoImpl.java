@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateJudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.dao.JudgerInfoDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +18,14 @@ import java.util.List;
 @Repository
 public class JudgerInfoDaoImpl implements JudgerInfoDao {
 
-    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgerInfo, HibernateJudgerInfo> batchBaseDao;
-    private final HibernateEntireLookupDao<JudgerInfo, HibernateJudgerInfo> entireLookupDao;
-    private final HibernatePresetLookupDao<JudgerInfo, HibernateJudgerInfo> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, JudgerInfo> batchBaseDao;
+    private final EntireLookupDao<JudgerInfo> entireLookupDao;
+    private final PresetLookupDao<JudgerInfo> presetLookupDao;
 
     public JudgerInfoDaoImpl(
-            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, JudgerInfo, HibernateJudgerInfo> batchBaseDao,
-            HibernateEntireLookupDao<JudgerInfo, HibernateJudgerInfo> entireLookupDao,
-            HibernatePresetLookupDao<JudgerInfo, HibernateJudgerInfo> presetLookupDao
+            BatchBaseDao<LongIdKey, JudgerInfo> batchBaseDao,
+            EntireLookupDao<JudgerInfo> entireLookupDao,
+            PresetLookupDao<JudgerInfo> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

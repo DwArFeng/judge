@@ -1,12 +1,11 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonSinkerRelation;
 import com.dwarfeng.judge.stack.bean.entity.SinkerRelation;
 import com.dwarfeng.judge.stack.bean.key.SinkerRelationKey;
 import com.dwarfeng.judge.stack.cache.SinkerRelationCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +15,11 @@ import java.util.List;
 @Repository
 public class SinkerRelationCacheImpl implements SinkerRelationCache {
 
-    private final RedisBatchBaseCache<SinkerRelationKey, SinkerRelation, FastJsonSinkerRelation> batchBaseCache;
+    private final BatchBaseCache<SinkerRelationKey, SinkerRelation> batchBaseCache;
 
-    public SinkerRelationCacheImpl(RedisBatchBaseCache<SinkerRelationKey, SinkerRelation, FastJsonSinkerRelation> batchBaseCache) {
+    public SinkerRelationCacheImpl(
+            BatchBaseCache<SinkerRelationKey, SinkerRelation> batchBaseCache
+    ) {
         this.batchBaseCache = batchBaseCache;
     }
 

@@ -2,15 +2,15 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.AdapterInfo;
 import com.dwarfeng.judge.stack.service.AdapterInfoMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class AdapterInfoMaintainServiceImpl implements AdapterInfoMaintainService {
 
-    private final GeneralBatchCrudService<LongIdKey, AdapterInfo> crudService;
-    private final DaoOnlyEntireLookupService<AdapterInfo> entireLookupService;
-    private final DaoOnlyPresetLookupService<AdapterInfo> presetLookupService;
+    private final BatchCrudService<LongIdKey, AdapterInfo> crudService;
+    private final EntireLookupService<AdapterInfo> entireLookupService;
+    private final PresetLookupService<AdapterInfo> presetLookupService;
 
     public AdapterInfoMaintainServiceImpl(
-            GeneralBatchCrudService<LongIdKey, AdapterInfo> crudService,
-            DaoOnlyEntireLookupService<AdapterInfo> entireLookupService,
-            DaoOnlyPresetLookupService<AdapterInfo> presetLookupService
+            BatchCrudService<LongIdKey, AdapterInfo> crudService,
+            EntireLookupService<AdapterInfo> entireLookupService,
+            PresetLookupService<AdapterInfo> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

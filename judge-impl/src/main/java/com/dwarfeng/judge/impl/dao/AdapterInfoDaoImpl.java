@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateAdapterInfo;
 import com.dwarfeng.judge.stack.bean.entity.AdapterInfo;
 import com.dwarfeng.judge.stack.dao.AdapterInfoDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +18,14 @@ import java.util.List;
 @Repository
 public class AdapterInfoDaoImpl implements AdapterInfoDao {
 
-    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AdapterInfo, HibernateAdapterInfo> batchBaseDao;
-    private final HibernateEntireLookupDao<AdapterInfo, HibernateAdapterInfo> entireLookupDao;
-    private final HibernatePresetLookupDao<AdapterInfo, HibernateAdapterInfo> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, AdapterInfo> batchBaseDao;
+    private final EntireLookupDao<AdapterInfo> entireLookupDao;
+    private final PresetLookupDao<AdapterInfo> presetLookupDao;
 
     public AdapterInfoDaoImpl(
-            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AdapterInfo, HibernateAdapterInfo> batchBaseDao,
-            HibernateEntireLookupDao<AdapterInfo, HibernateAdapterInfo> entireLookupDao,
-            HibernatePresetLookupDao<AdapterInfo, HibernateAdapterInfo> presetLookupDao
+            BatchBaseDao<LongIdKey, AdapterInfo> batchBaseDao,
+            EntireLookupDao<AdapterInfo> entireLookupDao,
+            PresetLookupDao<AdapterInfo> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

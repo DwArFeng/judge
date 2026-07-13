@@ -2,9 +2,9 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.VisualizerSupport;
 import com.dwarfeng.judge.stack.service.VisualizerSupportMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class VisualizerSupportMaintainServiceImpl implements VisualizerSupportMaintainService {
 
-    private final GeneralBatchCrudService<StringIdKey, VisualizerSupport> crudService;
-    private final DaoOnlyEntireLookupService<VisualizerSupport> entireLookupService;
-    private final DaoOnlyPresetLookupService<VisualizerSupport> presetLookupService;
+    private final BatchCrudService<StringIdKey, VisualizerSupport> crudService;
+    private final EntireLookupService<VisualizerSupport> entireLookupService;
+    private final PresetLookupService<VisualizerSupport> presetLookupService;
 
     public VisualizerSupportMaintainServiceImpl(
-            GeneralBatchCrudService<StringIdKey, VisualizerSupport> crudService,
-            DaoOnlyEntireLookupService<VisualizerSupport> entireLookupService,
-            DaoOnlyPresetLookupService<VisualizerSupport> presetLookupService
+            BatchCrudService<StringIdKey, VisualizerSupport> crudService,
+            EntireLookupService<VisualizerSupport> entireLookupService,
+            PresetLookupService<VisualizerSupport> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

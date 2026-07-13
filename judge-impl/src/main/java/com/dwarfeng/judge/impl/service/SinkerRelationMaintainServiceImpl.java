@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.SinkerRelation;
 import com.dwarfeng.judge.stack.bean.key.SinkerRelationKey;
 import com.dwarfeng.judge.stack.service.SinkerRelationMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class SinkerRelationMaintainServiceImpl implements SinkerRelationMaintainService {
 
-    private final GeneralBatchCrudService<SinkerRelationKey, SinkerRelation> crudService;
-    private final DaoOnlyEntireLookupService<SinkerRelation> entireLookupService;
-    private final DaoOnlyPresetLookupService<SinkerRelation> presetLookupService;
+    private final BatchCrudService<SinkerRelationKey, SinkerRelation> crudService;
+    private final EntireLookupService<SinkerRelation> entireLookupService;
+    private final PresetLookupService<SinkerRelation> presetLookupService;
 
     public SinkerRelationMaintainServiceImpl(
-            GeneralBatchCrudService<SinkerRelationKey, SinkerRelation> crudService,
-            DaoOnlyEntireLookupService<SinkerRelation> entireLookupService,
-            DaoOnlyPresetLookupService<SinkerRelation> presetLookupService
+            BatchCrudService<SinkerRelationKey, SinkerRelation> crudService,
+            EntireLookupService<SinkerRelation> entireLookupService,
+            PresetLookupService<SinkerRelation> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

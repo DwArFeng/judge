@@ -1,12 +1,11 @@
 package com.dwarfeng.judge.impl.cache;
 
-import com.dwarfeng.judge.sdk.bean.entity.FastJsonVisualizerInfo;
 import com.dwarfeng.judge.stack.bean.entity.VisualizerInfo;
 import com.dwarfeng.judge.stack.cache.VisualizerInfoCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +15,10 @@ import java.util.List;
 @Repository
 public class VisualizerInfoCacheImpl implements VisualizerInfoCache {
 
-    private final RedisBatchBaseCache<LongIdKey, VisualizerInfo, FastJsonVisualizerInfo> batchBaseCache;
+    private final BatchBaseCache<LongIdKey, VisualizerInfo> batchBaseCache;
 
     public VisualizerInfoCacheImpl(
-            RedisBatchBaseCache<LongIdKey, VisualizerInfo, FastJsonVisualizerInfo> batchBaseCache
+            BatchBaseCache<LongIdKey, VisualizerInfo> batchBaseCache
     ) {
         this.batchBaseCache = batchBaseCache;
     }

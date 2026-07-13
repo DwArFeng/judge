@@ -2,15 +2,15 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.service.SectionMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class SectionMaintainServiceImpl implements SectionMaintainService {
 
-    private final CustomBatchCrudService<LongIdKey, Section> crudService;
-    private final DaoOnlyEntireLookupService<Section> entireLookupService;
-    private final DaoOnlyPresetLookupService<Section> presetLookupService;
+    private final BatchCrudService<LongIdKey, Section> crudService;
+    private final EntireLookupService<Section> entireLookupService;
+    private final PresetLookupService<Section> presetLookupService;
 
     public SectionMaintainServiceImpl(
-            CustomBatchCrudService<LongIdKey, Section> crudService,
-            DaoOnlyEntireLookupService<Section> entireLookupService,
-            DaoOnlyPresetLookupService<Section> presetLookupService
+            BatchCrudService<LongIdKey, Section> crudService,
+            EntireLookupService<Section> entireLookupService,
+            PresetLookupService<Section> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

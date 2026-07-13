@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.SinkerMetaIndicator;
 import com.dwarfeng.judge.stack.bean.key.SinkerMetaIndicatorKey;
 import com.dwarfeng.judge.stack.service.SinkerMetaIndicatorMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicatorMaintainService {
 
-    private final GeneralBatchCrudService<SinkerMetaIndicatorKey, SinkerMetaIndicator> crudService;
-    private final DaoOnlyEntireLookupService<SinkerMetaIndicator> entireLookupService;
-    private final DaoOnlyPresetLookupService<SinkerMetaIndicator> presetLookupService;
+    private final BatchCrudService<SinkerMetaIndicatorKey, SinkerMetaIndicator> crudService;
+    private final EntireLookupService<SinkerMetaIndicator> entireLookupService;
+    private final PresetLookupService<SinkerMetaIndicator> presetLookupService;
 
     public SinkerMetaIndicatorMaintainServiceImpl(
-            GeneralBatchCrudService<SinkerMetaIndicatorKey, SinkerMetaIndicator> crudService,
-            DaoOnlyEntireLookupService<SinkerMetaIndicator> entireLookupService,
-            DaoOnlyPresetLookupService<SinkerMetaIndicator> presetLookupService
+            BatchCrudService<SinkerMetaIndicatorKey, SinkerMetaIndicator> crudService,
+            EntireLookupService<SinkerMetaIndicator> entireLookupService,
+            PresetLookupService<SinkerMetaIndicator> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

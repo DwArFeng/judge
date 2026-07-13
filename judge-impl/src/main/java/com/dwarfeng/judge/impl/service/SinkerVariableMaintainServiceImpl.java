@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.SinkerVariable;
 import com.dwarfeng.judge.stack.bean.key.SinkerVariableKey;
 import com.dwarfeng.judge.stack.service.SinkerVariableMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class SinkerVariableMaintainServiceImpl implements SinkerVariableMaintainService {
 
-    private final GeneralBatchCrudService<SinkerVariableKey, SinkerVariable> crudService;
-    private final DaoOnlyEntireLookupService<SinkerVariable> entireLookupService;
-    private final DaoOnlyPresetLookupService<SinkerVariable> presetLookupService;
+    private final BatchCrudService<SinkerVariableKey, SinkerVariable> crudService;
+    private final EntireLookupService<SinkerVariable> entireLookupService;
+    private final PresetLookupService<SinkerVariable> presetLookupService;
 
     public SinkerVariableMaintainServiceImpl(
-            GeneralBatchCrudService<SinkerVariableKey, SinkerVariable> crudService,
-            DaoOnlyEntireLookupService<SinkerVariable> entireLookupService,
-            DaoOnlyPresetLookupService<SinkerVariable> presetLookupService
+            BatchCrudService<SinkerVariableKey, SinkerVariable> crudService,
+            EntireLookupService<SinkerVariable> entireLookupService,
+            PresetLookupService<SinkerVariable> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

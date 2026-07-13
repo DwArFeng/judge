@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateSinkerMetaIndicator;
-import com.dwarfeng.judge.impl.bean.key.HibernateSinkerMetaIndicatorKey;
 import com.dwarfeng.judge.stack.bean.entity.SinkerMetaIndicator;
 import com.dwarfeng.judge.stack.bean.key.SinkerMetaIndicatorKey;
 import com.dwarfeng.judge.stack.dao.SinkerMetaIndicatorDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +18,14 @@ import java.util.List;
 @Repository
 public class SinkerMetaIndicatorDaoImpl implements SinkerMetaIndicatorDao {
 
-    private final HibernateBatchBaseDao<SinkerMetaIndicatorKey, HibernateSinkerMetaIndicatorKey, SinkerMetaIndicator, HibernateSinkerMetaIndicator> batchBaseDao;
-    private final HibernateEntireLookupDao<SinkerMetaIndicator, HibernateSinkerMetaIndicator> entireLookupDao;
-    private final HibernatePresetLookupDao<SinkerMetaIndicator, HibernateSinkerMetaIndicator> presetLookupDao;
+    private final BatchBaseDao<SinkerMetaIndicatorKey, SinkerMetaIndicator> batchBaseDao;
+    private final EntireLookupDao<SinkerMetaIndicator> entireLookupDao;
+    private final PresetLookupDao<SinkerMetaIndicator> presetLookupDao;
 
     public SinkerMetaIndicatorDaoImpl(
-            HibernateBatchBaseDao<SinkerMetaIndicatorKey, HibernateSinkerMetaIndicatorKey, SinkerMetaIndicator, HibernateSinkerMetaIndicator> batchBaseDao,
-            HibernateEntireLookupDao<SinkerMetaIndicator, HibernateSinkerMetaIndicator> entireLookupDao,
-            HibernatePresetLookupDao<SinkerMetaIndicator, HibernateSinkerMetaIndicator> presetLookupDao
+            BatchBaseDao<SinkerMetaIndicatorKey, SinkerMetaIndicator> batchBaseDao,
+            EntireLookupDao<SinkerMetaIndicator> entireLookupDao,
+            PresetLookupDao<SinkerMetaIndicator> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

@@ -1,16 +1,14 @@
 package com.dwarfeng.judge.impl.dao;
 
-import com.dwarfeng.judge.impl.bean.entity.HibernateAnalyserVariable;
-import com.dwarfeng.judge.impl.bean.key.HibernateAnalyserVariableKey;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserVariable;
 import com.dwarfeng.judge.stack.bean.key.AnalyserVariableKey;
 import com.dwarfeng.judge.stack.dao.AnalyserVariableDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +18,14 @@ import java.util.List;
 @Repository
 public class AnalyserVariableDaoImpl implements AnalyserVariableDao {
 
-    private final HibernateBatchBaseDao<AnalyserVariableKey, HibernateAnalyserVariableKey, AnalyserVariable,
-            HibernateAnalyserVariable> batchBaseDao;
-    private final HibernateEntireLookupDao<AnalyserVariable, HibernateAnalyserVariable> entireLookupDao;
-    private final HibernatePresetLookupDao<AnalyserVariable, HibernateAnalyserVariable> presetLookupDao;
+    private final BatchBaseDao<AnalyserVariableKey, AnalyserVariable> batchBaseDao;
+    private final EntireLookupDao<AnalyserVariable> entireLookupDao;
+    private final PresetLookupDao<AnalyserVariable> presetLookupDao;
 
     public AnalyserVariableDaoImpl(
-            HibernateBatchBaseDao<AnalyserVariableKey, HibernateAnalyserVariableKey, AnalyserVariable,
-                    HibernateAnalyserVariable> batchBaseDao,
-            HibernateEntireLookupDao<AnalyserVariable, HibernateAnalyserVariable> entireLookupDao,
-            HibernatePresetLookupDao<AnalyserVariable, HibernateAnalyserVariable> presetLookupDao
+            BatchBaseDao<AnalyserVariableKey, AnalyserVariable> batchBaseDao,
+            EntireLookupDao<AnalyserVariable> entireLookupDao,
+            PresetLookupDao<AnalyserVariable> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

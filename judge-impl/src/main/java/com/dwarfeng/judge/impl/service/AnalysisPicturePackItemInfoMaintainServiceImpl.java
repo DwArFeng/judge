@@ -2,15 +2,15 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.AnalysisPicturePackItemInfo;
 import com.dwarfeng.judge.stack.service.AnalysisPicturePackItemInfoMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class AnalysisPicturePackItemInfoMaintainServiceImpl implements AnalysisPicturePackItemInfoMaintainService {
 
-    private final CustomBatchCrudService<LongIdKey, AnalysisPicturePackItemInfo> crudService;
-    private final DaoOnlyEntireLookupService<AnalysisPicturePackItemInfo> entireLookupService;
-    private final DaoOnlyPresetLookupService<AnalysisPicturePackItemInfo> presetLookupService;
+    private final BatchCrudService<LongIdKey, AnalysisPicturePackItemInfo> crudService;
+    private final EntireLookupService<AnalysisPicturePackItemInfo> entireLookupService;
+    private final PresetLookupService<AnalysisPicturePackItemInfo> presetLookupService;
 
     public AnalysisPicturePackItemInfoMaintainServiceImpl(
-            CustomBatchCrudService<LongIdKey, AnalysisPicturePackItemInfo> crudService,
-            DaoOnlyEntireLookupService<AnalysisPicturePackItemInfo> entireLookupService,
-            DaoOnlyPresetLookupService<AnalysisPicturePackItemInfo> presetLookupService
+            BatchCrudService<LongIdKey, AnalysisPicturePackItemInfo> crudService,
+            EntireLookupService<AnalysisPicturePackItemInfo> entireLookupService,
+            PresetLookupService<AnalysisPicturePackItemInfo> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

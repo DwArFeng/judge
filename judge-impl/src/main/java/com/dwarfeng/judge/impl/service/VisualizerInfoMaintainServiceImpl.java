@@ -2,15 +2,15 @@ package com.dwarfeng.judge.impl.service;
 
 import com.dwarfeng.judge.stack.bean.entity.VisualizerInfo;
 import com.dwarfeng.judge.stack.service.VisualizerInfoMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class VisualizerInfoMaintainServiceImpl implements VisualizerInfoMaintainService {
 
-    private final GeneralBatchCrudService<LongIdKey, VisualizerInfo> crudService;
-    private final DaoOnlyEntireLookupService<VisualizerInfo> entireLookupService;
-    private final DaoOnlyPresetLookupService<VisualizerInfo> presetLookupService;
+    private final BatchCrudService<LongIdKey, VisualizerInfo> crudService;
+    private final EntireLookupService<VisualizerInfo> entireLookupService;
+    private final PresetLookupService<VisualizerInfo> presetLookupService;
 
     public VisualizerInfoMaintainServiceImpl(
-            GeneralBatchCrudService<LongIdKey, VisualizerInfo> crudService,
-            DaoOnlyEntireLookupService<VisualizerInfo> entireLookupService,
-            DaoOnlyPresetLookupService<VisualizerInfo> presetLookupService
+            BatchCrudService<LongIdKey, VisualizerInfo> crudService,
+            EntireLookupService<VisualizerInfo> entireLookupService,
+            PresetLookupService<VisualizerInfo> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

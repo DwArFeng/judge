@@ -3,14 +3,14 @@ package com.dwarfeng.judge.impl.service;
 import com.dwarfeng.judge.stack.bean.entity.Analysis;
 import com.dwarfeng.judge.stack.bean.key.AnalysisKey;
 import com.dwarfeng.judge.stack.service.AnalysisMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Component
 public class AnalysisMaintainServiceImpl implements AnalysisMaintainService {
 
-    private final CustomBatchCrudService<AnalysisKey, Analysis> crudService;
-    private final DaoOnlyEntireLookupService<Analysis> entireLookupService;
-    private final DaoOnlyPresetLookupService<Analysis> presetLookupService;
+    private final BatchCrudService<AnalysisKey, Analysis> crudService;
+    private final EntireLookupService<Analysis> entireLookupService;
+    private final PresetLookupService<Analysis> presetLookupService;
 
     public AnalysisMaintainServiceImpl(
-            CustomBatchCrudService<AnalysisKey, Analysis> crudService,
-            DaoOnlyEntireLookupService<Analysis> entireLookupService,
-            DaoOnlyPresetLookupService<Analysis> presetLookupService
+            BatchCrudService<AnalysisKey, Analysis> crudService,
+            EntireLookupService<Analysis> entireLookupService,
+            PresetLookupService<Analysis> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;
