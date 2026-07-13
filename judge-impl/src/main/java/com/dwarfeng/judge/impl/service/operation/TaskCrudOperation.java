@@ -38,7 +38,7 @@ public class TaskCrudOperation implements BatchCrudOperation<LongIdKey, Task> {
     private final VisualizeDataDao visualizeDataDao;
     private final VisualizeDataCache visualizeDataCache;
 
-    @Value("${cache.timeout.entity.task}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.task}")
     private long taskTimeout;
 
     public TaskCrudOperation(

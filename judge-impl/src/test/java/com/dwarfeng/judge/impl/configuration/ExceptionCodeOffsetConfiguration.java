@@ -9,19 +9,19 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class ExceptionCodeOffsetConfiguration {
 
-    @Value("${judge.exception_code_offset}")
+    @Value("${com.dwarfeng.judge.judge.exception_code_offset}")
     private int exceptionCodeOffset;
-    @Value("${judge.exception_code_offset.subgrade}")
+    @Value("${com.dwarfeng.judge.judge.exception_code_offset.subgrade}")
     private int subgradeExceptionCodeOffset;
-    @Value("${judge.exception_code_offset.spring_telqos}")
+    @Value("${com.dwarfeng.judge.judge.exception_code_offset.spring_telqos}")
     private int springTelqosExceptionCodeOffset;
-    @Value("${judge.exception_code_offset.spring_terminator}")
+    @Value("${com.dwarfeng.judge.judge.exception_code_offset.spring_terminator}")
     private int springTerminatorExceptionCodeOffset;
-    @Value("${judge.exception_code_offset.dwarfeng_datamark}")
+    @Value("${com.dwarfeng.judge.judge.exception_code_offset.dwarfeng_datamark}")
     private int dwarfengDatamarkExceptionCodeOffset;
-    @Value("${judge.exception_code_offset.dwarfeng_ftp}")
+    @Value("${com.dwarfeng.judge.judge.exception_code_offset.dwarfeng_ftp}")
     private int dwarfengFtpExceptionCodeOffset;
-    @Value("${judge.exception_code_offset.dcti}")
+    @Value("${com.dwarfeng.judge.judge.exception_code_offset.dcti}")
     private int dctiExceptionCodeOffset;
 
     @PostConstruct

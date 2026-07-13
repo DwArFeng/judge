@@ -25,7 +25,7 @@ public class AnalysisFilePackCrudOperation implements BatchCrudOperation<LongIdK
     private final AnalysisFilePackItemInfoDao analysisFilePackItemInfoDao;
     private final AnalysisFilePackItemInfoCrudOperation analysisFilePackItemInfoCrudOperation;
 
-    @Value("${cache.timeout.entity.analysis_file_pack}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analysis_file_pack}")
     private long analysisFilePackTimeout;
 
     public AnalysisFilePackCrudOperation(

@@ -60,7 +60,7 @@ public class DaoConfiguration {
     private final FilterInfoPresetCriteriaMaker filterInfoPresetCriteriaMaker;
     private final FilterSupportPresetCriteriaMaker filterSupportPresetCriteriaMaker;
 
-    @Value("${hibernate.jdbc.batch_size}")
+    @Value("${com.dwarfeng.judge.hibernate.jdbc.batch_size}")
     private int batchSize;
 
     public DaoConfiguration(

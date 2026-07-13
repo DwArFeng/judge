@@ -18,7 +18,7 @@ public class JudgementCrudOperation implements BatchCrudOperation<JudgementKey, 
     private final JudgementDao judgementDao;
     private final JudgementCache judgementCache;
 
-    @Value("${cache.timeout.entity.judgement}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.judgement}")
     private long judgementTimeout;
 
     public JudgementCrudOperation(

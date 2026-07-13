@@ -76,7 +76,7 @@ public class JobHandlerImpl implements JobHandler {
 
     private final HandlerValidator handlerValidator;
 
-    @Value("${task.beat_interval}")
+    @Value("${com.dwarfeng.judge.task.beat_interval}")
     private long beatInterval;
 
     public JobHandlerImpl(

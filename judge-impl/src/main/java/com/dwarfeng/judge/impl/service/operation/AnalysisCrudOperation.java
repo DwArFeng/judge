@@ -32,7 +32,7 @@ public class AnalysisCrudOperation implements BatchCrudOperation<AnalysisKey, An
     private final AnalysisPicturePackDao analysisPicturePackDao;
     private final AnalysisPicturePackCrudOperation analysisPicturePackCrudOperation;
 
-    @Value("${cache.timeout.entity.analysis}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analysis}")
     private long analysisTimeout;
 
     public AnalysisCrudOperation(

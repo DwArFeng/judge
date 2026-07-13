@@ -10,22 +10,24 @@
 >
 
     <ftp:config
-            host="${ftp.host}"
-            username="${ftp.username}"
-            password="${ftp.password}"
-            port="${ftp.port}"
-            server-charset="${ftp.server_charset}"
-            connect-timeout="${ftp.connect_timeout}"
-            noop-interval="${ftp.noop_interval}"
-            buffer-size="${ftp.buffer_size}"
-            temporary-file-directory-path="${ftp.temporary_file_directory_path}"
-            temporary-file-prefix="${ftp.temporary_file_prefix}"
-            temporary-file-suffix="${ftp.temporary_file_suffix}"
-            file-copy-memory-buffer-size="${ftp.file_copy_memory_buffer_size}"
-            data-connection-mode="${ftp.data_connection_mode}"
-            data-timeout="${ftp.data_timeout}"
-            active-remote-data-connection-mode-server-host="${ftp.active_remote_data_connection_mode_server_host}"
-            active-remote-data-connection-mode-server-port="${ftp.active_remote_data_connection_mode_server_port}"
+            host="${com.dwarfeng.judge.ftp.host}"
+            username="${com.dwarfeng.judge.ftp.username}"
+            password="${com.dwarfeng.judge.ftp.password}"
+            port="${com.dwarfeng.judge.ftp.port}"
+            server-charset="${com.dwarfeng.judge.ftp.server_charset}"
+            connect-timeout="${com.dwarfeng.judge.ftp.connect_timeout}"
+            noop-interval="${com.dwarfeng.judge.ftp.noop_interval}"
+            buffer-size="${com.dwarfeng.judge.ftp.buffer_size}"
+            temporary-file-directory-path="${com.dwarfeng.judge.ftp.temporary_file_directory_path}"
+            temporary-file-prefix="${com.dwarfeng.judge.ftp.temporary_file_prefix}"
+            temporary-file-suffix="${com.dwarfeng.judge.ftp.temporary_file_suffix}"
+            file-copy-memory-buffer-size="${com.dwarfeng.judge.ftp.file_copy_memory_buffer_size}"
+            data-connection-mode="${com.dwarfeng.judge.ftp.data_connection_mode}"
+            data-timeout="${com.dwarfeng.judge.ftp.data_timeout}"
+            active-remote-data-connection-mode-server-host=
+                    "${com.dwarfeng.judge.ftp.active_remote_data_connection_mode_server_host}"
+            active-remote-data-connection-mode-server-port=
+                    "${com.dwarfeng.judge.ftp.active_remote_data_connection_mode_server_port}"
     />
     <ftp:handler/>
     <ftp:qos/>

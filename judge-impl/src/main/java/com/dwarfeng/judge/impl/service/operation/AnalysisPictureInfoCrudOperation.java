@@ -24,7 +24,7 @@ public class AnalysisPictureInfoCrudOperation implements BatchCrudOperation<Long
 
     private final FtpPathResolver ftpPathResolver;
 
-    @Value("${cache.timeout.entity.analysis_picture_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analysis_picture_info}")
     private long analysisPictureInfoTimeout;
 
     public AnalysisPictureInfoCrudOperation(

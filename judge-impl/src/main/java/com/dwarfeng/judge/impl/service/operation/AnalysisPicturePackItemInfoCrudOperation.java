@@ -25,7 +25,7 @@ public class AnalysisPicturePackItemInfoCrudOperation implements
 
     private final FtpPathResolver ftpPathResolver;
 
-    @Value("${cache.timeout.entity.analysis_picture_pack_item_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analysis_picture_pack_item_info}")
     private long analysisPicturePackItemInfoTimeout;
 
     public AnalysisPicturePackItemInfoCrudOperation(

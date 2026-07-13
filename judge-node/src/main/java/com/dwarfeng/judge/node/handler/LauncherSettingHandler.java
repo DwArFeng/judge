@@ -7,49 +7,49 @@ import org.springframework.stereotype.Component;
 @Component
 public class LauncherSettingHandler implements Handler {
 
-    @Value("${launcher.reset_analyser_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_analyser_support}")
     private boolean resetAnalyserSupport;
 
-    @Value("${launcher.reset_driver_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_driver_support}")
     private boolean resetDriverSupport;
 
-    @Value("${launcher.reset_judger_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_judger_support}")
     private boolean resetJudgerSupport;
 
-    @Value("${launcher.reset_sinker_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_sinker_support}")
     private boolean resetSinkerSupport;
 
-    @Value("${launcher.reset_provider_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_provider_support}")
     private boolean resetProviderSupport;
 
-    @Value("${launcher.reset_visualizer_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_visualizer_support}")
     private boolean resetVisualizerSupport;
 
-    @Value("${launcher.reset_adapter_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_adapter_support}")
     private boolean resetAdapterSupport;
 
-    @Value("${launcher.reset_filter_support}")
+    @Value("${com.dwarfeng.judge.launcher.reset_filter_support}")
     private boolean resetFilterSupport;
 
-    @Value("${launcher.start_reset_delay}")
+    @Value("${com.dwarfeng.judge.launcher.start_reset_delay}")
     private long startResetDelay;
 
-    @Value("${launcher.online_task_check_delay}")
+    @Value("${com.dwarfeng.judge.launcher.online_task_check_delay}")
     private long onlineTaskCheckDelay;
-    @Value("${launcher.enable_task_check_delay}")
+    @Value("${com.dwarfeng.judge.launcher.enable_task_check_delay}")
     private long enableTaskCheckDelay;
 
-    @Value("${launcher.start_receive_delay}")
+    @Value("${com.dwarfeng.judge.launcher.start_receive_delay}")
     private long startReceiveDelay;
 
-    @Value("${launcher.online_supervise_delay}")
+    @Value("${com.dwarfeng.judge.launcher.online_supervise_delay}")
     private long onlineSuperviseDelay;
-    @Value("${launcher.enable_supervise_delay}")
+    @Value("${com.dwarfeng.judge.launcher.enable_supervise_delay}")
     private long enableSuperviseDelay;
 
-    @Value("${launcher.online_purge_delay}")
+    @Value("${com.dwarfeng.judge.launcher.online_purge_delay}")
     private long onlinePurgeDelay;
-    @Value("${launcher.enable_purge_delay}")
+    @Value("${com.dwarfeng.judge.launcher.enable_purge_delay}")
     private long enablePurgeDelay;
 
     public boolean isResetAnalyserSupport() {

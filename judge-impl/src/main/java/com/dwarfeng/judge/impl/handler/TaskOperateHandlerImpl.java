@@ -91,9 +91,9 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
     private final HandlerValidator handlerValidator;
 
-    @Value("${task.expire_timeout}")
+    @Value("${com.dwarfeng.judge.task.expire_timeout}")
     private long expireTimeout;
-    @Value("${task.die_timeout}")
+    @Value("${com.dwarfeng.judge.task.die_timeout}")
     private long dieTimeout;
 
     public TaskOperateHandlerImpl(

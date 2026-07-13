@@ -28,7 +28,7 @@ public class TaskCheckHandlerImpl implements TaskCheckHandler {
 
     public TaskCheckHandlerImpl(
             CuratorFramework curatorFramework,
-            @Value("${curator.latch_path.task_check.leader_latch}") String leaserLatchPath,
+            @Value("${com.dwarfeng.judge.curator.latch_path.task_check.leader_latch}") String leaserLatchPath,
             TaskCheckWorker taskCheckWorker
     ) {
         handler = new CuratorDistributedLockHandler(curatorFramework, leaserLatchPath, taskCheckWorker);
@@ -93,9 +93,9 @@ public class TaskCheckHandlerImpl implements TaskCheckHandler {
 
         private final ThreadPoolTaskScheduler scheduler;
 
-        @Value("${task.check.expire_check.cron}")
+        @Value("${com.dwarfeng.judge.task.check.expire_check.cron}")
         private String expireCheckCron;
-        @Value("${task.check.die_check.cron}")
+        @Value("${com.dwarfeng.judge.task.check.die_check.cron}")
         private String dieCheckCron;
 
         private Future<?> expireCheckFuture;

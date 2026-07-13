@@ -43,7 +43,7 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
     private final VisualizerInfoDao visualizerInfoDao;
     private final VisualizerInfoCache visualizerInfoCache;
 
-    @Value("${cache.timeout.entity.section}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.section}")
     private long sectionTimeout;
 
     public SectionCrudOperation(

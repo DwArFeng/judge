@@ -12,73 +12,73 @@
     <!-- Section 数据标识。 -->
     <datamark:handler
             handler-name="sectionDatamarkHandler"
-            resource-url="${datamark.section.resource_url}"
-            resource-charset="${datamark.section.resource_charset}"
-            update-allowed="${datamark.section.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.section.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.section.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.section.update_allowed}"
     />
 
     <!-- Driver 数据标识。 -->
     <datamark:handler
             handler-name="driverDatamarkHandler"
-            resource-url="${datamark.driver.resource_url}"
-            resource-charset="${datamark.driver.resource_charset}"
-            update-allowed="${datamark.driver.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.driver.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.driver.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.driver.update_allowed}"
     />
 
     <!-- Analyser 数据标识。 -->
     <datamark:handler
             handler-name="analyserDatamarkHandler"
-            resource-url="${datamark.analyser.resource_url}"
-            resource-charset="${datamark.analyser.resource_charset}"
-            update-allowed="${datamark.analyser.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.analyser.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.analyser.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.analyser.update_allowed}"
     />
 
     <!-- Judger 数据标识。 -->
     <datamark:handler
             handler-name="judgerDatamarkHandler"
-            resource-url="${datamark.judger.resource_url}"
-            resource-charset="${datamark.judger.resource_charset}"
-            update-allowed="${datamark.judger.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.judger.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.judger.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.judger.update_allowed}"
     />
 
     <!-- Sinker 数据标识。 -->
     <datamark:handler
             handler-name="sinkerDatamarkHandler"
-            resource-url="${datamark.sinker.resource_url}"
-            resource-charset="${datamark.sinker.resource_charset}"
-            update-allowed="${datamark.sinker.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.sinker.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.sinker.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.sinker.update_allowed}"
     />
 
     <!-- Provider 数据标识。 -->
     <datamark:handler
             handler-name="providerDatamarkHandler"
-            resource-url="${datamark.provider.resource_url}"
-            resource-charset="${datamark.provider.resource_charset}"
-            update-allowed="${datamark.provider.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.provider.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.provider.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.provider.update_allowed}"
     />
 
     <!-- Visualizer 数据标识。 -->
     <datamark:handler
             handler-name="visualizerDatamarkHandler"
-            resource-url="${datamark.visualizer.resource_url}"
-            resource-charset="${datamark.visualizer.resource_charset}"
-            update-allowed="${datamark.visualizer.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.visualizer.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.visualizer.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.visualizer.update_allowed}"
     />
 
     <!-- Adapter 数据标识。 -->
     <datamark:handler
             handler-name="adapterDatamarkHandler"
-            resource-url="${datamark.adapter.resource_url}"
-            resource-charset="${datamark.adapter.resource_charset}"
-            update-allowed="${datamark.adapter.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.adapter.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.adapter.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.adapter.update_allowed}"
     />
 
     <!-- Filter 数据标识。 -->
     <datamark:handler
             handler-name="filterDatamarkHandler"
-            resource-url="${datamark.filter.resource_url}"
-            resource-charset="${datamark.filter.resource_charset}"
-            update-allowed="${datamark.filter.update_allowed}"
+            resource-url="${com.dwarfeng.judge.datamark.filter.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.filter.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.filter.update_allowed}"
     />
 
     <!-- QoS 服务。 -->

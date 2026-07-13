@@ -24,7 +24,7 @@ public class AnalysisFileInfoCrudOperation implements BatchCrudOperation<LongIdK
 
     private final FtpPathResolver ftpPathResolver;
 
-    @Value("${cache.timeout.entity.analysis_file_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analysis_file_info}")
     private long analysisFileInfoTimeout;
 
     public AnalysisFileInfoCrudOperation(

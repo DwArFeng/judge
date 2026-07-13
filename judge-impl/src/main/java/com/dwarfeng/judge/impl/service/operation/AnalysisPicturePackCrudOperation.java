@@ -25,7 +25,7 @@ public class AnalysisPicturePackCrudOperation implements BatchCrudOperation<Long
     private final AnalysisPicturePackItemInfoDao analysisPicturePackItemInfoDao;
     private final AnalysisPicturePackItemInfoCrudOperation analysisPicturePackItemInfoCrudOperation;
 
-    @Value("${cache.timeout.entity.analysis_picture_pack}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analysis_picture_pack}")
     private long analysisPicturePackTimeout;
 
     public AnalysisPicturePackCrudOperation(

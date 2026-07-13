@@ -27,7 +27,7 @@ public class AnalyserInfoCrudOperation implements BatchCrudOperation<LongIdKey, 
     private final AnalyserVariableDao analyserVariableDao;
     private final AnalyserVariableCache analyserVariableCache;
 
-    @Value("${cache.timeout.entity.analyser_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analyser_info}")
     private long analyserInfoTimeout;
 
     public AnalyserInfoCrudOperation(

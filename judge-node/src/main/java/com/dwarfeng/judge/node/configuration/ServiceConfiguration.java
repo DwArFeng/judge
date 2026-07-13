@@ -92,47 +92,47 @@ public class ServiceConfiguration {
     private final FilterSupportCache filterSupportCache;
     private final FilterSupportDao filterSupportDao;
 
-    @Value("${cache.timeout.entity.analyser_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
-    @Value("${cache.timeout.entity.analyser_variable}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.analyser_variable}")
     private long analyserVariableTimeout;
-    @Value("${cache.timeout.entity.driver_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.driver_info}")
     private long driverInfoTimeout;
-    @Value("${cache.timeout.entity.driver_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.driver_support}")
     private long driverSupportTimeout;
-    @Value("${cache.timeout.entity.judger_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.judger_support}")
     private long judgerSupportTimeout;
-    @Value("${cache.timeout.entity.judger_variable}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.judger_variable}")
     private long judgerVariableTimeout;
-    @Value("${cache.timeout.entity.task_event}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.task_event}")
     private long taskEventTimeout;
-    @Value("${cache.timeout.entity.sinker_meta}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.sinker_meta}")
     private long sinkerMetaTimeout;
-    @Value("${cache.timeout.entity.sinker_meta_indicator}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.sinker_meta_indicator}")
     private long sinkerMetaIndicatorTimeout;
-    @Value("${cache.timeout.entity.sinker_relation}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.sinker_relation}")
     private long sinkerRelationTimeout;
-    @Value("${cache.timeout.entity.sinker_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.sinker_support}")
     private long sinkerSupportTimeout;
-    @Value("${cache.timeout.entity.sinker_variable}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.sinker_variable}")
     private long sinkerVariableTimeout;
-    @Value("${cache.timeout.entity.provider_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.provider_info}")
     private long providerInfoTimeout;
-    @Value("${cache.timeout.entity.provider_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.provider_support}")
     private long providerSupportTimeout;
-    @Value("${cache.timeout.entity.visualizer_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.visualizer_info}")
     private long visualizerInfoTimeout;
-    @Value("${cache.timeout.entity.visualizer_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.visualizer_support}")
     private long visualizerSupportTimeout;
-    @Value("${cache.timeout.entity.visualize_data}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.visualize_data}")
     private long visualizeDataTimeout;
-    @Value("${cache.timeout.entity.adapter_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.adapter_info}")
     private long adapterInfoTimeout;
-    @Value("${cache.timeout.entity.adapter_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.adapter_support}")
     private long adapterSupportTimeout;
-    @Value("${cache.timeout.entity.filter_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.filter_info}")
     private long filterInfoTimeout;
-    @Value("${cache.timeout.entity.filter_support}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.filter_support}")
     private long filterSupportTimeout;
 
     public ServiceConfiguration(

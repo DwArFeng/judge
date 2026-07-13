@@ -43,7 +43,7 @@ public class SinkerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Si
     private final SinkerVariableDao sinkerVariableDao;
     private final SinkerVariableCache sinkerVariableCache;
 
-    @Value("${cache.timeout.entity.sinker_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.sinker_info}")
     private long sinkerInfoTimeout;
 
     public SinkerInfoCrudOperation(

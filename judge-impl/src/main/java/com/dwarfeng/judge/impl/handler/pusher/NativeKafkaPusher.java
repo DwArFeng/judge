@@ -38,25 +38,25 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${pusher.kafka.native.topic.task_finished}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.task_finished}")
     private String taskFinishedTopic;
-    @Value("${pusher.kafka.native.topic.task_failed}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.task_failed}")
     private String taskFailedTopic;
-    @Value("${pusher.kafka.native.topic.task_expired}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.task_expired}")
     private String taskExpiredTopic;
-    @Value("${pusher.kafka.native.topic.task_died}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.task_died}")
     private String taskDiedTopic;
-    @Value("${pusher.kafka.native.topic.job_reset}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.job_reset}")
     private String jobResetTopic;
-    @Value("${pusher.kafka.native.topic.supervise_reset}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.supervise_reset}")
     private String superviseResetTopic;
-    @Value("${pusher.kafka.native.topic.sink_reset}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.sink_reset}")
     private String sinkResetTopic;
-    @Value("${pusher.kafka.native.topic.provide_reset}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.provide_reset}")
     private String provideResetTopic;
-    @Value("${pusher.kafka.native.topic.purge_finished}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.purge_finished}")
     private String purgeFinishedTopic;
-    @Value("${pusher.kafka.native.topic.purge_failed}")
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.purge_failed}")
     private String purgeFailedTopic;
 
     public NativeKafkaPusher(
@@ -140,19 +140,19 @@ public class NativeKafkaPusher extends AbstractPusher {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(KafkaPusherConfiguration.class);
 
-        @Value("${pusher.kafka.native.bootstrap_servers}")
+        @Value("${com.dwarfeng.judge.pusher.kafka.native.bootstrap_servers}")
         private String producerBootstrapServers;
-        @Value("${pusher.kafka.native.retries}")
+        @Value("${com.dwarfeng.judge.pusher.kafka.native.retries}")
         private int retries;
-        @Value("${pusher.kafka.native.linger}")
+        @Value("${com.dwarfeng.judge.pusher.kafka.native.linger}")
         private long linger;
-        @Value("${pusher.kafka.native.buffer_memory}")
+        @Value("${com.dwarfeng.judge.pusher.kafka.native.buffer_memory}")
         private long bufferMemory;
-        @Value("${pusher.kafka.native.batch_size}")
+        @Value("${com.dwarfeng.judge.pusher.kafka.native.batch_size}")
         private int batchSize;
-        @Value("${pusher.kafka.native.acks}")
+        @Value("${com.dwarfeng.judge.pusher.kafka.native.acks}")
         private String acks;
-        @Value("${pusher.kafka.native.transaction_prefix}")
+        @Value("${com.dwarfeng.judge.pusher.kafka.native.transaction_prefix}")
         private String transactionPrefix;
 
         @SuppressWarnings("DuplicatedCode")

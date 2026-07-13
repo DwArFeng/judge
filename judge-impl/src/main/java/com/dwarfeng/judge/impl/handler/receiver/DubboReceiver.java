@@ -42,7 +42,7 @@ public class DubboReceiver extends AbstractReceiver {
     private final RegistryConfig registry;
     private final ProtocolConfig protocol;
 
-    @Value("${dubbo.provider.group}")
+    @Value("${com.dwarfeng.judge.dubbo.provider.group}")
     private String group;
 
     private final Lock lock = new ReentrantLock();

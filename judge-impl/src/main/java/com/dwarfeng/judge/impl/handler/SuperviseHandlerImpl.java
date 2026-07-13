@@ -20,7 +20,7 @@ public class SuperviseHandlerImpl implements SuperviseHandler {
 
     public SuperviseHandlerImpl(
             CuratorFramework curatorFramework,
-            @Value("${curator.latch_path.supervise.leader_latch}") String leaserLatchPath,
+            @Value("${com.dwarfeng.judge.curator.latch_path.supervise.leader_latch}") String leaserLatchPath,
             SuperviseWorker superviseWorker
     ) {
         handler = new CuratorDistributedLockHandler(curatorFramework, leaserLatchPath, superviseWorker);

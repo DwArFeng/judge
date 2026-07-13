@@ -33,13 +33,13 @@ public class AnalysisPictureFileOperateHandlerImpl implements AnalysisPictureFil
 
     private final HandlerValidator handlerValidator;
 
-    @Value("${thumbnail.width}")
+    @Value("${com.dwarfeng.judge.thumbnail.width}")
     private int thumbnailWidth;
-    @Value("${thumbnail.height}")
+    @Value("${com.dwarfeng.judge.thumbnail.height}")
     private int thumbnailHeight;
-    @Value("${thumbnail.quality}")
+    @Value("${com.dwarfeng.judge.thumbnail.quality}")
     private double thumbnailQuality;
-    @Value("${thumbnail.output_format}")
+    @Value("${com.dwarfeng.judge.thumbnail.output_format}")
     private String thumbnailOutputFormat;
 
     public AnalysisPictureFileOperateHandlerImpl(

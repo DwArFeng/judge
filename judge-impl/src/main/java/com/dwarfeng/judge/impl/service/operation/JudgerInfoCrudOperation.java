@@ -27,7 +27,7 @@ public class JudgerInfoCrudOperation implements BatchCrudOperation<LongIdKey, Ju
     private final JudgerVariableDao judgerVariableDao;
     private final JudgerVariableCache judgerVariableCache;
 
-    @Value("${cache.timeout.entity.judger_info}")
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.judger_info}")
     private long judgerInfoTimeout;
 
     public JudgerInfoCrudOperation(

@@ -21,73 +21,73 @@ public class CacheConfiguration {
 
     private final RedisTemplate<String, ?> template;
 
-    @Value("${cache.prefix.entity.analyser_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analyser_info}")
     private String analyserInfoPrefix;
-    @Value("${cache.prefix.entity.analyser_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analyser_support}")
     private String analyserSupportPrefix;
-    @Value("${cache.prefix.entity.analyser_variable}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analyser_variable}")
     private String analyserVariablePrefix;
-    @Value("${cache.prefix.entity.analysis}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analysis}")
     private String analysisPrefix;
-    @Value("${cache.prefix.entity.driver_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.driver_info}")
     private String driverInfoPrefix;
-    @Value("${cache.prefix.entity.driver_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.driver_support}")
     private String driverSupportPrefix;
-    @Value("${cache.prefix.entity.judger_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.judger_info}")
     private String judgerInfoPrefix;
-    @Value("${cache.prefix.entity.judger_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.judger_support}")
     private String judgerSupportPrefix;
-    @Value("${cache.prefix.entity.judger_variable}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.judger_variable}")
     private String judgerVariablePrefix;
-    @Value("${cache.prefix.entity.section}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.section}")
     private String sectionPrefix;
-    @Value("${cache.prefix.entity.task}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.task}")
     private String taskPrefix;
-    @Value("${cache.prefix.entity.task_event}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.task_event}")
     private String taskEventPrefix;
-    @Value("${cache.prefix.entity.analysis_file_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analysis_file_info}")
     private String analysisFileInfoPrefix;
-    @Value("${cache.prefix.entity.analysis_file_pack}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analysis_file_pack}")
     private String analysisFilePackPrefix;
-    @Value("${cache.prefix.entity.analysis_file_pack_item_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analysis_file_pack_item_info}")
     private String analysisFilePackItemInfoPrefix;
-    @Value("${cache.prefix.entity.analysis_picture_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analysis_picture_info}")
     private String analysisPictureInfoPrefix;
-    @Value("${cache.prefix.entity.analysis_picture_pack}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analysis_picture_pack}")
     private String analysisPicturePackPrefix;
-    @Value("${cache.prefix.entity.analysis_picture_pack_item_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.analysis_picture_pack_item_info}")
     private String analysisPicturePackItemInfoPrefix;
-    @Value("${cache.prefix.entity.judgement}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.judgement}")
     private String judgementPrefix;
-    @Value("${cache.prefix.entity.sinker_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.sinker_info}")
     private String sinkerInfoPrefix;
-    @Value("${cache.prefix.entity.sinker_meta}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.sinker_meta}")
     private String sinkerMetaPrefix;
-    @Value("${cache.prefix.entity.sinker_meta_indicator}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.sinker_meta_indicator}")
     private String sinkerMetaIndicatorPrefix;
-    @Value("${cache.prefix.entity.sinker_relation}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.sinker_relation}")
     private String sinkerRelationPrefix;
-    @Value("${cache.prefix.entity.sinker_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.sinker_support}")
     private String sinkerSupportPrefix;
-    @Value("${cache.prefix.entity.sinker_variable}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.sinker_variable}")
     private String sinkerVariablePrefix;
-    @Value("${cache.prefix.entity.provider_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.provider_info}")
     private String providerInfoPrefix;
-    @Value("${cache.prefix.entity.provider_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.provider_support}")
     private String providerSupportPrefix;
-    @Value("${cache.prefix.entity.visualizer_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.visualizer_info}")
     private String visualizerInfoPrefix;
-    @Value("${cache.prefix.entity.visualizer_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.visualizer_support}")
     private String visualizerSupportPrefix;
-    @Value("${cache.prefix.entity.visualize_data}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.visualize_data}")
     private String visualizeDataPrefix;
-    @Value("${cache.prefix.entity.adapter_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.adapter_info}")
     private String adapterInfoPrefix;
-    @Value("${cache.prefix.entity.adapter_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.adapter_support}")
     private String adapterSupportPrefix;
-    @Value("${cache.prefix.entity.filter_info}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.filter_info}")
     private String filterInfoPrefix;
-    @Value("${cache.prefix.entity.filter_support}")
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.filter_support}")
     private String filterSupportPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
