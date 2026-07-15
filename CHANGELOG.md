@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/QuickStart.md。
+
 - 可视化机制优化。
   - 优化 `com.dwarfeng.judge.stack.handler.Visualizer` 接口签名。
 
