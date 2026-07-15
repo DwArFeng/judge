@@ -46,8 +46,9 @@ public interface Visualizer {
          * 通过 {@link Context} 进行持久化。
          *
          * @throws Exception 方法执行过程中发生的任何异常。
+         * @since 2.7.0
          */
-        void analyse() throws Exception;
+        void visualize() throws Exception;
     }
 
     /**

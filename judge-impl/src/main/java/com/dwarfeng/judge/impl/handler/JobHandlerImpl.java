@@ -448,7 +448,7 @@ public class JobHandlerImpl implements JobHandler {
             visualizerExecutor.init(visualizerContext);
 
             // 调用可视化器执行器的可视化方法。
-            visualizerExecutor.analyse();
+            visualizerExecutor.visualize();
         }
 
         // 结束计时，创建任务事件。

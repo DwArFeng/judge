@@ -19,6 +19,7 @@ public interface Processor {
      *
      * @param context 执行器的可视化器上下文。
      * @throws Exception 方法执行过程中发生的任何异常。
+     * @since 2.7.0
      */
-    void analyse(Visualizer.Context context) throws Exception;
+    void visualize(Visualizer.Context context) throws Exception;
 }

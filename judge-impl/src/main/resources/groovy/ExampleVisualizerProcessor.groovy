@@ -25,7 +25,7 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
 class ExampleVisualizerProcessor implements Processor {
 
     @Override
-    void analyse(Visualizer.Context context) throws Exception {
+    void visualize(Visualizer.Context context) throws Exception {
         // 获取任务键。
         LongIdKey taskKey = context.getTaskKey()
 

@@ -22,8 +22,8 @@ public class GroovyExecutor extends AbstractExecutor {
     }
 
     @Override
-    public void analyse() throws Exception {
-        processor.analyse(context);
+    public void visualize() throws Exception {
+        processor.visualize(context);
     }
 
     @Override

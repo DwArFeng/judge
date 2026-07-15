@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- 可视化机制优化。
+  - 优化 `com.dwarfeng.judge.stack.handler.Visualizer` 接口签名。
 
 ### Bug 修复
 
