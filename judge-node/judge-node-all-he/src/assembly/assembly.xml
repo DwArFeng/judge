@@ -24,7 +24,7 @@
     <fileSets>
         <fileSet>
             <outputDirectory>docs</outputDirectory>
-            <directory>../docs</directory>
+            <directory>../../docs</directory>
             <!-- 仅应用于文本文件 -->
             <includes>
                 <include>**/*.md</include>
@@ -35,7 +35,7 @@
         </fileSet>
         <fileSet>
             <outputDirectory>docs</outputDirectory>
-            <directory>../docs</directory>
+            <directory>../../docs</directory>
             <!-- 仅应用于二进制文件 -->
             <includes>
                 <include>**/*.png</include>
@@ -192,17 +192,17 @@
     <files>
         <file>
             <outputDirectory>./</outputDirectory>
-            <source>../README.md</source>
+            <source>../../README.md</source>
             <fileMode>0644</fileMode>
         </file>
         <file>
             <outputDirectory>./</outputDirectory>
-            <source>../CHANGELOG.md</source>
+            <source>../../CHANGELOG.md</source>
             <fileMode>0644</fileMode>
         </file>
         <file>
             <outputDirectory>./</outputDirectory>
-            <source>../LICENSE</source>
+            <source>../../LICENSE</source>
             <fileMode>0644</fileMode>
         </file>
     </files>

@@ -1,4 +1,4 @@
-package com.dwarfeng.judge.node.configuration;
+package com.dwarfeng.judge.node.all.he.configuration;
 
 import com.dwarfeng.judge.impl.service.operation.*;
 import com.dwarfeng.judge.stack.bean.entity.*;

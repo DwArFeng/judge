@@ -1,4 +1,4 @@
-package com.dwarfeng.judge.node.configuration;
+package com.dwarfeng.judge.node.all.he.configuration;
 
 import com.dwarfeng.sfds.api.integration.subgrade.SnowflakeLongIdKeyGenerator;
 import com.dwarfeng.sfds.stack.service.GenerateService;

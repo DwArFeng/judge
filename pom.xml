@@ -597,6 +597,16 @@
                 <artifactId>judge-node</artifactId>
                 <version>3.0.0.a-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>judge-node-all-he</artifactId>
+                <version>3.0.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>judge-distribute</artifactId>
+                <version>3.0.0.a-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -642,5 +652,6 @@
         <module>judge-sdk</module>
         <module>judge-impl</module>
         <module>judge-node</module>
+        <module>judge-distribute</module>
     </modules>
 </project>

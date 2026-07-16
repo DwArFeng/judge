@@ -1,6 +1,6 @@
-package com.dwarfeng.judge.node.launcher;
+package com.dwarfeng.judge.node.all.he.launcher;
 
-import com.dwarfeng.judge.node.handler.LauncherSettingHandler;
+import com.dwarfeng.judge.node.all.he.handler.LauncherSettingHandler;
 import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;

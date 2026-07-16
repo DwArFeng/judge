@@ -1,4 +1,4 @@
-package com.dwarfeng.judge.node.configuration;
+package com.dwarfeng.judge.node.all.he.configuration;
 
 import com.dwarfeng.judge.sdk.util.ServiceExceptionCodes;
 import org.springframework.beans.factory.annotation.Value;

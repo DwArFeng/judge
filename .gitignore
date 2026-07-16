@@ -72,36 +72,36 @@ buildNumber.properties
 ## Logger Files
 #################
 /judge-impl/logs/
-/judge-node/logs/
+/judge-node/judge-node-all-he/logs/
 
 #################
 ## Configuration Files
 #################
 /judge-impl/conf/
-/judge-node/conf/
+/judge-node/judge-node-all-he/conf/
 
 #################
 ## Libext Files
 #################
-/judge-node/libext/
+/judge-node/judge-node-all-he/libext/
 
 #################
 ## Opt Files
 #################
-/judge-node/opt/
+/judge-node/judge-node-all-he/opt/
 
 #################
 ## Optext Files
 #################
-/judge-node/optext/
+/judge-node/judge-node-all-he/optext/
 
 #################
 ## Confext Files
 #################
-/judge-node/confext/
+/judge-node/judge-node-all-he/confext/
 
 #################
 ## Temp Files
 #################
 /judge-impl/temp/
-/judge-node/temp/
+/judge-node/judge-node-all-he/temp/

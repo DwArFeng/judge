@@ -1,4 +1,4 @@
-package com.dwarfeng.judge.node.configuration;
+package com.dwarfeng.judge.node.all.he.configuration;
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.dwarfeng.judge.sdk.bean.entity.*;
