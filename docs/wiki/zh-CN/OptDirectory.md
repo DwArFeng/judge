@@ -16,8 +16,8 @@ opt
 ├─ opt-pusher.xml
 ├─ opt-receiver.xml
 ├─ opt-resetter.xml
-├─ opt-sinker-kafka-native.xml
 ├─ opt-sinker.xml
+├─ opt-sinker-kafka-native.xml
 └─ opt-visualizer.xml
 ```
 
@@ -94,7 +94,8 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress SpringFacetInspection -->
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -105,7 +106,7 @@ opt
         http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <!--扫描 handler 的实现包。 -->
+    <!-- 扫描 handler 的实现包。 -->
     <context:component-scan
             base-package="com.dwarfeng.judge.impl.handler.dispatcher" use-default-filters="false"
     >
@@ -144,7 +145,8 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress SpringFacetInspection -->
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -155,7 +157,7 @@ opt
         http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <!--扫描 handler 的实现包。 -->
+    <!-- 扫描 handler 的实现包。 -->
     <context:component-scan
             base-package="com.dwarfeng.judge.impl.handler.driver" use-default-filters="false"
     >
@@ -206,6 +208,7 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
 <!--suppress SpringFacetInspection, XmlUnusedNamespaceDeclaration -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
@@ -228,6 +231,7 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
 <!--suppress SpringFacetInspection, XmlUnusedNamespaceDeclaration -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
@@ -270,6 +274,7 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
 <!--suppress SpringFacetInspection, XmlUnusedNamespaceDeclaration -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
@@ -297,7 +302,8 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress SpringFacetInspection -->
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -308,7 +314,7 @@ opt
         http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <!--扫描 handler 的实现包。 -->
+    <!-- 扫描 handler 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.pusher" use-default-filters="false">
         <!-- 加载 DrainPusher -->
         <!--
@@ -345,7 +351,8 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress SpringFacetInspection -->
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -356,7 +363,7 @@ opt
         http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <!--扫描 handler 的实现包。 -->
+    <!-- 扫描 handler 的实现包。 -->
     <context:component-scan
             base-package="com.dwarfeng.judge.impl.handler.receiver" use-default-filters="false"
     >
@@ -395,7 +402,8 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress SpringFacetInspection -->
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -450,6 +458,7 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
 <!--suppress SpringFacetInspection, XmlUnusedNamespaceDeclaration -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
@@ -477,6 +486,7 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
 <!--suppress SpringFacetInspection, XmlUnusedNamespaceDeclaration -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
@@ -548,7 +558,8 @@ opt
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress SpringFacetInspection -->
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
 <beans
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -559,7 +570,7 @@ opt
         http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-    <!--扫描 handler 的实现包。 -->
+    <!-- 扫描 handler 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.judge.impl.handler.visualizer" use-default-filters="false">
         <!-- 加载 GroovyVisualizer -->
         <!--
