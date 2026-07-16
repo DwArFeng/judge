@@ -18,14 +18,14 @@
 
 ## 解压软件包
 
-软件包的名称格式为 `judge-node-${version}-release.tar.gz`，其中 `${version}` 为软件包的版本号。
+软件包的名称格式为 `judge-all-he-${version}-release.tar.gz`，其中 `${version}` 为软件包的版本号。
 
 使用工具软件，将软件包上传至服务器 `/usr/local` 目录下，解压软件包。
 
 ```shell
 cd /usr/local
-tar -zxvf judge-node-${version}-release.tar.gz
-mv judge-node-${version}-release/judge-node-${version} judge
+tar -zxvf judge-all-he-${version}-release.tar.gz
+mv judge-all-he-${version}-release/judge-all-he-${version} judge
 ```
 
 ## 数据库初始化
@@ -430,59 +430,137 @@ ON DUPLICATE KEY UPDATE
 `conf/curator/connection.properties` 文件中配置 curator 连接信息。
 
 ```properties
-curator.connect.connect_string=your-host-here:2181
+com.dwarfeng.judge.curator.connect.connect_string=your-host-here:2181
 ```
 
 `conf/database/connection.properties` 文件中配置数据库连接信息。
 
 ```properties
-jdbc.url=jdbc:mysql://your-host-here:3306/judge?serverTimezone=Asia/Shanghai&autoReconnect=true
-jdbc.username=root
-jdbc.password=your-password-here
+com.dwarfeng.judge.jdbc.url=jdbc:mysql://your-host-here:3306/judge?serverTimezone=Asia/Shanghai
+com.dwarfeng.judge.jdbc.username=root
+com.dwarfeng.judge.jdbc.password=your-password-here
 ```
 
 `conf/dubbo/connection.properties` 文件中配置 dubbo 连接信息。
 
 ```properties
-dubbo.registry.zookeeper.address=zookeeper://your-host-here:2181
-dubbo.protocol.dubbo.host=your-host-here
+com.dwarfeng.judge.dubbo.registry.zookeeper.address=zookeeper://your-host-here:2181
+com.dwarfeng.judge.dubbo.protocol.dubbo.host=your-host-here
 ```
 
 `conf/redis/connection.properties` 文件中配置 redis 连接信息。
 
 ```properties
-redis.hostName=your-host-here
-redis.port=6379
-redis.password=your-password-here
+com.dwarfeng.judge.redis.hostName=your-host-here
+com.dwarfeng.judge.redis.port=6379
+com.dwarfeng.judge.redis.password=your-password-here
 ```
 
-`conf/judge/receive.properties` 文件中配置接收器信息。发布包中的默认接收器配置为 `do_nothing`，
-按照本文验证最小演示链路时使用默认值即可。
+`conf/judge/receive.properties` 文件中配置接收器类型。本文使用单节点 JVM 内部接收器承接分发请求。
 
 ```properties
-receiver.type=do_nothing
+com.dwarfeng.judge.receiver.type=injvm
 ```
 
-`conf/judge/dispatch.properties` 文件中配置分发器信息。发布包中的默认分发器配置为 `drain`，
-按照本文验证最小演示链路时使用默认值即可。
+`conf/judge/dispatch.properties` 文件中配置分发器类型。本文使用单节点 JVM 内部分发器触发消费链路。
 
 ```properties
-dispatcher.type=drain
+com.dwarfeng.judge.dispatcher.type=injvm
 ```
 
-`conf/judge/push.properties` 文件中配置推送器信息。发布包中的默认推送器配置为 `drain`，
-按照本文验证最小演示链路时使用默认值即可。
+`conf/judge/push.properties` 文件中配置推送器类型。本文不接入外部推送通道，可使用 `drain` 推送器丢弃推送事件。
 
 ```properties
-pusher.type=drain
+com.dwarfeng.judge.pusher.type=drain
 ```
 
 ## 修改可选配置
 
-下文列出了启动程序需要改动的可选的配置文件，每个配置文件中仅展示需要改动的配置项。
+下文列出了本文演示链路需要启用的 `opt/` 配置。发布包中对应实现默认以注释形式提供， 可直接将对应文件调整为本节展示的完整配置。
 
-`opt/opt-provider.xml` 提供器可选配置。
-发布包中的提供器扩展默认以注释形式提供，如需按照本文使用 Groovy 提供器生成演示数据， 需要取消下列组件扫描配置的注释。
+`opt/opt-dispatcher.xml` 分发器可选配置。需要启用 Injvm 分发器。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!--扫描 handler 的实现包。 -->
+    <context:component-scan
+            base-package="com.dwarfeng.judge.impl.handler.dispatcher" use-default-filters="false"
+    >
+        <!-- 加载 InjvmDispatcher -->
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.judge.impl.handler.dispatcher.InjvmDispatcher"
+        />
+    </context:component-scan>
+</beans>
+```
+
+`opt/opt-receiver.xml` 接收器可选配置。需要启用 Injvm 接收器。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!--扫描 handler 的实现包。 -->
+    <context:component-scan
+            base-package="com.dwarfeng.judge.impl.handler.receiver" use-default-filters="false"
+    >
+        <!-- 加载 InjvmReceiver -->
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.judge.impl.handler.receiver.InjvmReceiver"
+        />
+    </context:component-scan>
+</beans>
+```
+
+`opt/opt-pusher.xml` 推送器可选配置。需要启用 Drain 推送器，与 `com.dwarfeng.judge.pusher.type=drain` 对应。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 以下注释用于抑制 idea 中 .md 的警告，实际并无错误，在使用时可以连同本注释一起删除。 -->
+<!--suppress SpringXmlModelInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!--扫描 handler 的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.judge.impl.handler.pusher" use-default-filters="false">
+        <!-- 加载 DrainPusher -->
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.judge.impl.handler.pusher.DrainPusher"
+        />
+    </context:component-scan>
+</beans>
+```
+
+`opt/opt-provider.xml` 提供器可选配置。需要启用 Groovy 提供器生成演示数据。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -503,8 +581,7 @@ pusher.type=drain
 </beans>
 ```
 
-`opt/opt-analyser.xml` 分析器可选配置。
-发布包中的分析器扩展默认以注释形式提供，如需按照本文使用 Groovy 分析器调用提供器并生成分析结果，需要取消下列组件扫描配置的注释。
+`opt/opt-analyser.xml` 分析器可选配置。需要启用 Groovy 分析器调用提供器并生成分析结果。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -525,8 +602,7 @@ pusher.type=drain
 </beans>
 ```
 
-`opt/opt-judger.xml` 判断器可选配置。
-发布包中的判断器扩展默认以注释形式提供，如需按照本文使用本征判断器将分析结果转换为判断结果，需要取消下列组件扫描配置的注释。
+`opt/opt-judger.xml` 判断器可选配置。需要启用 Identity 判断器将分析结果转换为判断结果。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -547,8 +623,7 @@ pusher.type=drain
 </beans>
 ```
 
-`opt/opt-visualizer.xml` 可视化器可选配置。
-发布包中的可视化器扩展默认以注释形式提供，如需按照本文使用 Groovy 可视化器生成 HTML 片段，需要取消下列组件扫描配置的注释。
+`opt/opt-visualizer.xml` 可视化器可选配置。需要启用 Groovy 可视化器生成 HTML 片段。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -575,8 +650,7 @@ pusher.type=drain
 </beans>
 ```
 
-`opt/opt-sinker.xml` 下沉器可选配置。
-发布包中的下沉器扩展默认以注释形式提供，如需按照本文使用 Mock 下沉器模拟数据下沉，需要取消下列组件扫描配置的注释。
+`opt/opt-sinker.xml` 下沉器可选配置。需要启用 Mock 下沉器模拟数据下沉。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -597,8 +671,7 @@ pusher.type=drain
 </beans>
 ```
 
-`opt/opt-driver.xml` 驱动器可选配置。
-发布包中的驱动器扩展默认以注释形式提供，如需按照本文使用 FixedDelay 驱动器定时触发演示部件，需要取消下列组件扫描配置的注释。
+`opt/opt-driver.xml` 驱动器可选配置。需要启用 FixedDelay 驱动器定时触发演示部件。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
