@@ -73,6 +73,15 @@ public class ResetQosServiceImpl implements ResetQosService {
     }
 
     @Override
+    public void resetSupervise() throws ServiceException {
+        try {
+            resetHandler.resetSupervise();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("重置主管功能时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
     public void resetJob() throws ServiceException {
         try {
             resetHandler.resetJob();
@@ -82,11 +91,29 @@ public class ResetQosServiceImpl implements ResetQosService {
     }
 
     @Override
-    public void resetSupervise() throws ServiceException {
+    public void resetAdapt() throws ServiceException {
         try {
-            resetHandler.resetSupervise();
+            resetHandler.resetAdapt();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("重置主管功能时发生异常", LogLevel.WARN, e, sem);
+            throw ServiceExceptionHelper.logParse("重置适配器功能时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
+    public void resetProvide() throws ServiceException {
+        try {
+            resetHandler.resetProvide();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("重置提供功能时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
+    public void resetFilter() throws ServiceException {
+        try {
+            resetHandler.resetFilter();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("重置过滤器功能时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -99,12 +126,4 @@ public class ResetQosServiceImpl implements ResetQosService {
         }
     }
 
-    @Override
-    public void resetProvide() throws ServiceException {
-        try {
-            resetHandler.resetProvide();
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logParse("重置提供功能时发生异常", LogLevel.WARN, e, sem);
-        }
-    }
 }

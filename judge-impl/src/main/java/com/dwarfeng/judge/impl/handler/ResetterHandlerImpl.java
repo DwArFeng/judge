@@ -41,23 +41,33 @@ public class ResetterHandlerImpl implements ResetterHandler {
     private class InternalResetterContext implements Resetter.Context {
 
         @Override
-        public void resetJob() throws Exception {
-            resetProcessor.resetJob();
-        }
-
-        @Override
         public void resetSupervise() throws Exception {
             resetProcessor.resetSupervise();
         }
 
         @Override
-        public void resetSink() throws Exception {
-            resetProcessor.resetSink();
+        public void resetJob() throws Exception {
+            resetProcessor.resetJob();
+        }
+
+        @Override
+        public void resetAdapt() throws Exception {
+            resetProcessor.resetAdapt();
         }
 
         @Override
         public void resetProvide() throws Exception {
             resetProcessor.resetProvide();
+        }
+
+        @Override
+        public void resetFilter() throws Exception {
+            resetProcessor.resetFilter();
+        }
+
+        @Override
+        public void resetSink() throws Exception {
+            resetProcessor.resetSink();
         }
     }
 }

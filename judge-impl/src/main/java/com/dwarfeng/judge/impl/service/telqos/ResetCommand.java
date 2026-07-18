@@ -26,20 +26,24 @@ public class ResetCommand extends CliCommand {
     private static final String COMMAND_OPTION_START = "start";
     private static final String COMMAND_OPTION_STOP = "stop";
     private static final String COMMAND_OPTION_STATUS = "status";
-    private static final String COMMAND_OPTION_RESET_JOB = "reset-job";
     private static final String COMMAND_OPTION_RESET_SUPERVISE = "reset-supervise";
-    private static final String COMMAND_OPTION_RESET_SINK = "reset-sink";
+    private static final String COMMAND_OPTION_RESET_JOB = "reset-job";
+    private static final String COMMAND_OPTION_RESET_ADAPT = "reset-adapt";
     private static final String COMMAND_OPTION_RESET_PROVIDE = "reset-provide";
+    private static final String COMMAND_OPTION_RESET_FILTER = "reset-filter";
+    private static final String COMMAND_OPTION_RESET_SINK = "reset-sink";
 
     private static final String[] COMMAND_OPTION_ARRAY = new String[]{
             COMMAND_OPTION_LOOKUP,
             COMMAND_OPTION_START,
             COMMAND_OPTION_STOP,
             COMMAND_OPTION_STATUS,
-            COMMAND_OPTION_RESET_JOB,
             COMMAND_OPTION_RESET_SUPERVISE,
-            COMMAND_OPTION_RESET_SINK,
-            COMMAND_OPTION_RESET_PROVIDE
+            COMMAND_OPTION_RESET_JOB,
+            COMMAND_OPTION_RESET_ADAPT,
+            COMMAND_OPTION_RESET_PROVIDE,
+            COMMAND_OPTION_RESET_FILTER,
+            COMMAND_OPTION_RESET_SINK
     };
 
     // endregion
@@ -61,7 +65,6 @@ public class ResetCommand extends CliCommand {
         return this::cliSyntaxProvider;
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private String cliSyntaxProvider(CommandDescriptor.Context context) throws Exception {
         String identity = context.getRuntimeIdentity();
         String[] patterns = new String[]{
@@ -69,10 +72,12 @@ public class ResetCommand extends CliCommand {
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_START),
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_STOP),
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_STATUS),
-                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_JOB),
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SUPERVISE),
-                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SINK),
-                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_PROVIDE)
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_JOB),
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_ADAPT),
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_PROVIDE),
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_FILTER),
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SINK)
         };
         return CliCommandUtil.cliSyntax(patterns);
     }
@@ -88,20 +93,28 @@ public class ResetCommand extends CliCommand {
                         .desc("查看重置处理器状态").build()
         );
         list.add(
+                Option.builder(COMMAND_OPTION_RESET_SUPERVISE).optionalArg(true).hasArg(false)
+                        .desc("执行重置主管功能操作").build()
+        );
+        list.add(
                 Option.builder(COMMAND_OPTION_RESET_JOB).optionalArg(true).hasArg(false)
                         .desc("作业重置作业功能操作").build()
         );
         list.add(
-                Option.builder(COMMAND_OPTION_RESET_SUPERVISE).optionalArg(true).hasArg(false)
-                        .desc("执行重置主管功能操作").build()
-        );
-        list.add(Option.builder(
-                        COMMAND_OPTION_RESET_SINK).optionalArg(true).hasArg(false)
-                .desc("执行重置下沉功能操作").build()
+                Option.builder(COMMAND_OPTION_RESET_ADAPT).optionalArg(true).hasArg(false)
+                        .desc("执行重置适配器功能操作").build()
         );
         list.add(
                 Option.builder(COMMAND_OPTION_RESET_PROVIDE).optionalArg(true).hasArg(false)
                         .desc("执行重置提供功能操作").build()
+        );
+        list.add(
+                Option.builder(COMMAND_OPTION_RESET_FILTER).optionalArg(true).hasArg(false)
+                        .desc("执行重置过滤器功能操作").build()
+        );
+        list.add(Option.builder(
+                        COMMAND_OPTION_RESET_SINK).optionalArg(true).hasArg(false)
+                .desc("执行重置下沉功能操作").build()
         );
         return list;
     }
@@ -129,20 +142,28 @@ public class ResetCommand extends CliCommand {
             case COMMAND_OPTION_STATUS:
                 printStatus(context);
                 break;
-            case COMMAND_OPTION_RESET_JOB:
-                resetQosService.resetJob();
-                context.sendMessage("重置成功!");
-                break;
             case COMMAND_OPTION_RESET_SUPERVISE:
                 resetQosService.resetSupervise();
                 context.sendMessage("重置成功!");
                 break;
-            case COMMAND_OPTION_RESET_SINK:
-                resetQosService.resetSink();
+            case COMMAND_OPTION_RESET_JOB:
+                resetQosService.resetJob();
+                context.sendMessage("重置成功!");
+                break;
+            case COMMAND_OPTION_RESET_ADAPT:
+                resetQosService.resetAdapt();
                 context.sendMessage("重置成功!");
                 break;
             case COMMAND_OPTION_RESET_PROVIDE:
                 resetQosService.resetProvide();
+                context.sendMessage("重置成功!");
+                break;
+            case COMMAND_OPTION_RESET_FILTER:
+                resetQosService.resetFilter();
+                context.sendMessage("重置成功!");
+                break;
+            case COMMAND_OPTION_RESET_SINK:
+                resetQosService.resetSink();
                 context.sendMessage("重置成功!");
                 break;
             default:

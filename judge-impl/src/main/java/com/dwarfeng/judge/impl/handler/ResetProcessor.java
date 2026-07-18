@@ -25,12 +25,14 @@ public class ResetProcessor {
     private final JobLocalCacheHandler jobLocalCacheHandler;
     private final SuperviseHandler superviseHandler;
     private final DriveLocalCacheHandler driveLocalCacheHandler;
+    private final AdapterLocalCacheHandler adapterLocalCacheHandler;
+    private final ProviderSessionHoldHandler providerSessionHoldHandler;
+    private final ProviderLocalCacheHandler providerLocalCacheHandler;
+    private final FilterLocalCacheHandler filterLocalCacheHandler;
     private final SinkerSessionHoldHandler sinkerSessionHoldHandler;
     private final SinkerLocalCacheHandler sinkerLocalCacheHandler;
     private final SectionBindingLocalCacheHandler sectionBindingLocalCacheHandler;
     private final SinkerBindingLocalCacheHandler sinkerBindingLocalCacheHandler;
-    private final ProviderSessionHoldHandler providerSessionHoldHandler;
-    private final ProviderLocalCacheHandler providerLocalCacheHandler;
     private final PushHandler pushHandler;
 
     private final Lock lock = new ReentrantLock();
@@ -40,25 +42,61 @@ public class ResetProcessor {
             JobLocalCacheHandler jobLocalCacheHandler,
             SuperviseHandler superviseHandler,
             DriveLocalCacheHandler driveLocalCacheHandler,
+            AdapterLocalCacheHandler adapterLocalCacheHandler,
+            ProviderSessionHoldHandler providerSessionHoldHandler,
+            ProviderLocalCacheHandler providerLocalCacheHandler,
+            FilterLocalCacheHandler filterLocalCacheHandler,
             SinkerSessionHoldHandler sinkerSessionHoldHandler,
             SinkerLocalCacheHandler sinkerLocalCacheHandler,
             SectionBindingLocalCacheHandler sectionBindingLocalCacheHandler,
             SinkerBindingLocalCacheHandler sinkerBindingLocalCacheHandler,
-            ProviderSessionHoldHandler providerSessionHoldHandler,
-            ProviderLocalCacheHandler providerLocalCacheHandler,
             PushHandler pushHandler
     ) {
         this.receiveHandler = receiveHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
         this.superviseHandler = superviseHandler;
         this.driveLocalCacheHandler = driveLocalCacheHandler;
+        this.adapterLocalCacheHandler = adapterLocalCacheHandler;
+        this.providerSessionHoldHandler = providerSessionHoldHandler;
+        this.providerLocalCacheHandler = providerLocalCacheHandler;
+        this.filterLocalCacheHandler = filterLocalCacheHandler;
         this.sinkerSessionHoldHandler = sinkerSessionHoldHandler;
         this.sinkerLocalCacheHandler = sinkerLocalCacheHandler;
         this.sectionBindingLocalCacheHandler = sectionBindingLocalCacheHandler;
         this.sinkerBindingLocalCacheHandler = sinkerBindingLocalCacheHandler;
-        this.providerSessionHoldHandler = providerSessionHoldHandler;
-        this.providerLocalCacheHandler = providerLocalCacheHandler;
         this.pushHandler = pushHandler;
+    }
+
+    public void resetSupervise() throws HandlerException {
+        lock.lock();
+        try {
+            doResetSupervise();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetSupervise() throws Exception {
+        // 获取当前的主管处理器的状态。
+        boolean superviseHandlerStarted = superviseHandler.isStarted();
+
+        // 主管处理器停止，且清空本地缓存。
+        superviseHandler.stop();
+        driveLocalCacheHandler.clear();
+
+        // 如果主管处理器之前是启动的，则重新启动。
+        if (superviseHandlerStarted) {
+            superviseHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.superviseReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送主管功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
     }
 
     public void resetJob() throws HandlerException {
@@ -93,10 +131,10 @@ public class ResetProcessor {
         }
     }
 
-    public void resetSupervise() throws HandlerException {
+    public void resetAdapt() throws HandlerException {
         lock.lock();
         try {
-            doResetSupervise();
+            doResetAdapt();
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         } finally {
@@ -104,25 +142,59 @@ public class ResetProcessor {
         }
     }
 
-    private void doResetSupervise() throws Exception {
-        // 获取当前的主管处理器的状态。
-        boolean superviseHandlerStarted = superviseHandler.isStarted();
+    private void doResetAdapt() throws Exception {
+        adapterLocalCacheHandler.clear();
+    }
 
-        // 主管处理器停止，且清空本地缓存。
-        superviseHandler.stop();
-        driveLocalCacheHandler.clear();
+    public void resetProvide() throws HandlerException {
+        lock.lock();
+        try {
+            doResetProvide();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
 
-        // 如果主管处理器之前是启动的，则重新启动。
-        if (superviseHandlerStarted) {
-            superviseHandler.start();
+    private void doResetProvide() throws Exception {
+        // 获取当前的接收处理器的状态。
+        boolean receiveHandlerStarted = receiveHandler.isStarted();
+
+        // 接收处理器停止。
+        receiveHandler.stop();
+
+        // 关闭并清空提供会话持有器。
+        providerSessionHoldHandler.closeAndClear();
+        // 清空提供本地缓存。
+        providerLocalCacheHandler.clear();
+
+        // 如果接收处理器之前是启动的，则重新启动。
+        if (receiveHandlerStarted) {
+            receiveHandler.start();
         }
 
         // 消息推送。
         try {
-            pushHandler.superviseReset();
+            pushHandler.provideReset();
         } catch (Exception e) {
-            LOGGER.warn("推送主管功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+            LOGGER.warn("推送提供功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
+    }
+
+    public void resetFilter() throws HandlerException {
+        lock.lock();
+        try {
+            doResetFilter();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetFilter() throws Exception {
+        filterLocalCacheHandler.clear();
     }
 
     public void resetSink() throws HandlerException {
@@ -165,39 +237,4 @@ public class ResetProcessor {
         }
     }
 
-    public void resetProvide() throws HandlerException {
-        lock.lock();
-        try {
-            doResetProvide();
-        } catch (Exception e) {
-            throw HandlerExceptionHelper.parse(e);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    private void doResetProvide() throws Exception {
-        // 获取当前的接收处理器的状态。
-        boolean receiveHandlerStarted = receiveHandler.isStarted();
-
-        // 接收处理器停止。
-        receiveHandler.stop();
-
-        // 关闭并清空提供会话持有器。
-        providerSessionHoldHandler.closeAndClear();
-        // 清空提供本地缓存。
-        providerLocalCacheHandler.clear();
-
-        // 如果接收处理器之前是启动的，则重新启动。
-        if (receiveHandlerStarted) {
-            receiveHandler.start();
-        }
-
-        // 消息推送。
-        try {
-            pushHandler.provideReset();
-        } catch (Exception e) {
-            LOGGER.warn("推送提供功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
-        }
-    }
 }

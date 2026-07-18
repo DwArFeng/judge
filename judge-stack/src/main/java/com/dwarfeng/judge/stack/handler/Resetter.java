@@ -44,14 +44,6 @@ public interface Resetter {
     interface Context {
 
         /**
-         * 重置作业功能。
-         *
-         * @throws Exception 作业重置时抛出的任何异常。
-         * @since 2.0.0-beta
-         */
-        void resetJob() throws Exception;
-
-        /**
          * 重置主管功能。
          *
          * @throws Exception 执行重置时抛出的任何异常。
@@ -60,12 +52,20 @@ public interface Resetter {
         void resetSupervise() throws Exception;
 
         /**
-         * 重置下沉功能。
+         * 重置作业功能。
+         *
+         * @throws Exception 作业重置时抛出的任何异常。
+         * @since 2.0.0-beta
+         */
+        void resetJob() throws Exception;
+
+        /**
+         * 重置适配器功能。
          *
          * @throws Exception 执行重置时抛出的任何异常。
-         * @since 2.1.0-beta
+         * @since 3.0.1
          */
-        void resetSink() throws Exception;
+        void resetAdapt() throws Exception;
 
         /**
          * 重置提供功能。
@@ -74,5 +74,21 @@ public interface Resetter {
          * @since 2.1.0-beta
          */
         void resetProvide() throws Exception;
+
+        /**
+         * 重置过滤器功能。
+         *
+         * @throws Exception 执行重置时抛出的任何异常。
+         * @since 3.0.1
+         */
+        void resetFilter() throws Exception;
+
+        /**
+         * 重置下沉功能。
+         *
+         * @throws Exception 执行重置时抛出的任何异常。
+         * @since 2.1.0-beta
+         */
+        void resetSink() throws Exception;
     }
 }
