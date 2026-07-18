@@ -60,7 +60,6 @@ public class SupportCommand extends CliCommand {
         return this::cliSyntaxProvider;
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private String cliSyntaxProvider(CommandDescriptor.Context context) throws Exception {
         String identity = context.getRuntimeIdentity();
         String[] patterns = new String[]{
