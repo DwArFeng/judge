@@ -20,20 +20,24 @@ public class ResetCommand extends CliCommand {
     private static final String COMMAND_OPTION_START = "start";
     private static final String COMMAND_OPTION_STOP = "stop";
     private static final String COMMAND_OPTION_STATUS = "status";
-    private static final String COMMAND_OPTION_RESET_JOB = "reset-job";
     private static final String COMMAND_OPTION_RESET_SUPERVISE = "reset-supervise";
-    private static final String COMMAND_OPTION_RESET_SINK = "reset-sink";
+    private static final String COMMAND_OPTION_RESET_JOB = "reset-job";
+    private static final String COMMAND_OPTION_RESET_ADAPT = "reset-adapt";
     private static final String COMMAND_OPTION_RESET_PROVIDE = "reset-provide";
+    private static final String COMMAND_OPTION_RESET_FILTER = "reset-filter";
+    private static final String COMMAND_OPTION_RESET_SINK = "reset-sink";
 
     private static final String[] COMMAND_OPTION_ARRAY = new String[]{
             COMMAND_OPTION_LOOKUP,
             COMMAND_OPTION_START,
             COMMAND_OPTION_STOP,
             COMMAND_OPTION_STATUS,
-            COMMAND_OPTION_RESET_JOB,
             COMMAND_OPTION_RESET_SUPERVISE,
+            COMMAND_OPTION_RESET_JOB,
+            COMMAND_OPTION_RESET_ADAPT,
+            COMMAND_OPTION_RESET_PROVIDE,
+            COMMAND_OPTION_RESET_FILTER,
             COMMAND_OPTION_RESET_SINK,
-            COMMAND_OPTION_RESET_PROVIDE
     };
 
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
@@ -48,24 +52,30 @@ public class ResetCommand extends CliCommand {
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_STOP);
     private static final String CMD_LINE_SYNTAX_STATUS = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_STATUS);
-    private static final String CMD_LINE_SYNTAX_RESET_JOB = IDENTITY + " " +
-            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_JOB);
     private static final String CMD_LINE_SYNTAX_RESET_SUPERVISE = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SUPERVISE);
-    private static final String CMD_LINE_SYNTAX_RESET_SINK = IDENTITY + " " +
-            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SINK);
+    private static final String CMD_LINE_SYNTAX_RESET_JOB = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_JOB);
+    private static final String CMD_LINE_SYNTAX_RESET_ADAPT = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_ADAPT);
     private static final String CMD_LINE_SYNTAX_RESET_PROVIDE = IDENTITY + " " +
             CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_PROVIDE);
+    private static final String CMD_LINE_SYNTAX_RESET_FILTER = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_FILTER);
+    private static final String CMD_LINE_SYNTAX_RESET_SINK = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_SINK);
 
     private static final String[] CMD_LINE_ARRAY = new String[]{
             CMD_LINE_SYNTAX_LOOKUP,
             CMD_LINE_SYNTAX_START,
             CMD_LINE_SYNTAX_STOP,
             CMD_LINE_SYNTAX_STATUS,
-            CMD_LINE_SYNTAX_RESET_JOB,
             CMD_LINE_SYNTAX_RESET_SUPERVISE,
+            CMD_LINE_SYNTAX_RESET_JOB,
+            CMD_LINE_SYNTAX_RESET_ADAPT,
+            CMD_LINE_SYNTAX_RESET_PROVIDE,
+            CMD_LINE_SYNTAX_RESET_FILTER,
             CMD_LINE_SYNTAX_RESET_SINK,
-            CMD_LINE_SYNTAX_RESET_PROVIDE
     };
 
     private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
@@ -84,10 +94,12 @@ public class ResetCommand extends CliCommand {
         list.add(Option.builder().longOpt(COMMAND_OPTION_START).desc("启动重置处理器").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_STOP).desc("停止重置处理器").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_STATUS).desc("查看重置处理器状态").build());
-        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_JOB).desc("作业重置作业功能操作").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_SUPERVISE).desc("执行重置主管功能操作").build());
-        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_SINK).desc("执行重置下沉功能操作").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_JOB).desc("作业重置作业功能操作").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_ADAPT).desc("执行重置适配器功能操作").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_PROVIDE).desc("执行重置提供功能操作").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_FILTER).desc("执行重置过滤器功能操作").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_SINK).desc("执行重置下沉功能操作").build());
         return list;
     }
 
@@ -129,6 +141,14 @@ public class ResetCommand extends CliCommand {
                     break;
                 case COMMAND_OPTION_RESET_PROVIDE:
                     resetQosService.resetProvide();
+                    context.sendMessage("重置成功!");
+                    break;
+                case COMMAND_OPTION_RESET_ADAPT:
+                    resetQosService.resetAdapt();
+                    context.sendMessage("重置成功!");
+                    break;
+                case COMMAND_OPTION_RESET_FILTER:
+                    resetQosService.resetFilter();
                     context.sendMessage("重置成功!");
                     break;
             }

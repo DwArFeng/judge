@@ -25,12 +25,14 @@ public class ResetProcessor {
     private final JobLocalCacheHandler jobLocalCacheHandler;
     private final SuperviseHandler superviseHandler;
     private final DriveLocalCacheHandler driveLocalCacheHandler;
+    private final AdapterLocalCacheHandler adapterLocalCacheHandler;
     private final SinkerSessionHoldHandler sinkerSessionHoldHandler;
     private final SinkerLocalCacheHandler sinkerLocalCacheHandler;
     private final SectionBindingLocalCacheHandler sectionBindingLocalCacheHandler;
     private final SinkerBindingLocalCacheHandler sinkerBindingLocalCacheHandler;
     private final ProviderSessionHoldHandler providerSessionHoldHandler;
     private final ProviderLocalCacheHandler providerLocalCacheHandler;
+    private final FilterLocalCacheHandler filterLocalCacheHandler;
     private final PushHandler pushHandler;
 
     private final Lock lock = new ReentrantLock();
@@ -40,24 +42,28 @@ public class ResetProcessor {
             JobLocalCacheHandler jobLocalCacheHandler,
             SuperviseHandler superviseHandler,
             DriveLocalCacheHandler driveLocalCacheHandler,
+            AdapterLocalCacheHandler adapterLocalCacheHandler,
             SinkerSessionHoldHandler sinkerSessionHoldHandler,
             SinkerLocalCacheHandler sinkerLocalCacheHandler,
             SectionBindingLocalCacheHandler sectionBindingLocalCacheHandler,
             SinkerBindingLocalCacheHandler sinkerBindingLocalCacheHandler,
             ProviderSessionHoldHandler providerSessionHoldHandler,
             ProviderLocalCacheHandler providerLocalCacheHandler,
+            FilterLocalCacheHandler filterLocalCacheHandler,
             PushHandler pushHandler
     ) {
         this.receiveHandler = receiveHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
         this.superviseHandler = superviseHandler;
         this.driveLocalCacheHandler = driveLocalCacheHandler;
+        this.adapterLocalCacheHandler = adapterLocalCacheHandler;
         this.sinkerSessionHoldHandler = sinkerSessionHoldHandler;
         this.sinkerLocalCacheHandler = sinkerLocalCacheHandler;
         this.sectionBindingLocalCacheHandler = sectionBindingLocalCacheHandler;
         this.sinkerBindingLocalCacheHandler = sinkerBindingLocalCacheHandler;
         this.providerSessionHoldHandler = providerSessionHoldHandler;
         this.providerLocalCacheHandler = providerLocalCacheHandler;
+        this.filterLocalCacheHandler = filterLocalCacheHandler;
         this.pushHandler = pushHandler;
     }
 
@@ -123,6 +129,21 @@ public class ResetProcessor {
         } catch (Exception e) {
             LOGGER.warn("推送主管功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
+    }
+
+    public void resetAdapt() throws HandlerException {
+        lock.lock();
+        try {
+            doResetAdapt();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetAdapt() throws Exception {
+        adapterLocalCacheHandler.clear();
     }
 
     public void resetSink() throws HandlerException {
@@ -199,5 +220,20 @@ public class ResetProcessor {
         } catch (Exception e) {
             LOGGER.warn("推送提供功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
+    }
+
+    public void resetFilter() throws HandlerException {
+        lock.lock();
+        try {
+            doResetFilter();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetFilter() throws Exception {
+        filterLocalCacheHandler.clear();
     }
 }

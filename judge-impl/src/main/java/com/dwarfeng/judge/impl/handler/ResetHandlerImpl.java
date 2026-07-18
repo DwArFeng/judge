@@ -65,17 +65,6 @@ public class ResetHandlerImpl implements ResetHandler {
 
     @BehaviorAnalyse
     @Override
-    public void resetJob() throws HandlerException {
-        lock.lock();
-        try {
-            resetProcessor.resetJob();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    @BehaviorAnalyse
-    @Override
     public void resetSupervise() throws HandlerException {
         lock.lock();
         try {
@@ -87,10 +76,21 @@ public class ResetHandlerImpl implements ResetHandler {
 
     @BehaviorAnalyse
     @Override
-    public void resetSink() throws HandlerException {
+    public void resetJob() throws HandlerException {
         lock.lock();
         try {
-            resetProcessor.resetSink();
+            resetProcessor.resetJob();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @BehaviorAnalyse
+    @Override
+    public void resetAdapt() throws HandlerException {
+        lock.lock();
+        try {
+            resetProcessor.resetAdapt();
         } finally {
             lock.unlock();
         }
@@ -102,6 +102,28 @@ public class ResetHandlerImpl implements ResetHandler {
         lock.lock();
         try {
             resetProcessor.resetProvide();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @BehaviorAnalyse
+    @Override
+    public void resetFilter() throws HandlerException {
+        lock.lock();
+        try {
+            resetProcessor.resetFilter();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @BehaviorAnalyse
+    @Override
+    public void resetSink() throws HandlerException {
+        lock.lock();
+        try {
+            resetProcessor.resetSink();
         } finally {
             lock.unlock();
         }

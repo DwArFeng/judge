@@ -128,18 +128,6 @@ public class DubboResetter extends AbstractResetter {
     public interface DubboResetService extends Service {
 
         /**
-         * 重置作业功能。
-         *
-         * <p>
-         * 因为 Dubbo 广播响应机制无法处理 void 返回类型，所以方法需要返回一个结果。
-         *
-         * @return 恒为 true。
-         * @throws ServiceException 服务异常。
-         */
-        @SuppressWarnings("SameReturnValue")
-        boolean resetJob() throws ServiceException;
-
-        /**
          * 重置主管功能。
          *
          * <p>
@@ -152,7 +140,7 @@ public class DubboResetter extends AbstractResetter {
         boolean resetSupervise() throws ServiceException;
 
         /**
-         * 重置下沉功能。
+         * 重置作业功能。
          *
          * <p>
          * 因为 Dubbo 广播响应机制无法处理 void 返回类型，所以方法需要返回一个结果。
@@ -161,7 +149,20 @@ public class DubboResetter extends AbstractResetter {
          * @throws ServiceException 服务异常。
          */
         @SuppressWarnings("SameReturnValue")
-        boolean resetSink() throws ServiceException;
+        boolean resetJob() throws ServiceException;
+
+        /**
+         * 重置适配器功能。
+         *
+         * <p>
+         * 因为 Dubbo 广播响应机制无法处理 void 返回类型，所以方法需要返回一个结果。
+         *
+         * @return 恒为 true。
+         * @throws ServiceException 服务异常。
+         * @since 2.7.1
+         */
+        @SuppressWarnings("SameReturnValue")
+        boolean resetAdapt() throws ServiceException;
 
         /**
          * 重置提供功能。
@@ -174,6 +175,31 @@ public class DubboResetter extends AbstractResetter {
          */
         @SuppressWarnings("SameReturnValue")
         boolean resetProvide() throws ServiceException;
+
+        /**
+         * 重置过滤器功能。
+         *
+         * <p>
+         * 因为 Dubbo 广播响应机制无法处理 void 返回类型，所以方法需要返回一个结果。
+         *
+         * @return 恒为 true。
+         * @throws ServiceException 服务异常。
+         * @since 2.7.1
+         */
+        @SuppressWarnings("SameReturnValue")
+        boolean resetFilter() throws ServiceException;
+
+        /**
+         * 重置下沉功能。
+         *
+         * <p>
+         * 因为 Dubbo 广播响应机制无法处理 void 返回类型，所以方法需要返回一个结果。
+         *
+         * @return 恒为 true。
+         * @throws ServiceException 服务异常。
+         */
+        @SuppressWarnings("SameReturnValue")
+        boolean resetSink() throws ServiceException;
     }
 
     @org.springframework.stereotype.Service
@@ -183,17 +209,6 @@ public class DubboResetter extends AbstractResetter {
 
         public DubboResetServiceImpl(ServiceExceptionMapper sem) {
             this.sem = sem;
-        }
-
-        @Override
-        public boolean resetJob() throws ServiceException {
-            try {
-                LOGGER.info("接收到作业功能重置消息, 正在重置作业功能...");
-                context.resetJob();
-                return true;
-            } catch (Exception e) {
-                throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
-            }
         }
 
         @Override
@@ -208,10 +223,21 @@ public class DubboResetter extends AbstractResetter {
         }
 
         @Override
-        public boolean resetSink() throws ServiceException {
+        public boolean resetJob() throws ServiceException {
             try {
-                LOGGER.info("接收到下沉功能重置消息, 正在重置下沉功能...");
-                context.resetSink();
+                LOGGER.info("接收到作业功能重置消息, 正在重置作业功能...");
+                context.resetJob();
+                return true;
+            } catch (Exception e) {
+                throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
+            }
+        }
+
+        @Override
+        public boolean resetAdapt() throws ServiceException {
+            try {
+                LOGGER.info("接收到适配器功能重置消息, 正在重置适配器功能...");
+                context.resetAdapt();
                 return true;
             } catch (Exception e) {
                 throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
@@ -223,6 +249,28 @@ public class DubboResetter extends AbstractResetter {
             try {
                 LOGGER.info("接收到提供功能重置消息, 正在重置提供功能...");
                 context.resetProvide();
+                return true;
+            } catch (Exception e) {
+                throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
+            }
+        }
+
+        @Override
+        public boolean resetFilter() throws ServiceException {
+            try {
+                LOGGER.info("接收到过滤器功能重置消息, 正在重置过滤器功能...");
+                context.resetFilter();
+                return true;
+            } catch (Exception e) {
+                throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
+            }
+        }
+
+        @Override
+        public boolean resetSink() throws ServiceException {
+            try {
+                LOGGER.info("接收到下沉功能重置消息, 正在重置下沉功能...");
+                context.resetSink();
                 return true;
             } catch (Exception e) {
                 throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);

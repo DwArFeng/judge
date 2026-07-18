@@ -58,14 +58,18 @@ public class CronResetter extends AbstractResetter {
         public void run() {
             try {
                 LOGGER.info("计划时间已到, 重置相关功能...");
-                LOGGER.info("重置作业功能...");
-                context.resetJob();
                 LOGGER.info("重置主管功能...");
                 context.resetSupervise();
-                LOGGER.info("重置下沉功能...");
-                context.resetSink();
+                LOGGER.info("重置作业功能...");
+                context.resetJob();
+                LOGGER.info("重置适配器功能...");
+                context.resetAdapt();
                 LOGGER.info("重置提供功能...");
                 context.resetProvide();
+                LOGGER.info("重置过滤器功能...");
+                context.resetFilter();
+                LOGGER.info("重置下沉功能...");
+                context.resetSink();
             } catch (Exception e) {
                 String message = "重置器 " + CronResetter.this +
                         " 执行重置调度时发生异常, 相关工功能可能不会完全重置, 异常信息如下: ";

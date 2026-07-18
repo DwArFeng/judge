@@ -45,14 +45,6 @@ public interface ResetQosService extends Service {
     void stop() throws ServiceException;
 
     /**
-     * 重置作业功能。
-     *
-     * @throws ServiceException 服务异常。
-     * @since 2.0.0-beta
-     */
-    void resetJob() throws ServiceException;
-
-    /**
      * 重置主管功能。
      *
      * @throws ServiceException 服务异常。
@@ -61,12 +53,20 @@ public interface ResetQosService extends Service {
     void resetSupervise() throws ServiceException;
 
     /**
-     * 重置下沉功能。
+     * 重置作业功能。
      *
      * @throws ServiceException 服务异常。
-     * @since 2.1.0-beta
+     * @since 2.0.0-beta
      */
-    void resetSink() throws ServiceException;
+    void resetJob() throws ServiceException;
+
+    /**
+     * 重置适配器功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.7.1
+     */
+    void resetAdapt() throws ServiceException;
 
     /**
      * 重置提供功能。
@@ -75,4 +75,20 @@ public interface ResetQosService extends Service {
      * @since 2.1.0-beta
      */
     void resetProvide() throws ServiceException;
+
+    /**
+     * 重置过滤器功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.7.1
+     */
+    void resetFilter() throws ServiceException;
+
+    /**
+     * 重置下沉功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 2.1.0-beta
+     */
+    void resetSink() throws ServiceException;
 }
