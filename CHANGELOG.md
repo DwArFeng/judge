@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/Provider.md。
+  - docs/wiki/zh-CN/PresetProviderImplements.md。
+
 - 优化核心机制。
   - 重置机制。
 

@@ -41,6 +41,8 @@
 ## 机制
 
 - [Provide](./Provide.md) - 提供机制，详细说明了本项目的提供机制。
+- [Provider](./Provider.md) - 提供器，详细说明了本项目的提供器机制。
+- [Preset Provider Implements](./PresetProviderImplements.md) - 预设提供器实现，详细说明了本项目内置的提供器。
 
 ## 维护与调试
 
