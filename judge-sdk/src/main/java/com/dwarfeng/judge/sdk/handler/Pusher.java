@@ -57,14 +57,6 @@ public interface Pusher {
     void taskDied(Section section) throws HandlerException;
 
     /**
-     * 作业功能重置时作业的广播操作。
-     *
-     * @throws HandlerException 处理器异常。
-     * @since 2.0.0-beta
-     */
-    void jobReset() throws HandlerException;
-
-    /**
      * 主管功能重置时执行的广播操作。
      *
      * @throws HandlerException 处理器异常。
@@ -73,12 +65,20 @@ public interface Pusher {
     void superviseReset() throws HandlerException;
 
     /**
-     * 下沉功能重置时执行的广播操作。
+     * 作业功能重置时作业的广播操作。
      *
      * @throws HandlerException 处理器异常。
-     * @since 2.1.0-beta
+     * @since 2.0.0-beta
      */
-    void sinkReset() throws HandlerException;
+    void jobReset() throws HandlerException;
+
+    /**
+     * 适配器功能重置时执行的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 3.1.0
+     */
+    void adaptReset() throws HandlerException;
 
     /**
      * 提供功能重置时执行的广播操作。
@@ -87,6 +87,22 @@ public interface Pusher {
      * @since 2.1.0-beta
      */
     void provideReset() throws HandlerException;
+
+    /**
+     * 过滤器功能重置时执行的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 3.1.0
+     */
+    void filterReset() throws HandlerException;
+
+    /**
+     * 下沉功能重置时执行的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 2.1.0-beta
+     */
+    void sinkReset() throws HandlerException;
 
     /**
      * 清除完成时执行的调度。

@@ -55,23 +55,33 @@ public class PushHandlerImpl implements PushHandler {
     }
 
     @Override
-    public void jobReset() throws HandlerException {
-        pusher.jobReset();
-    }
-
-    @Override
     public void superviseReset() throws HandlerException {
         pusher.superviseReset();
     }
 
     @Override
-    public void sinkReset() throws HandlerException {
-        pusher.sinkReset();
+    public void jobReset() throws HandlerException {
+        pusher.jobReset();
+    }
+
+    @Override
+    public void adaptReset() throws HandlerException {
+        pusher.adaptReset();
     }
 
     @Override
     public void provideReset() throws HandlerException {
         pusher.provideReset();
+    }
+
+    @Override
+    public void filterReset() throws HandlerException {
+        pusher.filterReset();
+    }
+
+    @Override
+    public void sinkReset() throws HandlerException {
+        pusher.sinkReset();
     }
 
     @Override

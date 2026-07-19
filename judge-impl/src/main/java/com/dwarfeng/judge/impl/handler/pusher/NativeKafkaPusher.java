@@ -20,7 +20,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +53,10 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String sinkResetTopic;
     @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.provide_reset}")
     private String provideResetTopic;
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.adapt_reset}")
+    private String adaptResetTopic;
+    @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.filter_reset}")
+    private String filterResetTopic;
     @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.purge_finished}")
     private String purgeFinishedTopic;
     @Value("${com.dwarfeng.judge.pusher.kafka.native.topic.purge_failed}")
@@ -87,24 +90,33 @@ public class NativeKafkaPusher extends AbstractPusher {
     }
 
     @Override
-    public void jobReset() {
-        kafkaTemplate.send(jobResetTopic, StringUtils.EMPTY);
-    }
-
-    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
-    @Override
     public void superviseReset() {
         kafkaTemplate.send(superviseResetTopic, StringUtils.EMPTY);
     }
 
     @Override
-    public void sinkReset() {
-        kafkaTemplate.send(sinkResetTopic, StringUtils.EMPTY);
+    public void adaptReset() {
+        kafkaTemplate.send(adaptResetTopic, StringUtils.EMPTY);
+    }
+
+    @Override
+    public void jobReset() {
+        kafkaTemplate.send(jobResetTopic, StringUtils.EMPTY);
     }
 
     @Override
     public void provideReset() {
         kafkaTemplate.send(provideResetTopic, StringUtils.EMPTY);
+    }
+
+    @Override
+    public void filterReset() {
+        kafkaTemplate.send(filterResetTopic, StringUtils.EMPTY);
+    }
+
+    @Override
+    public void sinkReset() {
+        kafkaTemplate.send(sinkResetTopic, StringUtils.EMPTY);
     }
 
     @Override
@@ -129,6 +141,8 @@ public class NativeKafkaPusher extends AbstractPusher {
                 ", superviseResetTopic='" + superviseResetTopic + '\'' +
                 ", sinkResetTopic='" + sinkResetTopic + '\'' +
                 ", provideResetTopic='" + provideResetTopic + '\'' +
+                ", adaptResetTopic='" + adaptResetTopic + '\'' +
+                ", filterResetTopic='" + filterResetTopic + '\'' +
                 ", purgeFinishedTopic='" + purgeFinishedTopic + '\'' +
                 ", purgeFailedTopic='" + purgeFailedTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
