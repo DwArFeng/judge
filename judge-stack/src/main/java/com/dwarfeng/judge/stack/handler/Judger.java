@@ -290,5 +290,20 @@ public interface Judger {
          * @throws Exception 方法执行过程中发生的任何异常。
          */
         void removeJudgement(JudgementRemoveInfo info) throws Exception;
+
+        /**
+         * 查询提供。
+         *
+         * <p>
+         * 有关参数和返回值的详细描述，请参阅相关对象的文档注释。
+         *
+         * @param info 查询信息。
+         * @return 查询结果。
+         * @throws HandlerException 处理器异常。
+         * @see ProvideLookupInfo
+         * @see ProvideLookupResult
+         * @since 3.1.0
+         */
+        ProvideLookupResult lookupProvide(ProvideLookupInfo info) throws HandlerException;
     }
 }
