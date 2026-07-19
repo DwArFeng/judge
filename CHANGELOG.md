@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增服务。
+  - com.dwarfeng.judge.stack.service.ProvideService。
+
 - 优化核心机制。
   - 推送机制。
   - 重置机制。
