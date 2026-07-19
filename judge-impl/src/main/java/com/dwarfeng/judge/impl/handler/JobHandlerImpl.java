@@ -396,7 +396,8 @@ public class JobHandlerImpl implements JobHandler {
                     taskOperateHandler, taskEventOperateHandler,
                     judgerVariableOperateHandler, analysisOperateHandler,
                     analysisPictureFileOperateHandler, analysisPicturePackItemFileOperateHandler,
-                    analysisFileFileOperateHandler, analysisFilePackItemFileOperateHandler, judgementOperateHandler
+                    analysisFileFileOperateHandler, analysisFilePackItemFileOperateHandler, judgementOperateHandler,
+                    provideHandler
             );
 
             // 获取判断器。
@@ -437,7 +438,8 @@ public class JobHandlerImpl implements JobHandler {
                     taskOperateHandler, taskEventOperateHandler,
                     analysisOperateHandler, analysisPictureFileOperateHandler,
                     analysisPicturePackItemFileOperateHandler, analysisFileFileOperateHandler,
-                    analysisFilePackItemFileOperateHandler, judgementOperateHandler, visualizeDataOperateHandler
+                    analysisFilePackItemFileOperateHandler, judgementOperateHandler, visualizeDataOperateHandler,
+                    provideHandler
             );
 
             // 获取可视化器。
@@ -889,6 +891,7 @@ public class JobHandlerImpl implements JobHandler {
         private final AnalysisFileFileOperateHandler analysisFileFileOperateHandler;
         private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
         private final JudgementOperateHandler judgementOperateHandler;
+        private final ProvideHandler provideHandler;
 
         public InternalJudgerContext(
                 LongIdKey sectionKey,
@@ -902,7 +905,8 @@ public class JobHandlerImpl implements JobHandler {
                 AnalysisPicturePackItemFileOperateHandler analysisPicturePackItemFileOperateHandler,
                 AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
                 AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
-                JudgementOperateHandler judgementOperateHandler
+                JudgementOperateHandler judgementOperateHandler,
+                ProvideHandler provideHandler
         ) {
             this.sectionKey = sectionKey;
             this.judgerInfoKey = judgerInfoKey;
@@ -916,6 +920,7 @@ public class JobHandlerImpl implements JobHandler {
             this.analysisFileFileOperateHandler = analysisFileFileOperateHandler;
             this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
             this.judgementOperateHandler = judgementOperateHandler;
+            this.provideHandler = provideHandler;
         }
 
         @Override
@@ -1042,6 +1047,11 @@ public class JobHandlerImpl implements JobHandler {
         }
 
         @Override
+        public ProvideLookupResult lookupProvide(ProvideLookupInfo info) throws HandlerException {
+            return provideHandler.lookup(info);
+        }
+
+        @Override
         public String toString() {
             return "InternalJudgerContext{" +
                     "sectionKey=" + sectionKey +
@@ -1056,6 +1066,7 @@ public class JobHandlerImpl implements JobHandler {
                     ", analysisFileFileOperateHandler=" + analysisFileFileOperateHandler +
                     ", analysisFilePackItemFileOperateHandler=" + analysisFilePackItemFileOperateHandler +
                     ", judgementOperateHandler=" + judgementOperateHandler +
+                    ", provideHandler=" + provideHandler +
                     '}';
         }
     }
@@ -1083,6 +1094,7 @@ public class JobHandlerImpl implements JobHandler {
         private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
         private final JudgementOperateHandler judgementOperateHandler;
         private final VisualizeDataOperateHandler visualizeDataOperateHandler;
+        private final ProvideHandler provideHandler;
 
         public InternalVisualizerContext(
                 LongIdKey sectionKey,
@@ -1096,7 +1108,8 @@ public class JobHandlerImpl implements JobHandler {
                 AnalysisFileFileOperateHandler analysisFileFileOperateHandler,
                 AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
                 JudgementOperateHandler judgementOperateHandler,
-                VisualizeDataOperateHandler visualizeDataOperateHandler
+                VisualizeDataOperateHandler visualizeDataOperateHandler,
+                ProvideHandler provideHandler
         ) {
             this.sectionKey = sectionKey;
             this.visualizerInfoKey = visualizerInfoKey;
@@ -1110,6 +1123,7 @@ public class JobHandlerImpl implements JobHandler {
             this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
             this.judgementOperateHandler = judgementOperateHandler;
             this.visualizeDataOperateHandler = visualizeDataOperateHandler;
+            this.provideHandler = provideHandler;
         }
 
         @Override
@@ -1216,6 +1230,11 @@ public class JobHandlerImpl implements JobHandler {
         }
 
         @Override
+        public ProvideLookupResult lookupProvide(ProvideLookupInfo info) throws HandlerException {
+            return provideHandler.lookup(info);
+        }
+
+        @Override
         public String toString() {
             return "InternalVisualizerContext{" +
                     "sectionKey=" + sectionKey +
@@ -1230,6 +1249,7 @@ public class JobHandlerImpl implements JobHandler {
                     ", analysisFilePackItemFileOperateHandler=" + analysisFilePackItemFileOperateHandler +
                     ", judgementOperateHandler=" + judgementOperateHandler +
                     ", visualizeDataOperateHandler=" + visualizeDataOperateHandler +
+                    ", provideHandler=" + provideHandler +
                     '}';
         }
     }

@@ -253,5 +253,20 @@ public interface Visualizer {
          * @throws HandlerException 处理器异常。
          */
         void upsertVisualizeData(VisualizeDataUpsertInfo info) throws HandlerException;
+
+        /**
+         * 查询提供。
+         *
+         * <p>
+         * 有关参数和返回值的详细描述，请参阅相关对象的文档注释。
+         *
+         * @param info 查询信息。
+         * @return 查询结果。
+         * @throws HandlerException 处理器异常。
+         * @see ProvideLookupInfo
+         * @see ProvideLookupResult
+         * @since 2.8.0
+         */
+        ProvideLookupResult lookupProvide(ProvideLookupInfo info) throws HandlerException;
     }
 }
