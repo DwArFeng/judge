@@ -59,9 +59,9 @@ conf
 
 ## curator 目录
 
-| 文件名                   | 说明            |
-|-----------------------|---------------|
-| connection.properties | Curator 连接配置  |
+| 文件名                | 说明               |
+|-----------------------|--------------------|
+| connection.properties | Curator 连接配置   |
 | latch-path.properties | Curator 互斥锁路径 |
 
 ### connection.properties
@@ -102,8 +102,8 @@ curator.latch_path.purge.leader_latch=/judge/purge/leader_latch
 
 ## database 目录
 
-| 文件名                    | 说明        |
-|------------------------|-----------|
+| 文件名                 | 说明               |
+|------------------------|--------------------|
 | connection.properties  | 数据库连接配置文件 |
 | performance.properties | 数据库性能配置文件 |
 
@@ -136,8 +136,8 @@ data_source.min_idle=0
 
 ## datamark 目录
 
-| 文件名                 | 说明        |
-|---------------------|-----------|
+| 文件名              | 说明               |
+|---------------------|--------------------|
 | settings.properties | 数据标记的配置文件 |
 
 ### settings.properties
@@ -181,8 +181,8 @@ data_source.min_idle=0
 
 ## dubbo 目录
 
-| 文件名                   | 说明           |
-|-----------------------|--------------|
+| 文件名                | 说明               |
+|-----------------------|--------------------|
 | connection.properties | Dubbo 连接配置文件 |
 
 ### connection.properties
@@ -209,8 +209,8 @@ dubbo.consumer.snowflake.group=
 
 ## ftp 目录
 
-| 文件名                   | 说明         |
-|-----------------------|------------|
+| 文件名                | 说明             |
+|-----------------------|------------------|
 | connection.properties | FTP 连接配置文件 |
 | path.properties       | FTP 路径配置文件 |
 
@@ -293,20 +293,20 @@ ftp.root_path=judge
 
 ## judge 目录
 
-| 文件名                   | 说明                           |
-|-----------------------|------------------------------|
-| background.properties | 后台服务配置文件，包括线程池的线程数及其它        |
-| consume.properties    | 消费服务配置文件                     |
-| dispatch.properties   | 调度器配置文件                      |
-| driver.properties     | 驱动器配置文件                      |
-| exception.properties  | ServiceException 的异常代码的偏移量配置 |
-| launcher.properties   | 启动器配置文件                      |
-| purge.properties      | 清除服务配置文件                     |
-| push.properties       | 推送服务配置文件                     |
-| receive.properties    | 接收器配置文件                      |
-| reset.properties      | 重置服务配置文件                     |
-| task.properties       | 任务配置文件                       |
-| thumbnail.properties  | 缩略图配置文件                      |
+| 文件名                | 说明                                       |
+|-----------------------|--------------------------------------------|
+| background.properties | 后台服务配置文件，包括线程池的线程数及其它 |
+| consume.properties    | 消费服务配置文件                           |
+| dispatch.properties   | 调度器配置文件                             |
+| driver.properties     | 驱动器配置文件                             |
+| exception.properties  | ServiceException 的异常代码的偏移量配置    |
+| launcher.properties   | 启动器配置文件                             |
+| purge.properties      | 清除服务配置文件                           |
+| push.properties       | 推送服务配置文件                           |
+| receive.properties    | 接收器配置文件                             |
+| reset.properties      | 重置服务配置文件                           |
+| task.properties       | 任务配置文件                               |
+| thumbnail.properties  | 缩略图配置文件                             |
 
 ### background.properties
 
@@ -855,10 +855,10 @@ thumbnail.output_format=jpg
 
 ## logging 目录
 
-| 文件名                      | 说明                     |
-|--------------------------|------------------------|
-| README.md                | 说明文件                   |
-| settings.xml             | 日志配置的配置文件              |
+| 文件名                   | 说明                                 |
+|--------------------------|--------------------------------------|
+| README.md                | 说明文件                             |
+| settings.xml             | 日志配置的配置文件                   |
 | settings-ref-linux.xml   | Linux 系统中日志配置的配置参考文件   |
 | settings-ref-windows.xml | Windows 系统中日志配置的配置参考文件 |
 
@@ -910,8 +910,8 @@ thumbnail.output_format=jpg
 
 ## redis 目录
 
-| 文件名                   | 说明   |
-|-----------------------|------|
+| 文件名                | 说明     |
+|-----------------------|----------|
 | connection.properties | 连接配置 |
 | prefix.properties     | 前缀配置 |
 | timeout.properties    | 超时配置 |
@@ -972,8 +972,8 @@ cache.timeout.entity.analyser_info=3600000
 
 ## telqos 目录
 
-| 文件名                   | 说明   |
-|-----------------------|------|
+| 文件名                | 说明     |
+|-----------------------|----------|
 | connection.properties | 连接配置 |
 
 ### connection.properties

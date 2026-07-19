@@ -37,6 +37,7 @@
 ## 概念
 
 - [Core Concepts](./CoreConcepts.md) - 核心概念，说明部件、处理器、任务、结果等基础对象。
+- [Provide](./Provide.md) - 提供查询，说明提供器查询链路、查询服务和 Telqos 查询指令。
 
 ## 维护与调试
 
