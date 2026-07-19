@@ -843,7 +843,7 @@ public class JobHandlerImpl implements JobHandler {
         }
 
         @Override
-        public LookupResult lookup(LookupInfo info) throws HandlerException {
+        public ProvideLookupResult lookupProvide(ProvideLookupInfo info) throws HandlerException {
             return provideHandler.lookup(info);
         }
 

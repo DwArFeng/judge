@@ -10,7 +10,7 @@ import java.util.List;
  *
  * <p>
  * 该配置描述一次 lookup 查询参数以及多个字段列表输出 <code>Analysis</code> 的写入规则。
- * 分析器执行单次 <code>Context.lookup(...)</code>，从 <code>LookupResult.datas</code> 的所有行中提取字段列表，
+ * 分析器执行单次 <code>Context.lookupProvide(...)</code>，从 <code>ProvideLookupResult.datas</code> 的所有行中提取字段列表，
  * 按指定格式序列化后写入字符串或文件类型分析结果。
  *
  * @author DwArFeng
@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class ValueLookupListSetAnalyserConfig implements Bean {
 
-    private static final long serialVersionUID = 7785041942753597157L;
+    private static final long serialVersionUID = -3943557584013988944L;
 
     @JSONField(name = "#lookup", ordinal = 1)
-    private String lookupRem = "lookup 查询参数，必填，用于构造 LookupInfo。";
+    private String lookupRem = "lookup 查询参数，必填，用于构造 ProvideLookupInfo。";
 
     @JSONField(name = "lookup", ordinal = 2)
     private LookupConfig lookup;
@@ -86,7 +86,7 @@ public class ValueLookupListSetAnalyserConfig implements Bean {
      * lookup 查询配置。
      *
      * <p>
-     * 该配置用于描述 <code>Context.lookup(...)</code> 所需的五参 <code>LookupInfo</code>，
+     * 该配置用于描述 <code>Context.lookupProvide(...)</code> 所需的五参 <code>ProvideLookupInfo</code>，
      * 字段语义与值设置分析器中的 <code>LookupConfig</code> 保持一致。
      *
      * @author DwArFeng
@@ -94,7 +94,7 @@ public class ValueLookupListSetAnalyserConfig implements Bean {
      */
     public static class LookupConfig implements Bean {
 
-        private static final long serialVersionUID = 1936800882248880550L;
+        private static final long serialVersionUID = -4411111936713498780L;
 
         @JSONField(name = "#provider_info_id", ordinal = 1)
         private String providerInfoIdRem = "提供器信息键，必填。";
@@ -248,7 +248,7 @@ public class ValueLookupListSetAnalyserConfig implements Bean {
      */
     public static class LookupObjectConfig implements Bean {
 
-        private static final long serialVersionUID = 7048750745127272390L;
+        private static final long serialVersionUID = 2421178558543175122L;
 
         @JSONField(name = "#object_source_type", ordinal = 1)
         private String objectSourceTypeRem = "对象来源类型，合法值为 constant、analysis。";
@@ -376,7 +376,7 @@ public class ValueLookupListSetAnalyserConfig implements Bean {
      */
     public static class OutputConfig implements Bean {
 
-        private static final long serialVersionUID = -785337290684859337L;
+        private static final long serialVersionUID = 245891449273959306L;
 
         @JSONField(name = "#output_analysis_data_id", ordinal = 1)
         private String outputAnalysisDataIdRem = "输出 Analysis 的 dataStringId，必填。";
@@ -555,7 +555,7 @@ public class ValueLookupListSetAnalyserConfig implements Bean {
      */
     public static class CsvConfig implements Bean {
 
-        private static final long serialVersionUID = 8877134116783754837L;
+        private static final long serialVersionUID = 6910944452852591920L;
 
         @JSONField(name = "#include_header", ordinal = 1)
         private String includeHeaderRem = "是否输出表头，默认 false。";

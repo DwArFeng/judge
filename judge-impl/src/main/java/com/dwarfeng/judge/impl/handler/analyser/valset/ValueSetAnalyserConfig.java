@@ -239,7 +239,7 @@ public class ValueSetAnalyserConfig implements Bean {
      * lookup 查询配置。
      *
      * <p>
-     * 该配置用于描述 <code>Context.lookup(...)</code> 所需的五参 <code>LookupInfo</code>，
+     * 该配置用于描述 <code>Context.lookupProvide(...)</code> 所需的五参 <code>ProvideLookupInfo</code>，
      * 包括提供器、适配器、过滤器、预设以及对象参数数组。
      *
      * @author DwArFeng
@@ -522,7 +522,7 @@ public class ValueSetAnalyserConfig implements Bean {
      * lookup 结果取值配置。
      *
      * <p>
-     * 该配置用于描述从 <code>LookupResult</code> 中提取字段值的规则，
+     * 该配置用于描述从 <code>ProvideLookupResult</code> 中提取字段值的规则，
      * 支持从 <code>datas</code> 或 <code>meta</code> 中按字段名取值。
      *
      * @author DwArFeng

@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.stack.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.LookupInfo;
-import com.dwarfeng.judge.stack.bean.dto.LookupResult;
+import com.dwarfeng.judge.stack.bean.dto.ProvideLookupInfo;
+import com.dwarfeng.judge.stack.bean.dto.ProvideLookupResult;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
@@ -14,7 +14,7 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
 public interface ProvideHandler extends Handler {
 
     /**
-     * 查询。
+     * 查询提供数据。
      *
      * <p>
      * 有关参数和返回值的详细描述，请参阅相关对象的文档注释。
@@ -22,9 +22,9 @@ public interface ProvideHandler extends Handler {
      * @param info 查询信息。
      * @return 查询结果。
      * @throws HandlerException 处理器异常。
-     * @see LookupInfo
-     * @see LookupResult
-     * @since 2.3.0
+     * @see ProvideLookupInfo
+     * @see ProvideLookupResult
+     * @since 3.1.0
      */
-    LookupResult lookup(LookupInfo info) throws HandlerException;
+    ProvideLookupResult lookup(ProvideLookupInfo info) throws HandlerException;
 }

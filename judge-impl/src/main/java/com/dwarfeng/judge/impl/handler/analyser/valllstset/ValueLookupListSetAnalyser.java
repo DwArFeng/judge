@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 值查询列表设置分析器。
  *
  * <p>
- * 该分析器执行一次 lookup 查询，从 <code>LookupResult.datas</code> 的所有行中提取字段列表，
+ * 该分析器执行一次 lookup 查询，从 <code>ProvideLookupResult.datas</code> 的所有行中提取字段列表，
  * 按 <code>outputs</code> 配置序列化后写入字符串或文件类型 <code>Analysis</code>。
  *
  * @author DwArFeng

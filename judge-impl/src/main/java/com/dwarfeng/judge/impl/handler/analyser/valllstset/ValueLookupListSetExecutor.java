@@ -19,8 +19,8 @@ import java.util.Objects;
  * 值查询列表设置分析器执行器。
  *
  * <p>
- * 执行器只调用一次 <code>Context.lookup(...)</code>，
- * 再从 <code>LookupResult.datas</code> 的所有行中提取字段列表、序列化后写入字符串或文件类型 <code>Analysis</code>。
+ * 执行器只调用一次 <code>Context.lookupProvide(...)</code>，
+ * 再从 <code>ProvideLookupResult.datas</code> 的所有行中提取字段列表、序列化后写入字符串或文件类型 <code>Analysis</code>。
  *
  * @author DwArFeng
  * @since 2.6.1
@@ -49,10 +49,10 @@ public class ValueLookupListSetExecutor extends AbstractExecutor {
             throw new AnalyserExecutionException("值查询列表设置分析器配置项 outputs 不能为空");
         }
 
-        LookupInfo lookupInfo = buildLookupInfo(config.getLookup());
-        LookupResult lookupResult;
+        ProvideLookupInfo lookupInfo = buildLookupInfo(config.getLookup());
+        ProvideLookupResult lookupResult;
         try {
-            lookupResult = context.lookup(lookupInfo);
+            lookupResult = context.lookupProvide(lookupInfo);
         } catch (HandlerException e) {
             throw new AnalyserExecutionException("值查询列表设置分析器 lookup 查询失败", e);
         }
@@ -160,7 +160,7 @@ public class ValueLookupListSetExecutor extends AbstractExecutor {
         return fieldValues;
     }
 
-    private LookupInfo buildLookupInfo(ValueLookupListSetAnalyserConfig.LookupConfig lookupConfig)
+    private ProvideLookupInfo buildLookupInfo(ValueLookupListSetAnalyserConfig.LookupConfig lookupConfig)
             throws Exception {
         checkRequired("lookup.provider_info_id", lookupConfig.getProviderInfoId());
         checkRequired("lookup.preset", lookupConfig.getPreset());
@@ -174,7 +174,7 @@ public class ValueLookupListSetExecutor extends AbstractExecutor {
             objs[index] = resolveLookupObjectValue(objectConfig, index);
         }
 
-        return new LookupInfo(
+        return new ProvideLookupInfo(
                 toLongIdKey("lookup.provider_info_id", lookupConfig.getProviderInfoId()),
                 toNullableLongIdKey(lookupConfig.getAdapterInfoId()),
                 toNullableLongIdKey(lookupConfig.getFilterInfoId()),

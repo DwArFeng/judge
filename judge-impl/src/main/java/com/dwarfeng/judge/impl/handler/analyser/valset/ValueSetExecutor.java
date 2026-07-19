@@ -97,17 +97,17 @@ public class ValueSetExecutor extends AbstractExecutor {
         ValueSetValueConverter.checkRequired("lookup", lookupConfig);
         ValueSetValueConverter.checkRequired("lookup_result", lookupResultConfig);
 
-        LookupInfo lookupInfo = buildLookupInfo(lookupConfig);
-        LookupResult lookupResult;
+        ProvideLookupInfo lookupInfo = buildLookupInfo(lookupConfig);
+        ProvideLookupResult lookupResult;
         try {
-            lookupResult = context.lookup(lookupInfo);
+            lookupResult = context.lookupProvide(lookupInfo);
         } catch (HandlerException e) {
             throw new AnalyserExecutionException("值设置分析器 lookup 查询失败", e);
         }
         return extractLookupResultValue(lookupResult, lookupResultConfig);
     }
 
-    private LookupInfo buildLookupInfo(ValueSetAnalyserConfig.LookupConfig lookupConfig) throws Exception {
+    private ProvideLookupInfo buildLookupInfo(ValueSetAnalyserConfig.LookupConfig lookupConfig) throws Exception {
         ValueSetValueConverter.checkRequired("lookup.provider_info_id", lookupConfig.getProviderInfoId());
         ValueSetValueConverter.checkRequired("lookup.preset", lookupConfig.getPreset());
         if (Objects.isNull(lookupConfig.getObjs())) {
@@ -120,7 +120,7 @@ public class ValueSetExecutor extends AbstractExecutor {
             objs[index] = resolveLookupObjectValue(objectConfig, index);
         }
 
-        return new LookupInfo(
+        return new ProvideLookupInfo(
                 toLongIdKey("lookup.provider_info_id", lookupConfig.getProviderInfoId()),
                 toNullableLongIdKey(lookupConfig.getAdapterInfoId()),
                 toNullableLongIdKey(lookupConfig.getFilterInfoId()),
@@ -160,7 +160,7 @@ public class ValueSetExecutor extends AbstractExecutor {
     }
 
     private Object extractLookupResultValue(
-            LookupResult lookupResult, ValueSetAnalyserConfig.LookupResultConfig lookupResultConfig
+            ProvideLookupResult lookupResult, ValueSetAnalyserConfig.LookupResultConfig lookupResultConfig
     ) throws AnalyserExecutionException {
         ValueSetValueConverter.checkRequired("lookup_result.result_scope", lookupResultConfig.getResultScope());
         ValueSetValueConverter.checkRequired("lookup_result.field_name", lookupResultConfig.getFieldName());
@@ -181,7 +181,7 @@ public class ValueSetExecutor extends AbstractExecutor {
     // 为了保证代码的可读性，此处代码不做简化。
     @SuppressWarnings("ExtractMethodRecommender")
     private Object extractLookupDatasValue(
-            LookupResult lookupResult, ValueSetAnalyserConfig.LookupResultConfig lookupResultConfig
+            ProvideLookupResult lookupResult, ValueSetAnalyserConfig.LookupResultConfig lookupResultConfig
     ) throws AnalyserExecutionException {
         ValueSetValueConverter.checkRequired("lookup_result.row_index", lookupResultConfig.getRowIndex());
         if (lookupResultConfig.getRowIndex() < 0) {
@@ -214,7 +214,7 @@ public class ValueSetExecutor extends AbstractExecutor {
     }
 
     private Object extractLookupMetaValue(
-            LookupResult lookupResult, ValueSetAnalyserConfig.LookupResultConfig lookupResultConfig
+            ProvideLookupResult lookupResult, ValueSetAnalyserConfig.LookupResultConfig lookupResultConfig
     ) throws AnalyserExecutionException {
         Map<String, Object> meta = lookupResult.getMeta();
         if (Objects.isNull(meta) || meta.isEmpty()) {
