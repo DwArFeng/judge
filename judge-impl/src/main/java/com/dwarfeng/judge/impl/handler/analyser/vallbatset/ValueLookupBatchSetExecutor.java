@@ -17,7 +17,7 @@ import java.util.Objects;
  * 值查询批量设置分析器执行器。
  *
  * <p>
- * 执行器只调用一次 <code>Context.lookup(...)</code>，
+ * 执行器只调用一次 <code>Context.lookupProvide(...)</code>，
  * 再按 <code>outputs</code> 配置逐项从 lookup 结果取值、转换类型并通过分析器上下文写入目标 <code>Analysis</code>。
  *
  * @author DwArFeng
@@ -47,10 +47,10 @@ public class ValueLookupBatchSetExecutor extends AbstractExecutor {
             throw new AnalyserExecutionException("值查询批量设置分析器配置项 outputs 不能为空");
         }
 
-        LookupInfo lookupInfo = buildLookupInfo(config.getLookup());
-        LookupResult lookupResult;
+        ProvideLookupInfo lookupInfo = buildLookupInfo(config.getLookup());
+        ProvideLookupResult lookupResult;
         try {
-            lookupResult = context.lookup(lookupInfo);
+            lookupResult = context.lookupProvide(lookupInfo);
         } catch (HandlerException e) {
             throw new AnalyserExecutionException("值查询批量设置分析器 lookup 查询失败", e);
         }
@@ -61,7 +61,7 @@ public class ValueLookupBatchSetExecutor extends AbstractExecutor {
     }
 
     private void processOutput(
-            ValueLookupBatchSetAnalyserConfig.OutputConfig outputConfig, int index, LookupResult lookupResult
+            ValueLookupBatchSetAnalyserConfig.OutputConfig outputConfig, int index, ProvideLookupResult lookupResult
     ) throws Exception {
         String fieldPrefix = "outputs[" + index + "]";
         if (Objects.isNull(outputConfig)) {
@@ -85,7 +85,7 @@ public class ValueLookupBatchSetExecutor extends AbstractExecutor {
         ));
     }
 
-    private LookupInfo buildLookupInfo(ValueLookupBatchSetAnalyserConfig.LookupConfig lookupConfig)
+    private ProvideLookupInfo buildLookupInfo(ValueLookupBatchSetAnalyserConfig.LookupConfig lookupConfig)
             throws Exception {
         checkRequired("lookup.provider_info_id", lookupConfig.getProviderInfoId());
         checkRequired("lookup.preset", lookupConfig.getPreset());
@@ -99,7 +99,7 @@ public class ValueLookupBatchSetExecutor extends AbstractExecutor {
             objs[index] = resolveLookupObjectValue(objectConfig, index);
         }
 
-        return new LookupInfo(
+        return new ProvideLookupInfo(
                 toLongIdKey("lookup.provider_info_id", lookupConfig.getProviderInfoId()),
                 toNullableLongIdKey(lookupConfig.getAdapterInfoId()),
                 toNullableLongIdKey(lookupConfig.getFilterInfoId()),
@@ -151,7 +151,7 @@ public class ValueLookupBatchSetExecutor extends AbstractExecutor {
     }
 
     private Object extractLookupResultValue(
-            LookupResult lookupResult,
+            ProvideLookupResult lookupResult,
             ValueLookupBatchSetAnalyserConfig.LookupResultConfig lookupResultConfig,
             String fieldPrefix
     ) throws AnalyserExecutionException {
@@ -174,7 +174,7 @@ public class ValueLookupBatchSetExecutor extends AbstractExecutor {
     // 为了保证代码的可读性，此处代码不做简化。
     @SuppressWarnings("ExtractMethodRecommender")
     private Object extractLookupDatasValue(
-            LookupResult lookupResult,
+            ProvideLookupResult lookupResult,
             ValueLookupBatchSetAnalyserConfig.LookupResultConfig lookupResultConfig,
             String fieldPrefix
     ) throws AnalyserExecutionException {
@@ -207,7 +207,7 @@ public class ValueLookupBatchSetExecutor extends AbstractExecutor {
     }
 
     private Object extractLookupMetaValue(
-            LookupResult lookupResult,
+            ProvideLookupResult lookupResult,
             ValueLookupBatchSetAnalyserConfig.LookupResultConfig lookupResultConfig,
             String fieldPrefix
     ) throws AnalyserExecutionException {

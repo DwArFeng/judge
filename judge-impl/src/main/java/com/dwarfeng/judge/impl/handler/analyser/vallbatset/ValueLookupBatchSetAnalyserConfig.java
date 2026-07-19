@@ -10,7 +10,7 @@ import java.util.List;
  *
  * <p>
  * 该配置描述一次 lookup 查询参数以及多个输出 <code>Analysis</code> 的写入规则。
- * 分析器执行单次 <code>Context.lookup(...)</code>，再按 <code>outputs</code> 批量取值、转换类型并写入目标分析结果。
+ * 分析器执行单次 <code>Context.lookupProvide(...)</code>，再按 <code>outputs</code> 批量取值、转换类型并写入目标分析结果。
  *
  * @author DwArFeng
  * @since 2.6.1
@@ -20,7 +20,7 @@ public class ValueLookupBatchSetAnalyserConfig implements Bean {
     private static final long serialVersionUID = -6733568450108971384L;
 
     @JSONField(name = "#lookup", ordinal = 1)
-    private String lookupRem = "lookup 查询参数，必填，用于构造 LookupInfo。";
+    private String lookupRem = "lookup 查询参数，必填，用于构造 ProvideLookupInfo。";
 
     @JSONField(name = "lookup", ordinal = 2)
     private LookupConfig lookup;
@@ -85,7 +85,7 @@ public class ValueLookupBatchSetAnalyserConfig implements Bean {
      * lookup 查询配置。
      *
      * <p>
-     * 该配置用于描述 <code>Context.lookup(...)</code> 所需的五参 <code>LookupInfo</code>，
+     * 该配置用于描述 <code>Context.lookupProvide(...)</code> 所需的五参 <code>ProvideLookupInfo</code>，
      * 字段语义与值设置分析器中的 <code>LookupConfig</code> 保持一致。
      *
      * @author DwArFeng
@@ -471,7 +471,7 @@ public class ValueLookupBatchSetAnalyserConfig implements Bean {
      * lookup 结果取值配置。
      *
      * <p>
-     * 该配置用于描述从 <code>LookupResult</code> 中提取字段值的规则，
+     * 该配置用于描述从 <code>ProvideLookupResult</code> 中提取字段值的规则，
      * 支持从 <code>datas</code> 或 <code>meta</code> 中按字段名取值。
      *
      * @author DwArFeng

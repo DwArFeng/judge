@@ -9,11 +9,11 @@ import java.util.Map;
  * 查询结果。
  *
  * @author DwArFeng
- * @since 2.3.0
+ * @since 2.8.0
  */
-public class LookupResult implements Dto {
+public class ProvideLookupResult implements Dto {
 
-    private static final long serialVersionUID = 6293238618779956132L;
+    private static final long serialVersionUID = -4537670798242219897L;
 
     /**
      * 数据列表。
@@ -92,10 +92,10 @@ public class LookupResult implements Dto {
      */
     private Map<String, Object> meta;
 
-    public LookupResult() {
+    public ProvideLookupResult() {
     }
 
-    public LookupResult(List<Map<String, Object>> datas, Map<String, Object> meta) {
+    public ProvideLookupResult(List<Map<String, Object>> datas, Map<String, Object> meta) {
         this.datas = datas;
         this.meta = meta;
     }
@@ -118,7 +118,7 @@ public class LookupResult implements Dto {
 
     @Override
     public String toString() {
-        return "LookupResult{" +
+        return "ProvideLookupResult{" +
                 "datas=" + datas +
                 ", meta=" + meta +
                 '}';

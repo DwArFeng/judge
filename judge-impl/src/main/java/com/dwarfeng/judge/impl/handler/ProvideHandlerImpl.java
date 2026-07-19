@@ -1,7 +1,7 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.dto.LookupInfo;
-import com.dwarfeng.judge.stack.bean.dto.LookupResult;
+import com.dwarfeng.judge.stack.bean.dto.ProvideLookupInfo;
+import com.dwarfeng.judge.stack.bean.dto.ProvideLookupResult;
 import com.dwarfeng.judge.stack.exception.AdapterNotExistsException;
 import com.dwarfeng.judge.stack.exception.FilterNotExistsException;
 import com.dwarfeng.judge.stack.handler.*;
@@ -44,7 +44,7 @@ public class ProvideHandlerImpl implements ProvideHandler {
 
     @Override
     @BehaviorAnalyse
-    public LookupResult lookup(LookupInfo info) throws HandlerException {
+    public ProvideLookupResult lookup(ProvideLookupInfo info) throws HandlerException {
         try {
             return lookup0(info);
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class ProvideHandlerImpl implements ProvideHandler {
         }
     }
 
-    private LookupResult lookup0(LookupInfo info) throws Exception {
+    private ProvideLookupResult lookup0(ProvideLookupInfo info) throws Exception {
         // 展开参数。
         LongIdKey providerInfoKey = info.getProviderInfoKey();
         LongIdKey adapterInfoKey = info.getAdapterInfoKey();
@@ -95,6 +95,6 @@ public class ProvideHandlerImpl implements ProvideHandler {
         }
 
         // 基于过滤后的数据，构造结果并返回。
-        return new LookupResult(datas, meta);
+        return new ProvideLookupResult(datas, meta);
     }
 }

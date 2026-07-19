@@ -10,11 +10,11 @@ import java.util.Arrays;
  *
  * @author DwArFeng
  * @author wangyc
- * @since 2.3.0
+ * @since 2.8.0
  */
-public class LookupInfo implements Dto {
+public class ProvideLookupInfo implements Dto {
 
-    private static final long serialVersionUID = -7509398702083001209L;
+    private static final long serialVersionUID = -1767288777831922570L;
 
     /**
      * 提供器信息键。
@@ -117,10 +117,10 @@ public class LookupInfo implements Dto {
      */
     private Object[] objs;
 
-    public LookupInfo() {
+    public ProvideLookupInfo() {
     }
 
-    public LookupInfo(
+    public ProvideLookupInfo(
             LongIdKey providerInfoKey, LongIdKey adapterInfoKey, LongIdKey filterInfoKey, String preset,
             Object[] objs
     ) {
@@ -173,7 +173,7 @@ public class LookupInfo implements Dto {
 
     @Override
     public String toString() {
-        return "LookupInfo{" +
+        return "ProvideLookupInfo{" +
                 "providerInfoKey=" + providerInfoKey +
                 ", adapterInfoKey=" + adapterInfoKey +
                 ", filterInfoKey=" + filterInfoKey +
