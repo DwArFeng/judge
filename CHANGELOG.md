@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增 telqos 指令。
+  - com.dwarfeng.judge.impl.service.telqos.ProvideCommand。
+
 - 新增服务。
   - com.dwarfeng.judge.stack.service.ProvideService。
 
