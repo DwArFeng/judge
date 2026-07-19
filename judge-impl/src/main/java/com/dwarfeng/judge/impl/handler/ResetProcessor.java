@@ -67,38 +67,6 @@ public class ResetProcessor {
         this.pushHandler = pushHandler;
     }
 
-    public void resetJob() throws HandlerException {
-        lock.lock();
-        try {
-            doResetJob();
-        } catch (Exception e) {
-            throw HandlerExceptionHelper.parse(e);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    private void doResetJob() throws Exception {
-        // 获取当前的接收处理器的状态。
-        boolean receiveHandlerStarted = receiveHandler.isStarted();
-
-        // 接收处理器停止，且清空本地缓存。
-        receiveHandler.stop();
-        jobLocalCacheHandler.clear();
-
-        // 如果接收处理器之前是启动的，则重新启动。
-        if (receiveHandlerStarted) {
-            receiveHandler.start();
-        }
-
-        // 消息推送。
-        try {
-            pushHandler.jobReset();
-        } catch (Exception e) {
-            LOGGER.warn("推送作业功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
-        }
-    }
-
     public void resetSupervise() throws HandlerException {
         lock.lock();
         try {
@@ -131,6 +99,38 @@ public class ResetProcessor {
         }
     }
 
+    public void resetJob() throws HandlerException {
+        lock.lock();
+        try {
+            doResetJob();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetJob() throws Exception {
+        // 获取当前的接收处理器的状态。
+        boolean receiveHandlerStarted = receiveHandler.isStarted();
+
+        // 接收处理器停止，且清空本地缓存。
+        receiveHandler.stop();
+        jobLocalCacheHandler.clear();
+
+        // 如果接收处理器之前是启动的，则重新启动。
+        if (receiveHandlerStarted) {
+            receiveHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.jobReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送作业功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
+    }
+
     public void resetAdapt() throws HandlerException {
         lock.lock();
         try {
@@ -143,35 +143,13 @@ public class ResetProcessor {
     }
 
     private void doResetAdapt() throws Exception {
-        adapterLocalCacheHandler.clear();
-    }
-
-    public void resetSink() throws HandlerException {
-        lock.lock();
-        try {
-            doResetSink();
-        } catch (Exception e) {
-            throw HandlerExceptionHelper.parse(e);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    private void doResetSink() throws Exception {
         // 获取当前的接收处理器的状态。
         boolean receiveHandlerStarted = receiveHandler.isStarted();
 
         // 接收处理器停止。
         receiveHandler.stop();
 
-        // 关闭并清空下沉会话持有器。
-        sinkerSessionHoldHandler.closeAndClear();
-        // 清空下沉本地缓存。
-        sinkerLocalCacheHandler.clear();
-        // 清空部件绑定本地缓存。
-        sectionBindingLocalCacheHandler.clear();
-        // 清空下沉器绑定本地缓存。
-        sinkerBindingLocalCacheHandler.clear();
+        adapterLocalCacheHandler.clear();
 
         // 如果接收处理器之前是启动的，则重新启动。
         if (receiveHandlerStarted) {
@@ -180,9 +158,9 @@ public class ResetProcessor {
 
         // 消息推送。
         try {
-            pushHandler.sinkReset();
+            pushHandler.adaptReset();
         } catch (Exception e) {
-            LOGGER.warn("推送下沉功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+            LOGGER.warn("推送适配器功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
     }
 
@@ -234,6 +212,64 @@ public class ResetProcessor {
     }
 
     private void doResetFilter() throws Exception {
+        // 获取当前的接收处理器的状态。
+        boolean receiveHandlerStarted = receiveHandler.isStarted();
+
+        // 接收处理器停止。
+        receiveHandler.stop();
+
         filterLocalCacheHandler.clear();
+
+        // 如果接收处理器之前是启动的，则重新启动。
+        if (receiveHandlerStarted) {
+            receiveHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.filterReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送过滤器功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
+    }
+
+    public void resetSink() throws HandlerException {
+        lock.lock();
+        try {
+            doResetSink();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetSink() throws Exception {
+        // 获取当前的接收处理器的状态。
+        boolean receiveHandlerStarted = receiveHandler.isStarted();
+
+        // 接收处理器停止。
+        receiveHandler.stop();
+
+        // 关闭并清空下沉会话持有器。
+        sinkerSessionHoldHandler.closeAndClear();
+        // 清空下沉本地缓存。
+        sinkerLocalCacheHandler.clear();
+        // 清空部件绑定本地缓存。
+        sectionBindingLocalCacheHandler.clear();
+        // 清空下沉器绑定本地缓存。
+        sinkerBindingLocalCacheHandler.clear();
+
+        // 如果接收处理器之前是启动的，则重新启动。
+        if (receiveHandlerStarted) {
+            receiveHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.sinkReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送下沉功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
     }
 }

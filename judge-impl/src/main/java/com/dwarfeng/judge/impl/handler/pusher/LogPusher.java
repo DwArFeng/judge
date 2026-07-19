@@ -81,13 +81,6 @@ public class LogPusher extends AbstractPusher {
     }
 
     @Override
-    public void jobReset() throws HandlerException {
-        String title = "作业功能重置:";
-        String message = StringUtils.EMPTY;
-        logData(title, message);
-    }
-
-    @Override
     public void superviseReset() throws HandlerException {
         String title = "主管功能重置:";
         String message = StringUtils.EMPTY;
@@ -95,8 +88,15 @@ public class LogPusher extends AbstractPusher {
     }
 
     @Override
-    public void sinkReset() throws HandlerException {
-        String title = "下沉功能重置:";
+    public void jobReset() throws HandlerException {
+        String title = "作业功能重置:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
+    }
+
+    @Override
+    public void adaptReset() throws HandlerException {
+        String title = "适配器功能重置:";
         String message = StringUtils.EMPTY;
         logData(title, message);
     }
@@ -104,6 +104,20 @@ public class LogPusher extends AbstractPusher {
     @Override
     public void provideReset() throws HandlerException {
         String title = "提供功能重置:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
+    }
+
+    @Override
+    public void filterReset() throws HandlerException {
+        String title = "过滤器功能重置:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
+    }
+
+    @Override
+    public void sinkReset() throws HandlerException {
+        String title = "下沉功能重置:";
         String message = StringUtils.EMPTY;
         logData(title, message);
     }

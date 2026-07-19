@@ -93,17 +93,6 @@ public class MultiPusher extends AbstractPusher {
     }
 
     @Override
-    public void jobReset() {
-        for (Pusher delegate : delegates) {
-            try {
-                delegate.jobReset();
-            } catch (Exception e) {
-                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
-            }
-        }
-    }
-
-    @Override
     public void superviseReset() {
         for (Pusher delegate : delegates) {
             try {
@@ -115,10 +104,21 @@ public class MultiPusher extends AbstractPusher {
     }
 
     @Override
-    public void sinkReset() {
+    public void jobReset() {
         for (Pusher delegate : delegates) {
             try {
-                delegate.sinkReset();
+                delegate.jobReset();
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void adaptReset() {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.adaptReset();
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
             }
@@ -130,6 +130,28 @@ public class MultiPusher extends AbstractPusher {
         for (Pusher delegate : delegates) {
             try {
                 delegate.provideReset();
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void filterReset() {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.filterReset();
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void sinkReset() {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.sinkReset();
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
             }

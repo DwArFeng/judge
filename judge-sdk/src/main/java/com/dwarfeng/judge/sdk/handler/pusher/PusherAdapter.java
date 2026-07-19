@@ -52,22 +52,32 @@ public abstract class PusherAdapter extends AbstractPusher {
 
     @SuppressWarnings("RedundantThrows")
     @Override
-    public void jobReset() throws HandlerException {
-    }
-
-    @SuppressWarnings("RedundantThrows")
-    @Override
     public void superviseReset() throws HandlerException {
     }
 
     @SuppressWarnings("RedundantThrows")
     @Override
-    public void sinkReset() throws HandlerException {
+    public void jobReset() throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void adaptReset() throws HandlerException {
     }
 
     @SuppressWarnings("RedundantThrows")
     @Override
     public void provideReset() throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void filterReset() throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void sinkReset() throws HandlerException {
     }
 
     @SuppressWarnings("RedundantThrows")

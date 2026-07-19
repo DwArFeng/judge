@@ -37,19 +37,27 @@ public class DrainPusher extends AbstractPusher {
     }
 
     @Override
-    public void jobReset() {
-    }
-
-    @Override
     public void superviseReset() {
     }
 
     @Override
-    public void sinkReset() {
+    public void jobReset() {
+    }
+
+    @Override
+    public void adaptReset() {
     }
 
     @Override
     public void provideReset() {
+    }
+
+    @Override
+    public void filterReset() {
+    }
+
+    @Override
+    public void sinkReset() {
     }
 
     @Override
