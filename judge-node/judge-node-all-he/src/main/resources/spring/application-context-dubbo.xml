@@ -256,6 +256,11 @@
             ref="judgementMaintainServiceImpl"
             group="${com.dwarfeng.judge.dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.ProvideService"
+            ref="provideServiceImpl"
+            group="${com.dwarfeng.judge.dubbo.provider.group}"
+    />
 
     <!-- endregion -->
 
