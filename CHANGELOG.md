@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/ConfDirectory.md。
+  - docs/wiki/zh-CN/Provider.md。
+  - docs/wiki/zh-CN/QuickStart.md。
+  - docs/wiki/zh-CN/TelqosCommands.md。
+
 - 新增 telqos 指令。
   - com.dwarfeng.judge.impl.service.telqos.ProvideCommand。
 

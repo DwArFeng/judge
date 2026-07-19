@@ -676,10 +676,14 @@ pusher.kafka.native.topic.task_died=judge.pusher.task_died
 pusher.kafka.native.topic.job_reset=judge.pusher.job_reset
 # 主管功能重置时向 Kafka 发送的主题。
 pusher.kafka.native.topic.supervise_reset=statistics.pusher.supervise_reset
+# 适配器功能重置时向 Kafka 发送的主题。
+pusher.kafka.native.topic.adapt_reset=statistics.pusher.adapt_reset
 # 下沉功能重置时向 Kafka 发送的主题。
 pusher.kafka.native.topic.sink_reset=statistics.pusher.sink_reset
 # 提供功能重置时向 Kafka 发送的主题。
 pusher.kafka.native.topic.provide_reset=statistics.pusher.provide_reset
+# 过滤器功能重置时向 Kafka 发送的主题。
+pusher.kafka.native.topic.filter_reset=statistics.pusher.filter_reset
 # 清除完成时向 Kafka 发送的主题。
 pusher.kafka.native.topic.purge_finished=statistics.pusher.purge_finished
 # 清除失败时向 Kafka 发送的主题。

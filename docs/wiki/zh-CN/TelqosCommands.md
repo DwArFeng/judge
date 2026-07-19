@@ -2,40 +2,41 @@
 
 ## 命令列表
 
-Judge 2.3.2.a 版本提供的 Telqos 命令如下所示：
+本文基于 Judge 2.8.0 版本整理 Telqos 命令；表中的版本表示命令首次出现的版本。
 
-| 命令                           | 说明           | 可用版本    |
-|------------------------------|--------------|---------|
-| [alc](#alc-命令)               | 适配器本地缓存操作    | 2.3.2.a |
-| [csu](#csu-命令)               | 消费者操作        | 2.3.2.a |
-| [datamark](#datamark-命令)     | 数据标记服务       | 2.3.2.a |
-| [dispatch](#dispatch-命令)     | 调度处理器操作/查看   | 2.3.2.a |
-| [dispatcher](#dispatcher-命令) | 调度器处理器操作/查看  | 2.3.2.a |
-| [dlc](#dlc-命令)               | 驱动器本地缓存操作    | 2.3.2.a |
-| [drive](#drive-命令)           | 驱动处理器操作/查看   | 2.3.2.a |
-| [dubbo](#dubbo-命令)           | 分布式服务上线/下线   | 2.3.2.a |
-| [jlc](#jlc-命令)               | 作业器本地缓存操作    | 2.3.2.a |
-| [jmxremote](#jmxremote-命令)   | JMX 远程管理操作   | 2.3.2.a |
-| [lc](#lc-命令)                 | 列出指令         | 2.3.2.a |
-| [log4j2](#log4j2-命令)         | Log4j2 命令    | 2.3.2.a |
-| [man](#man-命令)               | 显示指令的详细信息    | 2.3.2.a |
-| [memory](#memory-命令)         | 内存监视         | 2.3.2.a |
-| [plc](#plc-命令)               | 提供器本地缓存操作    | 2.3.2.a |
-| [ps](#ps-命令)                 | 提供器会话操作      | 2.3.2.a |
-| [purge](#purge-命令)           | 清除处理器操作/查看   | 2.3.2.a |
-| [quit](#quit-命令)             | 退出           | 2.3.2.a |
-| [receive](#receive-命令)       | 接收功能上线/下线    | 2.3.2.a |
-| [receiver](#receiver-命令)     | 接收器处理器操作/查看  | 2.3.2.a |
-| [reset](#reset-命令)           | 重置处理器操作/查看   | 2.3.2.a |
-| [sblc](#sblc-命令)             | 下沉绑定本地缓存操作   | 2.3.2.a |
-| [scblc](#scblc-命令)           | 部件绑定本地缓存操作   | 2.3.2.a |
-| [shutdown](#shutdown-命令)     | 关闭/重启程序      | 2.3.2.a |
-| [slc](#slc-命令)               | 下沉器本地缓存操作    | 2.3.2.a |
-| [ss](#ss-命令)                 | 下沉会话操作       | 2.3.2.a |
-| [supervise](#supervise-命令)   | 主管处理器操作/查看   | 2.3.2.a |
-| [support](#support-命令)       | 支持操作         | 2.3.2.a |
-| [tc](#tc-命令)                 | 任务检查处理器操作/查看 | 2.3.2.a |
-| [uptime](#uptime-命令)         | 系统运行时间       | 2.3.2.a |
+| 命令                           | 说明                    | 可用版本 |
+|--------------------------------|-------------------------|----------|
+| [alc](#alc-命令)               | 适配器本地缓存操作      | 2.3.2.a  |
+| [csu](#csu-命令)               | 消费者操作              | 2.3.2.a  |
+| [datamark](#datamark-命令)     | 数据标记服务            | 2.3.2.a  |
+| [dispatch](#dispatch-命令)     | 调度处理器操作/查看     | 2.3.2.a  |
+| [dispatcher](#dispatcher-命令) | 调度器处理器操作/查看   | 2.3.2.a  |
+| [dlc](#dlc-命令)               | 驱动器本地缓存操作      | 2.3.2.a  |
+| [drive](#drive-命令)           | 驱动处理器操作/查看     | 2.3.2.a  |
+| [dubbo](#dubbo-命令)           | 分布式服务上线/下线     | 2.3.2.a  |
+| [jlc](#jlc-命令)               | 作业器本地缓存操作      | 2.3.2.a  |
+| [jmxremote](#jmxremote-命令)   | JMX 远程管理操作        | 2.3.2.a  |
+| [lc](#lc-命令)                 | 列出指令                | 2.3.2.a  |
+| [log4j2](#log4j2-命令)         | Log4j2 命令             | 2.3.2.a  |
+| [man](#man-命令)               | 显示指令的详细信息      | 2.3.2.a  |
+| [memory](#memory-命令)         | 内存监视                | 2.3.2.a  |
+| [plc](#plc-命令)               | 提供器本地缓存操作      | 2.3.2.a  |
+| [provide](#provide-命令)       | 提供查询服务            | 2.8.0    |
+| [ps](#ps-命令)                 | 提供器会话操作          | 2.3.2.a  |
+| [purge](#purge-命令)           | 清除处理器操作/查看     | 2.3.2.a  |
+| [quit](#quit-命令)             | 退出                    | 2.3.2.a  |
+| [receive](#receive-命令)       | 接收功能上线/下线       | 2.3.2.a  |
+| [receiver](#receiver-命令)     | 接收器处理器操作/查看   | 2.3.2.a  |
+| [reset](#reset-命令)           | 重置处理器操作/查看     | 2.3.2.a  |
+| [sblc](#sblc-命令)             | 下沉绑定本地缓存操作    | 2.3.2.a  |
+| [scblc](#scblc-命令)           | 部件绑定本地缓存操作    | 2.3.2.a  |
+| [shutdown](#shutdown-命令)     | 关闭/重启程序           | 2.3.2.a  |
+| [slc](#slc-命令)               | 下沉器本地缓存操作      | 2.3.2.a  |
+| [ss](#ss-命令)                 | 下沉会话操作            | 2.3.2.a  |
+| [supervise](#supervise-命令)   | 主管处理器操作/查看     | 2.3.2.a  |
+| [support](#support-命令)       | 支持操作                | 2.3.2.a  |
+| [tc](#tc-命令)                 | 任务检查处理器操作/查看 | 2.3.2.a  |
+| [uptime](#uptime-命令)         | 系统运行时间            | 2.3.2.a  |
 
 鉴于所有指令都可以实际操作验证，因此本文对于较长的输出将予以省略，省略的部分将会使用 `etc...` 进行标注。
 
@@ -553,6 +554,132 @@ plc -c
 OK
 ```
 
+## provide 命令
+
+提供查询服务，用于通过 Telqos 手动执行一次提供器查询。
+
+### 语法
+
+```text
+usage: provide -l [-json json-string] [-jf json-file]
+提供服务
+ -l                  单次查询
+ -json <arg>         JSON 字符串
+ -jf,--json-file <arg>  JSON 文件
+```
+
+查询参数通过 JSON 提供，字段如下：
+
+| 字段                | 说明                                                               |
+|---------------------|--------------------------------------------------------------------|
+| `provider_info_key` | 提供器信息键。                                                     |
+| `adapter_info_key`  | 适配器信息键，可选。                                               |
+| `filter_info_key`   | 过滤器信息键，可选。                                               |
+| `preset`            | 查询预设。                                                         |
+| `arg_types`         | 参数类型数组，支持 `LONG`、`DOUBLE`、`BOOLEAN`、`DATE`、`STRING`。 |
+| `arg_strings`       | 参数字符串数组，与 `arg_types` 按下标对应。                        |
+
+`arg_types` 和 `arg_strings` 的长度必须一致。未填写参数类型时，参数按字符串处理；日期参数使用毫秒时间戳。
+
+### 示例
+
+#### 使用 JSON 字符串查询
+
+```text
+provide -l -json '{"provider_info_key":{"long_id":1},"preset":"quickstart","arg_types":[],"arg_strings":[]}'
+输入 data 查看数据，输入 meta 查看元数据，输入 q 退出
+```
+
+需要注意的是，JSON 字符串不能换行，否则会被解析为多条指令，导致查询失败。
+
+#### 使用 JSON 文件查询
+
+JSON 文件中的字段与 JSON 字符串查询一致。例如，在节点工作目录的 `confext/test.json` 中写入：
+
+```json
+{
+  "provider_info_key": {
+    "long_id": 1800000000000000002
+  },
+  "adapter_info_key": {
+    "long_id": 1800000000000000001
+  },
+  "filter_info_key": {
+    "long_id": 1800000000000000003
+  },
+  "preset": "test",
+  "arg_types": [
+    "STRING",
+    "STRING"
+  ],
+  "arg_strings": [
+    "alpha",
+    "beta"
+  ]
+}
+```
+
+以 `judge-node` 为工作目录时，可以使用相对路径执行查询：
+
+```text
+provide -l -jf confext\test.json
+输入 data 查看数据，输入 meta 查看元数据，输入 q 退出
+```
+
+输入 `meta` 查看本次查询的元数据：
+
+```text
+key: argsCount
+  valueClass: java.lang.Integer
+  value: 2
+key: dataCount
+  valueClass: java.lang.Integer
+  value: 2
+key: filterTag
+  valueClass: java.lang.String
+  value: test-filter
+key: filtered
+  valueClass: java.lang.Boolean
+  value: true
+key: presetEcho
+  valueClass: java.lang.String
+  value: test
+key: providerTag
+  valueClass: java.lang.String
+  value: test-provider
+```
+
+输入 `data` 后，可以输入 `all` 查看全部数据，或输入 `begin-end` 查看指定范围的数据；输入 `q` 返回上一级。例如，输入 `0-2` 查看索引 0 和索引 1：
+
+```text
+索引: 0/2
+  key: arg0
+    valueClass: java.lang.String
+    value: alpha
+  key: arg1
+    valueClass: java.lang.String
+    value: beta
+  key: preset
+    valueClass: java.lang.String
+    value: test
+  key: rowIndex
+    valueClass: java.lang.Integer
+    value: 0
+索引: 1/2
+  key: arg0
+    valueClass: java.lang.String
+    value: alpha
+  key: arg1
+    valueClass: java.lang.String
+    value: beta
+  key: preset
+    valueClass: java.lang.String
+    value: test
+  key: rowIndex
+    valueClass: java.lang.Integer
+    value: 1
+```
+
 ## ps 命令
 
 提供器会话操作。
@@ -767,12 +894,16 @@ reset -stop
 reset -status
 reset --reset-job
 reset --reset-supervise
+reset --reset-adapt
 reset --reset-sink
 reset --reset-provide
+reset --reset-filter
 重置处理器操作/查看
     --l              查看重置处理器
     --reset-job      作业重置作业功能操作
+    --reset-adapt    执行重置适配器功能操作
     --reset-provide  执行重置提供功能操作
+    --reset-filter   执行重置过滤器功能操作
     --reset-sink     执行重置下沉功能操作
     --reset-supervise 执行重置主管功能操作
     --start          启动重置处理器
@@ -792,6 +923,12 @@ reset --reset-provide
 2. 清空主管本地缓存处理器。
 3. 启动主管处理器。
 
+`reset --reset-adapt` 指令重置适配器功能，会执行以下操作：
+
+1. 停止接收处理器。
+2. 清空适配器本地缓存处理器。
+3. 启动接收处理器。
+
 `reset --reset-sink` 指令重置下沉功能，会执行以下操作：
 
 1. 停止下沉处理器。
@@ -803,6 +940,12 @@ reset --reset-provide
 1. 停止提供处理器。
 2. 清空提供本地缓存处理器。
 3. 启动提供处理器。
+
+`reset --reset-filter` 指令重置过滤器功能，会执行以下操作：
+
+1. 停止接收处理器。
+2. 清空过滤器本地缓存处理器。
+3. 启动接收处理器。
 
 这些方法会消耗一定的时间，尤其是在消费者积压数据较多的情况下。
 
@@ -856,6 +999,14 @@ reset --reset-supervise
 OK
 ```
 
+#### 重置适配器功能
+
+```text
+reset --reset-adapt
+重置成功!
+OK
+```
+
 #### 重置下沉功能
 
 ```text
@@ -868,6 +1019,14 @@ OK
 
 ```text
 reset --reset-provide
+重置成功!
+OK
+```
+
+#### 重置过滤器功能
+
+```text
+reset --reset-filter
 重置成功!
 OK
 ```

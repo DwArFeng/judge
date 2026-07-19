@@ -288,7 +288,7 @@ VALUES (1, 'judge-node', b'1', 0, 'judge-node', 'package groovy
 import com.dwarfeng.judge.impl.handler.analyser.groovy.Processor
 import com.dwarfeng.judge.sdk.util.Constants
 import com.dwarfeng.judge.stack.bean.dto.AnalysisUpsertInfo
-import com.dwarfeng.judge.stack.bean.dto.LookupInfo
+import com.dwarfeng.judge.stack.bean.dto.ProvideLookupInfo
 import com.dwarfeng.judge.stack.bean.dto.TaskEventCreateInfo
 import com.dwarfeng.judge.stack.handler.Analyser
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey
@@ -297,7 +297,7 @@ class QuickStartAnalyserProcessor implements Processor {
 
     @Override
     void analyse(Analyser.Context context) throws Exception {
-        final lookupResult = context.lookup(new LookupInfo(new LongIdKey(1L), null, null, "quickstart", new Object[0]))
+        final lookupResult = context.lookupProvide(new ProvideLookupInfo(new LongIdKey(1L), null, null, "quickstart", new Object[0]))
         final datas = lookupResult.getDatas()
         if (datas.isEmpty()) {
             throw new IllegalStateException("QuickStart provider returned no data")
