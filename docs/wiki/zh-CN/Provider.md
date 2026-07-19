@@ -13,11 +13,11 @@
 提供器是 [Provide](./Provide.md) 查询链路中的核心执行环节，典型链路如下：
 
 ```text
-LookupInfo
+ProvideLookupInfo
   -> Adapter
   -> ProviderSession
   -> Filter
-  -> LookupResult
+  -> ProvideLookupResult
 ```
 
 `Adapter` 和 `Filter` 是可选环节，`ProviderSession` 负责执行实际查询。
