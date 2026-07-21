@@ -73,7 +73,9 @@ public interface BeanMapper {
     JSFixedFastJsonAnalyserVariableKey analyserVariableKeyToJSFixedFastJson(AnalyserVariableKey analyserVariableKey);
 
     @InheritInverseConfiguration
-    AnalyserVariableKey analyserVariableKeyFromJSFixedFastJson(JSFixedFastJsonAnalyserVariableKey jSFixedFastJsonAnalyserVariableKey);
+    AnalyserVariableKey analyserVariableKeyFromJSFixedFastJson(
+            JSFixedFastJsonAnalyserVariableKey jSFixedFastJsonAnalyserVariableKey
+    );
 
     JSFixedFastJsonAnalysisKey analysisKeyToJSFixedFastJson(AnalysisKey analysisKey);
 
@@ -83,7 +85,9 @@ public interface BeanMapper {
     JSFixedFastJsonJudgerVariableKey judgerVariableKeyToJSFixedFastJson(JudgerVariableKey judgerVariableKey);
 
     @InheritInverseConfiguration
-    JudgerVariableKey judgerVariableKeyFromJSFixedFastJson(JSFixedFastJsonJudgerVariableKey jSFixedFastJsonJudgerVariableKey);
+    JudgerVariableKey judgerVariableKeyFromJSFixedFastJson(
+            JSFixedFastJsonJudgerVariableKey jSFixedFastJsonJudgerVariableKey
+    );
 
     WebInputAnalyserVariableKey analyserVariableKeyToWebInput(AnalyserVariableKey analyserVariableKey);
 
@@ -118,7 +122,9 @@ public interface BeanMapper {
     FastJsonSinkerMetaIndicatorKey sinkerMetaIndicatorKeyToFastJson(SinkerMetaIndicatorKey sinkerMetaIndicatorKey);
 
     @InheritInverseConfiguration
-    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromFastJson(FastJsonSinkerMetaIndicatorKey fastJsonSinkerMetaIndicatorKey);
+    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromFastJson(
+            FastJsonSinkerMetaIndicatorKey fastJsonSinkerMetaIndicatorKey
+    );
 
     FastJsonSinkerMetaKey sinkerMetaKeyToFastJson(SinkerMetaKey sinkerMetaKey);
 
@@ -143,12 +149,16 @@ public interface BeanMapper {
     JSFixedFastJsonSinkerRelationKey sinkerRelationKeyToJSFixedFastJson(SinkerRelationKey sinkerRelationKey);
 
     @InheritInverseConfiguration
-    SinkerRelationKey sinkerRelationKeyFromJSFixedFastJson(JSFixedFastJsonSinkerRelationKey jSFixedFastJsonSinkerRelationKey);
+    SinkerRelationKey sinkerRelationKeyFromJSFixedFastJson(
+            JSFixedFastJsonSinkerRelationKey jSFixedFastJsonSinkerRelationKey
+    );
 
     JSFixedFastJsonSinkerVariableKey sinkerVariableKeyToJSFixedFastJson(SinkerVariableKey sinkerVariableKey);
 
     @InheritInverseConfiguration
-    SinkerVariableKey sinkerVariableKeyFromJSFixedFastJson(JSFixedFastJsonSinkerVariableKey jSFixedFastJsonSinkerVariableKey);
+    SinkerVariableKey sinkerVariableKeyFromJSFixedFastJson(
+            JSFixedFastJsonSinkerVariableKey jSFixedFastJsonSinkerVariableKey
+    );
 
     WebInputSinkerMetaKey sinkerMetaKeyToWebInput(SinkerMetaKey sinkerMetaKey);
 
@@ -180,7 +190,9 @@ public interface BeanMapper {
     WebInputSinkerMetaIndicatorKey sinkerMetaIndicatorKeyToWebInput(SinkerMetaIndicatorKey sinkerMetaIndicatorKey);
 
     @InheritInverseConfiguration
-    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromWebInput(WebInputSinkerMetaIndicatorKey webInputSinkerMetaIndicatorKey);
+    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromWebInput(
+            WebInputSinkerMetaIndicatorKey webInputSinkerMetaIndicatorKey
+    );
 
     WebInputSinkerVariableKey sinkerVariableKeyToWebInput(SinkerVariableKey sinkerVariableKey);
 

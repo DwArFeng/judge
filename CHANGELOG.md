@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- `judge-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.sdk.bean.BeanMapper。
+  - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSinkInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonAnalysisFileInfo。
+  - com.dwarfeng.judge.sdk.bean.entity.JSFixedFastJsonAnalysisPictureInfo。
+
 - `judge-stack` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.stack.dao.ProviderSupportDao。
   - com.dwarfeng.judge.stack.dao.SinkerMetaIndicatorDao。

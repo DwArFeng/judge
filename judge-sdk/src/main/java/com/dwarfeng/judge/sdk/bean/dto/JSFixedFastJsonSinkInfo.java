@@ -551,7 +551,8 @@ public class JSFixedFastJsonSinkInfo implements Dto {
                         analysisPicturePack.getItemAnchorIndex(),
                         analysisPicturePack.getRemark(),
                         Optional.ofNullable(analysisPicturePack.getItems()).map(
-                                f -> f.stream().map(JSFixedFastJsonAnalysisPicturePackItem::of).collect(Collectors.toList())
+                                f -> f.stream().map(JSFixedFastJsonAnalysisPicturePackItem::of)
+                                        .collect(Collectors.toList())
                         ).orElse(null)
                 );
             }
@@ -839,7 +840,8 @@ public class JSFixedFastJsonSinkInfo implements Dto {
                         analysisFilePack.getItemAnchorIndex(),
                         analysisFilePack.getRemark(),
                         Optional.ofNullable(analysisFilePack.getItems()).map(
-                                f -> f.stream().map(JSFixedFastJsonAnalysisFilePackItem::of).collect(Collectors.toList())
+                                f -> f.stream().map(JSFixedFastJsonAnalysisFilePackItem::of)
+                                        .collect(Collectors.toList())
                         ).orElse(null)
                 );
             }
@@ -956,7 +958,8 @@ public class JSFixedFastJsonSinkInfo implements Dto {
         }
 
         public JSFixedFastJsonAnalysisFilePackItem(
-                JSFixedFastJsonLongIdKey analysisFilePackItemInfoKey, int index, String originName, Long length, String remark
+                JSFixedFastJsonLongIdKey analysisFilePackItemInfoKey, int index, String originName, Long length,
+                String remark
         ) {
             this.analysisFilePackItemInfoKey = analysisFilePackItemInfoKey;
             this.index = index;
