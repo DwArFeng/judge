@@ -261,6 +261,36 @@
             ref="provideServiceImpl"
             group="${com.dwarfeng.judge.dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmMaintainService"
+            ref="alarmMaintainServiceImpl"
+            group="${com.dwarfeng.judge.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmHistoryMaintainService"
+            ref="alarmHistoryMaintainServiceImpl"
+            group="${com.dwarfeng.judge.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmModalMaintainService"
+            ref="alarmModalMaintainServiceImpl"
+            group="${com.dwarfeng.judge.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmSettingMaintainService"
+            ref="alarmSettingMaintainServiceImpl"
+            group="${com.dwarfeng.judge.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.AlarmTypeIndicatorMaintainService"
+            ref="alarmTypeIndicatorMaintainServiceImpl"
+            group="${com.dwarfeng.judge.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.judge.stack.service.VerdictMaintainService"
+            ref="verdictMaintainServiceImpl"
+            group="${com.dwarfeng.judge.dubbo.provider.group}"
+    />
 
     <!-- endregion -->
 

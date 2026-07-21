@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- 新建实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.judge.stack.bean.entity.Alarm。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmHistory。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmModal。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmSetting。
+  - com.dwarfeng.judge.stack.bean.entity.AlarmTypeIndicator。
+  - com.dwarfeng.judge.stack.bean.entity.Verdict。
+
 - `judge-node-all-he` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.node.all.he.configuration.CacheConfiguration。
   - com.dwarfeng.judge.node.all.he.configuration.DaoConfiguration。

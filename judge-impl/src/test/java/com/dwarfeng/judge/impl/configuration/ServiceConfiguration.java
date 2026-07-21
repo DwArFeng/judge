@@ -91,6 +91,18 @@ public class ServiceConfiguration {
     private final FilterInfoDao filterInfoDao;
     private final FilterSupportCache filterSupportCache;
     private final FilterSupportDao filterSupportDao;
+    private final AlarmDao alarmDao;
+    private final AlarmCache alarmCache;
+    private final AlarmHistoryDao alarmHistoryDao;
+    private final AlarmHistoryCache alarmHistoryCache;
+    private final AlarmModalDao alarmModalDao;
+    private final AlarmModalCache alarmModalCache;
+    private final AlarmSettingDao alarmSettingDao;
+    private final AlarmSettingCache alarmSettingCache;
+    private final AlarmTypeIndicatorDao alarmTypeIndicatorDao;
+    private final AlarmTypeIndicatorCache alarmTypeIndicatorCache;
+    private final VerdictDao verdictDao;
+    private final VerdictCache verdictCache;
 
     @Value("${com.dwarfeng.judge.cache.timeout.entity.analyser_support}")
     private long analyserSupportTimeout;
@@ -134,6 +146,18 @@ public class ServiceConfiguration {
     private long filterInfoTimeout;
     @Value("${com.dwarfeng.judge.cache.timeout.entity.filter_support}")
     private long filterSupportTimeout;
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.alarm}")
+    private long alarmTimeout;
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.alarm_history}")
+    private long alarmHistoryTimeout;
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.alarm_modal}")
+    private long alarmModalTimeout;
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.alarm_setting}")
+    private long alarmSettingTimeout;
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.alarm_type_indicator}")
+    private long alarmTypeIndicatorTimeout;
+    @Value("${com.dwarfeng.judge.cache.timeout.entity.verdict}")
+    private long verdictTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -205,10 +229,34 @@ public class ServiceConfiguration {
             FilterInfoCache filterInfoCache,
             FilterInfoDao filterInfoDao,
             FilterSupportCache filterSupportCache,
-            FilterSupportDao filterSupportDao
+            FilterSupportDao filterSupportDao,
+            AlarmDao alarmDao,
+            AlarmCache alarmCache,
+            AlarmHistoryDao alarmHistoryDao,
+            AlarmHistoryCache alarmHistoryCache,
+            AlarmModalDao alarmModalDao,
+            AlarmModalCache alarmModalCache,
+            AlarmSettingDao alarmSettingDao,
+            AlarmSettingCache alarmSettingCache,
+            AlarmTypeIndicatorDao alarmTypeIndicatorDao,
+            AlarmTypeIndicatorCache alarmTypeIndicatorCache,
+            VerdictDao verdictDao,
+            VerdictCache verdictCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
+        this.alarmDao = alarmDao;
+        this.alarmCache = alarmCache;
+        this.alarmHistoryDao = alarmHistoryDao;
+        this.alarmHistoryCache = alarmHistoryCache;
+        this.alarmModalDao = alarmModalDao;
+        this.alarmModalCache = alarmModalCache;
+        this.alarmSettingDao = alarmSettingDao;
+        this.alarmSettingCache = alarmSettingCache;
+        this.alarmTypeIndicatorDao = alarmTypeIndicatorDao;
+        this.alarmTypeIndicatorCache = alarmTypeIndicatorCache;
+        this.verdictDao = verdictDao;
+        this.verdictCache = verdictCache;
         this.analyserInfoCrudOperation = analyserInfoCrudOperation;
         this.analyserInfoDao = analyserInfoDao;
         this.analyserSupportDao = analyserSupportDao;
@@ -1275,6 +1323,187 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 filterSupportDao
+        );
+    }
+
+
+    @Bean
+    public GeneralBatchCrudService<AlarmKey, Alarm> alarmGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmDao,
+                alarmCache,
+                new ExceptionKeyGenerator<>(),
+                alarmTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Alarm> alarmDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Alarm> alarmDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, AlarmHistory> alarmHistoryGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmHistoryDao,
+                alarmHistoryCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                alarmHistoryTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmHistory> alarmHistoryDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmHistoryDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmHistory> alarmHistoryDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmHistoryDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<AlarmKey, AlarmModal> alarmModalGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmModalDao,
+                alarmModalCache,
+                new ExceptionKeyGenerator<>(),
+                alarmModalTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmModal> alarmModalDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmModalDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmModal> alarmModalDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmModalDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, AlarmSetting> alarmSettingGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmSettingDao,
+                alarmSettingCache,
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
+                alarmSettingTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmSetting> alarmSettingDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmSettingDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmSetting> alarmSettingDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmSettingDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> alarmTypeIndicatorGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmTypeIndicatorDao,
+                alarmTypeIndicatorCache,
+                new ExceptionKeyGenerator<>(),
+                alarmTypeIndicatorTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmTypeIndicator> alarmTypeIndicatorDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmTypeIndicatorDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmTypeIndicator> alarmTypeIndicatorDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmTypeIndicatorDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<VerdictKey, Verdict> verdictGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                verdictDao,
+                verdictCache,
+                new ExceptionKeyGenerator<>(),
+                verdictTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Verdict> verdictDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                verdictDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Verdict> verdictDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                verdictDao
         );
     }
 }

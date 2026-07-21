@@ -81,6 +81,14 @@
             update-allowed="${com.dwarfeng.judge.datamark.filter.update_allowed}"
     />
 
+    <!-- AlarmSetting 数据标识。 -->
+    <datamark:handler
+            handler-name="alarmSettingDatamarkHandler"
+            resource-url="${com.dwarfeng.judge.datamark.alarm_setting.resource_url}"
+            resource-charset="${com.dwarfeng.judge.datamark.alarm_setting.resource_charset}"
+            update-allowed="${com.dwarfeng.judge.datamark.alarm_setting.update_allowed}"
+    />
+
     <!-- QoS 服务。 -->
     <datamark:qos/>
 </beans>

@@ -48,6 +48,12 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonAdapterSupport.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonFilterInfo.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonFilterSupport.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarm.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmHistory.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmModal.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmSetting.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmTypeIndicator.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonVerdict.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

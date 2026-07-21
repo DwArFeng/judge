@@ -89,6 +89,18 @@ public class CacheConfiguration {
     private String filterInfoPrefix;
     @Value("${com.dwarfeng.judge.cache.prefix.entity.filter_support}")
     private String filterSupportPrefix;
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.alarm}")
+    private String alarmPrefix;
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.alarm_history}")
+    private String alarmHistoryPrefix;
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.alarm_modal}")
+    private String alarmModalPrefix;
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.alarm_setting}")
+    private String alarmSettingPrefix;
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.alarm_type_indicator}")
+    private String alarmTypeIndicatorPrefix;
+    @Value("${com.dwarfeng.judge.cache.prefix.entity.verdict}")
+    private String verdictPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -465,6 +477,70 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonFilterSupport>) template,
                 new StringIdStringKeyFormatter(filterSupportPrefix),
                 new MapStructBeanTransformer<>(FilterSupport.class, FastJsonFilterSupport.class, BeanMapper.class)
+        );
+    }
+
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<AlarmKey, Alarm, FastJsonAlarm> alarmRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarm>) template,
+                new AlarmStringKeyFormatter(alarmPrefix),
+                new MapStructBeanTransformer<>(Alarm.class, FastJsonAlarm.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AlarmHistory, FastJsonAlarmHistory> alarmHistoryRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmHistory>) template,
+                new LongIdStringKeyFormatter(alarmHistoryPrefix),
+                new MapStructBeanTransformer<>(AlarmHistory.class, FastJsonAlarmHistory.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<AlarmKey, AlarmModal, FastJsonAlarmModal> alarmModalRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmModal>) template,
+                new AlarmStringKeyFormatter(alarmModalPrefix),
+                new MapStructBeanTransformer<>(AlarmModal.class, FastJsonAlarmModal.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> alarmSettingRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmSetting>) template,
+                new LongIdStringKeyFormatter(alarmSettingPrefix),
+                new MapStructBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, BeanMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator>
+    alarmTypeIndicatorRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmTypeIndicator>) template,
+                new StringIdStringKeyFormatter(alarmTypeIndicatorPrefix),
+                new MapStructBeanTransformer<>(
+                        AlarmTypeIndicator.class, FastJsonAlarmTypeIndicator.class, BeanMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<VerdictKey, Verdict, FastJsonVerdict> verdictRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonVerdict>) template,
+                new VerdictStringKeyFormatter(verdictPrefix),
+                new MapStructBeanTransformer<>(Verdict.class, FastJsonVerdict.class, BeanMapper.class)
         );
     }
 }

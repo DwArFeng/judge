@@ -199,6 +199,36 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     SinkerVariableKey sinkerVariableKeyFromWebInput(WebInputSinkerVariableKey webInputSinkerVariableKey);
 
+    WebInputVerdictKey verdictKeyToWebInput(VerdictKey verdictKey);
+
+    @InheritInverseConfiguration
+    VerdictKey verdictKeyFromWebInput(WebInputVerdictKey webInputVerdictKey);
+
+    JSFixedFastJsonVerdictKey verdictKeyToJSFixedFastJson(VerdictKey verdictKey);
+
+    @InheritInverseConfiguration
+    VerdictKey verdictKeyFromJSFixedFastJson(JSFixedFastJsonVerdictKey jSFixedFastJsonVerdictKey);
+
+    FastJsonVerdictKey verdictKeyToFastJson(VerdictKey verdictKey);
+
+    @InheritInverseConfiguration
+    VerdictKey verdictKeyFromFastJson(FastJsonVerdictKey fastJsonVerdictKey);
+
+    WebInputAlarmKey alarmKeyToWebInput(AlarmKey alarmKey);
+
+    @InheritInverseConfiguration
+    AlarmKey alarmKeyFromWebInput(WebInputAlarmKey webInputAlarmKey);
+
+    JSFixedFastJsonAlarmKey alarmKeyToJSFixedFastJson(AlarmKey alarmKey);
+
+    @InheritInverseConfiguration
+    AlarmKey alarmKeyFromJSFixedFastJson(JSFixedFastJsonAlarmKey jSFixedFastJsonAlarmKey);
+
+    FastJsonAlarmKey alarmKeyToFastJson(AlarmKey alarmKey);
+
+    @InheritInverseConfiguration
+    AlarmKey alarmKeyFromFastJson(FastJsonAlarmKey fastJsonAlarmKey);
+
     // endregion
 
     // region Judge Entity
@@ -578,6 +608,71 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     VisualizerInfo visualizerInfoFromWebInput(WebInputVisualizerInfo webInputVisualizerInfo);
+
+    FastJsonAlarm alarmToFastJson(Alarm alarm);
+
+    @InheritInverseConfiguration
+    Alarm alarmFromFastJson(FastJsonAlarm fastJsonAlarm);
+
+    FastJsonAlarmHistory alarmHistoryToFastJson(AlarmHistory alarmHistory);
+
+    @InheritInverseConfiguration
+    AlarmHistory alarmHistoryFromFastJson(FastJsonAlarmHistory fastJsonAlarmHistory);
+
+    FastJsonAlarmModal alarmModalToFastJson(AlarmModal alarmModal);
+
+    @InheritInverseConfiguration
+    AlarmModal alarmModalFromFastJson(FastJsonAlarmModal fastJsonAlarmModal);
+
+    FastJsonAlarmSetting alarmSettingToFastJson(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromFastJson(FastJsonAlarmSetting fastJsonAlarmSetting);
+
+    FastJsonAlarmTypeIndicator alarmTypeIndicatorToFastJson(AlarmTypeIndicator alarmTypeIndicator);
+
+    @InheritInverseConfiguration
+    AlarmTypeIndicator alarmTypeIndicatorFromFastJson(FastJsonAlarmTypeIndicator fastJsonAlarmTypeIndicator);
+
+    FastJsonVerdict verdictToFastJson(Verdict verdict);
+
+    @InheritInverseConfiguration
+    Verdict verdictFromFastJson(FastJsonVerdict fastJsonVerdict);
+
+    JSFixedFastJsonAlarm alarmToJSFixedFastJson(Alarm alarm);
+
+    @InheritInverseConfiguration
+    Alarm alarmFromJSFixedFastJson(JSFixedFastJsonAlarm jSFixedFastJsonAlarm);
+
+    JSFixedFastJsonAlarmHistory alarmHistoryToJSFixedFastJson(AlarmHistory alarmHistory);
+
+    @InheritInverseConfiguration
+    AlarmHistory alarmHistoryFromJSFixedFastJson(JSFixedFastJsonAlarmHistory jSFixedFastJsonAlarmHistory);
+
+    JSFixedFastJsonAlarmModal alarmModalToJSFixedFastJson(AlarmModal alarmModal);
+
+    @InheritInverseConfiguration
+    AlarmModal alarmModalFromJSFixedFastJson(JSFixedFastJsonAlarmModal jSFixedFastJsonAlarmModal);
+
+    JSFixedFastJsonAlarmSetting alarmSettingToJSFixedFastJson(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromJSFixedFastJson(JSFixedFastJsonAlarmSetting jSFixedFastJsonAlarmSetting);
+
+    JSFixedFastJsonVerdict verdictToJSFixedFastJson(Verdict verdict);
+
+    @InheritInverseConfiguration
+    Verdict verdictFromJSFixedFastJson(JSFixedFastJsonVerdict jSFixedFastJsonVerdict);
+
+    WebInputAlarmSetting alarmSettingToWebInput(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromWebInput(WebInputAlarmSetting webInputAlarmSetting);
+
+    WebInputAlarmTypeIndicator alarmTypeIndicatorToWebInput(AlarmTypeIndicator alarmTypeIndicator);
+
+    @InheritInverseConfiguration
+    AlarmTypeIndicator alarmTypeIndicatorFromWebInput(WebInputAlarmTypeIndicator webInputAlarmTypeIndicator);
 
     // endregion
 

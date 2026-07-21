@@ -48,6 +48,18 @@ public class HibernateSection implements Bean {
 
     // region 一对多
 
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarm.class, mappedBy = "section")
+    private Set<HibernateAlarm> alarms = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmHistory.class, mappedBy = "section")
+    private Set<HibernateAlarmHistory> alarmHistories = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmModal.class, mappedBy = "section")
+    private Set<HibernateAlarmModal> alarmModals = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmSetting.class, mappedBy = "section")
+    private Set<HibernateAlarmSetting> alarmSettings = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateDriverInfo.class, mappedBy = "section")
     private Set<HibernateDriverInfo> driverInfos = new HashSet<>();
 
@@ -59,6 +71,9 @@ public class HibernateSection implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateTask.class, mappedBy = "section")
     private Set<HibernateTask> tasks = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateVerdict.class, mappedBy = "section")
+    private Set<HibernateVerdict> verdicts = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateSinkerRelation.class, mappedBy = "section")
     private Set<HibernateSinkerRelation> sinkerRelations = new HashSet<>();
@@ -136,6 +151,38 @@ public class HibernateSection implements Bean {
         this.remark = remark;
     }
 
+    public Set<HibernateAlarm> getAlarms() {
+        return alarms;
+    }
+
+    public void setAlarms(Set<HibernateAlarm> alarms) {
+        this.alarms = alarms;
+    }
+
+    public Set<HibernateAlarmHistory> getAlarmHistories() {
+        return alarmHistories;
+    }
+
+    public void setAlarmHistories(Set<HibernateAlarmHistory> alarmHistories) {
+        this.alarmHistories = alarmHistories;
+    }
+
+    public Set<HibernateAlarmModal> getAlarmModals() {
+        return alarmModals;
+    }
+
+    public void setAlarmModals(Set<HibernateAlarmModal> alarmModals) {
+        this.alarmModals = alarmModals;
+    }
+
+    public Set<HibernateAlarmSetting> getAlarmSettings() {
+        return alarmSettings;
+    }
+
+    public void setAlarmSettings(Set<HibernateAlarmSetting> alarmSettings) {
+        this.alarmSettings = alarmSettings;
+    }
+
     public Set<HibernateDriverInfo> getDriverInfos() {
         return driverInfos;
     }
@@ -166,6 +213,14 @@ public class HibernateSection implements Bean {
 
     public void setTasks(Set<HibernateTask> tasks) {
         this.tasks = tasks;
+    }
+
+    public Set<HibernateVerdict> getVerdicts() {
+        return verdicts;
+    }
+
+    public void setVerdicts(Set<HibernateVerdict> verdicts) {
+        this.verdicts = verdicts;
     }
 
     public Set<HibernateSinkerRelation> getSinkerRelations() {

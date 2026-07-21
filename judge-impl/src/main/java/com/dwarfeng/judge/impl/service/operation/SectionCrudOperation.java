@@ -1,8 +1,10 @@
 package com.dwarfeng.judge.impl.service.operation;
 
 import com.dwarfeng.judge.stack.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.key.AlarmKey;
 import com.dwarfeng.judge.stack.bean.key.SinkerMetaKey;
 import com.dwarfeng.judge.stack.bean.key.SinkerRelationKey;
+import com.dwarfeng.judge.stack.bean.key.VerdictKey;
 import com.dwarfeng.judge.stack.cache.*;
 import com.dwarfeng.judge.stack.dao.*;
 import com.dwarfeng.judge.stack.service.*;
@@ -21,6 +23,18 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
 
     private final SectionDao sectionDao;
     private final SectionCache sectionCache;
+
+    private final AlarmDao alarmDao;
+    private final AlarmCache alarmCache;
+
+    private final AlarmHistoryDao alarmHistoryDao;
+    private final AlarmHistoryCache alarmHistoryCache;
+
+    private final AlarmModalDao alarmModalDao;
+    private final AlarmModalCache alarmModalCache;
+
+    private final AlarmSettingDao alarmSettingDao;
+    private final AlarmSettingCache alarmSettingCache;
 
     private final DriverInfoDao driverInfoDao;
     private final DriverInfoCache driverInfoCache;
@@ -43,12 +57,23 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
     private final VisualizerInfoDao visualizerInfoDao;
     private final VisualizerInfoCache visualizerInfoCache;
 
+    private final VerdictDao verdictDao;
+    private final VerdictCache verdictCache;
+
     @Value("${com.dwarfeng.judge.cache.timeout.entity.section}")
     private long sectionTimeout;
 
     public SectionCrudOperation(
             SectionDao sectionDao,
             SectionCache sectionCache,
+            AlarmDao alarmDao,
+            AlarmCache alarmCache,
+            AlarmHistoryDao alarmHistoryDao,
+            AlarmHistoryCache alarmHistoryCache,
+            AlarmModalDao alarmModalDao,
+            AlarmModalCache alarmModalCache,
+            AlarmSettingDao alarmSettingDao,
+            AlarmSettingCache alarmSettingCache,
             DriverInfoDao driverInfoDao,
             DriverInfoCache driverInfoCache,
             AnalyserInfoCrudOperation analyserInfoCrudOperation,
@@ -62,10 +87,20 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
             SinkerMetaDao sinkerMetaDao,
             SinkerMetaCache sinkerMetaCache,
             VisualizerInfoDao visualizerInfoDao,
-            VisualizerInfoCache visualizerInfoCache
+            VisualizerInfoCache visualizerInfoCache,
+            VerdictDao verdictDao,
+            VerdictCache verdictCache
     ) {
         this.sectionDao = sectionDao;
         this.sectionCache = sectionCache;
+        this.alarmDao = alarmDao;
+        this.alarmCache = alarmCache;
+        this.alarmHistoryDao = alarmHistoryDao;
+        this.alarmHistoryCache = alarmHistoryCache;
+        this.alarmModalDao = alarmModalDao;
+        this.alarmModalCache = alarmModalCache;
+        this.alarmSettingDao = alarmSettingDao;
+        this.alarmSettingCache = alarmSettingCache;
         this.driverInfoDao = driverInfoDao;
         this.driverInfoCache = driverInfoCache;
         this.analyserInfoCrudOperation = analyserInfoCrudOperation;
@@ -80,6 +115,8 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         this.sinkerMetaCache = sinkerMetaCache;
         this.visualizerInfoDao = visualizerInfoDao;
         this.visualizerInfoCache = visualizerInfoCache;
+        this.verdictDao = verdictDao;
+        this.verdictCache = verdictCache;
     }
 
     @Override
@@ -115,6 +152,37 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
 
     @Override
     public void delete(LongIdKey key) throws Exception {
+        // 删除与部件相关的当前报警。
+        List<AlarmKey> alarmKeys = alarmDao.lookup(
+                AlarmMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+        ).stream().map(Alarm::getKey).collect(Collectors.toList());
+        alarmDao.batchDelete(alarmKeys);
+        alarmCache.batchDelete(alarmKeys);
+
+        // 置空与部件相关的报警历史。
+        List<AlarmHistory> alarmHistories = alarmHistoryDao.lookup(
+                AlarmHistoryMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+        );
+        alarmHistories.forEach(alarmHistory -> alarmHistory.setSectionKey(null));
+        List<LongIdKey> alarmHistoryKeys = alarmHistories.stream().map(AlarmHistory::getKey)
+                .collect(Collectors.toList());
+        alarmHistoryDao.batchUpdate(alarmHistories);
+        alarmHistoryCache.batchDelete(alarmHistoryKeys);
+
+        // 删除与部件相关的报警模态。
+        List<AlarmKey> alarmModalKeys = alarmModalDao.lookup(
+                AlarmModalMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+        ).stream().map(AlarmModal::getKey).collect(Collectors.toList());
+        alarmModalDao.batchDelete(alarmModalKeys);
+        alarmModalCache.batchDelete(alarmModalKeys);
+
+        // 删除与部件相关的报警设置。
+        List<LongIdKey> alarmSettingKeys = alarmSettingDao.lookup(
+                AlarmSettingMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+        ).stream().map(AlarmSetting::getKey).collect(Collectors.toList());
+        alarmSettingDao.batchDelete(alarmSettingKeys);
+        alarmSettingCache.batchDelete(alarmSettingKeys);
+
         // 删除与 统计设置 相关的 驱动器信息。
         List<LongIdKey> driverInfoKeys = driverInfoDao.lookup(
                 DriverInfoMaintainService.CHILD_FOR_SECTION, new Object[]{key}
@@ -160,6 +228,13 @@ public class SectionCrudOperation implements BatchCrudOperation<LongIdKey, Secti
         ).stream().map(VisualizerInfo::getKey).collect(Collectors.toList());
         visualizerInfoDao.batchDelete(longIdKeys);
         visualizerInfoCache.batchDelete(longIdKeys);
+
+        // 删除与部件相关的裁决结果。
+        List<VerdictKey> verdictKeys = verdictDao.lookup(
+                VerdictMaintainService.CHILD_FOR_SECTION, new Object[]{key}
+        ).stream().map(Verdict::getKey).collect(Collectors.toList());
+        verdictDao.batchDelete(verdictKeys);
+        verdictCache.batchDelete(verdictKeys);
 
         // 删除 部件 自身。
         sectionDao.delete(key);

@@ -87,6 +87,16 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     VisualizeDataKey visualizeDataKeyFromHibernate(HibernateVisualizeDataKey hibernateVisualizeDataKey);
 
+    HibernateVerdictKey verdictKeyToHibernate(VerdictKey verdictKey);
+
+    @InheritInverseConfiguration
+    VerdictKey verdictKeyFromHibernate(HibernateVerdictKey hibernateVerdictKey);
+
+    HibernateAlarmKey alarmKeyToHibernate(AlarmKey alarmKey);
+
+    @InheritInverseConfiguration
+    AlarmKey alarmKeyFromHibernate(HibernateAlarmKey hibernateAlarmKey);
+
     // endregion
 
     // region Judge Entity
@@ -194,6 +204,11 @@ public interface BeanMapper {
     @Mapping(target = "driverInfos", ignore = true)
     @Mapping(target = "createdDatamark", ignore = true)
     @Mapping(target = "analyserInfos", ignore = true)
+    @Mapping(target = "verdicts", ignore = true)
+    @Mapping(target = "alarmSettings", ignore = true)
+    @Mapping(target = "alarmModals", ignore = true)
+    @Mapping(target = "alarmHistories", ignore = true)
+    @Mapping(target = "alarms", ignore = true)
     HibernateSection sectionToHibernate(Section section);
 
     @InheritInverseConfiguration
@@ -374,6 +389,54 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     FilterSupport filterSupportFromHibernate(HibernateFilterSupport hibernateFilterSupport);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "dataStringId", ignore = true)
+    HibernateAlarm alarmToHibernate(Alarm alarm);
+
+    @InheritInverseConfiguration
+    Alarm alarmFromHibernate(HibernateAlarm hibernateAlarm);
+
+    @Mapping(target = "stringId", ignore = true)
+    HibernateAlarmTypeIndicator alarmTypeIndicatorToHibernate(AlarmTypeIndicator alarmTypeIndicator);
+
+    @InheritInverseConfiguration
+    AlarmTypeIndicator alarmTypeIndicatorFromHibernate(HibernateAlarmTypeIndicator hibernateAlarmTypeIndicator);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    HibernateAlarmSetting alarmSettingToHibernate(AlarmSetting alarmSetting);
+
+    @InheritInverseConfiguration
+    AlarmSetting alarmSettingFromHibernate(HibernateAlarmSetting hibernateAlarmSetting);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "dataStringId", ignore = true)
+    HibernateAlarmModal alarmModalToHibernate(AlarmModal alarmModal);
+
+    @InheritInverseConfiguration
+    AlarmModal alarmModalFromHibernate(HibernateAlarmModal hibernateAlarmModal);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "longId", ignore = true)
+    HibernateAlarmHistory alarmHistoryToHibernate(AlarmHistory alarmHistory);
+
+    @InheritInverseConfiguration
+    AlarmHistory alarmHistoryFromHibernate(HibernateAlarmHistory hibernateAlarmHistory);
+
+    @Mapping(target = "sectionLongId", ignore = true)
+    @Mapping(target = "section", ignore = true)
+    @Mapping(target = "dataStringId", ignore = true)
+    HibernateVerdict verdictToHibernate(Verdict verdict);
+
+    @InheritInverseConfiguration
+    Verdict verdictFromHibernate(HibernateVerdict hibernateVerdict);
 
     // endregion
 }
