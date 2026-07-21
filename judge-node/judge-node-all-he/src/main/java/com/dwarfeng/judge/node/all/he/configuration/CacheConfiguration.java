@@ -383,7 +383,8 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<StringIdKey, ProviderSupport, FastJsonProviderSupport> providerSupportRedisBatchBaseCache() {
+    public RedisBatchBaseCache<StringIdKey, ProviderSupport, FastJsonProviderSupport>
+    providerSupportRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonProviderSupport>) template,
                 new StringIdStringKeyFormatter(providerSupportPrefix),
@@ -438,7 +439,8 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<StringIdKey, AdapterSupport, FastJsonAdapterSupport> adapterSupportRedisBatchBaseCache() {
+    public RedisBatchBaseCache<StringIdKey, AdapterSupport, FastJsonAdapterSupport>
+    adapterSupportRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonAdapterSupport>) template,
                 new StringIdStringKeyFormatter(adapterSupportPrefix),

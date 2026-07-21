@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `judge-node-all-he` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.node.all.he.configuration.CacheConfiguration。
+  - com.dwarfeng.judge.node.all.he.configuration.DaoConfiguration。
+
 - `judge-impl` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.impl.bean.BeanMapper。
   - com.dwarfeng.judge.impl.dao.SinkerMetaIndicatorDaoImpl。
