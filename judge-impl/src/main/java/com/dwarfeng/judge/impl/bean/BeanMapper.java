@@ -63,7 +63,9 @@ public interface BeanMapper {
     HibernateSinkerMetaIndicatorKey sinkerMetaIndicatorKeyToHibernate(SinkerMetaIndicatorKey sinkerMetaIndicatorKey);
 
     @InheritInverseConfiguration
-    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromHibernate(HibernateSinkerMetaIndicatorKey hibernateSinkerMetaIndicatorKey);
+    SinkerMetaIndicatorKey sinkerMetaIndicatorKeyFromHibernate(
+            HibernateSinkerMetaIndicatorKey hibernateSinkerMetaIndicatorKey
+    );
 
     HibernateSinkerMetaKey sinkerMetaKeyToHibernate(SinkerMetaKey sinkerMetaKey);
 

@@ -403,7 +403,8 @@ public class ValueLookupListSetAnalyserConfig implements Bean {
         private String format;
 
         @JSONField(name = "#file_origin_name", ordinal = 9)
-        private String fileOriginNameRem = "当 output_analysis_value_type=file 时必填，用于构造 AnalysisFileUpsertInfo.originName。";
+        private String fileOriginNameRem =
+                "当 output_analysis_value_type=file 时必填，用于构造 AnalysisFileUpsertInfo.originName。";
 
         @JSONField(name = "file_origin_name", ordinal = 10)
         private String fileOriginName;

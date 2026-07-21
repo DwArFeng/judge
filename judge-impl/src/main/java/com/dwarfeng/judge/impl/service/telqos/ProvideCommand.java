@@ -192,7 +192,8 @@ public class ProvideCommand extends CliCommand {
         );
     }
 
-    private void printProvideLookupResult(CommandExecutor.Context context, ProvideLookupResult result) throws Exception {
+    private void printProvideLookupResult(CommandExecutor.Context context, ProvideLookupResult result)
+            throws Exception {
         while (true) {
             context.sendMessage("输入 data 查看数据，输入 meta 查看元数据，输入 q 退出");
             String message = context.receiveMessage();

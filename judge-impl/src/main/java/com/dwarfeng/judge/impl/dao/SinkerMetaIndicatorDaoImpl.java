@@ -71,7 +71,8 @@ public class SinkerMetaIndicatorDaoImpl implements SinkerMetaIndicatorDao {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerMetaIndicatorKey> batchInsert(@SkipRecord List<SinkerMetaIndicator> elements) throws DaoException {
+    public List<SinkerMetaIndicatorKey> batchInsert(@SkipRecord List<SinkerMetaIndicator> elements)
+            throws DaoException {
         return batchBaseDao.batchInsert(elements);
     }
 

@@ -157,7 +157,9 @@ public class DateProviderSession extends AbstractProviderSession {
             startTimestamp = baseTimestamp;
             endTimestamp = baseTimestamp + offsetMillis;
         }
-        return buildSingleRangeResult(preset, timezone, baseTimestamp, offset.getExpression(), startTimestamp, endTimestamp);
+        return buildSingleRangeResult(
+                preset, timezone, baseTimestamp, offset.getExpression(), startTimestamp, endTimestamp
+        );
     }
 
     private LookupResult executeRangeDay(String preset, Object[] objs) {

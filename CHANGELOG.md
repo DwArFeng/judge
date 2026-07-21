@@ -4,6 +4,25 @@
 
 ### 功能构建
 
+- `judge-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.impl.bean.BeanMapper。
+  - com.dwarfeng.judge.impl.dao.SinkerMetaIndicatorDaoImpl。
+  - com.dwarfeng.judge.impl.handler.analyser.valllstset.ValueLookupListSetAnalyserConfig。
+  - com.dwarfeng.judge.impl.handler.judger.identity.IdentityExecutor。
+  - com.dwarfeng.judge.impl.handler.provider.date.DateProviderSession。
+  - com.dwarfeng.judge.impl.handler.sinker.kafka.nati.NativeKafkaSinkerSession。
+  - com.dwarfeng.judge.impl.service.AdapterSupportMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.FilterSupportMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.ProviderInfoMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.ProviderSupportMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.SinkerMetaIndicatorMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.SinkerRelationMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.SinkerSupportMaintainServiceImpl。
+  - com.dwarfeng.judge.impl.service.telqos.ProvideCommand。
+  - com.dwarfeng.judge.impl.configuration.CacheConfiguration。
+  - com.dwarfeng.judge.impl.configuration.DaoConfiguration。
+  - com.dwarfeng.judge.impl.service.SinkerRelationMaintainServiceImplLookupTest。
+
 - `judge-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.sdk.bean.BeanMapper。
   - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSinkInfo。

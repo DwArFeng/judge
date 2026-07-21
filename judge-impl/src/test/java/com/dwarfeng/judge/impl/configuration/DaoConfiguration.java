@@ -1041,7 +1041,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, ProviderInfo, HibernateProviderInfo> providerInfoHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, ProviderInfo, HibernateProviderInfo>
+    providerInfoHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
@@ -1072,7 +1073,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, ProviderSupport, HibernateProviderSupport> providerSupportHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, ProviderSupport, HibernateProviderSupport>
+    providerSupportHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
@@ -1084,7 +1086,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateEntireLookupDao<ProviderSupport, HibernateProviderSupport> providerSupportHibernateEntireLookupDao() {
+    public HibernateEntireLookupDao<ProviderSupport, HibernateProviderSupport>
+    providerSupportHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(ProviderSupport.class, HibernateProviderSupport.class, BeanMapper.class),
@@ -1093,7 +1096,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernatePresetLookupDao<ProviderSupport, HibernateProviderSupport> providerSupportHibernatePresetLookupDao() {
+    public HibernatePresetLookupDao<ProviderSupport, HibernateProviderSupport>
+    providerSupportHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(ProviderSupport.class, HibernateProviderSupport.class, BeanMapper.class),
@@ -1211,7 +1215,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AdapterInfo, HibernateAdapterInfo> adapterInfoHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AdapterInfo, HibernateAdapterInfo>
+    adapterInfoHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
@@ -1242,7 +1247,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AdapterSupport, HibernateAdapterSupport> adapterSupportHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AdapterSupport, HibernateAdapterSupport>
+    adapterSupportHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
@@ -1273,7 +1279,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, FilterInfo, HibernateFilterInfo> filterInfoHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, FilterInfo, HibernateFilterInfo>
+    filterInfoHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
@@ -1304,7 +1311,8 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, FilterSupport, HibernateFilterSupport> filterSupportHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, FilterSupport, HibernateFilterSupport>
+    filterSupportHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
                 new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),

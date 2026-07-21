@@ -129,7 +129,8 @@ public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerMetaIndicatorKey> batchInsert(@SkipRecord List<SinkerMetaIndicator> elements) throws ServiceException {
+    public List<SinkerMetaIndicatorKey> batchInsert(@SkipRecord List<SinkerMetaIndicator> elements)
+            throws ServiceException {
         return crudService.batchInsert(elements);
     }
 
@@ -151,7 +152,8 @@ public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<SinkerMetaIndicator> batchGetIfExists(@SkipRecord List<SinkerMetaIndicatorKey> keys) throws ServiceException {
+    public List<SinkerMetaIndicator> batchGetIfExists(@SkipRecord List<SinkerMetaIndicatorKey> keys)
+            throws ServiceException {
         return crudService.batchGetIfExists(keys);
     }
 
@@ -160,7 +162,8 @@ public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerMetaIndicatorKey> batchInsertIfExists(@SkipRecord List<SinkerMetaIndicator> elements) throws ServiceException {
+    public List<SinkerMetaIndicatorKey> batchInsertIfExists(@SkipRecord List<SinkerMetaIndicator> elements)
+            throws ServiceException {
         return crudService.batchInsertIfExists(elements);
     }
 
@@ -168,7 +171,8 @@ public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerMetaIndicatorKey> batchInsertIfNotExists(@SkipRecord List<SinkerMetaIndicator> elements) throws ServiceException {
+    public List<SinkerMetaIndicatorKey> batchInsertIfNotExists(@SkipRecord List<SinkerMetaIndicator> elements)
+            throws ServiceException {
         return crudService.batchInsertIfNotExists(elements);
     }
 
@@ -190,7 +194,8 @@ public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerMetaIndicatorKey> batchInsertOrUpdate(@SkipRecord List<SinkerMetaIndicator> elements) throws ServiceException {
+    public List<SinkerMetaIndicatorKey> batchInsertOrUpdate(@SkipRecord List<SinkerMetaIndicator> elements)
+            throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
     }
 
@@ -254,7 +259,8 @@ public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public PagedData<SinkerMetaIndicator> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+    public PagedData<SinkerMetaIndicator> lookup(String preset, Object[] objs, PagingInfo pagingInfo)
+            throws ServiceException {
         return presetLookupService.lookup(preset, objs, pagingInfo);
     }
 
@@ -270,7 +276,8 @@ public class SinkerMetaIndicatorMaintainServiceImpl implements SinkerMetaIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<SinkerMetaIndicator> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+    public List<SinkerMetaIndicator> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo)
+            throws ServiceException {
         return presetLookupService.lookupAsList(preset, objs, pagingInfo);
     }
 

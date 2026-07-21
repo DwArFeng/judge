@@ -70,7 +70,8 @@ public class SinkerRelationMaintainServiceImplLookupTest {
 
             // 数据测试。
             List<SinkerRelationKey> sinkerRelationKeys = sinkerRelationMaintainService.lookupAsList(
-                    SinkerRelationMaintainService.CHILD_FOR_SECTION_ENABLED_SECTION_ENABLED, new Object[]{section.getKey()}
+                    SinkerRelationMaintainService.CHILD_FOR_SECTION_ENABLED_SECTION_ENABLED,
+                    new Object[]{section.getKey()}
             ).stream().map(SinkerRelation::getKey).collect(Collectors.toList());
 
             assertEquals(2, sinkerRelationKeys.size());
@@ -151,7 +152,8 @@ public class SinkerRelationMaintainServiceImplLookupTest {
 
             // 数据测试。
             List<SinkerRelationKey> sinkerRelationKeys = sinkerRelationMaintainService.lookupAsList(
-                    SinkerRelationMaintainService.CHILD_FOR_SECTION_ENABLED_SECTION_ENABLED, new Object[]{section.getKey()}
+                    SinkerRelationMaintainService.CHILD_FOR_SECTION_ENABLED_SECTION_ENABLED,
+                    new Object[]{section.getKey()}
             ).stream().map(SinkerRelation::getKey).collect(Collectors.toList());
 
             assertEquals(0, sinkerRelationKeys.size());

@@ -160,7 +160,8 @@ public class SinkerRelationMaintainServiceImpl implements SinkerRelationMaintain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerRelationKey> batchInsertIfExists(@SkipRecord List<SinkerRelation> elements) throws ServiceException {
+    public List<SinkerRelationKey> batchInsertIfExists(@SkipRecord List<SinkerRelation> elements)
+            throws ServiceException {
         return crudService.batchInsertIfExists(elements);
     }
 
@@ -168,7 +169,8 @@ public class SinkerRelationMaintainServiceImpl implements SinkerRelationMaintain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerRelationKey> batchInsertIfNotExists(@SkipRecord List<SinkerRelation> elements) throws ServiceException {
+    public List<SinkerRelationKey> batchInsertIfNotExists(@SkipRecord List<SinkerRelation> elements)
+            throws ServiceException {
         return crudService.batchInsertIfNotExists(elements);
     }
 
@@ -190,7 +192,8 @@ public class SinkerRelationMaintainServiceImpl implements SinkerRelationMaintain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<SinkerRelationKey> batchInsertOrUpdate(@SkipRecord List<SinkerRelation> elements) throws ServiceException {
+    public List<SinkerRelationKey> batchInsertOrUpdate(@SkipRecord List<SinkerRelation> elements)
+            throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
     }
 
@@ -254,7 +257,8 @@ public class SinkerRelationMaintainServiceImpl implements SinkerRelationMaintain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public PagedData<SinkerRelation> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+    public PagedData<SinkerRelation> lookup(String preset, Object[] objs, PagingInfo pagingInfo)
+            throws ServiceException {
         return presetLookupService.lookup(preset, objs, pagingInfo);
     }
 
@@ -270,7 +274,8 @@ public class SinkerRelationMaintainServiceImpl implements SinkerRelationMaintain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<SinkerRelation> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+    public List<SinkerRelation> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo)
+            throws ServiceException {
         return presetLookupService.lookupAsList(preset, objs, pagingInfo);
     }
 

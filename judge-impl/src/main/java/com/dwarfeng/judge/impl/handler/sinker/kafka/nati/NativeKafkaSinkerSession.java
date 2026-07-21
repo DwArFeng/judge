@@ -96,7 +96,9 @@ public class NativeKafkaSinkerSession extends AbstractSinkerSession {
         }
     }
 
-    private NativeKafkaSinkerSinkInfo parseSinkInfo(LongIdKey sectionKey, Map<String, SinkerMetaInfo> sinkerMetaInfoMap) {
+    private NativeKafkaSinkerSinkInfo parseSinkInfo(
+            LongIdKey sectionKey, Map<String, SinkerMetaInfo> sinkerMetaInfoMap
+    ) {
         // 获取指示器值并进行检查。
         String patternString = sinkerMetaInfoMap.get(NativeKafkaSinkerConstants.INDICATOR_LABEL_PARTITION)
                 .getEquivalentValue();

@@ -87,7 +87,9 @@ public class IdentityExecutor extends AbstractExecutor {
                 convertedValue = (Double) rawValue;
                 break;
             case Constants.ANALYSIS_TYPE_STRING:
-                convertedValue = parseDouble("input_analysis_data_id=" + config.getInputAnalysisDataId(), (String) rawValue);
+                convertedValue = parseDouble(
+                        "input_analysis_data_id=" + config.getInputAnalysisDataId(), (String) rawValue
+                );
                 break;
             case Constants.ANALYSIS_TYPE_BOOLEAN:
                 convertedValue = parseBooleanValue((Boolean) rawValue);
