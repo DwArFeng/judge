@@ -4,7 +4,12 @@
 
 ### 功能构建
 
-- (无)
+- `judge-stack` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.stack.dao.ProviderSupportDao。
+  - com.dwarfeng.judge.stack.dao.SinkerMetaIndicatorDao。
+  - com.dwarfeng.judge.stack.dao.SinkerRelationDao。
+  - com.dwarfeng.judge.stack.service。
+  - com.dwarfeng.judge.stack.service.ProviderSessionQosService。
 
 ### Bug 修复
 

@@ -62,7 +62,9 @@ public interface ProviderSessionQosService extends Service {
         private final Provider provider;
         private final ProviderSession providerSession;
 
-        public ProviderSessionDescription(ProviderInfo providerInfo, Provider provider, ProviderSession providerSession) {
+        public ProviderSessionDescription(
+                ProviderInfo providerInfo, Provider provider, ProviderSession providerSession
+        ) {
             this.providerInfo = providerInfo;
             this.provider = provider;
             this.providerSession = providerSession;

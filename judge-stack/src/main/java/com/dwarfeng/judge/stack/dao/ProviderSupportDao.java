@@ -12,6 +12,6 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * @author wangyc
  * @since 2.1.0-beta
  */
-public interface ProviderSupportDao extends BatchBaseDao<StringIdKey, ProviderSupport>, EntireLookupDao<ProviderSupport>,
-        PresetLookupDao<ProviderSupport> {
+public interface ProviderSupportDao extends BatchBaseDao<StringIdKey, ProviderSupport>,
+        EntireLookupDao<ProviderSupport>, PresetLookupDao<ProviderSupport> {
 }

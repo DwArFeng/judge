@@ -12,6 +12,6 @@ import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
  * @author wangyc
  * @since 2.1.0-beta
  */
-public interface SinkerRelationDao extends BatchBaseDao<SinkerRelationKey, SinkerRelation>, EntireLookupDao<SinkerRelation>,
-        PresetLookupDao<SinkerRelation> {
+public interface SinkerRelationDao extends BatchBaseDao<SinkerRelationKey, SinkerRelation>,
+        EntireLookupDao<SinkerRelation>, PresetLookupDao<SinkerRelation> {
 }
