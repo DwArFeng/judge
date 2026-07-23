@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/CoreConcepts.md。
+
 - 推送机制新增系统事件。
   - com.dwarfeng.judge.stack.handler.PushHandler.alarmAppeared。
   - com.dwarfeng.judge.stack.handler.PushHandler.alarmLevelIncreased。
