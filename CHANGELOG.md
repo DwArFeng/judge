@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 增加预设的运维指令。
+  - com.dwarfeng.judge.impl.service.telqos.AlarmModalCommand。
+  - com.dwarfeng.judge.impl.service.telqos.VerdictCommand。
+
 - 实现核心机制。
   - 报警机制。
 
