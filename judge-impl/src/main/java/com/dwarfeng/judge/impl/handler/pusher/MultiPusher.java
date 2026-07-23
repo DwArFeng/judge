@@ -3,6 +3,7 @@ package com.dwarfeng.judge.impl.handler.pusher;
 import com.dwarfeng.judge.sdk.handler.Pusher;
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
 import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
@@ -176,6 +177,50 @@ public class MultiPusher extends AbstractPusher {
                 delegate.purgeFailed();
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送数据失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void alarmAppeared(AlarmModal alarmModal) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.alarmAppeared(alarmModal);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void alarmLevelIncreased(AlarmModal alarmModal) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.alarmLevelIncreased(alarmModal);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void alarmLevelDecreased(AlarmModal alarmModal) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.alarmLevelDecreased(alarmModal);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void alarmDisappeared(AlarmModal alarmModal) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.alarmDisappeared(alarmModal);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
             }
         }
     }

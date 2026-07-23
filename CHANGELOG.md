@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 推送机制新增系统事件。
+  - com.dwarfeng.judge.stack.handler.PushHandler.alarmAppeared。
+  - com.dwarfeng.judge.stack.handler.PushHandler.alarmLevelIncreased。
+  - com.dwarfeng.judge.stack.handler.PushHandler.alarmLevelDecreased。
+  - com.dwarfeng.judge.stack.handler.PushHandler.alarmDisappeared。
+
 - 增加预设的运维指令。
   - com.dwarfeng.judge.impl.service.telqos.AlarmModalCommand。
   - com.dwarfeng.judge.impl.service.telqos.VerdictCommand。

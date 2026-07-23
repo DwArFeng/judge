@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler.pusher;
 
 import com.dwarfeng.judge.sdk.handler.pusher.AbstractPusher;
 import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import org.springframework.stereotype.Component;
 
@@ -66,6 +67,22 @@ public class DrainPusher extends AbstractPusher {
 
     @Override
     public void purgeFailed() {
+    }
+
+    @Override
+    public void alarmAppeared(AlarmModal alarmModal) {
+    }
+
+    @Override
+    public void alarmLevelIncreased(AlarmModal alarmModal) {
+    }
+
+    @Override
+    public void alarmLevelDecreased(AlarmModal alarmModal) {
+    }
+
+    @Override
+    public void alarmDisappeared(AlarmModal alarmModal) {
     }
 
     @Override

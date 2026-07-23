@@ -6,6 +6,7 @@ import com.dwarfeng.judge.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.key.AlarmKey;
 import com.dwarfeng.judge.stack.handler.AlarmModalOperateHandler;
+import com.dwarfeng.judge.stack.handler.PushHandler;
 import com.dwarfeng.judge.stack.service.AlarmHistoryMaintainService;
 import com.dwarfeng.judge.stack.service.AlarmMaintainService;
 import com.dwarfeng.judge.stack.service.AlarmModalMaintainService;
@@ -27,6 +28,8 @@ public class AlarmModalOperateHandlerImpl implements AlarmModalOperateHandler {
     private final AlarmMaintainService alarmMaintainService;
     private final AlarmHistoryMaintainService alarmHistoryMaintainService;
 
+    private final PushHandler pushHandler;
+
     private final KeyGenerator<LongIdKey> keyGenerator;
 
     private final HandlerValidator handlerValidator;
@@ -35,12 +38,14 @@ public class AlarmModalOperateHandlerImpl implements AlarmModalOperateHandler {
             AlarmModalMaintainService alarmModalMaintainService,
             AlarmMaintainService alarmMaintainService,
             AlarmHistoryMaintainService alarmHistoryMaintainService,
+            PushHandler pushHandler,
             KeyGenerator<LongIdKey> keyGenerator,
             HandlerValidator handlerValidator
     ) {
         this.alarmModalMaintainService = alarmModalMaintainService;
         this.alarmMaintainService = alarmMaintainService;
         this.alarmHistoryMaintainService = alarmHistoryMaintainService;
+        this.pushHandler = pushHandler;
         this.keyGenerator = keyGenerator;
         this.handlerValidator = handlerValidator;
     }
@@ -82,7 +87,7 @@ public class AlarmModalOperateHandlerImpl implements AlarmModalOperateHandler {
         // 插入或更新报警模态。
         alarmModalMaintainService.insertOrUpdate(latestModal);
 
-        // 维护当前报警与报警历史。
+        // 维护当前报警、报警历史，并在分支内推送生命周期事件。
         // 如果当前在报警。
         if (alarming) {
             // 首次进入报警状态。
@@ -91,6 +96,8 @@ public class AlarmModalOperateHandlerImpl implements AlarmModalOperateHandler {
                 alarmMaintainService.insertOrUpdate(
                         new Alarm(alarmKey, happenedDate, message, type, verdictValue, verdictMessage)
                 );
+                // 事件推送。
+                pushHandler.alarmAppeared(latestModal);
             }
             // 非手册进入报警状态，且新旧报警模态类型不一样时。
             else if (!Objects.equals(oldAlarm.getType(), type)) {
@@ -100,6 +107,15 @@ public class AlarmModalOperateHandlerImpl implements AlarmModalOperateHandler {
                 alarmMaintainService.insertOrUpdate(
                         new Alarm(alarmKey, happenedDate, message, type, verdictValue, verdictMessage)
                 );
+                // 在该条件下，报警等级一定会发生升降，进行判断并推送对应事件。
+                int compare = Double.compare(latestModal.getVerdictValue(), oldAlarm.getVerdictValue());
+                if (compare > 0) {
+                    pushHandler.alarmLevelIncreased(latestModal);
+                } else if (compare < 0) {
+                    pushHandler.alarmLevelDecreased(latestModal);
+                } else {
+                    throw new IllegalStateException("不应该执行到此处, 请联系开发人员");
+                }
             }
         }
         // 如果当前不在报警，且存在旧报警。
@@ -108,6 +124,8 @@ public class AlarmModalOperateHandlerImpl implements AlarmModalOperateHandler {
             generateAndInsertAlarmHistory(oldAlarm, sectionKey, dataId, happenedDate);
             // 删除当前的报警。
             alarmMaintainService.delete(alarmKey);
+            // 事件推送。
+            pushHandler.alarmDisappeared(latestModal);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.sdk.handler;
 
 import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
@@ -120,4 +121,52 @@ public interface Pusher {
      * @since 2.2.0
      */
     void purgeFailed() throws HandlerException;
+
+    /**
+     * 报警发生时执行的推送操作。
+     *
+     * <p>
+     * 事件负载为本次更新后的报警模态，订阅方通过方法或 topic 区分事件类型。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmAppeared(AlarmModal alarmModal) throws HandlerException;
+
+    /**
+     * 报警等级提升时执行的推送操作。
+     *
+     * <p>
+     * 事件负载为本次更新后的报警模态，订阅方通过方法或 topic 区分事件类型。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmLevelIncreased(AlarmModal alarmModal) throws HandlerException;
+
+    /**
+     * 报警等级下降时执行的推送操作。
+     *
+     * <p>
+     * 事件负载为本次更新后的报警模态，订阅方通过方法或 topic 区分事件类型。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmLevelDecreased(AlarmModal alarmModal) throws HandlerException;
+
+    /**
+     * 报警消失时执行的推送操作。
+     *
+     * <p>
+     * 事件负载为本次更新后的报警模态，其中 {@code alarming=false}。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmDisappeared(AlarmModal alarmModal) throws HandlerException;
 }

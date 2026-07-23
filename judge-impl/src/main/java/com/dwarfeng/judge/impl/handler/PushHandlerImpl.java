@@ -2,6 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.judge.sdk.handler.Pusher;
 import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.judge.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -92,6 +93,26 @@ public class PushHandlerImpl implements PushHandler {
     @Override
     public void purgeFailed() throws HandlerException {
         pusher.purgeFailed();
+    }
+
+    @Override
+    public void alarmAppeared(AlarmModal alarmModal) throws HandlerException {
+        pusher.alarmAppeared(alarmModal);
+    }
+
+    @Override
+    public void alarmLevelIncreased(AlarmModal alarmModal) throws HandlerException {
+        pusher.alarmLevelIncreased(alarmModal);
+    }
+
+    @Override
+    public void alarmLevelDecreased(AlarmModal alarmModal) throws HandlerException {
+        pusher.alarmLevelDecreased(alarmModal);
+    }
+
+    @Override
+    public void alarmDisappeared(AlarmModal alarmModal) throws HandlerException {
+        pusher.alarmDisappeared(alarmModal);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.dwarfeng.judge.stack.handler;
 
 import com.dwarfeng.judge.stack.bean.dto.PurgeFinishedResult;
+import com.dwarfeng.judge.stack.bean.entity.AlarmModal;
 import com.dwarfeng.judge.stack.bean.entity.Section;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
@@ -113,4 +114,58 @@ public interface PushHandler extends Handler {
      * @since 2.2.0
      */
     void purgeFailed() throws HandlerException;
+
+    /**
+     * 报警发生时执行的推送操作。
+     *
+     * <p>
+     * 当某个 Section/dataId 原本没有当前报警，本次模态更新后进入报警状态时触发。
+     * 事件负载为本次更新后的报警模态。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmAppeared(AlarmModal alarmModal) throws HandlerException;
+
+    /**
+     * 报警等级提升时执行的推送操作。
+     *
+     * <p>
+     * 当某个 Section/dataId 原本处于报警状态，本次仍处于报警状态，
+     * 且新报警对应的 {@code AlarmSetting.threshold} 高于旧报警时触发。
+     * 事件负载为本次更新后的报警模态。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmLevelIncreased(AlarmModal alarmModal) throws HandlerException;
+
+    /**
+     * 报警等级下降时执行的推送操作。
+     *
+     * <p>
+     * 当某个 Section/dataId 原本处于报警状态，本次仍处于报警状态，
+     * 且新报警对应的 {@code AlarmSetting.threshold} 低于旧报警时触发。
+     * 事件负载为本次更新后的报警模态。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmLevelDecreased(AlarmModal alarmModal) throws HandlerException;
+
+    /**
+     * 报警消失时执行的推送操作。
+     *
+     * <p>
+     * 当某个 Section/dataId 原本处于报警状态，本次模态更新后退出报警状态时触发。
+     * 事件负载为本次更新后的报警模态，其中 {@code alarming=false}。
+     *
+     * @param alarmModal 本次更新后的报警模态。
+     * @throws HandlerException 处理器异常。
+     * @since 3.2.0
+     */
+    void alarmDisappeared(AlarmModal alarmModal) throws HandlerException;
 }
