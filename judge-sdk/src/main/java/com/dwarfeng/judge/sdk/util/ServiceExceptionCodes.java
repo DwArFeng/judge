@@ -146,6 +146,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(420), "invalid variable value type");
     public static final ServiceException.Code VARIABLE_VALUE_TYPE_MISMATCH =
             new ServiceException.Code(offset(421), "variable value type mismatch");
+    public static final ServiceException.Code TASK_SECTION_MISMATCH =
+            new ServiceException.Code(offset(430), "task section mismatch");
+    public static final ServiceException.Code INVALID_ALARM_MODAL_UPDATE_INFO =
+            new ServiceException.Code(offset(440), "invalid alarm modal update info");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -237,6 +241,8 @@ public final class ServiceExceptionCodes {
         FILTER_EXECUTION_FAILED.setCode(offset(413));
         INVALID_VARIABLE_VALUE_TYPE.setCode(offset(420));
         VARIABLE_VALUE_TYPE_MISMATCH.setCode(offset(421));
+        TASK_SECTION_MISMATCH.setCode(offset(430));
+        INVALID_ALARM_MODAL_UPDATE_INFO.setCode(offset(440));
     }
 
     private ServiceExceptionCodes() {

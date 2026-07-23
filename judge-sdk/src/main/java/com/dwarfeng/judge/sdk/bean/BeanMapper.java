@@ -840,5 +840,28 @@ public interface BeanMapper {
             WebInputSinkerVariableUpsertInfo webInputSinkerVariableUpsertInfo
     );
 
+    WebInputAlarmModalUpdateInfo alarmModalUpdateInfoToWebInput(AlarmModalUpdateInfo alarmModalUpdateInfo);
+
+    @InheritInverseConfiguration
+    AlarmModalUpdateInfo alarmModalUpdateInfoFromWebInput(
+            WebInputAlarmModalUpdateInfo webInputAlarmModalUpdateInfo
+    );
+
+    WebInputVerdictInspectBySectionInfo verdictInspectBySectionInfoToWebInput(
+            VerdictInspectBySectionInfo verdictInspectBySectionInfo
+    );
+
+    @InheritInverseConfiguration
+    VerdictInspectBySectionInfo verdictInspectBySectionInfoFromWebInput(
+            WebInputVerdictInspectBySectionInfo webInputVerdictInspectBySectionInfo
+    );
+
+    WebInputVerdictUpdateByTaskInfo verdictUpdateByTaskInfoToWebInput(VerdictUpdateByTaskInfo verdictUpdateByTaskInfo);
+
+    @InheritInverseConfiguration
+    VerdictUpdateByTaskInfo verdictUpdateByTaskInfoFromWebInput(
+            WebInputVerdictUpdateByTaskInfo webInputVerdictUpdateByTaskInfo
+    );
+
     // endregion
 }

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SinkInfo implements Dto {
 
-    private static final long serialVersionUID = -3708631880200815710L;
+    private static final long serialVersionUID = -4168979294464179439L;
 
     private LongIdKey sectionKey;
     private LongIdKey taskKey;
@@ -54,6 +54,11 @@ public class SinkInfo implements Dto {
     private List<Judgement> judgements;
     private List<VisualizeData> visualizeDatas;
 
+    /**
+     * @since 3.2.0
+     */
+    private List<AlarmModal> alarmModals;
+
     public SinkInfo() {
     }
 
@@ -62,7 +67,7 @@ public class SinkInfo implements Dto {
             Date taskCreatedDate, Date taskStartedDate, Date taskEndedDate, Long taskDuration,
             Date taskShouldExpireDate, Date taskShouldDieDate, Date taskExpiredDate, Date taskDiedDate,
             String taskAnchorMessage, List<TaskEvent> taskEvents, List<Analysis> analyses, List<Judgement> judgements,
-            List<VisualizeData> visualizeDatas
+            List<VisualizeData> visualizeDatas, List<AlarmModal> alarmModals
     ) {
         this.sectionKey = sectionKey;
         this.taskKey = taskKey;
@@ -82,6 +87,7 @@ public class SinkInfo implements Dto {
         this.analyses = analyses;
         this.judgements = judgements;
         this.visualizeDatas = visualizeDatas;
+        this.alarmModals = alarmModals;
     }
 
     public LongIdKey getSectionKey() {
@@ -228,6 +234,14 @@ public class SinkInfo implements Dto {
         this.visualizeDatas = visualizeDatas;
     }
 
+    public List<AlarmModal> getAlarmModals() {
+        return alarmModals;
+    }
+
+    public void setAlarmModals(List<AlarmModal> alarmModals) {
+        this.alarmModals = alarmModals;
+    }
+
     @Override
     public String toString() {
         return "SinkInfo{" +
@@ -249,6 +263,7 @@ public class SinkInfo implements Dto {
                 ", analyses=" + analyses +
                 ", judgements=" + judgements +
                 ", visualizeDatas=" + visualizeDatas +
+                ", alarmModals=" + alarmModals +
                 '}';
     }
 
@@ -985,6 +1000,110 @@ public class SinkInfo implements Dto {
             return "VisualizeData{" +
                     "perspectiveStringId='" + perspectiveStringId + '\'' +
                     ", content='" + content + '\'' +
+                    '}';
+        }
+    }
+
+    /**
+     * 报警模态。
+     *
+     * @author DwArFeng
+     * @since 3.2.0
+     */
+    public static class AlarmModal implements Dto {
+
+        private static final long serialVersionUID = -2724558678857686768L;
+
+        private String dataId;
+        private boolean alarming;
+        private Date happenedDate;
+        private String message;
+        private String type;
+        private double verdictValue;
+        private String verdictMessage;
+
+        public AlarmModal() {
+        }
+
+        public AlarmModal(
+                String dataId, boolean alarming, Date happenedDate, String message, String type, double verdictValue,
+                String verdictMessage
+        ) {
+            this.dataId = dataId;
+            this.alarming = alarming;
+            this.happenedDate = happenedDate;
+            this.message = message;
+            this.type = type;
+            this.verdictValue = verdictValue;
+            this.verdictMessage = verdictMessage;
+        }
+
+        public String getDataId() {
+            return dataId;
+        }
+
+        public void setDataId(String dataId) {
+            this.dataId = dataId;
+        }
+
+        public boolean isAlarming() {
+            return alarming;
+        }
+
+        public void setAlarming(boolean alarming) {
+            this.alarming = alarming;
+        }
+
+        public Date getHappenedDate() {
+            return happenedDate;
+        }
+
+        public void setHappenedDate(Date happenedDate) {
+            this.happenedDate = happenedDate;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public double getVerdictValue() {
+            return verdictValue;
+        }
+
+        public void setVerdictValue(double verdictValue) {
+            this.verdictValue = verdictValue;
+        }
+
+        public String getVerdictMessage() {
+            return verdictMessage;
+        }
+
+        public void setVerdictMessage(String verdictMessage) {
+            this.verdictMessage = verdictMessage;
+        }
+
+        @Override
+        public String toString() {
+            return "AlarmModal{" +
+                    "dataId='" + dataId + '\'' +
+                    ", alarming=" + alarming +
+                    ", happenedDate=" + happenedDate +
+                    ", message='" + message + '\'' +
+                    ", type='" + type + '\'' +
+                    ", verdictValue=" + verdictValue +
+                    ", verdictMessage='" + verdictMessage + '\'' +
                     '}';
         }
     }

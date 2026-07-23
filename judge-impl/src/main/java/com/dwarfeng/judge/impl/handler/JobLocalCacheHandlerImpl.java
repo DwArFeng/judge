@@ -1,14 +1,8 @@
 package com.dwarfeng.judge.impl.handler;
 
-import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
-import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
-import com.dwarfeng.judge.stack.bean.entity.Section;
-import com.dwarfeng.judge.stack.bean.entity.VisualizerInfo;
+import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.handler.*;
-import com.dwarfeng.judge.stack.service.AnalyserInfoMaintainService;
-import com.dwarfeng.judge.stack.service.JudgerInfoMaintainService;
-import com.dwarfeng.judge.stack.service.SectionMaintainService;
-import com.dwarfeng.judge.stack.service.VisualizerInfoMaintainService;
+import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.judge.stack.struct.JobLocalCache;
 import com.dwarfeng.subgrade.impl.handler.Fetcher;
 import com.dwarfeng.subgrade.impl.handler.GeneralLocalCacheHandler;
@@ -57,6 +51,7 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
     public static class JobLocalCacheFetcher implements Fetcher<LongIdKey, JobLocalCache> {
 
         private final SectionMaintainService sectionMaintainService;
+        private final AlarmSettingMaintainService alarmSettingMaintainService;
         private final AnalyserInfoMaintainService analyserInfoMaintainService;
         private final JudgerInfoMaintainService judgerInfoMaintainService;
         private final VisualizerInfoMaintainService visualizerInfoMaintainService;
@@ -67,6 +62,7 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
 
         public JobLocalCacheFetcher(
                 SectionMaintainService sectionMaintainService,
+                AlarmSettingMaintainService alarmSettingMaintainService,
                 AnalyserInfoMaintainService analyserInfoMaintainService,
                 JudgerInfoMaintainService judgerInfoMaintainService,
                 VisualizerInfoMaintainService visualizerInfoMaintainService,
@@ -75,6 +71,7 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
                 VisualizerHandler visualizerHandler
         ) {
             this.sectionMaintainService = sectionMaintainService;
+            this.alarmSettingMaintainService = alarmSettingMaintainService;
             this.analyserInfoMaintainService = analyserInfoMaintainService;
             this.judgerInfoMaintainService = judgerInfoMaintainService;
             this.visualizerInfoMaintainService = visualizerInfoMaintainService;
@@ -143,9 +140,18 @@ public class JobLocalCacheHandlerImpl implements JobLocalCacheHandler {
                 visualizerMap.put(visualizerInfo.getKey(), visualizer);
             }
 
+            List<AlarmSetting> alarmSettings = alarmSettingMaintainService.lookupAsList(
+                    AlarmSettingMaintainService.CHILD_FOR_SECTION_DATA_ID_ASC_THRESHOLD_DESC, new Object[]{key}
+            );
+            Map<String, List<AlarmSetting>> alarmSettingsMap = new LinkedHashMap<>();
+            for (AlarmSetting alarmSetting : alarmSettings) {
+                alarmSettingsMap.computeIfAbsent(alarmSetting.getDataId(), ignored -> new ArrayList<>())
+                        .add(alarmSetting);
+            }
+
             return new JobLocalCache(
                     section, analyserInfoKeys, analyserInfoMap, analyserMap, judgerInfoKeys, judgerInfoMap, judgerMap,
-                    visualizerInfoKeys, visualizerInfoMap, visualizerMap
+                    visualizerInfoKeys, visualizerInfoMap, visualizerMap, alarmSettingsMap
             );
         }
     }

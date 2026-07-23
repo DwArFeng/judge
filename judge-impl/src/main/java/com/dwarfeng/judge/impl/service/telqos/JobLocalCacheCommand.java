@@ -1,5 +1,6 @@
 package com.dwarfeng.judge.impl.service.telqos;
 
+import com.dwarfeng.judge.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
 import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
 import com.dwarfeng.judge.stack.bean.entity.VisualizerInfo;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @TelqosCommand
@@ -158,6 +160,22 @@ public class JobLocalCacheCommand extends CliCommand {
             Visualizer visualizer = jobLocalCache.getVisualizerMap().get(visualizerInfoKey);
             context.sendMessage(String.format("  %-3d %s", index, visualizerInfo));
             context.sendMessage(String.format("  %-3d %s", index, visualizer));
+        }
+        context.sendMessage("alarm settings:");
+        index = 0;
+        for (Map.Entry<String, List<AlarmSetting>> entry : jobLocalCache.getAlarmSettingsMap().entrySet()) {
+            if (index != 0) {
+                context.sendMessage("");
+            }
+            index++;
+            String dataId = entry.getKey();
+            List<AlarmSetting> alarmSettings = entry.getValue();
+            context.sendMessage(String.format("  %-3d dataId: %s", index, dataId));
+            int settingIndex = 0;
+            for (AlarmSetting alarmSetting : alarmSettings) {
+                settingIndex++;
+                context.sendMessage(String.format("    %-3d %s", settingIndex, alarmSetting));
+            }
         }
     }
 }

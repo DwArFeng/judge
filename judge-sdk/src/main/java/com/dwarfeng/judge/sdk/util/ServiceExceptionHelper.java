@@ -113,6 +113,8 @@ public final class ServiceExceptionHelper {
         map.put(FilterExecutionException.class, ServiceExceptionCodes.FILTER_EXECUTION_FAILED);
         map.put(InvalidVariableValueTypeException.class, ServiceExceptionCodes.INVALID_VARIABLE_VALUE_TYPE);
         map.put(VariableValueTypeMismatchException.class, ServiceExceptionCodes.VARIABLE_VALUE_TYPE_MISMATCH);
+        map.put(TaskSectionMismatchException.class, ServiceExceptionCodes.TASK_SECTION_MISMATCH);
+        map.put(InvalidAlarmModalUpdateInfoException.class, ServiceExceptionCodes.INVALID_ALARM_MODAL_UPDATE_INFO);
         return map;
     }
 

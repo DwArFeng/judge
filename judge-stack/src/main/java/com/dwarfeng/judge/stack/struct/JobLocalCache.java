@@ -1,9 +1,6 @@
 package com.dwarfeng.judge.stack.struct;
 
-import com.dwarfeng.judge.stack.bean.entity.AnalyserInfo;
-import com.dwarfeng.judge.stack.bean.entity.JudgerInfo;
-import com.dwarfeng.judge.stack.bean.entity.Section;
-import com.dwarfeng.judge.stack.bean.entity.VisualizerInfo;
+import com.dwarfeng.judge.stack.bean.entity.*;
 import com.dwarfeng.judge.stack.handler.Analyser;
 import com.dwarfeng.judge.stack.handler.Judger;
 import com.dwarfeng.judge.stack.handler.Visualizer;
@@ -70,12 +67,24 @@ public final class JobLocalCache {
     private final Map<LongIdKey, VisualizerInfo> visualizerInfoMap;
     private final Map<LongIdKey, Visualizer> visualizerMap;
 
+    /**
+     * 报警设置快照映射。
+     *
+     * <p>
+     * key 为数据点标识 {@code dataId}；value 为该 {@code dataId} 对应的报警设置列表。
+     *
+     * <p>
+     * value 中的列表保留数据库查询返回顺序，同一 {@code dataId} 下按 threshold 降序排列。
+     */
+    private final Map<String, List<AlarmSetting>> alarmSettingsMap;
+
     public JobLocalCache(
             Section section, List<LongIdKey> analyserInfoKeys, Map<LongIdKey, AnalyserInfo> analyserInfoMap,
             Map<LongIdKey, Analyser> analyserMap, List<LongIdKey> judgerInfoKeys,
             Map<LongIdKey, JudgerInfo> judgerInfoMap, Map<LongIdKey, Judger> judgerMap,
             List<LongIdKey> visualizerInfoKeys, Map<LongIdKey, VisualizerInfo> visualizerInfoMap,
-            Map<LongIdKey, Visualizer> visualizerMap
+            Map<LongIdKey, Visualizer> visualizerMap,
+            Map<String, List<AlarmSetting>> alarmSettingsMap
     ) {
         this.section = section;
         this.analyserInfoKeys = analyserInfoKeys;
@@ -87,6 +96,7 @@ public final class JobLocalCache {
         this.visualizerInfoKeys = visualizerInfoKeys;
         this.visualizerInfoMap = visualizerInfoMap;
         this.visualizerMap = visualizerMap;
+        this.alarmSettingsMap = alarmSettingsMap;
     }
 
     public Section getSection() {
@@ -129,6 +139,10 @@ public final class JobLocalCache {
         return visualizerMap;
     }
 
+    public Map<String, List<AlarmSetting>> getAlarmSettingsMap() {
+        return alarmSettingsMap;
+    }
+
     @Override
     public String toString() {
         return "JobLocalCache{" +
@@ -142,6 +156,7 @@ public final class JobLocalCache {
                 ", visualizerInfoKeys=" + visualizerInfoKeys +
                 ", visualizerInfoMap=" + visualizerInfoMap +
                 ", visualizerMap=" + visualizerMap +
+                ", alarmSettingsMap=" + alarmSettingsMap +
                 '}';
     }
 }

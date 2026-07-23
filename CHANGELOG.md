@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 实现核心机制。
+  - 报警机制。
+
 - 新建实体以及维护服务，并通过单元测试。
   - com.dwarfeng.judge.stack.bean.entity.Alarm。
   - com.dwarfeng.judge.stack.bean.entity.AlarmHistory。

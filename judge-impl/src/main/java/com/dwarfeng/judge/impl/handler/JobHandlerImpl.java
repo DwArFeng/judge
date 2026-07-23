@@ -4,12 +4,15 @@ import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.judge.sdk.util.Constants;
 import com.dwarfeng.judge.stack.bean.dto.*;
 import com.dwarfeng.judge.stack.bean.entity.*;
+import com.dwarfeng.judge.stack.bean.key.AlarmKey;
 import com.dwarfeng.judge.stack.handler.*;
 import com.dwarfeng.judge.stack.service.*;
 import com.dwarfeng.judge.stack.struct.JobLocalCache;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,6 +58,7 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisFilePackMaintainService analysisFilePackMaintainService;
     private final AnalysisFilePackItemInfoMaintainService analysisFilePackItemInfoMaintainService;
     private final VisualizeDataMaintainService visualizeDataMaintainService;
+    private final AlarmModalMaintainService alarmModalMaintainService;
 
     private final TaskOperateHandler taskOperateHandler;
     private final TaskEventOperateHandler taskEventOperateHandler;
@@ -69,7 +73,11 @@ public class JobHandlerImpl implements JobHandler {
     private final AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler;
     private final JudgementOperateHandler judgementOperateHandler;
     private final VisualizeDataOperateHandler visualizeDataOperateHandler;
+    private final VerdictOperateHandler verdictOperateHandler;
+    private final AlarmModalOperateHandler alarmModalOperateHandler;
     private final SinkHandler sinkHandler;
+
+    private final CuratorFramework curatorFramework;
 
     private final ThreadPoolTaskExecutor executor;
     private final ThreadPoolTaskScheduler scheduler;
@@ -78,6 +86,9 @@ public class JobHandlerImpl implements JobHandler {
 
     @Value("${com.dwarfeng.judge.task.beat_interval}")
     private long beatInterval;
+
+    @Value("${com.dwarfeng.judge.curator.latch_path.job.section}")
+    private String sectionLatchPath;
 
     public JobHandlerImpl(
             ApplicationContext ctx,
@@ -93,6 +104,7 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisFilePackMaintainService analysisFilePackMaintainService,
             AnalysisFilePackItemInfoMaintainService analysisFilePackItemInfoMaintainService,
             VisualizeDataMaintainService visualizeDataMaintainService,
+            AlarmModalMaintainService alarmModalMaintainService,
             TaskOperateHandler taskOperateHandler,
             TaskEventOperateHandler taskEventOperateHandler,
             JobLocalCacheHandler jobLocalCacheHandler,
@@ -106,7 +118,10 @@ public class JobHandlerImpl implements JobHandler {
             AnalysisFilePackItemFileOperateHandler analysisFilePackItemFileOperateHandler,
             JudgementOperateHandler judgementOperateHandler,
             VisualizeDataOperateHandler visualizeDataOperateHandler,
+            VerdictOperateHandler verdictOperateHandler,
+            AlarmModalOperateHandler alarmModalOperateHandler,
             SinkHandler sinkHandler,
+            CuratorFramework curatorFramework,
             ThreadPoolTaskExecutor executor,
             ThreadPoolTaskScheduler scheduler,
             HandlerValidator handlerValidator
@@ -124,6 +139,7 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisFilePackMaintainService = analysisFilePackMaintainService;
         this.analysisFilePackItemInfoMaintainService = analysisFilePackItemInfoMaintainService;
         this.visualizeDataMaintainService = visualizeDataMaintainService;
+        this.alarmModalMaintainService = alarmModalMaintainService;
         this.taskOperateHandler = taskOperateHandler;
         this.taskEventOperateHandler = taskEventOperateHandler;
         this.jobLocalCacheHandler = jobLocalCacheHandler;
@@ -137,7 +153,10 @@ public class JobHandlerImpl implements JobHandler {
         this.analysisFilePackItemFileOperateHandler = analysisFilePackItemFileOperateHandler;
         this.judgementOperateHandler = judgementOperateHandler;
         this.visualizeDataOperateHandler = visualizeDataOperateHandler;
+        this.verdictOperateHandler = verdictOperateHandler;
+        this.alarmModalOperateHandler = alarmModalOperateHandler;
         this.sinkHandler = sinkHandler;
+        this.curatorFramework = curatorFramework;
         this.executor = executor;
         this.scheduler = scheduler;
         this.handlerValidator = handlerValidator;
@@ -227,7 +246,25 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
+        // 在分布式锁中执行作业主逻辑。
+        InterProcessMutex mutex = new InterProcessMutex(
+                curatorFramework, sectionLatchPath + "/" + sectionKey.getLongId()
+        );
+        boolean acquired = false;
+        try {
+            mutex.acquire();
+            acquired = true;
+            execute1(taskKey, sectionKey, beatTaskFuture);
+        } finally {
+            if (acquired) {
+                mutex.release();
+            }
+        }
+    }
+
+    private void execute1(LongIdKey taskKey, LongIdKey sectionKey, Future<?> beatTaskFuture) throws Exception {
         // 根据部件主键获取作业本地缓存，并展开参数。
+        JobLocalCache jobLocalCache;
         List<LongIdKey> analyserInfoKeys;
         Map<LongIdKey, Analyser> analyserMap;
         List<LongIdKey> judgerInfoKeys;
@@ -235,7 +272,7 @@ public class JobHandlerImpl implements JobHandler {
         List<LongIdKey> visualizerInfoKeys;
         Map<LongIdKey, Visualizer> visualizerMap;
         try {
-            JobLocalCache jobLocalCache = jobLocalCacheHandler.get(sectionKey);
+            jobLocalCache = jobLocalCacheHandler.get(sectionKey);
             analyserInfoKeys = jobLocalCache.getAnalyserInfoKeys();
             analyserMap = jobLocalCache.getAnalyserMap();
             judgerInfoKeys = jobLocalCache.getJudgerInfoKeys();
@@ -303,6 +340,22 @@ public class JobHandlerImpl implements JobHandler {
             return;
         }
 
+        // 进行报警。
+        try {
+            alarm(sectionKey, taskKey, jobLocalCache);
+        } catch (Exception e) {
+            // 取消心跳任务。
+            beatTaskFuture.cancel(true);
+            // 记录日志。
+            LOGGER.warn("作业执行失败, 任务主键: {}, 部件主键: {}, 异常信息如下: ", taskKey, sectionKey, e);
+            // 插入任务事件。
+            taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, "作业执行失败, 请查看系统日志以了解详细原因"));
+            // 将任务状态置为失败。
+            taskOperateHandler.fail(new TaskFailInfo(taskKey));
+            // 结束方法。
+            return;
+        }
+
         // 进行下沉。
         try {
             sink(sectionKey, taskKey);
@@ -339,7 +392,7 @@ public class JobHandlerImpl implements JobHandler {
             Map<LongIdKey, Analyser> analyserMap
     ) throws Exception {
         // 开始计时，创建任务事件。
-        String taskMessage = "作业步骤 1/4: 开始分析...";
+        String taskMessage = "作业步骤 1/5: 开始分析...";
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
         TimeMeasurer tm = new TimeMeasurer();
@@ -371,7 +424,7 @@ public class JobHandlerImpl implements JobHandler {
 
         // 结束计时，创建任务事件。
         tm.stop();
-        taskMessage = String.format("作业步骤 1/4: 分析完成, 耗时 %d ms", tm.getTimeMs());
+        taskMessage = String.format("作业步骤 1/5: 分析完成, 耗时 %d ms", tm.getTimeMs());
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
@@ -381,7 +434,7 @@ public class JobHandlerImpl implements JobHandler {
             Map<LongIdKey, Judger> judgerMap
     ) throws Exception {
         // 开始计时，创建任务事件。
-        String taskMessage = "作业步骤 2/4: 开始判断...";
+        String taskMessage = "作业步骤 2/5: 开始判断...";
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
         TimeMeasurer tm = new TimeMeasurer();
@@ -413,7 +466,7 @@ public class JobHandlerImpl implements JobHandler {
 
         // 结束计时，创建任务事件。
         tm.stop();
-        taskMessage = String.format("作业步骤 2/4: 判断完成, 耗时 %d ms", tm.getTimeMs());
+        taskMessage = String.format("作业步骤 2/5: 判断完成, 耗时 %d ms", tm.getTimeMs());
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
@@ -423,7 +476,7 @@ public class JobHandlerImpl implements JobHandler {
             Map<LongIdKey, Visualizer> visualizerMap
     ) throws Exception {
         // 开始计时，创建任务事件。
-        String taskMessage = "作业步骤 3/4: 开始可视化...";
+        String taskMessage = "作业步骤 3/5: 开始可视化...";
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
         TimeMeasurer tm = new TimeMeasurer();
@@ -455,14 +508,70 @@ public class JobHandlerImpl implements JobHandler {
 
         // 结束计时，创建任务事件。
         tm.stop();
-        taskMessage = String.format("作业步骤 3/4: 可视化完成, 耗时 %d ms", tm.getTimeMs());
+        taskMessage = String.format("作业步骤 3/5: 可视化完成, 耗时 %d ms", tm.getTimeMs());
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
 
+    private void alarm(LongIdKey sectionKey, LongIdKey taskKey, JobLocalCache jobLocalCache) throws Exception {
+        String taskMessage = "作业步骤 4/5: 开始报警...";
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
+        TimeMeasurer tm = new TimeMeasurer();
+        tm.start();
+
+        Date happenedDate = new Date();
+        verdictOperateHandler.updateByTask(new VerdictUpdateByTaskInfo(taskKey, sectionKey));
+        List<Verdict> verdicts = verdictOperateHandler.inspectBySection(
+                new VerdictInspectBySectionInfo(sectionKey)
+        ).getVerdicts();
+        Map<String, List<AlarmSetting>> alarmSettingsMap = jobLocalCache.getAlarmSettingsMap();
+        for (Verdict verdict : verdicts) {
+            AlarmModal alarmModal = calculateLatestAlarmModal(
+                    verdict, happenedDate, alarmSettingsMap
+            );
+            alarmModalOperateHandler.updateModal(new AlarmModalUpdateInfo(
+                    sectionKey,
+                    verdict.getKey().getDataStringId(),
+                    alarmModal.isAlarming(),
+                    happenedDate,
+                    alarmModal.getMessage(),
+                    alarmModal.getType(),
+                    alarmModal.getVerdictValue(),
+                    alarmModal.getVerdictMessage()
+            ));
+        }
+
+        tm.stop();
+        taskMessage = String.format("作业步骤 4/5: 报警完成, 耗时 %d ms", tm.getTimeMs());
+        taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
+        taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
+    }
+
+    private AlarmModal calculateLatestAlarmModal(
+            Verdict verdict, Date happenedDate, Map<String, List<AlarmSetting>> alarmSettingsMap
+    ) {
+        String dataId = verdict.getKey().getDataStringId();
+        double value = verdict.getValue();
+        String verdictMessage = verdict.getMessage();
+        AlarmKey alarmKey = new AlarmKey(verdict.getKey().getSectionLongId(), dataId);
+        List<AlarmSetting> alarmSettings = alarmSettingsMap.get(dataId);
+        if (Objects.nonNull(alarmSettings)) {
+            for (AlarmSetting alarmSetting : alarmSettings) {
+                if (value >= alarmSetting.getThreshold()) {
+                    return new AlarmModal(
+                            alarmKey, true, happenedDate, alarmSetting.getMessage(), alarmSetting.getType(),
+                            value, verdictMessage
+                    );
+                }
+            }
+        }
+        return new AlarmModal(alarmKey, false, happenedDate, null, null, value, verdictMessage);
+    }
+
     private void sink(LongIdKey sectionKey, LongIdKey taskKey) throws Exception {
         // 开始计时，创建任务事件。
-        String taskMessage = "作业步骤 4/4: 开始下沉...";
+        String taskMessage = "作业步骤 5/5: 开始下沉...";
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
         TimeMeasurer tm = new TimeMeasurer();
@@ -475,19 +584,20 @@ public class JobHandlerImpl implements JobHandler {
         List<SinkInfo.Analysis> analyses = lookupAnalyses(taskKey);
         List<SinkInfo.Judgement> judgements = lookupJudgements(taskKey);
         List<SinkInfo.VisualizeData> visualizeDatas = lookupVisualizeDatas(taskKey);
+        List<SinkInfo.AlarmModal> alarmModals = lookupAlarmModals(sectionKey);
         SinkInfo sinkInfo = new SinkInfo(
                 sectionKey, taskKey,
                 section.getName(), section.getRemark(),
                 task.getStatus(), task.getCreatedDate(), task.getStartedDate(), task.getEndedDate(), task.getDuration(),
                 task.getShouldExpireDate(), task.getShouldDieDate(), task.getExpiredDate(), task.getDiedDate(),
                 task.getAnchorMessage(),
-                taskEvents, analyses, judgements, visualizeDatas
+                taskEvents, analyses, judgements, visualizeDatas, alarmModals
         );
         sinkHandler.sink(sinkInfo);
 
         // 结束计时，创建任务事件。
         tm.stop();
-        taskMessage = String.format("作业步骤 4/4: 下沉完成, 耗时 %d ms", tm.getTimeMs());
+        taskMessage = String.format("作业步骤 5/5: 下沉完成, 耗时 %d ms", tm.getTimeMs());
         taskEventOperateHandler.create(new TaskEventCreateInfo(taskKey, taskMessage));
         taskOperateHandler.updateModal(new TaskUpdateModalInfo(taskKey, taskMessage));
     }
@@ -632,6 +742,25 @@ public class JobHandlerImpl implements JobHandler {
             ));
         }
         return sinkInfoVisualizeDatas;
+    }
+
+    private List<SinkInfo.AlarmModal> lookupAlarmModals(LongIdKey sectionKey) throws Exception {
+        List<AlarmModal> alarmModals = alarmModalMaintainService.lookupAsList(
+                AlarmModalMaintainService.CHILD_FOR_SECTION, new Object[]{sectionKey}
+        );
+        List<SinkInfo.AlarmModal> sinkInfoAlarmModals = new ArrayList<>(alarmModals.size());
+        for (AlarmModal alarmModal : alarmModals) {
+            sinkInfoAlarmModals.add(new SinkInfo.AlarmModal(
+                    alarmModal.getKey().getDataStringId(),
+                    alarmModal.isAlarming(),
+                    alarmModal.getHappenedDate(),
+                    alarmModal.getMessage(),
+                    alarmModal.getType(),
+                    alarmModal.getVerdictValue(),
+                    alarmModal.getVerdictMessage()
+            ));
+        }
+        return sinkInfoAlarmModals;
     }
 
     /**

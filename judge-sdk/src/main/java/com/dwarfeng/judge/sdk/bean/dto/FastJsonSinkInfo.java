@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class FastJsonSinkInfo implements Dto {
 
-    private static final long serialVersionUID = 4540322352025692678L;
+    private static final long serialVersionUID = -2205211731014497656L;
 
     public static FastJsonSinkInfo of(SinkInfo sinkInfo) {
         if (Objects.isNull(sinkInfo)) {
@@ -52,6 +52,9 @@ public class FastJsonSinkInfo implements Dto {
                     ).orElse(null),
                     Optional.ofNullable(sinkInfo.getVisualizeDatas()).map(
                             f -> f.stream().map(FastJsonVisualizeData::of).collect(Collectors.toList())
+                    ).orElse(null),
+                    Optional.ofNullable(sinkInfo.getAlarmModals()).map(
+                            f -> f.stream().map(FastJsonAlarmModal::of).collect(Collectors.toList())
                     ).orElse(null)
             );
         }
@@ -111,6 +114,9 @@ public class FastJsonSinkInfo implements Dto {
     @JSONField(name = "visualize_datas", ordinal = 18)
     private List<FastJsonVisualizeData> visualizeDatas;
 
+    @JSONField(name = "alarm_modals", ordinal = 19)
+    private List<FastJsonAlarmModal> alarmModals;
+
     public FastJsonSinkInfo() {
     }
 
@@ -119,7 +125,8 @@ public class FastJsonSinkInfo implements Dto {
             int taskStatus, Date taskCreatedDate, Date taskStartedDate, Date taskEndedDate, Long taskDuration,
             Date taskShouldExpireDate, Date taskShouldDieDate, Date taskExpiredDate, Date taskDiedDate,
             String taskAnchorMessage, List<FastJsonTaskEvent> taskEvents, List<FastJsonAnalysis> analyses,
-            List<FastJsonJudgement> judgements, List<FastJsonVisualizeData> visualizeDatas
+            List<FastJsonJudgement> judgements, List<FastJsonVisualizeData> visualizeDatas,
+            List<FastJsonAlarmModal> alarmModals
     ) {
         this.sectionKey = sectionKey;
         this.taskKey = taskKey;
@@ -139,6 +146,7 @@ public class FastJsonSinkInfo implements Dto {
         this.analyses = analyses;
         this.judgements = judgements;
         this.visualizeDatas = visualizeDatas;
+        this.alarmModals = alarmModals;
     }
 
     public Date getTaskShouldDieDate() {
@@ -285,6 +293,14 @@ public class FastJsonSinkInfo implements Dto {
         this.visualizeDatas = visualizeDatas;
     }
 
+    public List<FastJsonAlarmModal> getAlarmModals() {
+        return alarmModals;
+    }
+
+    public void setAlarmModals(List<FastJsonAlarmModal> alarmModals) {
+        this.alarmModals = alarmModals;
+    }
+
     @Override
     public String toString() {
         return "FastJsonSinkInfo{" +
@@ -306,6 +322,7 @@ public class FastJsonSinkInfo implements Dto {
                 ", analyses=" + analyses +
                 ", judgements=" + judgements +
                 ", visualizeDatas=" + visualizeDatas +
+                ", alarmModals=" + alarmModals +
                 '}';
     }
 
@@ -1140,6 +1157,139 @@ public class FastJsonSinkInfo implements Dto {
             return "FastJsonVisualizeData{" +
                     "perspectiveStringId='" + perspectiveStringId + '\'' +
                     ", content='" + content + '\'' +
+                    '}';
+        }
+    }
+
+    /**
+     * FastJson 报警模态。
+     *
+     * @author DwArFeng
+     * @since 3.2.0
+     */
+    public static class FastJsonAlarmModal implements Dto {
+
+        private static final long serialVersionUID = -4933882442573391456L;
+
+        public static FastJsonAlarmModal of(AlarmModal alarmModal) {
+            if (Objects.isNull(alarmModal)) {
+                return null;
+            } else {
+                return new FastJsonAlarmModal(
+                        alarmModal.getDataId(),
+                        alarmModal.isAlarming(),
+                        alarmModal.getHappenedDate(),
+                        alarmModal.getMessage(),
+                        alarmModal.getType(),
+                        alarmModal.getVerdictValue(),
+                        alarmModal.getVerdictMessage()
+                );
+            }
+        }
+
+        @JSONField(name = "data_id", ordinal = 1)
+        private String dataId;
+
+        @JSONField(name = "alarming", ordinal = 2)
+        private boolean alarming;
+
+        @JSONField(name = "happened_date", ordinal = 3)
+        private Date happenedDate;
+
+        @JSONField(name = "message", ordinal = 4)
+        private String message;
+
+        @JSONField(name = "type", ordinal = 5)
+        private String type;
+
+        @JSONField(name = "verdict_value", ordinal = 6)
+        private double verdictValue;
+
+        @JSONField(name = "verdict_message", ordinal = 7)
+        private String verdictMessage;
+
+        public FastJsonAlarmModal() {
+        }
+
+        public FastJsonAlarmModal(
+                String dataId, boolean alarming, Date happenedDate, String message, String type, double verdictValue,
+                String verdictMessage
+        ) {
+            this.dataId = dataId;
+            this.alarming = alarming;
+            this.happenedDate = happenedDate;
+            this.message = message;
+            this.type = type;
+            this.verdictValue = verdictValue;
+            this.verdictMessage = verdictMessage;
+        }
+
+        public String getDataId() {
+            return dataId;
+        }
+
+        public void setDataId(String dataId) {
+            this.dataId = dataId;
+        }
+
+        public boolean isAlarming() {
+            return alarming;
+        }
+
+        public void setAlarming(boolean alarming) {
+            this.alarming = alarming;
+        }
+
+        public Date getHappenedDate() {
+            return happenedDate;
+        }
+
+        public void setHappenedDate(Date happenedDate) {
+            this.happenedDate = happenedDate;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public double getVerdictValue() {
+            return verdictValue;
+        }
+
+        public void setVerdictValue(double verdictValue) {
+            this.verdictValue = verdictValue;
+        }
+
+        public String getVerdictMessage() {
+            return verdictMessage;
+        }
+
+        public void setVerdictMessage(String verdictMessage) {
+            this.verdictMessage = verdictMessage;
+        }
+
+        @Override
+        public String toString() {
+            return "FastJsonAlarmModal{" +
+                    "dataId='" + dataId + '\'' +
+                    ", alarming=" + alarming +
+                    ", happenedDate=" + happenedDate +
+                    ", message='" + message + '\'' +
+                    ", type='" + type + '\'' +
+                    ", verdictValue=" + verdictValue +
+                    ", verdictMessage='" + verdictMessage + '\'' +
                     '}';
         }
     }

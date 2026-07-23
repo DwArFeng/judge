@@ -2,10 +2,7 @@ package com.dwarfeng.judge.impl.handler;
 
 import com.dwarfeng.dutil.basic.cls.ClassUtil;
 import com.dwarfeng.judge.sdk.util.Constants;
-import com.dwarfeng.judge.stack.bean.dto.AnalysisFilePackUpsertInfo;
-import com.dwarfeng.judge.stack.bean.dto.AnalysisFileUpsertInfo;
-import com.dwarfeng.judge.stack.bean.dto.AnalysisPicturePackUpsertInfo;
-import com.dwarfeng.judge.stack.bean.dto.AnalysisPictureUpsertInfo;
+import com.dwarfeng.judge.stack.bean.dto.*;
 import com.dwarfeng.judge.stack.bean.entity.Task;
 import com.dwarfeng.judge.stack.bean.key.*;
 import com.dwarfeng.judge.stack.exception.*;
@@ -376,6 +373,44 @@ public class HandlerValidator {
         // 如果 actualValueClazz 不是 expectedValueClazz 或 expectedValueClazz 的子类，则抛出异常。
         if (!expectedValueClazz.isAssignableFrom(actualValueClazz)) {
             throw new VariableValueTypeMismatchException(valueType, expectedValueClazz, actualValueClazz);
+        }
+    }
+
+    public void makeSureVerdictUpdateByTaskInfoValid(VerdictUpdateByTaskInfo info) throws HandlerException {
+        LongIdKey taskKey = info.getTaskKey();
+        LongIdKey sectionKey = info.getSectionKey();
+        if (Objects.isNull(taskKey) || Objects.isNull(sectionKey)) {
+            throw new TaskSectionMismatchException(taskKey, sectionKey, sectionKey);
+        }
+        makeSureTaskExists(taskKey);
+        makeSureSectionExists(sectionKey);
+        try {
+            Task task = taskMaintainService.get(taskKey);
+            LongIdKey taskSectionKey = task.getSectionKey();
+            if (!Objects.equals(taskSectionKey, sectionKey)) {
+                throw new TaskSectionMismatchException(taskKey, taskSectionKey, sectionKey);
+            }
+        } catch (HandlerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureAlarmModalUpdateInfoValid(AlarmModalUpdateInfo info) throws HandlerException {
+        LongIdKey sectionKey = info.getSectionKey();
+        String dataId = info.getDataId();
+        Date happenedDate = info.getHappenedDate();
+        if (Objects.isNull(sectionKey) || Objects.isNull(dataId) || Objects.isNull(happenedDate)) {
+            throw new InvalidAlarmModalUpdateInfoException("sectionKey、dataId 和 happenedDate 均不能为空");
+        }
+        makeSureSectionExists(sectionKey);
+        if (info.isAlarming()) {
+            if (Objects.isNull(info.getMessage()) || Objects.isNull(info.getType())) {
+                throw new InvalidAlarmModalUpdateInfoException("报警状态下 message 和 type 均不能为空");
+            }
+        } else if (Objects.nonNull(info.getMessage()) || Objects.nonNull(info.getType())) {
+            throw new InvalidAlarmModalUpdateInfoException("非报警状态下 message 和 type 必须为 null");
         }
     }
 }

@@ -96,6 +96,8 @@ com.dwarfeng.judge.curator.latch_path.task_check.leader_latch=/judge/task_check/
 com.dwarfeng.judge.curator.latch_path.supervise.leader_latch=/judge/supervise/leader_latch
 # 清除服务的领导者锁存的路径。
 com.dwarfeng.judge.curator.latch_path.purge.leader_latch=/judge/purge/leader_latch
+# 作业 Section 级互斥锁根路径。
+com.dwarfeng.judge.curator.latch_path.job.section=/judge/job/section
 ```
 
 如果您在本机上部署了多个项目，每个项目中都使用本服务，那么需要为每个项目配置不同的互斥锁路径，以避免项目之间不必要的互斥。
