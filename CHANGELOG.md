@@ -5,6 +5,7 @@
 ### 功能构建
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/Analyser.md。
   - docs/wiki/zh-CN/CoreConcepts.md。
 
 - 推送机制新增系统事件。
