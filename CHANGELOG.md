@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/Judger.md。
+  - docs/wiki/zh-CN/PresetJudgerImplements.md。
+
 - Wiki 更新。
   - docs/wiki/zh-CN/Provide.md。
   - docs/wiki/zh-CN/SystemRequirements.md。

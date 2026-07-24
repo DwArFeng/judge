@@ -45,6 +45,8 @@
 - [Preset Provider Implements](./PresetProviderImplements.md) - 预设提供器实现，详细说明了本项目内置的提供器。
 - [Analyser](./Analyser.md) - 分析器，详细说明了本项目的分析器机制。
 - [Preset Analyser Implements](./PresetAnalyserImplements.md) - 预设分析器实现，详细说明了本项目内置的分析器。
+- [Judger](./Judger.md) - 判断器，详细说明了本项目的判断器机制。
+- [Preset Judger Implements](./PresetJudgerImplements.md) - 预设判断器实现，详细说明了本项目内置的判断器。
 
 ## 维护与调试
 
