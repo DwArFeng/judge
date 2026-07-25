@@ -30,31 +30,31 @@
 
 ## 版本黑名单
 
-| 编号                                                 | 大版本   | 起始版本    | 结束版本    | 原因                                            |
-|----------------------------------------------------|-------|---------|---------|-----------------------------------------------|
-| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.6.x | 2.6.0.a | 2.6.0.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
-| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.5.x | 2.5.0.a | 2.5.2.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
-| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.4.x | 2.4.0.a | 2.4.3.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
-| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.3.x | 2.3.0.a | 2.3.2.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
-| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.2.x | 2.2.0.a | 2.2.1.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
-| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.1.x | 2.1.0.a | 2.1.0.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题    |
-| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.5.x | 2.5.0.a | 2.5.1.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
-| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.4.x | 2.4.0.a | 2.4.3.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
-| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.3.x | 2.3.0.a | 2.3.2.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
-| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.2.x | 2.2.0.a | 2.2.1.a | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错    |
-| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.5.x | 2.5.0.a | 2.5.0.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
-| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.4.x | 2.4.0.a | 2.4.3.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
-| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.3.x | 2.3.0.a | 2.3.2.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
-| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.2.x | 2.2.0.a | 2.2.1.a | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题 |
-| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.4.x | 2.4.0.a | 2.4.0.a | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用              |
-| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.3.x | 2.3.0.a | 2.3.2.a | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用              |
-| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.2.x | 2.2.0.a | 2.2.1.a | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用              |
-| [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.3.x | 2.3.0.a | 2.3.0.a | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题        |
-| [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.2.x | 2.2.0.a | 2.2.1.a | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题        |
-| [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.1.x | 2.1.0.a | 2.1.0.a | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题        |
-| [BLACKLIST-LEGACY-2.2.0.a](#BLACKLIST-LEGACY-220a) | 2.2.x | 2.2.0.a | 2.2.0.a | 核心功能无法正常使用                                    |
-| [BLACKLIST-LEGACY-2.1.0.a](#BLACKLIST-LEGACY-210a) | 2.1.x | 2.1.0.a | 2.1.0.a | Beta 版本，与现行接口差异较大                             |
-| [BLACKLIST-LEGACY-2.0.0.a](#BLACKLIST-LEGACY-200a) | 2.0.x | 2.0.0.a | 2.0.0.a | Beta 版本，与现行接口差异较大                             |
+| 编号                                               | 大版本 | 起始版本 | 结束版本 | 原因                                                                 |
+|----------------------------------------------------|--------|----------|----------|----------------------------------------------------------------------|
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.6.x  | 2.6.0.a  | 2.6.0.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题       |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.5.x  | 2.5.0.a  | 2.5.2.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题       |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.4.x  | 2.4.0.a  | 2.4.3.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题       |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.3.x  | 2.3.0.a  | 2.3.2.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题       |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.2.x  | 2.2.0.a  | 2.2.1.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题       |
+| [BLACKLIST-20260615.1](#BLACKLIST-202606151)       | 2.1.x  | 2.1.0.a  | 2.1.0.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化精度问题       |
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.5.x  | 2.5.0.a  | 2.5.1.a  | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错 |
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.4.x  | 2.4.0.a  | 2.4.3.a  | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错 |
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.3.x  | 2.3.0.a  | 2.3.2.a  | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错 |
+| [BLACKLIST-20260521.2](#BLACKLIST-202605212)       | 2.2.x  | 2.2.0.a  | 2.2.1.a  | Task 预设查询 Hibernate 排序字段无法解析，执行相关预设查询时可能报错 |
+| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.5.x  | 2.5.0.a  | 2.5.0.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题  |
+| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.4.x  | 2.4.0.a  | 2.4.3.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题  |
+| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.3.x  | 2.3.0.a  | 2.3.2.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题  |
+| [BLACKLIST-20260514.1](#BLACKLIST-202605141)       | 2.2.x  | 2.2.0.a  | 2.2.1.a  | JSFixedFastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题  |
+| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.4.x  | 2.4.0.a  | 2.4.0.a  | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用                |
+| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.3.x  | 2.3.0.a  | 2.3.2.a  | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用                |
+| [BLACKLIST-20251221.1](#BLACKLIST-202512211)       | 2.2.x  | 2.2.0.a  | 2.2.1.a  | Dubbo 服务注册缺失，可能导致部分服务无法通过 RPC 调用                |
+| [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.3.x  | 2.3.0.a  | 2.3.0.a  | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题         |
+| [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.2.x  | 2.2.0.a  | 2.2.1.a  | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题         |
+| [BLACKLIST-20251210.1](#BLACKLIST-202512101)       | 2.1.x  | 2.1.0.a  | 2.1.0.a  | FastJson 实体字段注解错误，可能导致 JSON 序列化/反序列化问题         |
+| [BLACKLIST-LEGACY-2.2.0.a](#BLACKLIST-LEGACY-220a) | 2.2.x  | 2.2.0.a  | 2.2.0.a  | 核心功能无法正常使用                                                 |
+| [BLACKLIST-LEGACY-2.1.0.a](#BLACKLIST-LEGACY-210a) | 2.1.x  | 2.1.0.a  | 2.1.0.a  | Beta 版本，与现行接口差异较大                                        |
+| [BLACKLIST-LEGACY-2.0.0.a](#BLACKLIST-LEGACY-200a) | 2.0.x  | 2.0.0.a  | 2.0.0.a  | Beta 版本，与现行接口差异较大                                        |
 
 ## 详细原因
 

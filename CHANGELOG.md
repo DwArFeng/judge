@@ -5,6 +5,9 @@
 ### 功能构建
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/Provide.md。
+  - docs/wiki/zh-CN/SystemRequirements.md。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
   - docs/wiki/zh-CN/Analyser.md。
   - docs/wiki/zh-CN/CoreConcepts.md。
 
