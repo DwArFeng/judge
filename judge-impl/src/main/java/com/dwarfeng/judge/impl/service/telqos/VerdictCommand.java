@@ -171,6 +171,7 @@ public class VerdictCommand extends CliCommand {
         context.sendMessage("裁决更新成功!");
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void printVerdictInspectBySectionResult(
             CommandExecutor.Context context, VerdictInspectBySectionResult result
     ) throws Exception {

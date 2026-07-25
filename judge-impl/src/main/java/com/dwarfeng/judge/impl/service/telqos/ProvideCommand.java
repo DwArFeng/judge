@@ -220,6 +220,7 @@ public class ProvideCommand extends CliCommand {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void printProvideLookupResultDatas(
             CommandExecutor.Context context, List<Map<String, Object>> datas
     ) throws Exception {
