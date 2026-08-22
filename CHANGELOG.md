@@ -15,7 +15,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复任务在特定的状态转移时行为异常的 bug。
+  - com.dwarfeng.judge.impl.handler.TaskOperateHandlerImpl。
 
 ### 功能移除
 

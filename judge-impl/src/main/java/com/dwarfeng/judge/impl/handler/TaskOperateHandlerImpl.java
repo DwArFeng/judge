@@ -190,7 +190,6 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void finish0(TaskFinishInfo finishInfo) throws Exception {
         // 展开参数。
         LongIdKey taskKey = finishInfo.getTaskKey();
@@ -207,16 +206,14 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         Date currentDate = new Date();
         task.setStatus(Constants.TASK_STATUS_FINISHED);
         task.setEndedDate(currentDate);
-        task.setDuration(currentDate.getTime() - task.getStartedDate().getTime());
+        task.setDuration(duration(task, currentDate));
 
         // 调用维护服务更新任务状态。
         taskMaintainService.update(task);
 
         // 消息推送。
         try {
-            Section section = sectionMaintainService.get(
-                    task.getSectionKey()
-            );
+            Section section = sectionMaintainService.get(task.getSectionKey());
             pushHandler.taskFinished(section);
         } catch (Exception e) {
             LOGGER.warn("推送任务完成消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
@@ -232,7 +229,6 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void fail0(TaskFailInfo failInfo) throws Exception {
         // 展开参数。
         LongIdKey taskKey = failInfo.getTaskKey();
@@ -247,18 +243,16 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
         // 更新任务状态。
         Date currentDate = new Date();
-        task.setStatus(Constants.TASK_STATUS_FINISHED);
+        task.setStatus(Constants.TASK_STATUS_FAILED);
         task.setEndedDate(currentDate);
-        task.setDuration(currentDate.getTime() - task.getStartedDate().getTime());
+        task.setDuration(duration(task, currentDate));
 
         // 调用维护服务更新任务状态。
         taskMaintainService.update(task);
 
         // 消息推送。
         try {
-            Section section = sectionMaintainService.get(
-                    task.getSectionKey()
-            );
+            Section section = sectionMaintainService.get(task.getSectionKey());
             pushHandler.taskFailed(section);
         } catch (Exception e) {
             LOGGER.warn("推送任务失败消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
@@ -290,7 +284,7 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         Date currentDate = new Date();
         task.setStatus(Constants.TASK_STATUS_EXPIRED);
         task.setEndedDate(currentDate);
-        task.setDuration(currentDate.getTime() - task.getStartedDate().getTime());
+        task.setDuration(duration(task, currentDate));
         task.setExpiredDate(currentDate);
 
         // 调用维护服务更新任务状态。
@@ -298,9 +292,7 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
         // 消息推送。
         try {
-            Section section = sectionMaintainService.get(
-                    task.getSectionKey()
-            );
+            Section section = sectionMaintainService.get(task.getSectionKey());
             pushHandler.taskExpired(section);
         } catch (Exception e) {
             LOGGER.warn("推送任务过期消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
@@ -332,7 +324,7 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
         Date currentDate = new Date();
         task.setStatus(Constants.TASK_STATUS_DIED);
         task.setEndedDate(currentDate);
-        task.setDuration(currentDate.getTime() - task.getStartedDate().getTime());
+        task.setDuration(duration(task, currentDate));
         task.setDiedDate(currentDate);
 
         // 调用维护服务更新任务状态。
@@ -340,10 +332,8 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
         // 消息推送。
         try {
-            Section section = sectionMaintainService.get(
-                    task.getSectionKey()
-            );
-            pushHandler.taskExpired(section);
+            Section section = sectionMaintainService.get(task.getSectionKey());
+            pushHandler.taskDied(section);
         } catch (Exception e) {
             LOGGER.warn("推送任务死亡消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
@@ -405,5 +395,10 @@ public class TaskOperateHandlerImpl implements TaskOperateHandler {
 
         // 调用维护服务更新任务实体。
         taskMaintainService.update(task);
+    }
+
+    private static Long duration(Task task, Date endedDate) {
+        Date startDate = task.getStartedDate() == null ? task.getCreatedDate() : task.getStartedDate();
+        return startDate == null ? null : endedDate.getTime() - startDate.getTime();
     }
 }
