@@ -88,6 +88,8 @@ public class CronDriverProvider implements DriverProvider {
                 for (CronProcessor cronProcessor : cronProcessors) {
                     cronProcessor.shutdown();
                 }
+                scheduledFutures.clear();
+                cronProcessors.clear();
             } finally {
                 lock.unlock();
             }

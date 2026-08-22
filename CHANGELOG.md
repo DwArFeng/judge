@@ -30,6 +30,11 @@
 
 ### Bug 修复
 
+- 修复部分驱动器解除注册所有的驱动器未能妥善释放相关资源的 bug。
+  - com.dwarfeng.judge.impl.handler.driver.CronDriverProvider。
+  - com.dwarfeng.judge.impl.handler.driver.FixedDelayDriverProvider。
+  - com.dwarfeng.judge.impl.handler.driver.FixedRateDriverProvider。
+
 - 修复任务检查时死亡任务状态转移的逻辑问题。
   - com.dwarfeng.judge.impl.handler.TaskCheckHandlerImpl。
 
