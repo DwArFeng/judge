@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化驱动器。
+  - 优化 `dcti_kafka_driver` 驱动器，支持同一数据点关联多个部件，并在单个部件执行评估动作出现异常时继续处理其余部件。
+
 - `judge-node-all-he` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.judge.node.all.he.configuration.CacheConfiguration。
   - com.dwarfeng.judge.node.all.he.configuration.DaoConfiguration。

@@ -29,9 +29,7 @@ import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -75,7 +73,7 @@ public class DctiKafkaDriverProvider implements DriverProvider {
         @Value("${com.dwarfeng.judge.driver.kafka.dcti.listener_id}")
         private String listenerId;
 
-        private final Map<Long, LongIdKey> registerMap = new HashMap<>();
+        private final Map<Long, Set<LongIdKey>> registerMap = new HashMap<>();
         private final Lock lock = new ReentrantLock();
 
         private boolean kafkaListenerContainerStartFlag = false;
@@ -92,7 +90,7 @@ public class DctiKafkaDriverProvider implements DriverProvider {
                 // 将驱动信息注册到驱动器中。
                 LongIdKey sectionKey = driverInfo.getSectionKey();
                 Long dataInfoKey = Long.parseLong(driverInfo.getParam());
-                registerMap.put(dataInfoKey, sectionKey);
+                registerMap.computeIfAbsent(dataInfoKey, key -> new HashSet<>()).add(sectionKey);
                 // 按条件启动 Kafka 侦听容器。
                 mayStartKafkaListenerContainer();
             } catch (Exception e) {
@@ -164,9 +162,16 @@ public class DctiKafkaDriverProvider implements DriverProvider {
                 // 驱动判断。
                 DataInfo dataInfo = dctiHandler.fromMessage(message);
                 Long dataInfoKey = dataInfo.getPointLongId();
-                LongIdKey sectionKey = registerMap.getOrDefault(dataInfoKey, null);
-                if (Objects.nonNull(sectionKey)) {
-                    context.execute(sectionKey);
+                Set<LongIdKey> sectionKeys = registerMap.get(dataInfoKey);
+                if (Objects.isNull(sectionKeys)) {
+                    return;
+                }
+                for (LongIdKey sectionKey : sectionKeys) {
+                    try {
+                        context.execute(sectionKey);
+                    } catch (Exception e) {
+                        LOGGER.warn("部件 {} 执行评估动作时出现异常，将继续处理其余部件", sectionKey, e);
+                    }
                 }
             } catch (Exception e) {
                 LOGGER.warn("处理 dcti dataInfo 时出现异常，将忽略驱动动作 1 次，异常信息如下", e);
