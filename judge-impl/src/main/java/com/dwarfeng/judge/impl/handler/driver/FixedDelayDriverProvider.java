@@ -87,6 +87,8 @@ public class FixedDelayDriverProvider implements DriverProvider {
                 for (FixedDelayProcessor fixedDelayProcessor : fixedDelayProcessors) {
                     fixedDelayProcessor.shutdown();
                 }
+                scheduledFutures.clear();
+                fixedDelayProcessors.clear();
             } finally {
                 lock.unlock();
             }

@@ -87,6 +87,8 @@ public class FixedRateDriverProvider implements DriverProvider {
                 for (FixedRateProcessor fixedRateProcessor : fixedRateProcessors) {
                     fixedRateProcessor.shutdown();
                 }
+                scheduledFutures.clear();
+                fixedRateProcessors.clear();
             } finally {
                 lock.unlock();
             }
