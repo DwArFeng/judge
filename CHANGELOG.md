@@ -30,6 +30,9 @@
 
 ### Bug 修复
 
+- 修复任务检查时死亡任务状态转移的逻辑问题。
+  - com.dwarfeng.judge.impl.handler.TaskCheckHandlerImpl。
+
 - 修复任务在特定的状态转移时行为异常的 bug。
   - com.dwarfeng.judge.impl.handler.TaskOperateHandlerImpl。
 
