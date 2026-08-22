@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>judge</artifactId>
-    <version>3.2.0.a</version>
+    <version>3.2.1.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -580,32 +580,32 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-stack</artifactId>
-                <version>3.2.0.a</version>
+                <version>3.2.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-sdk</artifactId>
-                <version>3.2.0.a</version>
+                <version>3.2.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-impl</artifactId>
-                <version>3.2.0.a</version>
+                <version>3.2.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-node</artifactId>
-                <version>3.2.0.a</version>
+                <version>3.2.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-node-all-he</artifactId>
-                <version>3.2.0.a</version>
+                <version>3.2.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>judge-distribute</artifactId>
-                <version>3.2.0.a</version>
+                <version>3.2.1.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

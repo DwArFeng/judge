@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.dwarfeng</groupId>
         <artifactId>judge-node</artifactId>
-        <version>3.2.0.a</version>
+        <version>3.2.1.a-SNAPSHOT</version>
     </parent>
 
     <artifactId>judge-node-all-he</artifactId>
