@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project
         xmlns="http://maven.apache.org/POM/4.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -398,17 +399,69 @@
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
+            <!-- Jackson 组件 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!-- Groovy 支持 -->
+            <dependency>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <type>pom</type>
+                <version>${groovy.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jackson-databind</artifactId>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jackson-dataformat-yaml</artifactId>
+                        <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>ivy</artifactId>
+                        <groupId>org.apache.ivy</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>groovy-test</artifactId>
+                        <groupId>org.apache.groovy</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>groovy-test-junit5</artifactId>
+                        <groupId>org.apache.groovy</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>groovy-groovydoc</artifactId>
+                        <groupId>org.apache.groovy</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>groovy-servlet</artifactId>
+                        <groupId>org.apache.groovy</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>groovy-swing</artifactId>
+                        <groupId>org.apache.groovy</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- Thumbnailator 缩略图组件 -->
+            <dependency>
+                <groupId>net.coobird</groupId>
+                <artifactId>thumbnailator</artifactId>
+                <version>${thumbnailator.version}</version>
+            </dependency>
             <!-- Dutil 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>dutil-basic</artifactId>
                 <version>${dutil.version}</version>
-            </dependency>
-            <!-- SnowFlake 服务 -->
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>snowflake-distributed-service-api</artifactId>
-                <version>${snowflake.version}</version>
             </dependency>
             <!-- Subgrade 组件 -->
             <dependency>
@@ -462,12 +515,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- Spring-terminator 组件 -->
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>spring-terminator</artifactId>
-                <version>${spring-terminator.version}</version>
-            </dependency>
             <!-- Spring-telqos 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
@@ -479,63 +526,11 @@
                 <artifactId>spring-telqos-api</artifactId>
                 <version>${spring-telqos.version}</version>
             </dependency>
-            <!-- Dcti 标准接口 -->
+            <!-- Spring-terminator 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>dcti</artifactId>
-                <version>${dcti.version}</version>
-            </dependency>
-            <!-- Jackson 组件 -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-yaml</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <!-- Groovy 支持 -->
-            <dependency>
-                <groupId>org.apache.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <type>pom</type>
-                <version>${groovy.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>jackson-databind</artifactId>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jackson-dataformat-yaml</artifactId>
-                        <groupId>com.fasterxml.jackson.dataformat</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>ivy</artifactId>
-                        <groupId>org.apache.ivy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>groovy-test</artifactId>
-                        <groupId>org.apache.groovy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>groovy-test-junit5</artifactId>
-                        <groupId>org.apache.groovy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>groovy-groovydoc</artifactId>
-                        <groupId>org.apache.groovy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>groovy-servlet</artifactId>
-                        <groupId>org.apache.groovy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>groovy-swing</artifactId>
-                        <groupId>org.apache.groovy</groupId>
-                    </exclusion>
-                </exclusions>
+                <artifactId>spring-terminator</artifactId>
+                <version>${spring-terminator.version}</version>
             </dependency>
             <!-- Dwarfeng-datamark 组件 -->
             <dependency>
@@ -549,11 +544,17 @@
                 <artifactId>dwarfeng-ftp</artifactId>
                 <version>${dwarfeng-ftp.version}</version>
             </dependency>
-            <!-- Thumbnailator 缩略图组件 -->
+            <!-- Dcti 标准接口 -->
             <dependency>
-                <groupId>net.coobird</groupId>
-                <artifactId>thumbnailator</artifactId>
-                <version>${thumbnailator.version}</version>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dcti</artifactId>
+                <version>${dcti.version}</version>
+            </dependency>
+            <!-- SnowFlake 服务 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>snowflake-distributed-service-api</artifactId>
+                <version>${snowflake.version}</version>
             </dependency>
             <!-- 程序自身组件 -->
             <dependency>
