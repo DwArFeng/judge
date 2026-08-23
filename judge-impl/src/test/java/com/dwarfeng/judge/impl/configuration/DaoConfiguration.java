@@ -1360,7 +1360,6 @@ public class DaoConfiguration {
         );
     }
 
-
     @Bean
     public HibernateBatchBaseDao<AlarmKey, HibernateAlarmKey, Alarm, HibernateAlarm> alarmHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(

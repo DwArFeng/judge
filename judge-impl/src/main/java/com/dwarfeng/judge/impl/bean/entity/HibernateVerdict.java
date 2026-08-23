@@ -45,7 +45,6 @@ public class HibernateVerdict implements Bean {
 
     // endregion
 
-
     public HibernateVerdict() {
     }
 

@@ -59,7 +59,6 @@ public class HibernateAlarmModal implements Bean {
 
     // endregion
 
-
     public HibernateAlarmModal() {
     }
 

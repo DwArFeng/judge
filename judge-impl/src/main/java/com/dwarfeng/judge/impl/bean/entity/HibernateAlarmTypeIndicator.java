@@ -32,7 +32,6 @@ public class HibernateAlarmTypeIndicator implements Bean {
 
     // endregion
 
-
     public HibernateAlarmTypeIndicator() {
     }
 

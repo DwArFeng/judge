@@ -25,7 +25,6 @@ public class AlarmPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-
     @SuppressWarnings("DuplicatedCode")
     private void childForSection(DetachedCriteria criteria, Object[] objs) {
         try {

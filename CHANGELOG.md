@@ -4,6 +4,18 @@
 
 ### 功能构建
 
+- `judge-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.judge.impl.configuration.CacheConfiguration。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAlarmHistory。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAlarm。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateVerdict。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAlarmTypeIndicator。
+  - com.dwarfeng.judge.impl.configuration.ServiceConfiguration。
+  - com.dwarfeng.judge.impl.dao.preset.AlarmModalPresetCriteriaMaker。
+  - com.dwarfeng.judge.impl.dao.preset.AlarmPresetCriteriaMaker。
+  - com.dwarfeng.judge.impl.configuration.DaoConfiguration。
+  - com.dwarfeng.judge.impl.bean.entity.HibernateAlarmModal。
+
 - 依赖升级。
   - 升级 `fastjson` 依赖版本为 `1.2.84` 以规避漏洞。
   - 升级 `aspectj` 依赖版本为 `1.8.14` 以规避漏洞。
