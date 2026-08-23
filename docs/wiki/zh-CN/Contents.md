@@ -47,6 +47,8 @@
 - [Preset Analyser Implements](./PresetAnalyserImplements.md) - 预设分析器实现，详细说明了本项目内置的分析器。
 - [Judger](./Judger.md) - 判断器，详细说明了本项目的判断器机制。
 - [Preset Judger Implements](./PresetJudgerImplements.md) - 预设判断器实现，详细说明了本项目内置的判断器。
+- [Sinker](./Sinker.md) - 下沉器，详细说明了本项目的下沉器机制。
+- [Preset Sinker Implements](./PresetSinkerImplements.md) - 预设下沉器实现，详细说明了本项目内置的下沉器。
 
 ## 维护与调试
 

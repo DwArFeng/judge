@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/Sinker.md。
+  - docs/wiki/zh-CN/PresetSinkerImplements.md。
+
 - 优化部分类中部分方法的行为分析行为。
   - com.dwarfeng.judge.impl.cache.AlarmCacheImpl。
   - com.dwarfeng.judge.impl.cache.AlarmHistoryCacheImpl。
