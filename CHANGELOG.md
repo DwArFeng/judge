@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/Analyser.md。
+  - docs/wiki/zh-CN/PresetAnalyserImplements.md。
+
 - 优化推送器。
   - 为 `kafka.native` 推送器添加 Kafka 事务支持。
 
