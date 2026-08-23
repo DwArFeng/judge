@@ -1326,7 +1326,6 @@ public class ServiceConfiguration {
         );
     }
 
-
     @Bean
     public GeneralBatchCrudService<AlarmKey, Alarm> alarmGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(

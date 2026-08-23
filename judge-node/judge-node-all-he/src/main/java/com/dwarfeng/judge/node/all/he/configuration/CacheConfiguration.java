@@ -480,7 +480,6 @@ public class CacheConfiguration {
         );
     }
 
-
     @Bean
     @SuppressWarnings("unchecked")
     public RedisBatchBaseCache<AlarmKey, Alarm, FastJsonAlarm> alarmRedisBatchBaseCache() {
