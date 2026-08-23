@@ -22,6 +22,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,81 +80,97 @@ public class NativeKafkaPusher extends AbstractPusher {
         this.kafkaTemplate = kafkaTemplate;
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void taskFinished(Section section) {
         kafkaTemplate.send(taskFinishedTopic, JSON.toJSONString(FastJsonSection.of(section)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void taskFailed(Section section) {
         kafkaTemplate.send(taskFailedTopic, JSON.toJSONString(FastJsonSection.of(section)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void taskExpired(Section section) {
         kafkaTemplate.send(taskExpiredTopic, JSON.toJSONString(FastJsonSection.of(section)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void taskDied(Section section) {
         kafkaTemplate.send(taskDiedTopic, JSON.toJSONString(FastJsonSection.of(section)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void superviseReset() {
         kafkaTemplate.send(superviseResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void adaptReset() {
         kafkaTemplate.send(adaptResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void jobReset() {
         kafkaTemplate.send(jobResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void provideReset() {
         kafkaTemplate.send(provideResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void filterReset() {
         kafkaTemplate.send(filterResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void sinkReset() {
         kafkaTemplate.send(sinkResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void purgeFinished(PurgeFinishedResult result) {
         kafkaTemplate.send(purgeFinishedTopic, JSON.toJSONString(FastJsonPurgeFinishedResult.of(result)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void purgeFailed() {
         kafkaTemplate.send(purgeFailedTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void alarmAppeared(AlarmModal alarmModal) {
         kafkaTemplate.send(alarmAppearedTopic, JSON.toJSONString(FastJsonAlarmModal.of(alarmModal)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void alarmLevelIncreased(AlarmModal alarmModal) {
         kafkaTemplate.send(alarmLevelIncreasedTopic, JSON.toJSONString(FastJsonAlarmModal.of(alarmModal)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void alarmLevelDecreased(AlarmModal alarmModal) {
         kafkaTemplate.send(alarmLevelDecreasedTopic, JSON.toJSONString(FastJsonAlarmModal.of(alarmModal)));
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void alarmDisappeared(AlarmModal alarmModal) {
         kafkaTemplate.send(alarmDisappearedTopic, JSON.toJSONString(FastJsonAlarmModal.of(alarmModal)));
