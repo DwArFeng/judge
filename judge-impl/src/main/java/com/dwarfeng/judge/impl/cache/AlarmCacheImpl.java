@@ -59,7 +59,7 @@ public class AlarmCacheImpl implements AlarmCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<AlarmKey> keys) throws CacheException {
+    public boolean allExists(@SkipRecord List<AlarmKey> keys) throws CacheException {
         return batchBaseCache.allExists(keys);
     }
 

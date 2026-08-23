@@ -59,7 +59,7 @@ public class VerdictCacheImpl implements VerdictCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<VerdictKey> keys) throws CacheException {
+    public boolean allExists(@SkipRecord List<VerdictKey> keys) throws CacheException {
         return batchBaseCache.allExists(keys);
     }
 

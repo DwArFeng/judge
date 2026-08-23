@@ -59,7 +59,7 @@ public class AlarmModalCacheImpl implements AlarmModalCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<AlarmKey> keys) throws CacheException {
+    public boolean allExists(@SkipRecord List<AlarmKey> keys) throws CacheException {
         return batchBaseCache.allExists(keys);
     }
 

@@ -59,7 +59,7 @@ public class AlarmTypeIndicatorCacheImpl implements AlarmTypeIndicatorCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<StringIdKey> keys) throws CacheException {
+    public boolean allExists(@SkipRecord List<StringIdKey> keys) throws CacheException {
         return batchBaseCache.allExists(keys);
     }
 

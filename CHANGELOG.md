@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- 优化部分类中部分方法的行为分析行为。
+  - com.dwarfeng.judge.impl.cache.AlarmCacheImpl。
+  - com.dwarfeng.judge.impl.cache.AlarmHistoryCacheImpl。
+  - com.dwarfeng.judge.impl.cache.AlarmModalCacheImpl。
+  - com.dwarfeng.judge.impl.cache.AlarmSettingCacheImpl。
+  - com.dwarfeng.judge.impl.cache.AlarmTypeIndicatorCacheImpl。
+  - com.dwarfeng.judge.impl.cache.VerdictCacheImpl。
+
 - 优化推送器。
   - 为 `kafka.native` 推送器添加 Kafka 事务支持。
 
