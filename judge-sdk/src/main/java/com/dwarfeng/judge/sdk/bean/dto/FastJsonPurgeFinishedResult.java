@@ -27,10 +27,10 @@ public class FastJsonPurgeFinishedResult implements Dto {
         }
     }
 
-    @JSONField(name = "derive_history_deletion_count", ordinal = 1)
+    @JSONField(name = "task_deletion_count", ordinal = 1)
     private int taskDeletionCount;
 
-    @JSONField(name = "derive_history_divergent", ordinal = 2)
+    @JSONField(name = "task_divergent", ordinal = 2)
     private boolean taskDivergent;
 
     public FastJsonPurgeFinishedResult() {

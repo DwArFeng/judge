@@ -60,7 +60,7 @@ public class FastJsonSinkInfo implements Dto {
         }
     }
 
-    @JSONField(name = "key", ordinal = 1)
+    @JSONField(name = "section_key", ordinal = 1)
     private FastJsonLongIdKey sectionKey;
 
     @JSONField(name = "task_key", ordinal = 2)
@@ -108,7 +108,7 @@ public class FastJsonSinkInfo implements Dto {
     @JSONField(name = "analyses", ordinal = 16)
     private List<FastJsonAnalysis> analyses;
 
-    @JSONField(name = "analysis_pictures", ordinal = 17)
+    @JSONField(name = "judgements", ordinal = 17)
     private List<FastJsonJudgement> judgements;
 
     @JSONField(name = "visualize_datas", ordinal = 18)

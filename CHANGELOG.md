@@ -14,7 +14,10 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 DTO 实体中错误的字段注解。
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonPurgeFinishedResult。
+  - com.dwarfeng.judge.sdk.bean.dto.FastJsonSinkInfo。
+  - com.dwarfeng.judge.sdk.bean.dto.JSFixedFastJsonSinkInfo。
 
 ### 功能移除
 

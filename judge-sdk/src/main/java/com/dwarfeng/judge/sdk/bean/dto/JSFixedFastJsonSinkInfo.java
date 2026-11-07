@@ -60,7 +60,7 @@ public class JSFixedFastJsonSinkInfo implements Dto {
         }
     }
 
-    @JSONField(name = "key", ordinal = 1)
+    @JSONField(name = "section_key", ordinal = 1)
     private JSFixedFastJsonLongIdKey sectionKey;
 
     @JSONField(name = "task_key", ordinal = 2)
@@ -108,7 +108,7 @@ public class JSFixedFastJsonSinkInfo implements Dto {
     @JSONField(name = "analyses", ordinal = 16)
     private List<JSFixedFastJsonAnalysis> analyses;
 
-    @JSONField(name = "analysis_pictures", ordinal = 17)
+    @JSONField(name = "judgements", ordinal = 17)
     private List<JSFixedFastJsonJudgement> judgements;
 
     @JSONField(name = "visualize_datas", ordinal = 18)
