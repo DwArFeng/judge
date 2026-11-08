@@ -33,11 +33,11 @@ public class WebInputSinkerMetaKey implements Key {
         }
     }
 
-    @JSONField(name = "section_id")
+    @JSONField(name = "section_long_id")
     @NotNull
     private Long sectionLongId;
 
-    @JSONField(name = "sinker_id")
+    @JSONField(name = "sinker_long_id")
     @NotNull
     private Long sinkerLongId;
 

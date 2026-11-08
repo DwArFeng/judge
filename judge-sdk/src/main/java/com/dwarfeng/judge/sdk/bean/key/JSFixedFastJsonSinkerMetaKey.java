@@ -30,10 +30,10 @@ public class JSFixedFastJsonSinkerMetaKey implements Key {
         }
     }
 
-    @JSONField(name = "section_id", ordinal = 1, serializeUsing = ToStringSerializer.class)
+    @JSONField(name = "section_long_id", ordinal = 1, serializeUsing = ToStringSerializer.class)
     private Long sectionLongId;
 
-    @JSONField(name = "sinker_id", ordinal = 2, serializeUsing = ToStringSerializer.class)
+    @JSONField(name = "sinker_long_id", ordinal = 2, serializeUsing = ToStringSerializer.class)
     private Long sinkerLongId;
 
     @JSONField(name = "meta_string_id", ordinal = 3)

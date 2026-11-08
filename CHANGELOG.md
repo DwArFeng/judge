@@ -14,6 +14,14 @@
 
 ### Bug 修复
 
+- 修复部分 Key 实体中错误的字段注解。
+  - com.dwarfeng.judge.sdk.bean.key.FastJsonSinkerMetaKey。
+  - com.dwarfeng.judge.sdk.bean.key.FastJsonSinkerRelationKey。
+  - com.dwarfeng.judge.sdk.bean.key.JSFixedFastJsonSinkerMetaKey。
+  - com.dwarfeng.judge.sdk.bean.key.JSFixedFastJsonSinkerRelationKey。
+  - com.dwarfeng.judge.sdk.bean.key.WebInputSinkerMetaKey。
+  - com.dwarfeng.judge.sdk.bean.key.WebInputSinkerRelationKey。
+
 - 修复部分 DTO 实体中错误的字段注解。
   - com.dwarfeng.judge.sdk.bean.dto.FastJsonPurgeFinishedResult。
   - com.dwarfeng.judge.sdk.bean.dto.FastJsonSinkInfo。

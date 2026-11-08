@@ -29,10 +29,10 @@ public class FastJsonSinkerMetaKey implements Key {
         }
     }
 
-    @JSONField(name = "section_id", ordinal = 1)
+    @JSONField(name = "section_long_id", ordinal = 1)
     private Long sectionLongId;
 
-    @JSONField(name = "sinker_id", ordinal = 2)
+    @JSONField(name = "sinker_long_id", ordinal = 2)
     private Long sinkerLongId;
 
     @JSONField(name = "meta_string_id", ordinal = 3)

@@ -27,10 +27,10 @@ public class WebInputSinkerRelationKey implements Key {
         }
     }
 
-    @JSONField(name = "section_id")
+    @JSONField(name = "section_long_id")
     private Long sectionLongId;
 
-    @JSONField(name = "sinker_id")
+    @JSONField(name = "sinker_long_id")
     private Long sinkerLongId;
 
     public WebInputSinkerRelationKey() {
