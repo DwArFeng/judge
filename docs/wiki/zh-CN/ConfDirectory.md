@@ -602,7 +602,7 @@ com.dwarfeng.judge.purge.max_deletion_size=10000
 #   log: 将消息输出到日志中的推送器。
 #
 # 对于一个具体的项目，很可能只用一个推送器。此时如果希望程序加载时只加载一个推送器，可以通过编辑
-# opt/opt-push.xml 文件实现。
+# opt/opt-pusher.xml 文件实现。
 # 可以通过编辑 application-context-scan.xml 实现。
 com.dwarfeng.judge.pusher.type=drain
 #

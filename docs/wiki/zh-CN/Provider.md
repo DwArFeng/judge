@@ -152,7 +152,7 @@ public final class LookupResult {
 | 方法签名                                           | 说明                           |
 |----------------------------------------------------|--------------------------------|
 | `boolean supportType(String type)`                 | 判断是否支持指定类型。         |
-| `Provider makeProvider(String type, String param)` | 根据类型和构造参数创建提供器。 |
+| `Provider makeProvider(String type, String param) throws ProviderException` | 根据类型和构造参数创建提供器。 |
 
 `ProviderHandler` 会从所有 `ProviderMaker` 中查找第一个支持指定类型的制造器，并调用其构造提供器。
 

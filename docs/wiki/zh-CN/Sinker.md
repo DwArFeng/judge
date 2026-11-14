@@ -309,7 +309,7 @@ Map<sectionKey, Map<metaStringId, SinkerMetaInfo>>
 |----------------------------------|--------------------------------------------------------------------|
 | `UnsupportedSinkerTypeException` | 没有制造器支持指定的下沉器类型。                                   |
 | `SinkerMakeException`            | 下沉器参数解析或实例构造失败。                                     |
-| `SinkerSessionException`         | 创建、打开、关闭或执行会话时发生的下沉器会话异常。                 |
+| `SinkerSessionException`         | 打开、关闭或执行会话时发生的下沉器会话异常。                       |
 | 单个会话下沉失败                 | `SinkHandler` 记录警告并丢弃本次该下沉器下沉，继续处理其它下沉器。 |
 | 部件绑定获取失败                 | 无法取得下沉器遍历范围时向上抛出，作业下沉阶段可能因此失败。       |
 

@@ -196,7 +196,7 @@ FastJson 序列化时 `section_id` 以字符串输出、`sinker_id` 以数字输
 
 ### BLACKLIST-LEGACY-2.0.0.a
 
-详细版本号: Beta_2.1.0_20250915_build_A。
+详细版本号: Beta_2.0.0_20250915_build_A。
 
 原因： Beta 版本，与现行接口差异较大。
 

@@ -4,6 +4,20 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/ConfDirectory.md。
+  - docs/wiki/zh-CN/CoreConcepts.md。
+  - docs/wiki/zh-CN/InstallToCentos.md。
+  - docs/wiki/zh-CN/PresetSinkerImplements.md。
+  - docs/wiki/zh-CN/Provide.md。
+  - docs/wiki/zh-CN/Provider.md。
+  - docs/wiki/zh-CN/QuickStart.md。
+  - docs/wiki/zh-CN/Sinker.md。
+  - docs/wiki/zh-CN/SystemRequirements.md。
+  - docs/wiki/zh-CN/TelqosCommands.md。
+  - docs/wiki/zh-CN/UsingTelqos.md。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
+
 - 依赖升级。
   - 升级 `guava` 依赖版本为 `33.7.1-jre` 以规避漏洞。
   - 升级 `jackson` 依赖版本为 `2.21.7` 以规避漏洞。

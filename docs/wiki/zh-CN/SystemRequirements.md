@@ -22,13 +22,13 @@
   - MySQL 8.0.19。
 - Redis 5.0.7。
 - Zookeeper 3.5.5。
-- snowflake-distributed-service 1.6.4.a。
+- snowflake-distributed-service 2.0.2.a。
 
 *说明：以上清单中软件的版本为推荐版本，其它版本见下文详细测试列表。*
 
 ### Kafka 消息队列
 
-用于重置器实现，可选。
+用于调度器、接收器、推送器、DCTI 驱动器和 Native Kafka 下沉器实现，可选。
 
 - Kafka 2.4.0。
 

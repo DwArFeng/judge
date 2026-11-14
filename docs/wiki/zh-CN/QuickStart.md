@@ -10,7 +10,7 @@
 - MySQL 8.0.19。
 - Redis 5.0.7。
 - Zookeeper 3.5.5。
-- snowflake-distributed-service 1.6.4.a。
+- snowflake-distributed-service 2.0.2.a。
 
 ## 获取软件包
 
@@ -25,7 +25,7 @@
 ```shell
 cd /usr/local
 tar -zxvf judge-all-he-${version}-release.tar.gz
-mv judge-all-he-${version}-release/judge-all-he-${version} judge
+mv judge-all-he-${version} judge
 ```
 
 ## 数据库初始化

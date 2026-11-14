@@ -16,14 +16,14 @@
 
 ## 解压软件包
 
-软件包的名称格式为 `judge-node-${version}-release.tar.gz`，其中 `${version}` 为软件包的版本号。
+软件包的名称格式为 `judge-all-he-${version}-release.tar.gz`，其中 `${version}` 为软件包的版本号。
 
 使用工具软件，将软件包上传至服务器 `/usr/local` 目录下，解压软件包。
 
 ```shell
 cd /usr/local
-tar -zxvf judge-node-${version}-release.tar.gz
-mv judge-node-${version} judge
+tar -zxvf judge-all-he-${version}-release.tar.gz
+mv judge-all-he-${version} judge
 ```
 
 ## 更改启停脚本
@@ -87,7 +87,7 @@ sudo systemctl start judge
 监视日志。
 
 ```shell
-tail -f /var/log/judge/info.log
+tail -f /usr/local/judge/logs/info.log
 ```
 
 *注意：如果 Judge 安装在其它位置，则需要修改监视路径。*
